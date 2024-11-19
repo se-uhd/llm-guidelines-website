@@ -31,7 +31,7 @@ Hybrid human-LLM annotation approaches may further increase accuracy and allow f
 
 In empirical studies, LLMs can act as judges to evaluate the quality of software artifacts such as code, documentation, and design patterns. 
 For instance, LLMs can be trained to assess code readability, adherence to coding standards, and the quality of comments. 
-By providing---depending on the model configuration---objective and consistent evaluations, LLMs can help mitigate certain biases and part of the variability that human judges might introduce. 
+By providing-depending on the model configuration-objective and consistent evaluations, LLMs can help mitigate certain biases and part of the variability that human judges might introduce. 
 This can lead to more reliable and reproducible results in empirical studies.
 When relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
 
