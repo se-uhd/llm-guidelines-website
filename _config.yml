@@ -16,7 +16,7 @@ search_enabled: true
 # Footer content
 # appears at the bottom of every page's main content
 
-footer_content: "Content provided under <a href=\"https://creativecommons.org/licenses/by/4.0/deed.en\">CC BY 4.0</a>. Just the docs theme provided via an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a>"
+footer_content: "Content provided under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a>. Just the docs theme provided via an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a>"
 
 callouts:
   deadlines:
