@@ -1,0 +1,66 @@
+---
+layout: default
+title: Guidelines
+nav_order: 2
+has_children: false
+---
+
+# Guidelines
+
+While providing a comprehensive set of guidelines is beyond the scope of this position paper, we report a first set of guidelines based on a discussion session with other empiricism experts at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting. 
+This paper is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
+
+## Declare LLM Usage and Role
+
+When conducting any kind of empirical study involving LLMs, it is essential to clearly declare the an LLM was used. This includes specifying the purpose of using the LLM in the study, the tasks it was applied to, and the expected outcomes. Transparency in the usage of LLMs helps in understanding the context and scope of the study, facilitating better interpretation and comparison of results.
+Beyond this declaration, we recommend authors to be explicit about the LLM's exact role.
+Oftentimes, there is a complex layer around the LLM that preprocesses data, prepares prompts, or filters user requests.
+One example is ChatGPT, which can, among others, use the GPT-4o model.
+GitHub Copilot uses the same model as well, and researchers can build their own tools utilizing GPT-4o directly (e.g., via the OpenAI API).
+The infrastructure around the bare model can significantly contribute to the performance of a model in a certain task.
+Therefore, it is crucial that researchers clearly describe what the LLM contributes to the tool or method presented in a research paper.
+
+
+## Report Model Version and Date
+
+It is also crucial for all types of studies to document the specific version of the LLM used in the study, along with the date when the experiments were conducted. LLMs are frequently updated, and different versions may produce varying results. 
+By providing this information, researchers enable others to reproduce the study under the same conditions. Different model providers have varying degrees of information. For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output. Therefore, stating ``We used gpt-4o-2024-08-0, system fingerprint fp\_6b68a8204b'' provides clarity on the exact model and runtime environment.\footnote{\url{https://platform.openai.com/docs/api-reference/chat/object}}
+
+## Report Model Configuration
+
+Detailed documentation of the configuration and parameters used during any study is necessary for reproducibility. This includes settings such as the temperature that controls randomness, the maximum token length, and any other relevant parameters such as the consideration of historical context.
+Additionally, a thorough description of the hosting environment of the LLM or LLM-based tool should be provided, especially in studies focusing on performance or any time-sensitive measurement.
+For instance, researchers might report that ``the model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512,'' providing a clear overview of the experimental setup.
+
+## Report Prompts and their Development
+
+Reporting the exact prompts used in the study is essential for transparency and reproducibility.
+Prompts can significantly influence the [output of LLMs](https://dl.acm.org/doi/full/10.1145/3643674), and sharing them allows other researchers to understand and reproduce the conditions of the study.
+For example, including the specific questions or tasks given to the LLM helps in assessing the validity of the results and comparing them with other studies.
+This is an example where different types of studies require different information.
+When studying LLM usage, the researchers ideally collect and publish the prompts written by the users (if confidentiality allows).
+Otherwise, summaries and examples can be provided.
+Prompts also need to be reported when LLMs are integrated in new tools, especially if study participants were able to formulate (parts of) the prompts.
+For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
+If a systematic approach was used, this process should be described in detail.
+
+## Use an Open LLM as a Baseline
+
+To ensure the reproducibility of results, we recommended findings to be reported with an open LLM as a baseline.
+This applies both when using LLMs as tools for supporting researchers in empirical studies and when benchmarking LLMs for SE tasks.
+In case LLMs are integrated into new tools, this is also preferable if the architecture of the tool allows it.
+If the effort of changing models is too high, researchers should at least report an initial benchmarking with open models, which enables more objective comparisons.
+Open LLMs can either be hosted via cloud platforms such as *Hugging Face* or used locally via tools such as *ollama* or *LM Studio*.
+A replication package for papers using LLMs should include clear instructions that allow other researchers to reproduce the findings using open models.
+This practice enhances the credibility of the study and allows for independent verification of the results. 
+Researchers could, e.g., mention that ``results were compared with those obtained using Meta’s Code LLAMA, available on the Hugging Face platform'' and point to a replication package.
+
+We are aware that the definition of an "open" model is actively being discussed, and many open models are essentially only [``open weight''](https://doi.org/10.1038/d41586-024-02012-5).
+We consider the [*Open Source AI Definition*](https://opensource.org/ai/open-source-ai-definition) proposed by the *Open Source Initiative* (OSI) to be a first step towards defining true open-source models.
+
+## Use Human Validation for LLM Outputs
+
+Especially in studies where LLMs are used to support researchers, human validation should always be employed.
+While LLMs can automate many tasks, it is important to validate their outputs with human annotations, at least partially. For natural language processing tasks, a large-scale study has shown that LLMs have too large a variation in their results to be reliably used as a [substitution for human judges](https://arxiv.org/abs/2406.18403). Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs. Incorporating human judgment in the evaluation process adds a layer of quality control and increases the trustworthiness of the study’s findings, especially when explicitly reporting inter-rater reliability metrics. For instance, "A subset of 20% the LLM-generated annotations were reviewed and validated by experienced software engineers to ensure accuracy. An inter-rater reliability of 90% was reached."
+For studies using LLMs as annotators, the proposed process by [Ahmed et al.](https://arxiv.org/abs/2408.05534), which includes an initial few-shot learning and, given good results, the replacement of *one* human annotator by an LLM, might be a way forward.
+

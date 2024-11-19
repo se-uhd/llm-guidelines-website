@@ -1,0 +1,33 @@
+title: Guidelines for Empirical Studies involving LLMs
+description: >- # this means to ignore newlines until "theme:"
+  Community guidelines for empirical studies involving LLMs.
+theme: just-the-docs
+url: "https://llm-guidelines.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: ""
+favicon_ico: "/assets/images/favicon.ico"
+
+aux_links_new_tab: false
+aux_links:
+  GitHub:
+    - https://github.com/se-ubt/llm-guidelines
+
+search_enabled: true
+
+# Footer content
+# appears at the bottom of every page's main content
+
+footer_content: "Content provided under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en). Just the docs theme provided via an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a>"
+
+callouts:
+  deadlines:
+    title: Deadlines & Dates
+    color: red
+  dates:
+    title: Important Dates
+    color: red
+  important:
+    title: Important Information
+    color: blue
+
+sass:
+  quiet_deps: true # suppress deprecation warnings (https://github.com/jekyll/jekyll/issues/9686)

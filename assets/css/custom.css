@@ -1,0 +1,5 @@
+a.disabled {
+    color: inherit;
+    pointer-events: none;
+    text-decoration: none !important;
+}
