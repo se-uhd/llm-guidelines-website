@@ -24,13 +24,13 @@ Therefore, it is crucial that researchers clearly describe what the LLM contribu
 ## Report Model Version and Date
 
 It is also crucial for all types of studies to document the specific version of the LLM used in the study, along with the date when the experiments were conducted. LLMs are frequently updated, and different versions may produce varying results. 
-By providing this information, researchers enable others to reproduce the study under the same conditions. Different model providers have varying degrees of information. For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output. Therefore, stating ``We used gpt-4o-2024-08-0, system fingerprint fp\_6b68a8204b'' provides clarity on the exact model and runtime environment.\footnote{\url{https://platform.openai.com/docs/api-reference/chat/object}}
+By providing this information, researchers enable others to reproduce the study under the same conditions. Different model providers have varying degrees of information. For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output. Therefore, stating "We used gpt-4o-2024-08-0, system fingerprint fp_6b68a8204b" provides clarity on the [exact model and runtime environment](https://platform.openai.com/docs/api-reference/chat/object).
 
 ## Report Model Configuration
 
 Detailed documentation of the configuration and parameters used during any study is necessary for reproducibility. This includes settings such as the temperature that controls randomness, the maximum token length, and any other relevant parameters such as the consideration of historical context.
 Additionally, a thorough description of the hosting environment of the LLM or LLM-based tool should be provided, especially in studies focusing on performance or any time-sensitive measurement.
-For instance, researchers might report that ``the model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512,'' providing a clear overview of the experimental setup.
+For instance, researchers might report that "the model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512," providing a clear overview of the experimental setup.
 
 ## Report Prompts and their Development
 
@@ -53,9 +53,9 @@ If the effort of changing models is too high, researchers should at least report
 Open LLMs can either be hosted via cloud platforms such as *Hugging Face* or used locally via tools such as *ollama* or *LM Studio*.
 A replication package for papers using LLMs should include clear instructions that allow other researchers to reproduce the findings using open models.
 This practice enhances the credibility of the study and allows for independent verification of the results. 
-Researchers could, e.g., mention that ``results were compared with those obtained using Meta’s Code LLAMA, available on the Hugging Face platform'' and point to a replication package.
+Researchers could, e.g., mention that "results were compared with those obtained using Meta’s Code LLAMA, available on the Hugging Face platform" and point to a replication package.
 
-We are aware that the definition of an "open" model is actively being discussed, and many open models are essentially only [``open weight''](https://doi.org/10.1038/d41586-024-02012-5).
+We are aware that the definition of an "open" model is actively being discussed, and many open models are essentially only ["open weight"](https://doi.org/10.1038/d41586-024-02012-5).
 We consider the [*Open Source AI Definition*](https://opensource.org/ai/open-source-ai-definition) proposed by the *Open Source Initiative* (OSI) to be a first step towards defining true open-source models.
 
 ## Use Human Validation for LLM Outputs
