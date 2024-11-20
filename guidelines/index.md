@@ -35,7 +35,7 @@ Detailed documentation of the configuration and parameters used during any study
 Additionally, a thorough description of the hosting environment of the LLM or LLM-based tool should be provided, especially in studies focusing on performance or any time-sensitive measurement.
 For instance, researchers might report that "the model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512," providing a clear overview of the experimental setup.
 
-**TODO:** Experimenting with parameters
+**TODO:** Experimenting with parameters, finetuning (publish data)
 
 ## Report Prompts and their Development
 
