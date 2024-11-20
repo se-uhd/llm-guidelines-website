@@ -1,7 +1,7 @@
 ---
 layout: home
-title: Overview
-description: "Community guidelines for empirical studies involving LLMs"
+title: Home
+description: "Guidelines for Empirical Studies involving LLMs"
 nav_order: 1
 ---
 
