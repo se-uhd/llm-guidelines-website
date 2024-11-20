@@ -10,6 +10,8 @@ has_children: false
 The development of empirical guidelines for studies involving LLMs in software engineering is crucial for ensuring the validity and reproducibility of results. However, these guidelines must be tailored for different study types as they may pose unique challenges. Therefore, understanding the classification of these studies is essential for developing appropriate guidelines.
 We envision that a mature set of guidelines provides specific guidance for each of these study types, addressing their individual methodological idiosyncrasies.
 
+TODO: Make clear that the focus is on LLMs, not multimodel GenAI
+
 ## LLMs as Tools for Researchers in Empirical Studies
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies. They can automate various tasks such as data collection, preprocessing, and analysis. For example, LLMs can extract relevant information from large datasets, generate summaries of research papers, and even assist in writing literature reviews. This can significantly reduce the time and effort required by researchers, allowing them to focus on more complex aspects of their studies.
