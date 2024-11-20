@@ -12,3 +12,5 @@ has_children: false
 * Add final guidelines to [ACM SIGSOFT Empirical Standards](https://www2.sigsoft.org/EmpiricalStandards/docs/standards).
 * Reach out to open science chairs and PC chairs to advertise guidelines.
 * Reach out to [ReSA](https://www.researchsoft.org/).
+
+# Meeting Notes
