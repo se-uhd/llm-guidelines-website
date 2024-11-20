@@ -10,6 +10,8 @@ has_children: false
 While providing a comprehensive set of guidelines is beyond the scope of this position paper, we report a first set of guidelines based on a discussion session with other empiricism experts at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting as well as researchers at the 2nd Copenhagen Symposium on Human-Centered Software Engineering AI. 
 This paper is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
 
+**TODO:** Add references to "best practice" papers
+
 ## Declare LLM Usage and Role
 
 When conducting any kind of empirical study involving LLMs, it is essential to clearly declare the an LLM was used. This includes specifying the purpose of using the LLM in the study, the tasks it was applied to, and the expected outcomes. Transparency in the usage of LLMs helps in understanding the context and scope of the study, facilitating better interpretation and comparison of results.
@@ -75,3 +77,6 @@ For studies using LLMs as annotators, the proposed process by [Ahmed et al.](htt
 
 **TODO:** Number of repetitions, how were repetitions aggregated?, discuss limitations and mitigations
 
+## Metrics
+
+**TODO:** What are suitable metrics for evaluating LLMs? E.g., pass@k, acceptance rate of generated artifacts
