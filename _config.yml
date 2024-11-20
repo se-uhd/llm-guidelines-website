@@ -2,7 +2,7 @@ title: Guidelines for Empirical Studies involving LLMs
 description: >- # this means to ignore newlines until "theme:"
   Community guidelines for empirical studies involving LLMs.
 theme: just-the-docs
-url: "https://llm-guidelines.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://llm-guidelines.org" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: ""
 favicon_ico: "/assets/images/favicon.ico"
 
