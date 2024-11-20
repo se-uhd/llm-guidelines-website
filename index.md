@@ -17,7 +17,9 @@ We present a first taxonomy of [study types](/study-types) and corresponding [gu
 The current draft is based on a [position paper](https://arxiv.org/abs/2411.07668) as well as discussion during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd Copenhagen Symposium on Human-Centered Software Engineering AI.
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
-[Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan) and [Sebastian Baltes](https://empirical-software.engineering/)
+Workstream Leads:
+* [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan)
+* [Sebastian Baltes](https://empirical-software.engineering/)
 
 Team:
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/)
