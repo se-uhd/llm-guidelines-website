@@ -45,6 +45,10 @@ However, it is important that researchers are aware of LLMs' [inherent biases]({
 LLMs are being integrated into new tools designed to support software engineers in their daily tasks. These tools can include intelligent code editors that provide real-time code suggestions, automated documentation generators, and advanced debugging assistants. Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. By assessing the impact of LLM-powered tools, researchers can identify best practices and areas for further improvement.
 As an example, [Choudhuri et al.](https://dl.acm.org/doi/abs/10.1145/3597503.3639201) conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks.
 
+## LLMs for Synthesis
+
+**TODO:** E.g., literature reviews
+
 ## Studying LLM Usage
 
 Empirical studies can also focus on understanding how software engineers use LLMs in their workflows. This involves investigating the adoption, usage patterns, and perceived benefits and challenges of LLM-based tools. Surveys, interviews, and observational studies can provide insights into how LLMs are integrated into development processes, how they influence decision-making, and what factors affect their acceptance and effectiveness. Such studies can inform the design of more user-friendly and effective LLM-based tools.
