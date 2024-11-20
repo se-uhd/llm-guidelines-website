@@ -17,4 +17,15 @@ We present a first taxonomy of [study types](/study-types) and corresponding [gu
 The current draft is based on a [position paper](https://arxiv.org/abs/2411.07668) as well as discussion during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd Copenhagen Symposium on Human-Centered Software Engineering AI.
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
-[Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/), and [Sebastian Baltes](https://empirical-software.engineering/)
+[Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan) and [Sebastian Baltes](https://empirical-software.engineering/)
+
+Team:
+* [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/)
+* [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/)
+* [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/)
+* [Brian Fitzgerald](https://www.brian-fitzgerald.com)
+* [Christoph Treude](https://ctreude.ca)
+* [Mircea Lungu](https://pure.itu.dk/en/persons/mircea-lungu)
+* [Davide Fucci](https://dfucci.github.io)
+* [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php)
+* [Fabio Calefato](https://collab.di.uniba.it/fabio/)
