@@ -18,16 +18,17 @@ The current draft is based on a [position paper](https://arxiv.org/abs/2411.0766
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
 Workstream Leads:
-* [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan)
 * [Sebastian Baltes](https://empirical-software.engineering/)
+* [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan)
 
 Team:
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/)
-* [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/)
-* [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/)
-* [Brian Fitzgerald](https://www.brian-fitzgerald.com)
-* [Christoph Treude](https://ctreude.ca)
-* [Mircea Lungu](https://pure.itu.dk/en/persons/mircea-lungu)
-* [Davide Fucci](https://dfucci.github.io)
-* [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php)
 * [Fabio Calefato](https://collab.di.uniba.it/fabio/)
+* [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php)
+* [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/)
+* [Brian Fitzgerald](https://www.brian-fitzgerald.com)
+* [Davide Fucci](https://dfucci.github.io)
+* [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/)
+* [Stefano Lambiase](https://stefanolambiase.github.io)
+* [Mircea Lungu](https://pure.itu.dk/en/persons/mircea-lungu)
+* [Christoph Treude](https://ctreude.ca)
