@@ -8,7 +8,7 @@ favicon_ico: "/assets/images/favicon.ico"
 
 aux_links_new_tab: false
 aux_links:
-  GitHub:
+  <i class="fab fa-fw fa-github" aria-hidden="true"></i>&NonBreakingSpace;GitHub:
     - https://github.com/se-ubt/llm-guidelines
 
 search_enabled: true
