@@ -18,17 +18,18 @@ The current draft is based on a [position paper](https://arxiv.org/abs/2411.0766
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
 Workstream Leads:
-* [Sebastian Baltes](https://empirical-software.engineering/)
-* [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan)
+* [Sebastian Baltes](https://empirical-software.engineering/), University of Bayreuth (Germany)
+* [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), Technical University of Munich (Germany)
 
 Team:
-* [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/)
-* [Fabio Calefato](https://collab.di.uniba.it/fabio/)
-* [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php)
-* [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/)
-* [Brian Fitzgerald](https://www.brian-fitzgerald.com)
-* [Davide Fucci](https://dfucci.github.io)
-* [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/)
-* [Stefano Lambiase](https://stefanolambiase.github.io)
-* [Mircea Lungu](https://pure.itu.dk/en/persons/mircea-lungu)
-* [Christoph Treude](https://ctreude.ca)
+* [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), Technical University of Munich (Germany)
+* [Fabio Calefato](https://collab.di.uniba.it/fabio/), University of Bari (Italy)
+* [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php), University of Victoria (Canada)
+* [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/), University of Rome Tor Vergata (Italy)
+* [Brian Fitzgerald](https://www.brian-fitzgerald.com), Lero and University of Limerick (Ireland)
+* [Davide Fucci](https://dfucci.github.io), Blekinge Institute of Technology (Sweden)
+* [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
+* [Stefano Lambiase](https://stefanolambiase.github.io), University of Salerno (Italy)
+* [Mircea Lungu](https://pure.itu.dk/en/persons/mircea-lungu), IT University of Copenhagen (Denmark)
+* [Margaret-Anne Storey](https://www.margaretstorey.com), University of Victoria (Canada)
+* [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
