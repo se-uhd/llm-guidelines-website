@@ -47,7 +47,7 @@ Prompts also need to be reported when LLMs are integrated in new tools, especial
 For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
 If a systematic approach was used, this process should be described in detail.
 
-TODO: Provide transcripts of interactions and data dump of vector database if RAG was used
+**TODO:** Provide transcripts of interactions and data dump of vector database if RAG was used
 
 ## Use an Open LLM as a Baseline
 
