@@ -56,6 +56,8 @@ As an example, [Choudhuri et al.](https://dl.acm.org/doi/abs/10.1145/3597503.363
 Empirical studies can also focus on understanding how software engineers use LLMs in their workflows. This involves investigating the adoption, usage patterns, and perceived benefits and challenges of LLM-based tools. Surveys, interviews, and observational studies can provide insights into how LLMs are integrated into development processes, how they influence decision-making, and what factors affect their acceptance and effectiveness. Such studies can inform the design of more user-friendly and effective LLM-based tools.
 For example, [Khojah et al.](https://dl.acm.org/doi/10.1145/3660788) investigated the use of ChatGPT by professional software engineers in a week-long observational study.
 
+## Benchmarking LLMs for SE Tasks
+
 Another typical type of study focuses on benchmarking the LLM output quality on large-scale datasets.
 In software engineering, this may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from real-world projects or synthetically created SE datasets.
 In studies with generative models, the LLM output is often compared against a ground truth from the dataset using similarity metrics such as [ROUGE, BLEU, or METEOR](https://doi.org/10.1145/3695988).
