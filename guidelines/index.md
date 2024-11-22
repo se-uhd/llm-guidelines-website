@@ -14,6 +14,16 @@ This fraft is meant as a starting point for further discussions in the community
 
 **TODO:** Define scope of this guidelines (e.g., that they do not apply to using GenAI for proof-reading, etc.).
 
+1. [Declare LLM Usage and Role](#declare-llm-usage-and-role)
+2. [Report Model Version and Date](#report-model-version-and-date)
+3. [Report Model Configuration](#report-model-configuration)
+4. [Report Tool Architecture and Supplemental Data](#report-tool-architecture-and-supplemental-data)
+5. [Report Prompts, their Development, and Interaction Transcripts](report-prompts-their-development-and-interaction-transcripts)
+6. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
+7. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
+8. [Report Suitable Benchmarking Metrics](#report-suitable-benchmarking-metrics)
+9. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
+
 ## Declare LLM Usage and Role
 
 When conducting any kind of empirical study involving LLMs, it is essential to clearly declare the an LLM was used. This includes specifying the purpose of using the LLM in the study, the tasks it was applied to, and the expected outcomes. Transparency in the usage of LLMs helps in understanding the context and scope of the study, facilitating better interpretation and comparison of results.
@@ -24,12 +34,35 @@ GitHub Copilot uses the same model as well, and researchers can build their own 
 The infrastructure around the bare model can significantly contribute to the performance of a model in a certain task.
 Therefore, it is crucial that researchers clearly describe what the LLM contributes to the tool or method presented in a research paper.
 
-**TODO:** Architecture (e.g., usage of RAG)
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
 
 ## Report Model Version and Date
 
 It is also crucial for all types of studies to document the specific version of the LLM used in the study, along with the date when the experiments were conducted. LLMs are frequently updated, and different versions may produce varying results. 
 By providing this information, researchers enable others to reproduce the study under the same conditions. Different model providers have varying degrees of information. For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output. Therefore, stating "We used gpt-4o-2024-08-0, system fingerprint fp_6b68a8204b" provides clarity on the [exact model and runtime environment](https://platform.openai.com/docs/api-reference/chat/object).
+
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
 
 ## Report Model Configuration
 
@@ -37,9 +70,41 @@ Detailed documentation of the configuration and parameters used during any study
 Additionally, a thorough description of the hosting environment of the LLM or LLM-based tool should be provided, especially in studies focusing on performance or any time-sensitive measurement.
 For instance, researchers might report that "the model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512," providing a clear overview of the experimental setup.
 
-**TODO:** Experimenting with parameters, finetuning (publish data)
+**TODO:** Experimenting with parameters
 
-## Report Prompts and their Development
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
+
+## Report Tool Architecture and Supplemental Data
+
+**TODO:** Architecture (e.g., usage of RAG)
+**TODO:** data dump of vector database if used
+**TODO:** finetuning? if yes, how? also: publish data used for finetuning (if not confidential)
+
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
+
+## Report Prompts, their Development, and Interaction Transcripts
 
 Reporting the exact prompts used in the study is essential for transparency and reproducibility.
 Prompts can significantly influence the [output of LLMs](https://dl.acm.org/doi/full/10.1145/3643674), and sharing them allows other researchers to understand and reproduce the conditions of the study.
@@ -51,7 +116,39 @@ Prompts also need to be reported when LLMs are integrated in new tools, especial
 For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
 If a systematic approach was used, this process should be described in detail.
 
-**TODO:** Provide transcripts of interactions and data dump of vector database if RAG was used
+**TODO:** Provide transcripts of interactions
+
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
+
+## Use Human Validation for LLM Outputs
+
+Especially in studies where LLMs are used to support researchers, human validation should always be employed.
+While LLMs can automate many tasks, it is important to validate their outputs with human annotations, at least partially. For natural language processing tasks, a large-scale study has shown that LLMs have too large a variation in their results to be reliably used as a [substitution for human judges](https://arxiv.org/abs/2406.18403). Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs. Incorporating human judgment in the evaluation process adds a layer of quality control and increases the trustworthiness of the study’s findings, especially when explicitly reporting inter-rater reliability metrics. For instance, "A subset of 20% the LLM-generated annotations were reviewed and validated by experienced software engineers to ensure accuracy. An inter-rater reliability of 90% was reached."
+For studies using LLMs as annotators, the proposed process by [Ahmed et al.](https://arxiv.org/abs/2408.05534), which includes an initial few-shot learning and, given good results, the replacement of *one* human annotator by an LLM, might be a way forward.
+
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
 
 ## Use an Open LLM as a Baseline
 
@@ -69,16 +166,49 @@ We consider the [*Open Source AI Definition*](https://opensource.org/ai/open-sou
 
 **TODO:** Inter-model agreement, model confidence
 
-## Use Human Validation for LLM Outputs
+### Application
 
-Especially in studies where LLMs are used to support researchers, human validation should always be employed.
-While LLMs can automate many tasks, it is important to validate their outputs with human annotations, at least partially. For natural language processing tasks, a large-scale study has shown that LLMs have too large a variation in their results to be reliably used as a [substitution for human judges](https://arxiv.org/abs/2406.18403). Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs. Incorporating human judgment in the evaluation process adds a layer of quality control and increases the trustworthiness of the study’s findings, especially when explicitly reporting inter-rater reliability metrics. For instance, "A subset of 20% the LLM-generated annotations were reviewed and validated by experienced software engineers to ensure accuracy. An inter-rater reliability of 90% was reached."
-For studies using LLMs as annotators, the proposed process by [Ahmed et al.](https://arxiv.org/abs/2408.05534), which includes an initial few-shot learning and, given good results, the replacement of *one* human annotator by an LLM, might be a way forward.
+This recommendation applies to...
 
-## Metrics
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
+
+## Report Suitable Benchmarking Metrics
 
 **TODO:** What are suitable metrics for evaluating LLMs? E.g., pass@k, acceptance rate of generated artifacts, inter-model agreement
 
-## Limitations and Mitigations
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
+
+## Report Limitations and Mitigations
 
 **TODO:** Number of repetitions, how were repetitions aggregated?, discuss limitations and mitigations
+
+### Application
+
+This recommendation applies to...
+
+### Essential Attributes
+
+### Desirable Attributes
+
+### Extraordinary Attributes
+
+### Exemplars
+
