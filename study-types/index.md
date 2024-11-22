@@ -12,7 +12,17 @@ We envision that a mature set of guidelines provides specific guidance for each 
 
 **TODO:** Make clear that the focus is on LLMs, not multimodal GenAI
 
-## LLMs as Tools for Researchers in Empirical Studies
+1. [LLMs as Tools for Software Engineeering Researchers](#llms-as-tools-for-software-engineering-researchers)
+    1. [LLMs as Annotators](#llms-as-annotators)
+    2. [LLMs as Judges](#llms-as-judges)
+    3. [LLMs as Subjects](#llms-as-subjects)
+    4. [LLMs for Synthesis](#llms-for-synthesis)
+2. [LLMs as Tools for Software Engineers](#llms-as-tools-for-software-engineers)
+    1. [Studying LLM Usage in Software Engineering](#studying-llm-usage-in-software-engineering)
+    2. [LLMs for new Software Engineering Tools](#llms-for-new-software-engineering-tools)
+    3. [Benchmarking LLMs for Software Engineering Tasks](#benchmarking-llms-for-software-engineering-tasks)
+
+## LLMs as Tools for Software Engineeering Researchers
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies. They can automate various tasks such as data collection, preprocessing, and analysis. For example, LLMs can extract relevant information from large datasets, generate summaries of research papers, and even assist in writing literature reviews. This can significantly reduce the time and effort required by researchers, allowing them to focus on more complex aspects of their studies.
 
@@ -42,21 +52,23 @@ When relying on the judgment of LLMs, researchers have to make sure to build a r
 LLMs can be used as subjects in empirical studies to simulate human behavior and interactions. For example, researchers can use LLMs to generate responses in user studies, simulate developer interactions in collaborative coding environments, or model user feedback in software usability studies. This approach can provide valuable insights while reducing the need to recruit human participants, which can be time-consuming and costly. Additionally, using LLMs as subjects allows for controlled experiments with consistent and repeatable conditions.
 However, it is important that researchers are aware of LLMs' [inherent biases]({https://doi.org/10.1038/d41586-023-01689-4) and [limitations](https://link.springer.com/article/10.1007/s00146-023-01725-x) when using them as study subjects.
 
-## LLMs for New Tools Supporting Software Engineers
-
-LLMs are being integrated into new tools designed to support software engineers in their daily tasks. These tools can include intelligent code editors that provide real-time code suggestions, automated documentation generators, and advanced debugging assistants. Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. By assessing the impact of LLM-powered tools, researchers can identify best practices and areas for further improvement.
-As an example, [Choudhuri et al.](https://dl.acm.org/doi/abs/10.1145/3597503.3639201) conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks.
-
-## LLMs for Synthesis
+### LLMs for Synthesis
 
 **TODO:** E.g., literature reviews
 
-## Studying LLM Usage
+## LLMs as Tools for Software Engineers
+
+### Studying LLM Usage in Software Engineering
 
 Empirical studies can also focus on understanding how software engineers use LLMs in their workflows. This involves investigating the adoption, usage patterns, and perceived benefits and challenges of LLM-based tools. Surveys, interviews, and observational studies can provide insights into how LLMs are integrated into development processes, how they influence decision-making, and what factors affect their acceptance and effectiveness. Such studies can inform the design of more user-friendly and effective LLM-based tools.
 For example, [Khojah et al.](https://dl.acm.org/doi/10.1145/3660788) investigated the use of ChatGPT by professional software engineers in a week-long observational study.
 
-## Benchmarking LLMs for SE Tasks
+### LLMs for new Software Engineering Tools
+
+LLMs are being integrated into new tools designed to support software engineers in their daily tasks. These tools can include intelligent code editors that provide real-time code suggestions, automated documentation generators, and advanced debugging assistants. Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. By assessing the impact of LLM-powered tools, researchers can identify best practices and areas for further improvement.
+As an example, [Choudhuri et al.](https://dl.acm.org/doi/abs/10.1145/3597503.3639201) conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks.
+
+### Benchmarking LLMs for Software Engineering Tasks
 
 Another typical type of study focuses on benchmarking the LLM output quality on large-scale datasets.
 In software engineering, this may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from real-world projects or synthetically created SE datasets.
