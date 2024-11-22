@@ -7,8 +7,12 @@ has_children: false
 
 # Guidelines
 
-While providing a comprehensive set of guidelines is beyond the scope of this position paper, we report a first set of guidelines based on a discussion session with other empiricism experts at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting as well as researchers at the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/). 
-This paper is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
+This set of guidelines is currently a DRAFT and based on a discussion sessions with researchers at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting and at the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/). 
+This fraft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
+
+## Scope
+
+**TODO:** Define scope of this guidelines (e.g., that they do not apply to using GenAI for proof-reading, etc.).
 
 ## Declare LLM Usage and Role
 
