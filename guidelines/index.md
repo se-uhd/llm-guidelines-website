@@ -12,7 +12,11 @@ This fraft is meant as a starting point for further discussions in the community
 
 ## Scope
 
-**TODO:** Define scope of this guidelines (e.g., that they do not apply to using GenAI for proof-reading, etc.).
+As mentioned in the [study types](/stufy-types), we currently focus on large language models, that is, on natural language processing, and not on multimodal foundation models in general.
+
+**TODO:** Clarify scope of this guidelines (e.g., that they do not apply to using GenAI for proof-reading, etc.).
+
+## Overview
 
 1. [Declare LLM Usage and Role](#declare-llm-usage-and-role)
 2. [Report Model Version and Date](#report-model-version-and-date)
