@@ -7,10 +7,9 @@ has_children: false
 
 # Study Types
 
-The development of empirical guidelines for studies involving LLMs in software engineering is crucial for ensuring the validity and reproducibility of results. However, these guidelines must be tailored for different study types as they may pose unique challenges. Therefore, understanding the classification of these studies is essential for developing appropriate guidelines.
+The development of empirical guidelines for studies involving large language models (LLMs) in software engineering is crucial for ensuring the validity and reproducibility of results. However, these guidelines must be tailored for different study types as they may pose unique challenges. Therefore, understanding the classification of these studies is essential for developing appropriate guidelines.
 We envision that a mature set of guidelines provides specific guidance for each of these study types, addressing their individual methodological idiosyncrasies.
-
-**TODO:** Make clear that the focus is on LLMs, not multimodal GenAI
+Moreover, we currently focus on large language models, that is, on natural language processing. In the future, we might extend our focus to multimodal foundation models.
 
 1. [LLMs as Tools for Software Engineeering Researchers](#llms-as-tools-for-software-engineering-researchers)
     1. [LLMs as Annotators](#llms-as-annotators)
