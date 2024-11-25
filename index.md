@@ -31,6 +31,6 @@ Team:
 * [Davide Fucci](https://dfucci.github.io), Blekinge Institute of Technology (Sweden)
 * [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
 * [Stefano Lambiase](https://stefanolambiase.github.io), University of Salerno (Italy)
-* [Mircea Lungu](https://pure.itu.dk/en/persons/mircea-lungu), IT University of Copenhagen (Denmark)
+* [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
 * [Margaret-Anne Storey](https://www.margaretstorey.com), University of Victoria (Canada)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
