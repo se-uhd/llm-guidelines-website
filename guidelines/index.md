@@ -8,7 +8,32 @@ has_children: false
 # Guidelines
 
 This set of guidelines is currently a DRAFT and based on a discussion sessions with researchers at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting and at the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/). 
-This fraft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving large language models (LLMs).
+This draft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving large language models (LLMs).
+
+## Introduction
+
+In the short period since the release of ChatGPT in November 2022, large language models (LLMs) have changed the software engineering research landscape.
+While there are numerous opportunities to use LLMs for supporting research or software engineering tasks, solid science needs rigorous empirical evaluations.
+Such evaluations might explore the effectiveness, performance, and robustness of LLMs in different contexts, such as improving code quality, reducing development time, or supporting software documentation.
+However, it is often unclear how valid and reproducible results can be achieved with empirical studies involving LLMs - or what effect their usage has on the validity of empirical results.
+This uncertainty poses significant challenges for researchers aiming to draw reliable conclusions from empirical studies.
+
+One of the primary risks in creating unreproducible results stems from the variability in LLM performance due to differences in training data, model architecture, evaluation metrics, and the inherent non-determinism that those models possess.
+For example, slight changes in the training dataset or the hyperparameters can lead to significantly different outcomes, making it difficult to replicate studies.
+Additionally, the lack of standardized benchmarks and evaluation protocols further complicates the reproducibility of results.
+These issues highlight the need for clear guidelines and best practices to ensure that empirical studies with LLMs yield valid and reproducible results.
+
+There has been extensive work developing guidelines for conducting and reporting specific types of empirical studies such as controlled experiments (e.g., [Experimentation in Software Engineering](https://link.springer.com/book/10.1007/978-3-662-69306-3)) or [Guide to Advanced Empirical Software Engineering](https://link.springer.com/book/10.1007/978-1-84800-044-5)) or their replications (e.g., [A Procedure and Guidelines for Analyzing Groups of Software Engineering Replications](https://doi.org/10.1109/TSE.2019.2935720)).
+We believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducability.
+However, so far, there are no specific guidelines for conducting and assessing studies involving LLMs in software engineering research.
+
+For example, even if we know the specific version of an LLM used for an empirical study, the reported performance for the studied tasks can change over time, especially for commercial models that [evolve beyond version identifiers](https://arxiv.org/abs/2307.09009).
+Moreover, commercial providers do not guarantee the availability of old versions indefinitely.
+Besides versions, LLMs' performance widely varies depending on configured parameters such as temperature.
+Therefore, not reporting the parameter settings impacts the reproducibility of the research.
+
+Even for ``open'' models such as Llama, [we do not know](https://doi.org/10.1038/d41586-024-02012-5) how they were fine-tuned for specific tasks and what the exact training data was.
+For example, when evaluating LLMs' performance for certain programming tasks, it would be relevant to know whether the solution to a certain problem was part of the training data or not.
 
 ## Scope
 
@@ -27,8 +52,8 @@ However, in any domain where LLM usage is central aspect of the actual research 
 2. [Report Model Version and Date](#report-model-version-and-date)
 3. [Report Model Configuration](#report-model-configuration)
 4. [Report Tool Architecture and Supplemental Data](#report-tool-architecture-and-supplemental-data)
-5. [Report Prompts, their Development](report-prompts-their-development)
-6. [Report Full Interaction Transcripts](report-full-interaction-transcripts)
+5. [Report Prompts and their Development](#report-prompts-and-their-development)
+6. [Report Full Interaction Transcripts](#report-full-interaction-transcripts)
 7. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
 8. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
 9. [Report Suitable Benchmarking Metrics](#report-suitable-benchmarking-metrics)
@@ -114,11 +139,10 @@ This recommendation applies to...
 ### Exemplars
 
 
-## Report Prompts, their Development
+## Report Prompts and their Development
 
 Reporting the exact prompts used in the study is essential for transparency and reproducibility.
 Prompts can significantly influence the [output of LLMs](https://dl.acm.org/doi/full/10.1145/3643674), and sharing them allows other researchers to understand and reproduce the conditions of the study.
-
 
 For example, including the specific questions or tasks given to the LLM helps in assessing the validity of the results and comparing them with other studies.
 This is an example where different types of studies require different information.
@@ -130,14 +154,13 @@ If a systematic approach was used, this process should be described in detail.
 
 ## Report Full Interaction Transcripts
 
-This is important especially when reporting a study that uses a LLM that is used via a cloud API. Indeed, given that an cloud-based LLM service (e.g. ChatGPT v4) is an evolving system (minor upgrades of a major version are likely to be deployed frequently), reporting the prompts will not be enough for reproducibility. 
-
-If one uses an LLM locally, e.g. llama one could argue that restarting it always and always providing the same context might result in deterministic outcomes. However, this is not the case for all of the models (see [discussion about GPT 4](https://152334h.github.io/blog/non-determinism-in-gpt-4/)). 
-%% Note: you could make a given model version deterministic by fixing all the decoding parameters (e.g. the seed that is used for generations, other params, like temperature, etc.).  %%
-Moreover, even if a specific *locally run* and *open* LLM might be deterministic, there is no guarantee that the specific version that was used in the study in the first place will be available for the long term. 
-
-Thus, for complete transparency a researcher, should also report the answers generated by the LLM. In this sense, the way a LLM has to be treated is similar to the way a human participant in an interview should be treated, because both the human and the LLM might provide different answers if presented with the same *questions* at different times. The difference is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can.
-
+Reporting full interactions logs, that is all prompts and responses, is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrates LLMs via cloud APIs.
+Indeed, given that commercial LLMs and LLM-based tools are evolving systems (minor upgrades of a major version are likely to be [deployed frequently](https://arxiv.org/abs/2307.09009)) and that they [behave non-deterministically](https://152334h.github.io/blog/non-determinism-in-gpt-4/) even with a temperature of 0.0, reporting the prompts and model versions alone will not be enough to enable reproducibility.
+Even for models such as [Llama](https://www.llama.com/) that researchers can host and configure themselves, reaching complete determinism is challenging.
+While decoding strategies and parameters can be fixed (e.g. defining seeds, using deterministic decoding strategies, setting temperature to 0.0, etc.), non-determinism can also arise due to batching, input preprocessing, and floating point arithmetic on GPUs.
+Thus, for complete transparency, a researcher should report the answers generated by the LLM or LLM-based tool.
+In this sense, the way a LLM has to be treated is similar to the way a human participant in an interview should be treated, because both the human and the LLM might provide different answers if presented with the same *questions* at different times.
+The difference is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can.
 
 ### Application
 
