@@ -31,8 +31,7 @@ For example, even if we know the specific version of an LLM used for an empirica
 Moreover, commercial providers do not guarantee the availability of old versions indefinitely.
 Besides versions, LLMs' performance widely varies depending on configured parameters such as temperature.
 Therefore, not reporting the parameter settings impacts the reproducibility of the research.
-
-Even for ``open'' models such as Llama, [we do not know](https://doi.org/10.1038/d41586-024-02012-5) how they were fine-tuned for specific tasks and what the exact training data was.
+Even for *open* models such as Llama, [we do not know](https://doi.org/10.1038/d41586-024-02012-5) how they were fine-tuned for specific tasks and what the exact training data was.
 For example, when evaluating LLMs' performance for certain programming tasks, it would be relevant to know whether the solution to a certain problem was part of the training data or not.
 
 ## Scope
