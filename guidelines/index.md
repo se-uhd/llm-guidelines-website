@@ -24,11 +24,12 @@ Given the exponential growth in LLM usage across all research domains, it is use
 2. [Report Model Version and Date](#report-model-version-and-date)
 3. [Report Model Configuration](#report-model-configuration)
 4. [Report Tool Architecture and Supplemental Data](#report-tool-architecture-and-supplemental-data)
-5. [Report Prompts, their Development, and Interaction Transcripts](report-prompts-their-development-and-interaction-transcripts)
-6. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
-7. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
-8. [Report Suitable Benchmarking Metrics](#report-suitable-benchmarking-metrics)
-9. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
+5. [Report Prompts, their Development](report-prompts-their-development)
+6. [Report Full Interaction Transcripts](report-full-interaction-transcripts)
+7. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
+8. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
+9. [Report Suitable Benchmarking Metrics](#report-suitable-benchmarking-metrics)
+10. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
 
 ## Declare LLM Usage and Role
 
@@ -110,10 +111,12 @@ This recommendation applies to...
 ### Exemplars
 
 
-## Report Prompts, their Development, and Interaction Transcripts
+## Report Prompts, their Development
 
 Reporting the exact prompts used in the study is essential for transparency and reproducibility.
 Prompts can significantly influence the [output of LLMs](https://dl.acm.org/doi/full/10.1145/3643674), and sharing them allows other researchers to understand and reproduce the conditions of the study.
+
+
 For example, including the specific questions or tasks given to the LLM helps in assessing the validity of the results and comparing them with other studies.
 This is an example where different types of studies require different information.
 When studying LLM usage, the researchers ideally collect and publish the prompts written by the users (if confidentiality allows).
@@ -122,7 +125,13 @@ Prompts also need to be reported when LLMs are integrated in new tools, especial
 For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
 If a systematic approach was used, this process should be described in detail.
 
-**TODO:** Provide transcripts of interactions
+## Report Full Interaction Transcripts
+
+  
+Given that an LLM is an evolving system, reporting the prompts will not be enough for reproducibility. Indeed, different versions of a given LLM are likely to return different answers and even the same version is not guaranteed to provide deterministic answers.
+
+Thus, for complete transparency a researcher, should also report the LLM answers. In this sense, the way a LLM has to be treated is similar to the way a human participant should be treated. Both might provide different answers if asked the same questions at different times. The difference is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can.
+
 
 ### Application
 
