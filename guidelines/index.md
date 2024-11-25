@@ -8,15 +8,18 @@ has_children: false
 # Guidelines
 
 This set of guidelines is currently a DRAFT and based on a discussion sessions with researchers at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting and at the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/). 
-This fraft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
+This fraft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving large language models (LLMs).
 
 ## Scope
 
-As mentioned in the [study types](/stufy-types), we currently focus on large language models, that is, on natural language processing, and not on multimodal foundation models in general.
-
-~~**TODO:** Clarify scope of this guidelines (e.g., that they do not apply to using GenAI for proof-reading, etc.).~~
-
-Given the exponential growth in LLM usage across all research domains, it is useful to clarify the scope of study types to which these guidelines apply. LLMs are widely used to support several aspects of the overall research process – from fairly simple tasks such as proof-reading, spell-checking, text translation though to more significant activiies such as data coding and synthesis of literature reviews. These activities are research-topic agnostic. At best, researchers might be asked at the time of paper submission to clarify the role played by LLMs in paper preparation. It is clear that many of the specific guidelines suggested here are not all that relevant for the above categories of research-agnostic LLM usage. However, when LLM usage is more research-centric, specifically in the context of software engineering, these guidelines should apply. Indeed, in any domain where LLM usage is central aspect of the actual research topic itself, these guidelines would be a good starting point.
+Given the exponential growth in LLM usage across all research domains, it is useful to clarify the scope of study types to which these guidelines apply.
+First, as mentioned in the [study types](/stufy-types), we currently focus on large language models, that is, on natural language processing, and not on multimodal foundation models in general.
+Second, LLMs are already widely used to support several aspects of the overall research process – from fairly simple tasks such as proof-reading, spell-checking, text translation though to more significant activities such as data coding and synthesis of literature reviews.
+Simpler activities that are closely related to authorship as, for instance, documented in the [ACM Policy on Authorship](https://www.acm.org/publications/policies/frequently-asked-questions) are research-topic agnostic.
+At best, researchers might be asked at the time of paper submission to clarify the role played by LLMs in paper preparation.
+It is clear that many of the guidelines suggested here are more specific than such research-agnostic LLM usage.
+The scope of our guidelines focuses on LLM usage that is more research-centric, specifically in the context of software engineering.
+However, in any domain where LLM usage is central aspect of the actual research topic itself, the guidelines would be a good starting point.
 
 ## Overview
 
