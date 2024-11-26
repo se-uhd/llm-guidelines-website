@@ -22,6 +22,7 @@ Workstream Leads:
 * [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), Technical University of Munich (Germany)
 
 Team:
+* [Paris Avgeriou](https://www.cs.rug.nl/~paris/), University of Groningen (Netherlands)
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), Technical University of Munich (Germany)
 * [Lukas Böhme](https://www.hpi.uni-potsdam.de/hirschfeld/people/boehme/index.html), HPI, University of Potsdam (Germany)
 * [Fabio Calefato](https://collab.di.uniba.it/fabio/), University of Bari (Italy)
