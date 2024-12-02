@@ -26,6 +26,7 @@ Team:
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), Technical University of Munich (Germany)
 * [Lukas Böhme](https://www.hpi.uni-potsdam.de/hirschfeld/people/boehme/index.html), HPI, University of Potsdam (Germany)
 * [Fabio Calefato](https://collab.di.uniba.it/fabio/), University of Bari (Italy)
+* [Chunyang Chen](https://chunyang-chen.github.io/), Technical University of Munich (Germany)
 * [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php), University of Victoria (Canada)
 * [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/), University of Rome Tor Vergata (Italy)
 * [Brian Fitzgerald](https://www.brian-fitzgerald.com), Lero and University of Limerick (Ireland)
