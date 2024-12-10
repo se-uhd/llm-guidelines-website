@@ -21,7 +21,7 @@ Additionally, the lack of standardized benchmarks and evaluation protocols furth
 These issues highlight the need for clear guidelines and best practices to ensure that empirical studies with LLMs yield valid and reproducible results.
 
 There has been extensive work developing guidelines for conducting and reporting specific types of empirical studies such as controlled experiments (e.g., [Experimentation in Software Engineering](https://link.springer.com/book/10.1007/978-3-662-69306-3)) or [Guide to Advanced Empirical Software Engineering](https://link.springer.com/book/10.1007/978-1-84800-044-5)) or their replications (e.g., [A Procedure and Guidelines for Analyzing Groups of Software Engineering Replications](https://doi.org/10.1109/TSE.2019.2935720)).
-We believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducability.
+We believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducibility.
 However, so far, there are no specific guidelines for conducting and assessing studies involving LLMs in software engineering research.
 
 For example, even if we know the specific version of an LLM used for an empirical study, the reported performance for the studied tasks can change over time, especially for commercial models that [evolve beyond version identifiers](https://arxiv.org/abs/2307.09009).
