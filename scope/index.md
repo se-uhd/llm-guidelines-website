@@ -34,7 +34,7 @@ For example, when evaluating LLMs' performance for certain programming tasks, it
 ## Scope
 
 Given the exponential growth in LLM usage across all research domains, it is useful to clarify the scope of study types to which these guidelines apply.
-First, as mentioned in the [study types](/stufy-types), we currently focus on large language models, that is, on natural language processing, and not on multimodal foundation models in general.
+First, as mentioned in the [study types](/study-types), we currently focus on large language models, that is, on natural language processing, and not on multimodal foundation models in general.
 Second, LLMs are already widely used to support several aspects of the overall research process – from fairly simple tasks such as proof-reading, spell-checking, text translation though to more significant activities such as data coding and synthesis of literature reviews.
 Simpler activities that are closely related to authorship as, for instance, documented in the [ACM Policy on Authorship](https://www.acm.org/publications/policies/frequently-asked-questions) are research-topic agnostic.
 At best, researchers might be asked at the time of paper submission to clarify the role played by LLMs in paper preparation.
