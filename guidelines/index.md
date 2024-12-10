@@ -204,6 +204,7 @@ This recommendation applies to...
 
 * [HumanEval](https://github.com/openai/human-eval)
 * [REPOCOD](https://huggingface.co/datasets/lt-asset/REPOCOD)
+* [CoderVal](https://github.com/CoderEval/CoderEval)
 * ...
 
 ### Application
