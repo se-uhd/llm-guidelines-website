@@ -45,7 +45,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
 ## Report Model Version and Date
 
 It is also crucial for all types of studies to document the specific version of the LLM used in the study, along with the date when the experiments were conducted. LLMs are frequently updated, and different versions may produce varying results. 
@@ -62,8 +61,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
 ## Report Model Configuration
 
 Detailed documentation of the configuration and parameters used during any study is necessary for reproducibility. This includes settings such as the temperature that controls randomness, the maximum token length, and any other relevant parameters such as the consideration of historical context.
@@ -83,8 +80,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
 ## Report Tool Architecture and Supplemental Data
 
 **TODO:** Architecture (e.g., usage of RAG, agent-based architecture, etc.)
@@ -102,9 +97,7 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
-## Report Prompts and their Development
+# Report Prompts and their Development
 
 Reporting the exact prompts used in the study is essential for transparency and reproducibility.
 Prompts can significantly influence the [output of LLMs](https://dl.acm.org/doi/full/10.1145/3643674), and sharing them allows other researchers to understand and reproduce the conditions of the study.
@@ -116,7 +109,6 @@ Otherwise, summaries and examples can be provided.
 Prompts also need to be reported when LLMs are integrated into new tools, especially if study participants were able to formulate (parts of) the prompts.
 For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
 If a systematic approach was used, this process should be described in detail.
-
 ## Report Interaction Logs
 
 Reporting full interaction logs, that is all prompts and responses, is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs.
@@ -138,8 +130,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
 ## Use Human Validation for LLM Outputs
 
 Especially in studies where LLMs are used to support researchers, human validation should always be employed.
@@ -157,8 +147,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
 ## Use an Open LLM as a Baseline
 
 To ensure the reproducibility of results, we recommended findings be reported with an open LLM as a baseline.
@@ -186,8 +174,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
 ## Report Suitable Benchmarking Metrics
 
 **TODO:** What are suitable metrics and benchmarks for evaluating LLMs?
@@ -218,8 +204,6 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-
-
 ## Report Limitations and Mitigations
 
 **TODO:** Number of repetitions, how were repetitions aggregated?, discuss limitations and mitigations
@@ -235,4 +219,3 @@ This recommendation applies to...
 ### Extraordinary Attributes
 
 ### Exemplars
-

@@ -29,5 +29,4 @@ callouts:
     title: Important Information
     color: blue
 
-sass:
-  quiet_deps: true # suppress deprecation warnings (https://github.com/jekyll/jekyll/issues/9686)
+exclude: ["merge-sources.sh", "**/_sources/*"]

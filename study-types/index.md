@@ -56,7 +56,6 @@ However, it is important that researchers are aware of LLMs' [inherent biases]({
 ### LLMs for Synthesis
 
 **TODO:** E.g., literature reviews
-
 ## LLMs as Tools for Software Engineers
 
 ### Studying LLM Usage in Software Engineering
