@@ -1,20 +1,20 @@
 ---
 layout: home
 title: Home
-description: "Guidelines for Empirical Studies involving LLMs"
+description: "Guidelines for Empirical Studies in Software Engineering involving LLMs"
 nav_order: 1
 ---
 
-# Evaluation Guidelines for Empirical Studies involving LLMs
+# LLM Guidelines for SE 
 {: .fs-9 }
 
-Towards community guidlines for empirical studies in software engineering involving LLMs.
+Evaluation Guidelines for Empirical Studies in Software Engineering involving LLMs
 {: .fs-6 .fw-300 }
 
 This website hosts a DRAFT of community guidlines for empirical studies in software engineering involving LLMs.
 Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM study types](/study-types) and corresponding [guidelines](/guidelines).
 
-The current draft is based on a [position paper](https://arxiv.org/abs/2411.07668) as well as discussion during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
+This project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussion during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
 Workstream Leads:
