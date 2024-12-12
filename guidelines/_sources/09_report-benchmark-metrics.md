@@ -2,6 +2,8 @@
 
 **TODO:** What are suitable metrics and benchmarks for evaluating LLMs?
 
+A good starting point could be [this paper](https://arxiv.org/pdf/2308.10620).
+
 ### Metrics
 
 * pass@k (**TODO:** What are common values for k? Who came up with that metric?), but also others such as [CodeBLEU](https://arxiv.org/pdf/2009.10297), [CrystalBLEU](https://software-lab.org/publications/ase2022_CrystalBLEU.pdf), etc.
