@@ -14,14 +14,6 @@ We consider the [*Open Source AI Definition*](https://opensource.org/ai/open-sou
 
 **TODO:** Inter-model agreement, model confidence
 
-### Application
+### Recommendations per Study Type
 
-This recommendation applies to...
-
-### Essential Attributes
-
-### Desirable Attributes
-
-### Extraordinary Attributes
-
-### Exemplars
+**TODO:** Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119)).
