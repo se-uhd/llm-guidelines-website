@@ -1,4 +1,4 @@
-# Report Prompts and their Development
+## Report Prompts and their Development
 
 Reporting the exact prompts used in the study is essential for transparency and reproducibility.
 Prompts can significantly influence the [output of LLMs](https://dl.acm.org/doi/full/10.1145/3643674), and sharing them allows other researchers to understand and reproduce the conditions of the study.
