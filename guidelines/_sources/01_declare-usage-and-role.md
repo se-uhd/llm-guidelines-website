@@ -8,14 +8,6 @@ GitHub Copilot uses the same model as well, and researchers can build their own 
 The infrastructure around the bare model can significantly contribute to the performance of a model in a certain task.
 Therefore, it is crucial that researchers clearly describe what the LLM contributes to the tool or method presented in a research paper.
 
-### Application
+### Recommendations per Study Type
 
-This recommendation applies to...
-
-### Essential Attributes
-
-### Desirable Attributes
-
-### Extraordinary Attributes
-
-### Exemplars
+**TODO:** Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119)).
