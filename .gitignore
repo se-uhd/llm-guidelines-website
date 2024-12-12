@@ -13,3 +13,5 @@ Gemfile.lock
 node_modules
 npm-debug.log*
 .obsidian*
+guidelines/index.md  # automatically generated
+study-types/index.md  # automatically generated
