@@ -8,4 +8,4 @@ updates:
       - dependency-type: direct
     ignore:
       - dependency-name: "sass-embedded"
-        versions: ["~> 1.78.0"]  # prevent deprecation warnings https://github.com/jekyll/jekyll/issues/9686#issuecomment-2362850868
+        versions: [">= 1.79.0"]  # prevent deprecation warnings https://github.com/jekyll/jekyll/issues/9686#issuecomment-2362850868
