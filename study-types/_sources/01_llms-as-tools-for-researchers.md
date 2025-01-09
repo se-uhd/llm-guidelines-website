@@ -1,4 +1,4 @@
-## LLMs as Tools for Software Engineeering Researchers
+## LLMs as Tools for Software Engineering Researchers
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies. They can automate various tasks such as data collection, preprocessing, and analysis. For example, LLMs can extract relevant information from large datasets, generate summaries of research papers, and even assist in writing literature reviews. This can significantly reduce the time and effort required by researchers, allowing them to focus on more complex aspects of their studies.
 
