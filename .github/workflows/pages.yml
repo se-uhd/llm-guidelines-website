@@ -40,8 +40,14 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Merge Markdown Sources
-        run: ./merge-sources.sh
+      - name: Install texlive and pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install texlive
+          wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb
+          sudo dpkg -i pandoc-3.6.1-1-amd64.deb
+      - name: Convert and merge source files
+        run: ./convert-and-merge-sources.sh
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"

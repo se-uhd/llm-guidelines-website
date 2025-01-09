@@ -7,7 +7,7 @@ has_children: false
 
 # Study Types
 
-This list of study types is currently a DRAFT and based on a discussion sessions with researchers at the 2024 International Software Engineering Research Network (ISERN) meeting and at the 2nd Copenhagen Symposium on Human-Centered Software Engineering AI. 
+This list of study types is currently a DRAFT and based on a discussion sessions with researchers at the 2024 International Software Engineering Research Network (ISERN) meeting and at the 2nd Copenhagen Symposium on Human-Centered Software Engineering AI.
 
 The development of empirical guidelines for studies involving large language models (LLMs) in software engineering is crucial for ensuring the validity and reproducibility of results. However, these guidelines must be tailored for different study types as they may pose unique challenges. Therefore, understanding the classification of these studies is essential for developing appropriate guidelines.
 We envision that a mature set of guidelines provides specific guidance for each of these study types, addressing their individual methodological idiosyncrasies.

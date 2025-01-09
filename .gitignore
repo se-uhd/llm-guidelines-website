@@ -16,3 +16,4 @@ npm-debug.log*
 # automatically merged files (see merge-sources.sh)
 guidelines/index.md
 study-types/index.md
+study-types/_sources/*.md

@@ -29,4 +29,4 @@ callouts:
     title: Important Information
     color: blue
 
-exclude: ["merge-sources.sh", "**/_sources/*"]
+exclude: ["merge-sources.sh", "**/_sources/*", "literature.bib", "ieee.csl"]
