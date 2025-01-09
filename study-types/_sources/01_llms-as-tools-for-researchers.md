@@ -26,7 +26,7 @@ When relying on the judgment of LLMs, researchers have to make sure to build a r
 ### LLMs as Subjects
 
 LLMs can be used as subjects in empirical studies to simulate human behavior and interactions. For example, researchers can use LLMs to generate responses in user studies, simulate developer interactions in collaborative coding environments, or model user feedback in software usability studies. This approach can provide valuable insights while reducing the need to recruit human participants, which can be time-consuming and costly. Additionally, using LLMs as subjects allows for controlled experiments with consistent and repeatable conditions.
-However, it is important that researchers are aware of LLMs' [inherent biases]({https://doi.org/10.1038/d41586-023-01689-4) and [limitations](https://link.springer.com/article/10.1007/s00146-023-01725-x) when using them as study subjects.
+However, it is important that researchers are aware of LLMs' [inherent biases](https://doi.org/10.1038/d41586-023-01689-4) and [limitations](https://link.springer.com/article/10.1007/s00146-023-01725-x) when using them as study subjects.
 
 ### LLMs for Synthesis
 
