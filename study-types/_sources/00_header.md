@@ -18,8 +18,10 @@ Moreover, we currently focus on large language models, that is, on natural langu
     2. [LLMs as Judges](#llms-as-judges)
     3. [LLMs as Subjects](#llms-as-subjects)
     4. [LLMs for Synthesis](#llms-for-synthesis)
+    5. [References](#references)
 2. [LLMs as Tools for Software Engineers](#llms-as-tools-for-software-engineers)
     1. [Studying LLM Usage in Software Engineering](#studying-llm-usage-in-software-engineering)
     2. [LLMs for new Software Engineering Tools](#llms-for-new-software-engineering-tools)
     3. [Benchmarking LLMs for Software Engineering Tasks](#benchmarking-llms-for-software-engineering-tasks)
+    4. [References](#references)
 
