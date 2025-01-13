@@ -10,6 +10,7 @@ convert_tex_to_md() {
 }
 
 convert_tex_to_md "study-types/_sources"
+convert_tex_to_md "guidelines/_sources"
 
 cat guidelines/_sources/*.md > guidelines/index.md
 cat study-types/_sources/*.md > study-types/index.md

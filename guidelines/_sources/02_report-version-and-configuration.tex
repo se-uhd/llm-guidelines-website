@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\usepackage{hyperref}
+
+\begin{document}
+
+\subsection{Report Model Version and Configuration}
+
+\subsubsection{Context}
+
+LLMs are frequently updated, and different versions may produce varying results.
+Moreover, the model configuration and parameters influence the output generation of the models.
+
+\subsubsection{Recommendations}
+
+It is crucial to document the specific version of the LLM used in the study, along with the date when the experiments were conducted, and the exact configuration being used.
+Furthermore, detailed documentation of the configuration and parameters used during the study is necessary for reproducibility. 
+Our recommendations is to report:
+Additionally, a thorough description of the hosting environment of the LLM or LLM-based tool should be provided, especially in studies focusing on performance or any time-sensitive measurement.
+
+\begin{itemize}
+\item Model name
+\item Model version
+\item The maximum token length for prompts.
+\item The configured temperature that controls randomness, and all other relevant parameters that affect output generation.
+\item Whether historical context was considered when generating responses.
+\end{itemize}
+
+\subsubsection{Example}
+
+For an OpenAI model, researchers might report that "A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
+However, there are also related challenges (see section below).
+
+\textbf{TODO:} Talk about local or self-hosted models as well.
+
+\subsubsection{Benefits}
+
+By providing this information, researchers enable others to reproduce the study under the same or similar conditions.
+
+\subsubsection{Challenges}
+
+Different model providers and modes of operating the models allow for varying degrees of information.
+For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output.
+However, the fingerprint is indeed just intended to detect changes to the model or its configuration.
+As a user, one cannot go back to a certain fingerprint.
+As a beta feature, OpenAI also lets users set a seed parameter to receive ``(mostly) consistent output''~\cite{OpenAI23}.
+However, the seed value does not allow for full reproducibility and the fingerprint changes frequently. 
+
+\textbf{TODO:} Also ``open'' models come with challenges in terms of reproducibility (\url{https://github.com/ollama/ollama/issues/5321}).
+
+\subsubsection{Study Types}
+
+\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
+
+\textbf{TODO:} I guess when studying the usage of a tool such as ChatGPT or Copilot, it might not be possible to report all of this?
+
+\subsubsection{References}
+
+\bibliographystyle{plain}
+\bibliography{../../literature.bib}
+
+\end{document}

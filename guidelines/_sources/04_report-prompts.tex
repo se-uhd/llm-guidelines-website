@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\usepackage{hyperref}
+
+\begin{document}
+
+\subsection{Report Prompts and their Development}
+
+\subsubsection{Context}
+
+Prompts can significantly influence the [output of LLMs~\cite{DBLP:journals/tosem/LiuLWTLLL24}, and sharing them allows other researchers to understand and reproduce the conditions of the study.
+
+\textbf{TODO:} Architecture (e.g., usage of RAG, agent-based architecture, etc.)
+
+\textbf{TODO:} data dump of vector database if used
+
+\textbf{TODO:} finetuning? if yes, how? also: publish data used for finetuning (if not confidential)
+
+\subsubsection{Recommendations}
+
+Reporting the exact prompts used in the study is essential for transparency and reproducibility.
+For example, including the specific questions or tasks given to the LLM helps in assessing the validity of the results and comparing them with other studies.
+This is an example where different types of studies require different information.
+When studying LLM usage, the researchers ideally collect and publish the prompts written by the users (if confidentiality allows).
+Otherwise, summaries and examples can be provided.
+Prompts also need to be reported when LLMs are integrated into new tools, especially if study participants were able to formulate (parts of) the prompts.
+For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
+If a systematic approach was used, this process should be described in detail.
+
+\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
+
+\subsubsection{Example}
+
+\textbf{TODO}
+
+\subsubsection{Benefits}
+
+\textbf{TODO}
+
+\subsubsection{Challenges}
+
+\textbf{TODO}
+
+\subsubsection{References}
+
+\bibliographystyle{plain}
+\bibliography{../../literature.bib}
+
+\end{document}

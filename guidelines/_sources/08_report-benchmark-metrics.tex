@@ -1,0 +1,52 @@
+\documentclass[11pt]{article}
+\usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\usepackage{hyperref}
+
+\begin{document}
+
+\subsection{Report Suitable Benchmarking Metrics}
+
+\subsubsection{Context}
+
+\textbf{TODO}
+
+\subsubsection{Recommendations}
+
+\textbf{TODO:} What are suitable metrics and benchmarks for evaluating LLMs? A good starting point could be this paper~\cite{10.1145/3695988}.
+
+\begin{enumerate}
+\item pass@k (\textbf{TODO:} What are common values for k? Who came up with that metric?), but also others such as CodeBLEU, etc.
+\item If a tool is analyzed, the acceptance rate of generated artifacts could be interesting (how many artifacts were accepted/rejected by the user)
+\item Inter-model-agreement (related to section on open LLM as baseline): Ask different LLMs or differently considered LLMs and determine their agreement 
+\item ...
+\end{enumerate}
+
+\textbf{TODO:} Maybe something along the lines of using different benchmarks? Being aware of their biases (e.g., focus on a particular programming language such as Python)?
+
+\begin{enumerate}
+\item HumanEval \url{https://github.com/openai/human-eval}
+\item REPOCOD \url{https://huggingface.co/datasets/lt-asset/REPOCOD}
+\item CoderEval \url{https://github.com/CoderEval/CoderEval}
+\item ...
+\end{enumerate}
+
+\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
+
+\subsubsection{Example}
+
+\textbf{TODO}
+
+\subsubsection{Benefits}
+
+\textbf{TODO}
+
+\subsubsection{Challenges}
+
+\textbf{TODO}
+
+\subsubsection{References}
+
+\bibliographystyle{plain}
+\bibliography{../../literature.bib}
+
+\end{document}
