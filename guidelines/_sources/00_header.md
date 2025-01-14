@@ -22,6 +22,6 @@ The wording of the recommendations follows [RFC 2119](https://www.rfc-editor.org
 5. [Report Interaction Logs](#report-interaction-logs)
 6. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
 7. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
-8. [Report Suitable Benchmarking Metrics](#report-suitable-benchmarking-metrics)
+8. [Report Suitable Baselines, Benchmarks, and Metrics](#report-suitable-baselines-benchmarks-and-metrics)
 9. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
 
