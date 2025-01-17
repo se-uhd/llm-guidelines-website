@@ -22,31 +22,27 @@ LLMs can be used to augment or even replace human annotations, provide suggestio
 \emph{Example:} For example, in a study analyzing code changes in version control systems, researchers may need to categorize each individual change into predefined categories.
 For that, they may use LLMs to analyze commit messages and categorize them using labels such as bug fixes, feature additions, or refactorings, based on a short description of each label.
 
-\emph{Promises:} Recent research demonstrates several key advantages of using LLMs as annotators. 
+\emph{Promises:} Recent research demonstrates several key advantages of using LLMs as annotators, which can be organized into the following categories:
+
 \begin{itemize}
-    \item  LLM-based annotation can dramatically reduce costs compared to human labeling, with studies showing cost reductions of 50-96\% across various natural language tasks~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
-    \item LLMs can achieve comparable or even superior performance to crowd workers -- for instance, ChatGPT's accuracy exceeded that of crowd workers by approximately 25\% on average across multiple annotation tasks~\cite{DBLP:journals/corr/abs-2303-15056}. 
-    \item LLMs demonstrate remarkably high intercoder agreement, surpassing both crowd workers and trained annotators~\cite{DBLP:journals/corr/abs-2303-15056}. 
-    \item Models trained on LLM-generated labels can sometimes outperform the LLM itself on specific classification tasks, suggesting potential for bootstrapping improved performance~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
-    \item LLMs can generate explanations alongside their annotations, which can help verify the quality of labels and assist humans in understanding the classification decisions~\cite{DBLP:conf/chi/Wang0RMM24}. 
-    \item Lightweight classifiers trained on LLM-generated labels can achieve comparable or better performance than using LLMs directly as classifiers, while being more efficient and manageable at scale~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}. 
-    \item Hybrid approaches combining LLM and human annotations can achieve even better results than either approach alone~\cite{DBLP:conf/emnlp/WangLXZZ21}.
-    \item Comprehensive evaluations demonstrate ChatGPT's potential as a general-purpose annotator, achieving particularly strong performance in sentiment analysis (64.9\% accuracy) and in detecting responses that challenge hate speech (0.791 precision for counterspeech detection)~\cite{DBLP:journals/corr/abs-2304-10145}.
+    \item \textbf{Cost-Effectiveness and Efficiency:} LLM-based annotation dramatically reduces costs compared to human labeling, with studies showing cost reductions of 50-96\% across various natural language tasks~\cite{DBLP:conf/emnlp/WangLXZZ21}. This efficiency can be further enhanced through lightweight classifiers trained on LLM-generated labels, which achieve comparable or better performance than direct LLM classification while being more manageable at scale~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}.
+
+    \item \textbf{Performance and Accuracy Benefits:} LLMs consistently demonstrate strong performance, with ChatGPT's accuracy exceeding crowd workers by approximately 25\% on average~\cite{DBLP:journals/corr/abs-2303-15056} and achieving particularly impressive results in specific tasks such as sentiment analysis (64.9\% accuracy) and counterspeech detection (0.791 precision)~\cite{DBLP:journals/corr/abs-2304-10145}. They also show remarkably high intercoder agreement, surpassing both crowd workers and trained annotators~\cite{DBLP:journals/corr/abs-2303-15056}. Notably, models trained on LLM-generated labels can sometimes outperform the LLM itself~\cite{DBLP:conf/emnlp/WangLXZZ21}.
+
+    \item \textbf{Enhanced Functionality:} LLMs offer additional benefits beyond basic annotation, including the generation of explanations alongside their annotations to help verify label quality and assist human understanding~\cite{DBLP:conf/chi/Wang0RMM24}. Their versatility enables effective hybrid approaches, where combining LLM and human annotations achieves better results than either approach alone~\cite{DBLP:conf/emnlp/WangLXZZ21}.
 \end{itemize}
 
-\emph{Perils:} Several important challenges and limitations must also be considered. 
+\emph{Perils:} Several important challenges and limitations must also be considered, which can be grouped into the following categories:
+
 \begin{itemize}
-    \item While LLMs can be effective annotators, their performance varies significantly across tasks and can be particularly unreliable for complex or nuanced annotations~\cite{DBLP:conf/www/HuangKA23a,DBLP:conf/chi/Wang0RMM24}. 
-    \item LLMs can affect human judgment in annotation tasks -- research shows that when LLM labels are incorrect, human annotators perform worse than without any LLM assistance~\cite{DBLP:conf/www/HuangKA23a}. 
-    \item LLMs tend to be overconfident in their predictions, requiring careful verification of their outputs~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}. 
-    \item The quality of LLM-generated explanations significantly impacts human annotators' performance and satisfaction, with poor-quality explanations potentially hindering rather than helping the annotation process~\cite{DBLP:conf/chi/Wang0RMM24}
-    \item While cost-effective overall, LLM annotation still incurs per-token charges that must be carefully managed, especially for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
-    \item Researchers note that LLMs are not yet reliable enough for high-stakes labeling tasks, such as identifying toxic language, and are better suited for low-stakes applications~\cite{DBLP:conf/chi/Wang0RMM24}.
-    \item Significant performance inconsistencies for post-training events and complex tasks, with ChatGPT showing notable disparities in performance across different label categories and struggling with newer topics such as the Russo-Ukrainian conflict sentiment analysis~\cite{DBLP:journals/corr/abs-2304-10145}.
-    \item Systematic biases in label assignment have been observed, with LLMs sometimes showing a tendency to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}.
+    \item \textbf{Performance and Reliability Issues:} LLMs show significant variability in annotation quality across different tasks~\cite{DBLP:conf/www/HuangKA23a,DBLP:conf/chi/Wang0RMM24}, with particular challenges in complex tasks and post-training events. They are especially unreliable for high-stakes labeling tasks~\cite{DBLP:conf/chi/Wang0RMM24}, demonstrating notable performance disparities across different label categories~\cite{DBLP:journals/corr/abs-2304-10145}.
+
+    \item \textbf{Human-LLM Interaction Challenges:} LLMs can negatively impact human judgment when their labels are incorrect~\cite{DBLP:conf/www/HuangKA23a}, and their overconfidence requires careful verification~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}. The quality of LLM-generated explanations significantly impacts human annotators' performance and satisfaction~\cite{DBLP:conf/chi/Wang0RMM24}.
+
+    \item \textbf{Systematic Biases and Errors:} Research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}. These biases are especially pronounced when dealing with newer topics, such as the Russo-Ukrainian conflict sentiment analysis.
+
+    \item \textbf{Resource Considerations:} While generally cost-effective, LLM annotation requires careful management of per-token charges, particularly for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}.
 \end{itemize}
-%In such tasks, LLMs have the potential to improve the accuracy and efficiency of automated labeling processes~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}, making them valuable tools for empirical research in software engineering.
-%Hybrid human-LLM annotation approaches may further increase accuracy and allow for the correction of incorrectly applied labels~\cite{DBLP:conf/chi/Wang0RMM24}.
 
 \emph{Previous Work in SE:} Recent work in software engineering has begun exploring the use of LLMs for annotation tasks. 
 Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} conducted a comprehensive study evaluating whether LLMs could replace human annotators for software engineering artifacts.
