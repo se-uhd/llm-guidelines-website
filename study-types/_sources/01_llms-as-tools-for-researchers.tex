@@ -44,7 +44,7 @@ RoBERTa showed similar improvements when trained on the MJAR dataset, as compare
 
 Wang et al.~\cite{DBLP:conf/chi/Wang0RMM24} developed a human-LLM collaborative annotation framework with a novel verification component. 
 The verifier is a Random Forest classifier trained on three types of features: characteristics of the input sample (such as text coherence and readability), LLM output features (including logits and probability scores), and features from LLM-generated explanations (including their coherence and sufficiency); the verifier then assigns confidence scores to LLM annotations, allowing the framework to identify which samples need human review. 
-Their empirical evaluation found a moderate positive correlation between model-to-model agreement and human-model agreement (Spearman \rho = 0.65), suggesting that model agreement could be one useful indicator for when to trust LLM annotations.
+Their empirical evaluation found a moderate positive correlation between model-to-model agreement and human-model agreement (Spearman $\rho = 0.65$), suggesting that model agreement could be one useful indicator for when to trust LLM annotations.
 Using this approach, they demonstrated that up to 50-100\% of annotations for certain tasks could be delegated to LLMs while maintaining quality comparable to human annotation. 
 The system was particularly effective when LLMs showed high confidence in their predictions, though performance varied by task type.
 
