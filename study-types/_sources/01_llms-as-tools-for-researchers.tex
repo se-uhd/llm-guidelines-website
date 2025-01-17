@@ -22,7 +22,12 @@ LLMs can be used to augment or even replace human annotations, provide suggestio
 \emph{Example:} For example, in a study analyzing code changes in version control systems, researchers may need to categorize each individual change into predefined categories.
 For that, they may use LLMs to analyze commit messages and categorize them using labels such as bug fixes, feature additions, or refactorings, based on a short description of each label.
 
-\emph{Promises:} This automation can improve the efficiency of the annotation process, which is often a labor-intensive and error-prone task when done manually.
+\emph{Promises:} Recent research demonstrates several key advantages of using LLMs as annotators. 
+First, LLM-based annotation can dramatically reduce costs compared to human labeling, with studies showing cost reductions of 50-96\% across various natural language tasks~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
+Second, LLMs can achieve comparable or even superior performance to crowd workers -- for instance, ChatGPT's accuracy exceeded that of crowd workers by approximately 25\% on average across multiple annotation tasks~\cite{DBLP:journals/corr/abs-2303-15056}. 
+Third, LLMs demonstrate remarkably high intercoder agreement, surpassing both crowd workers and trained annotators~\cite{DBLP:journals/corr/abs-2303-15056}. 
+Fourth, models trained on LLM-generated labels can sometimes outperform the LLM itself, suggesting potential for bootstrapping improved performance~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
+Finally, hybrid approaches combining LLM and human annotations can achieve even better results than either approach alone~\cite{DBLP:conf/emnlp/WangLXZZ21}.
 
 \emph{Perils:} In such tasks, LLMs have the potential to improve the accuracy and efficiency of automated labeling processes~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}, making them valuable tools for empirical research in software engineering.
 Hybrid human-LLM annotation approaches may further increase accuracy and allow for the correction of incorrectly applied labels~\cite{DBLP:conf/chi/Wang0RMM24}.
