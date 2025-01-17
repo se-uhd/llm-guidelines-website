@@ -27,8 +27,27 @@ For that, they may use LLMs to analyze commit messages and categorize them using
 \emph{Perils:} In such tasks, LLMs have the potential to improve the accuracy and efficiency of automated labeling processes~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}, making them valuable tools for empirical research in software engineering.
 Hybrid human-LLM annotation approaches may further increase accuracy and allow for the correction of incorrectly applied labels~\cite{DBLP:conf/chi/Wang0RMM24}.
 
-\emph{Previous Work in SE:}  \textbf{TODO:} Examples of such studies in software engineering include...
+\emph{Previous Work in SE:} Recent work in software engineering has begun exploring the use of LLMs for annotation tasks. 
+Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} conducted a comprehensive study evaluating whether LLMs could replace human annotators for software engineering artifacts.
+Their findings demonstrated that LLMs performed particularly well on name-value inconsistency detection and semantic similarity tasks, achieving human-comparable inter-rater agreement levels. 
+However, they found LLMs struggled significantly with causality detection and static analysis warning classification, where human-model agreement was much lower than human-human agreement. 
+For code summarization tasks, LLMs showed moderate success but still fell short of human performance. 
+Based on these results, they recommend using LLMs to replace only one human rater rather than the entire annotation team, as model-model agreement strongly correlates with human-model agreement.
 
+Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
+Their Multi-model Joint Annotation Reviews (MJAR) dataset construction method used three 7B-parameter models (Llama3, Gemma, and Mistral) with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
+Their annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached). 
+When evaluated on the test set, the dataset produced through this multi-model voting approach achieved better performance compared to datasets annotated by single models. 
+For instance, using BERT as the classifier, they achieved an F1 score of 78.62\% and accuracy of 80.36\%, outperforming annotations from individual models like Mistral (F1: 72.56\%, Acc: 75.04\%), Gemma (F1: 75.84\%, Acc: 77.84\%), and Llama3 (F1: 77.48\%, Acc: 79.53\%). 
+Similarly, when using RoBERTa as the classifier, MJAR maintained its superior performance with improvements of 1.73\% in F1 score compared to single-model annotations.
+
+Wang et al.~\cite{DBLP:conf/chi/Wang0RMM24} developed a human-LLM collaborative annotation framework with a novel verification component. 
+The verifier is a Random Forest classifier trained on three types of features: characteristics of the input sample (such as text coherence and readability), LLM output features (including logits and probability scores), and features from LLM-generated explanations (including their coherence and sufficiency); the verifier then assigns confidence scores to LLM annotations, allowing the framework to identify which samples need human review. 
+Their empirical evaluation found a moderate positive correlation between model-to-model agreement and human-model agreement (Spearman \rho = 0.65), suggesting that model agreement could be one useful indicator for when to trust LLM annotations.
+Using this approach, they demonstrated that up to 50-100\% of annotations for certain tasks could be delegated to LLMs while maintaining quality comparable to human annotation. 
+The system was particularly effective when LLMs showed high confidence in their predictions, though performance varied by task type.
+
+These studies suggest that while LLMs show promise as annotation tools in SE, their optimal use may be in augmenting rather than replacing human annotators entirely, with careful consideration given to verification mechanisms and confidence thresholds.
 
 \subsubsection{LLMs as Raters}
 
