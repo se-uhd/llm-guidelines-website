@@ -31,6 +31,7 @@ For that, they may use LLMs to analyze commit messages and categorize them using
     \item LLMs can generate explanations alongside their annotations, which can help verify the quality of labels and assist humans in understanding the classification decisions~\cite{DBLP:conf/chi/Wang0RMM24}. 
     \item Lightweight classifiers trained on LLM-generated labels can achieve comparable or better performance than using LLMs directly as classifiers, while being more efficient and manageable at scale~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}. 
     \item Hybrid approaches combining LLM and human annotations can achieve even better results than either approach alone~\cite{DBLP:conf/emnlp/WangLXZZ21}.
+    \item Comprehensive evaluations demonstrate ChatGPT's potential as a general-purpose annotator, achieving particularly strong performance in sentiment analysis (64.9\% accuracy) and in detecting responses that challenge hate speech (0.791 precision for counterspeech detection)~\cite{DBLP:journals/corr/abs-2304-10145}.
 \end{itemize}
 
 \emph{Perils:} Several important challenges and limitations must also be considered. 
@@ -41,6 +42,8 @@ For that, they may use LLMs to analyze commit messages and categorize them using
     \item The quality of LLM-generated explanations significantly impacts human annotators' performance and satisfaction, with poor-quality explanations potentially hindering rather than helping the annotation process~\cite{DBLP:conf/chi/Wang0RMM24}
     \item While cost-effective overall, LLM annotation still incurs per-token charges that must be carefully managed, especially for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
     \item Researchers note that LLMs are not yet reliable enough for high-stakes labeling tasks, such as identifying toxic language, and are better suited for low-stakes applications~\cite{DBLP:conf/chi/Wang0RMM24}.
+    \item Significant performance inconsistencies for post-training events and complex tasks, with ChatGPT showing notable disparities in performance across different label categories and struggling with newer topics such as the Russo-Ukrainian conflict sentiment analysis~\cite{DBLP:journals/corr/abs-2304-10145}.
+    \item Systematic biases in label assignment have been observed, with LLMs sometimes showing a tendency to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}.
 \end{itemize}
 %In such tasks, LLMs have the potential to improve the accuracy and efficiency of automated labeling processes~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}, making them valuable tools for empirical research in software engineering.
 %Hybrid human-LLM annotation approaches may further increase accuracy and allow for the correction of incorrectly applied labels~\cite{DBLP:conf/chi/Wang0RMM24}.
