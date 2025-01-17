@@ -34,6 +34,12 @@ However, they found LLMs struggled significantly with causality detection and st
 For code summarization tasks, LLMs showed moderate success but still fell short of human performance. 
 Based on these results, they recommend using LLMs to replace only one human rater rather than the entire annotation team, as model-model agreement strongly correlates with human-model agreement.
 
+Colavito et al.~\cite{DBLP:conf/msr/ColavitoLNQ24} investigated the potential of GPT-like models for automated issue labeling in software repositories. 
+Their study compared different prompting strategies (zero-shot and few-shot) using various versions of GPT-3.5 models with different context lengths. 
+Their results demonstrated that GPT-like models could achieve performance comparable to state-of-the-art BERT-like models without requiring fine-tuning. 
+In particular, their zero-shot approach with GPT-3.5 achieved an F1-micro score of 0.8155, approaching the performance of the SETFIT baseline (F1-micro = 0.8321). 
+Notably, they observed substantial agreement between GPT-3.5 and human annotators (Cohen's $\kappa > 0.7$) across different experimental settings, suggesting that these models could effectively support human annotation efforts in creating gold-standard datasets.
+
 Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
 Their Multi-model Joint Annotation Reviews (MJAR) dataset construction method used three 7B-parameter models (Llama3, Gemma, and Mistral) with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached). 
