@@ -29,8 +29,14 @@ Third, LLMs demonstrate remarkably high intercoder agreement, surpassing both cr
 Fourth, models trained on LLM-generated labels can sometimes outperform the LLM itself, suggesting potential for bootstrapping improved performance~\cite{DBLP:conf/emnlp/WangLXZZ21}. 
 Finally, hybrid approaches combining LLM and human annotations can achieve even better results than either approach alone~\cite{DBLP:conf/emnlp/WangLXZZ21}.
 
-\emph{Perils:} In such tasks, LLMs have the potential to improve the accuracy and efficiency of automated labeling processes~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}, making them valuable tools for empirical research in software engineering.
-Hybrid human-LLM annotation approaches may further increase accuracy and allow for the correction of incorrectly applied labels~\cite{DBLP:conf/chi/Wang0RMM24}.
+\emph{Perils:} However, several important challenges and limitations must be considered. 
+First, while LLMs can be effective annotators, their performance varies significantly across tasks and can be particularly unreliable for complex or nuanced annotations \cite{DBLP:conf/www/HuangKA23a}. 
+Second, LLMs may reinforce human perceptions and biases -- research shows that LLM explanations can influence human judgments, potentially propagating incorrect classifications \cite{DBLP:conf/www/HuangKA23a}. 
+Third, quality control remains crucial -- LLMs exhibit varying confidence levels, and their annotations require careful validation, particularly for high-stakes applications \cite{DBLP:conf/emnlp/WangLXZZ21}. 
+Fourth, while cost-effective overall, LLM annotation still incurs per-token charges that must be carefully managed, especially for longer texts \cite{DBLP:conf/emnlp/WangLXZZ21}. 
+Finally, researchers note that LLMs are not yet reliable enough for high-stakes labeling tasks, such as identifying toxic language, and are better suited for low-stakes applications \cite{DBLP:conf/emnlp/WangLXZZ21}.
+%In such tasks, LLMs have the potential to improve the accuracy and efficiency of automated labeling processes~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}, making them valuable tools for empirical research in software engineering.
+%Hybrid human-LLM annotation approaches may further increase accuracy and allow for the correction of incorrectly applied labels~\cite{DBLP:conf/chi/Wang0RMM24}.
 
 \emph{Previous Work in SE:} Recent work in software engineering has begun exploring the use of LLMs for annotation tasks. 
 Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} conducted a comprehensive study evaluating whether LLMs could replace human annotators for software engineering artifacts.
