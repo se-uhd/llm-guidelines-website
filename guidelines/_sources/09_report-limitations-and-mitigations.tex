@@ -7,18 +7,46 @@
 \subsection{Report Limitations and Mitigations}
 
 \subsubsection{Context}
+When using large language models (LLMs) in empirical studies for software engineering, researchers face unique challenges and potential limitations that can influence the validity, reliability, and reproducibility~\cite{sallou2024breaking} of their findings including:
 
-\textbf{TODO}
+
+\textbf{Reproducibility and Generalization}:
+\begin{itemize}
+  \item Non-deterministic outputs of LLMs: LLMs may produce non-deterministic results due to inherent randomness in their outputs, especially when a temperature setting greater than 0 is used.
+  \item Sampling/Evaluation Bias: The selection of testing dataset, and researchers evaluating LLM outputs manually may introduce subjective bias or cognitive fatigue, particularly for large datasets.
+  \item Model update/version:  The behavior of LLMs can depend on external factors such as API updates, model version changes and very sensitivive to Prompt Variations, even because of time-based output drift.
+  \item Closed source model leading to model evolution unpredictability. Researchers may lack insight into the model's inner workings, hindering the ability to fully understand and trust its outputs.
+\end{itemize}
+
+\textbf{Data Leakage}:
+Data leakage/contamination/overfitting occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates. In the context of LLMs for software engineering, this can manifest as inter-dataset code duplication, where code snippets from one dataset appear in another, potentially compromising the integrity of evaluation results.
+
+\textbf{Scalability and Cost}:
+Conducting multiple repetitions or large-scale experiments can be computationally expensive, especially with proprietary APIs.
+
+\textbf{Misleading Performance Metrics}:
+Metrics like BLEU or ROUGE, often used in text-based tasks, may not capture important aspects of software engineering tasks (e.g., functional correctness, runtime performance).
+
+\textbf{Ethical Concerns with Proprietary Data}:
+Using LLMs for tasks involving proprietary or sensitive software engineering data (e.g., private bug reports), especially in closed-source LLMs may raise privacy and IP concerns.
 
 \subsubsection{Recommendations}
 
-\textbf{TODO:} Number of repetitions, how were repetitions aggregated?, discuss limitations and mitigations
+\textbf{Clear info:} 
+\begin{itemize}
+  \item Number of repetitions, how were repetitions aggregated?, discuss limitations and mitigations
+  \item Model version, fixed random seeds
+  \item etc...
+\end{itemize}
+
 
 \textbf{TODO:} Discuss what makes the results of a presented study generalizable and why they are not model-dependent. Argue why the results will likely hold for a different (future) model or the next release of the LLM-based tool that was studied (e.g., ChatGPT)?
 
 \textbf{TODO:} Discuss aspects as such increased performance (see benchmarking guidelines) vs. increased resource consumption and non-determinism.
 
 \textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
+
+\texbtf{Balance of evaluation dataset}: ``We have chosen our test samples to be small enough to perform manual semantic analysis, but large enough to draw conclusions''~\cite{tinnessoftware}
 
 \subsubsection{Example}
 
