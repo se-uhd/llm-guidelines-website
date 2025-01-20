@@ -102,15 +102,36 @@ This can lead to more reliable and reproducible results in empirical studies.
 
 \subsubsection{LLMs as Subjects}
 
-\emph{Description:} LLMs can be used as subjects in empirical studies to simulate human behavior and interactions.
+\emph{Description:} LLMs can be used as subjects in empirical studies to simulate human behavior and interactions. In this role, LLMs generate responses that mimic human participants, making them particularly useful for studies involving user interactions, collaborative coding environments, or software usability assessments. 
+To achieve this, prompt engineering techniques are widely employed, with a common approach being the use of the \textit{Personas Pattern}~\cite{DBLP:journals/corr/abs-2308-07702}, which involves tailoring LLM responses to align with predefined profiles or roles that emulate specific user archetypes. 
+Furthermore, recent sociological studies have emphasized that, to be effectively utilized in this capacity, LLMs—including their agentic versions tailored through prompt engineering—should meet four criteria of algorithmic fidelity~\cite{DBLP:journals/corr/abs-2209-06899}; generated responses should be: indistinguishable from human-produced texts; consistent with the attitudes and sociodemographic information of the conditioning context; naturally aligned with the form, tone, and content of the provided context; and reflective of patterns in relationships between ideas, demographics, and behavior observed in comparable human data.
 
-\emph{Example:} For example, researchers can use LLMs to generate responses in user studies, simulate developer interactions in collaborative coding environments, or model user feedback in software usability studies.
+\emph{Example:} LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. 
+Examples include:
+\begin{itemize}
+    \item \textbf{Survey and Interview Studies:} LLMs can impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts.
+    \item \textbf{Usability Studies:} In software usability studies, LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas.
+    \item \textbf{Experimental Studies:} LLMs can participate in experiments that test collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes.
+    \item \textbf{Simulated Decision-Making Studies:} LLMs can emulate team members in simulated decision-making exercises, such as planning sprints or prioritizing software requirements, enabling researchers to analyze team dynamics under different configurations.
+\end{itemize}
+Although not specifically focused on software engineering, Xu et al.~\cite{DBLP:journals/ipm/XuSRGPLSH24} have compiled various uses within the field of social science that are particularly relevant and transferable to the context of software development, given its socio-technical nature.
 
-\emph{Promises:}  This approach can provide valuable insights while reducing the need to recruit human participants, which can be time-consuming and costly. Additionally, using LLMs as subjects allows for controlled experiments with consistent and repeatable conditions.
+\emph{Promises:} Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}. 
+Furthermore, employing LLMs as subjects enables researchers to conduct empirical research under consistent and repeatable conditions, enhancing the reliability and scalability of the studies.
 
-\emph{Perils:} However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24} when using them as study subjects.
+\emph{Perils:} However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using them as study subjects; examples of these include:
+\begin{itemize}
+    \item \textbf{Distorted Representation:} LLMs tend to misrepresent demographic group perspectives, reflecting more the opinions of out-group members than those of in-group members.
+    \item \textbf{Group Flattening:} LLMs often oversimplify demographic identities, failing to capture the diversity of opinions and experiences within a group.
+    \item \textbf{Essentialization of Identity:} The use of identity-based prompts can reduce identities to fixed and innate characteristics, amplifying perceived differences between groups.
+\end{itemize}
+To mitigate these issues, encoded identity names can be used instead of explicit labels, the temperature setting can be increased to enhance response diversity, and alternatives to demographic prompts can be employed when the goal is to broaden response coverage~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908}.
 
-\emph{Previous Work in SE:}  \textbf{TODO:}  \textbf{TODO:} Examples of such studies in software engineering include...
+\emph{Previous Work in SE:} The use of LLMs as subjects is not yet widely adopted in software engineering, although much of what is being explored in the field of social science is beginning to be transferred.
+
+Examples of studies in software engineering include the works of Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} and Bano et al.~\cite{bano2025doessoftwareengineerlook}. 
+Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored various applications of LLMs, such as persona-based interviews, multi-persona focus groups, survey simulations, and observational studies employing multimodal models. They examined how LLMs can emulate human responses and behaviors while addressing critical ethical concerns, biases, and methodological challenges. The authors advocated for a hybrid approach that integrates AI-generated and human-generated data to improve research scalability and effectiveness while ensuring that human subjects are not entirely replaced.
+Bano et al.~\cite{bano2025doessoftwareengineerlook} investigated how LLMs, specifically GPT-4 and Microsoft Copilot, reinforce societal stereotypes in software engineering recruitment processes. They generated 300 candidate profiles and evaluated LLMs' ability to rank candidates for four distinct SE roles. Both textual and visual outputs were analyzed, uncovering biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly in senior positions. Their findings underline the risks of perpetuating exclusionary norms and present a replicable framework for assessing biases in LLM-generated data, emphasizing the need for equitable and inclusive AI integration in software engineering workflows.
 
 \subsubsection{References}
 
