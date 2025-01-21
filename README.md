@@ -18,3 +18,5 @@ Once you push your changes to the `main` branch or once a pull request is merged
 
 We are free to use any Latex editor you like.
 To double-check the generated Markdown files, you can use any Markdown editor you like, preferably one that supports [kramdown](https://kramdown.gettalong.org/), which is the [default Markdown renderer for Jekyll](https://jekyllrb.com/docs/configuration/markdown/#kramdown).
+
+If you add references to [literature.bib](https://github.com/se-ubt/llm-guidelines-website/blob/main/literature.bib), please use the [DBLP](https://dblp.org/) Bibtex entries if available.
