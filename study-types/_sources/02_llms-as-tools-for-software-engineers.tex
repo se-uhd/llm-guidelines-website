@@ -38,7 +38,7 @@
 High-quality reference datasets, such as HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} for the task of code generation, are necessary to perform evaluation across studies.
 LLM output is compared against a ground truth from the dataset in the benchmark using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, a well as task-specific metrics, such as Pass@k for code generation.
 
-\emph{Examples:} In software engineering, benchmarking may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from curated real-world projects or synthetic SE specific datasets.
+\emph{Examples:} In software engineering, benchmarking may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from curated real-world projects or synthetic SE specific datasets. Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
 
 RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
 The metrics are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
