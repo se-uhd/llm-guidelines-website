@@ -34,11 +34,17 @@
 
 \subsubsection{Benchmarking LLMs for Software Engineering Tasks}
 
-\emph{Description:}  Another typical type of study focuses on benchmarking the LLM output quality on large-scale datasets. In these benchmarks, reference datasets such as HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} play an important role in establishing standardized evaluation methods across studies. LLM output is often compared against a ground truth from the dataset using similarity metrics such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}.
-Moreover, the evaluation may be augmented by task-specific measures that focus on the type of SE artifact produced.
+\emph{Description:} Benchmarking is the process of evaluating the LLM output obtained from a \textit{standardized} datasets using a set of \texit{standardized} metrics.
+High-quality reference datasets, such as HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} for the task of code generation, are necessary to perform evaluation across studies.
+LLM output is compared against a ground truth from the dataset in the benchmark using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, a well as task-specific metrics, such as Pass@k for code generation.
 
-\emph{Examples:} In software engineering, benchmarking may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from real-world projects or synthetically created SE datasets.
-Used metrics can include code quality or performance metrics for code generation tasks or metrics for writing quality in SE tasks with natural language artifacts, such as requirements documents or domain descriptions.
+\emph{Examples:} In software engineering, benchmarking may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from curated real-world projects or synthetic SE specific datasets.
+
+RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
+The metrics are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
+
+SWE-Bench~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE python tasks extracted from GitHub pull requests.
+For scoring the performance of the LLMs on the tasks, the authors report first report whether the generated patch is applicable or not (i.e., it fails compilation) and, for successful patches, they use the percentage of test cases passed.
 
 \emph{Promises:} \textbf{TODO}
 
