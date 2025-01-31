@@ -1,6 +1,5 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
-\usepackage{hyperref}
 
 \begin{document}
 
@@ -126,12 +125,16 @@ Code snippets provided by benchmarks contain untrusted code, making sandboxing r
 To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 % Repeat the generation because of non-determinsm
 LLM generation is by-design non-determinisc making repeated experiments mandatory. % as long as temperature/ top-p / top-k is set correctly
 As long as hyperparameters (e.g. temperature, top-p and top-k) are not limiting randomness, researchers should execute experiments multiple times and calculate averages, confidence intervals or standard deviations across multiple runs.
 =======
 \todo{TODO: Mention aspects such as repeating the generation to handle non-determinism (``When evaluating model performance, it is recommended to conduct multiple tests and average the results.'' https://huggingface.co/deepseek-ai/DeepSeek-R1#usage-recommendations) how were repetitions aggregated?}
 >>>>>>> 777ea9f (Update TODO)
+=======
+\textbf{TODO: Mention aspects such as repeating the generation to handle non-determinism (``When evaluating model performance, it is recommended to conduct multiple tests and average the results.''  \url{https://huggingface.co/deepseek-ai/DeepSeek-R1\#usage-recommendations}) how were repetitions aggregated?}
+>>>>>>> ee91890 (Fix minor issues, add new macro for TODOs)
 
 % Use multiple benchmarks to ease the bias.
 Distinctive benchmarks evaluated on a model strengthen the meaningfulness of statements derived from a metric.
