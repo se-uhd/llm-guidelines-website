@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\subsection{LLMs as Tools for Software Engineering Researchers}
+\subsection{Introduction: LLMs as Tools for Software Engineering Researchers}
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies.
 They can automate various tasks such as data collection, preprocessing, and analysis.
@@ -15,26 +15,34 @@ However, all these applications also come with limitations, potential threats to
 In our guidelines, the following study types and used to contextualize the recommendations we provide.
 
 
-\subsubsection{LLMs as Annotators}
+\subsection{LLMs as Annotators}
 
-\emph{Description:} LLMs can serve as annotators by automatically labeling artifacts with corresponding categories for data analysis based on a pre-defined coding guide.
+\subsubsection{Description}
+
+LLMs can serve as annotators by automatically labeling artifacts with corresponding categories for data analysis based on a pre-defined coding guide.
 In qualitative data analysis, manually annotating or coding text passages, e.g. in software artifacts, open-ended survey responses, or interview transcripts, is often a time-consuming manual process~\cite{DBLP:journals/ase/BanoHZT24}.
 LLMs can be used to augment or even replace human annotations, provide suggestions for new codes (see \textbf{LLMs for Synthesis}), or even automate the entire process.
 
-\emph{Example(s):} Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
+\subsubsection{Example(s)}
+
+Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
 Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
 They used three 7B-parameter models (Llama3, Gemma, and Mistral) with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
 Training on their MJAR dataset improved classifier performance. BERT achieved higher F1 (78.62\%) and accuracy (80.36\%) than when trained on single-model annotations (Mistral: 72.56\%, Gemma: 75.84\%, Llama3: 77.48\%). RoBERTa also saw a 1.73\% F1 increase with MJAR, highlighting the benefits of multi-model annotation.
 
-\emph{Advantages:} Recent research demonstrates several key advantages of using LLMs as annotators, in particular their cost-effectiveness as well as efficiency and accurancy benefits.
+\subsubsection{Advantages}
+
+Recent research demonstrates several key advantages of using LLMs as annotators, in particular their cost-effectiveness as well as efficiency and accurancy benefits.
 LLM-based annotation dramatically reduces costs compared to human labeling, with studies showing cost reductions of 50-96\% across various natural language tasks~\cite{DBLP:conf/emnlp/WangLXZZ21}.
 %A comprehensive validation study across 27 diverse annotation tasks demonstrated that processing large datasets (>200,000 samples) can be achieved at relatively low cost~\cite{DBLP:journals/corr/abs-2306-00176}.
 For exampe, He et al. found in their study that GPT-4 annotation cost only \$122.08 compared to \$4,508 for a comparable MTurk pipeline, while also completing the task in just 2 days versus several weeks for the crowdsourced approach~\cite{DBLP:conf/chi/HeHDRH24}.
 Moreover, LLMs consistently demonstrate strong performance, with ChatGPT's accuracy exceeding crowd workers by approximately 25\% on average~\cite{DBLP:journals/corr/abs-2303-15056} and achieving impressive results in specific tasks such as sentiment analysis (64.9\% accuracy) and counterspeech detection (0.791 precision)~\cite{DBLP:journals/corr/abs-2304-10145}. They also show remarkably high intercoder agreement, surpassing both crowd workers and trained annotators~\cite{DBLP:journals/corr/abs-2303-15056}.
 %Recent research further validates this superior performance, demonstrating GPT-4 achieving 83.6\% accuracy in academic text annotation tasks, outperforming well-executed crowdsourcing pipelines that peaked at 81.5\% accuracy~\cite{DBLP:conf/chi/HeHDRH24}. Notably, models trained on LLM-generated labels can sometimes outperform the LLM itself~\cite{DBLP:conf/emnlp/WangLXZZ21}.
 
-\emph{Challenges:} Several important challenges and limitations must also be considered, which include reliability issues, human-LLM interaction challenges, biases, errors, and resource considerabtions.
+\subsubsection{Challenges}
+
+Several important challenges and limitations must also be considered, which include reliability issues, human-LLM interaction challenges, biases, errors, and resource considerabtions.
 Studies suggest that while LLMs show promise as annotation tools in SE, their optimal use may be in augmenting rather than replacing human annotators entirely~\cite{DBLP:conf/emnlp/WangLXZZ21, DBLP:conf/chi/HeHDRH24}, with careful consideration given to verification mechanisms and confidence thresholds
 LLMs can negatively impact human judgment when their labels are incorrect~\cite{DBLP:conf/www/HuangKA23a}, and their overconfidence requires careful verification~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}.
 %The quality of LLM-generated explanations significantly impacts human annotators' performance and satisfaction~\cite{DBLP:conf/chi/Wang0RMM24}.
@@ -45,36 +53,56 @@ While generally cost-effective, LLM annotation requires careful management of pe
 Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}. %These biases are especially pronounced when dealing with newer topics, such as the Russo-Ukrainian conflict sentiment analysis.
 
 
-\subsubsection{LLMs as Raters}
+\subsection{LLMs as Raters}
 
-\emph{Description:} In empirical studies, LLMs can act as raters to evaluate the quality or other properties of software artifacts such as code, documentation, and design patterns.
+\subsubsection{Description}
 
-\emph{Example(s):}  For instance, LLMs can be trained to assess code readability, adherence to coding standards, or the quality of comments. \todo{Examples of such studies in software engineering include...}
+In empirical studies, LLMs can act as raters to evaluate the quality or other properties of software artifacts such as code, documentation, and design patterns.
 
-\emph{Advantages:} By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human raters might introduce. 
+\subsubsection{Example(s)}
+
+For instance, LLMs can be trained to assess code readability, adherence to coding standards, or the quality of comments. \todo{Examples of such studies in software engineering include...}
+
+\subsubsection{Advantages}
+
+By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human raters might introduce. 
 This can lead to more reliable and reproducible results in empirical studies.
 
-\emph{Challenges:} However, when relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
+\subsubsection{Challenges}
+
+However, when relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
 
 
-\subsubsection{LLMs for Synthesis}
+\subsection{LLMs for Synthesis}
 
-\emph{Description:} LLMs can be used to synthesis large amounts of qualitative data.
+\subsubsection{Description}
 
-\emph{Example(s):}  For example, they can summarize or compare papers for literature reviews or support researchers in deriving codes and developing coding guides during the initial phase of qualitative data analysis. Those code can then later be used to annotate more data (see \textbf{annotation}). \todo{Examples of such studies in software engineering include...}
+LLMs can be used to synthesis large amounts of qualitative data.
 
-\emph{Advantages:} \todo{write paragraph}
+\subsubsection{Example(s)} 
 
-\emph{Challenges:} \todo{write paragraph}
+For example, they can summarize or compare papers for literature reviews or support researchers in deriving codes and developing coding guides during the initial phase of qualitative data analysis. Those code can then later be used to annotate more data (see \textbf{annotation}). \todo{Examples of such studies in software engineering include...}
+
+\subsubsection{Advantages}
+
+\todo{write paragraph}
+
+\subsubsection{Challenges}
+
+\todo{write paragraph}
 
 
-\subsubsection{LLMs as Subjects}
+\subsection{LLMs as Subjects}
 
-\emph{Description:} LLMs can be used as subjects in empirical studies to simulate human behavior and interactions. In this role, LLMs generate responses that mimic human participants, making them particularly useful for studies involving user interactions, collaborative coding environments, or software usability assessments. 
+\subsubsection{Description}
+
+LLMs can be used as subjects in empirical studies to simulate human behavior and interactions. In this role, LLMs generate responses that mimic human participants, making them particularly useful for studies involving user interactions, collaborative coding environments, or software usability assessments. 
 To achieve this, prompt engineering techniques are widely employed, with a common approach being the use of the \textit{Personas Pattern}~\cite{DBLP:journals/corr/abs-2308-07702}, which involves tailoring LLM responses to align with predefined profiles or roles that emulate specific user archetypes. 
 Furthermore, recent sociological studies have emphasized that, to be effectively utilized in this capacity, LLMs—including their agentic versions tailored through prompt engineering—should meet four criteria of algorithmic fidelity~\cite{DBLP:journals/corr/abs-2209-06899}; generated responses should be: indistinguishable from human-produced texts; consistent with the attitudes and sociodemographic information of the conditioning context; naturally aligned with the form, tone, and content of the provided context; and reflective of patterns in relationships between ideas, demographics, and behavior observed in comparable human data.
 
-\emph{Example(s):} LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. 
+\subsubsection{Example(s)}
+
+LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. 
 They can be used in \emph{survey and interview studies} to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts. In \emph{usability studies}, LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. In \emph{experimental studies}, LLMs can participate in experiments that test collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes. In \emph{simulated decision-making studies}, LLMs can emulate team members in simulated decision-making exercises, such as planning sprints or prioritizing software requirements, enabling researchers to analyze team dynamics under different configurations.
 Although not specifically focused on software engineering, Xu et al.~\cite{DBLP:journals/ipm/XuSRGPLSH24} have compiled various uses within the field of social science that are particularly relevant and transferable to the context of software development, given its socio-technical nature.
 
@@ -84,18 +112,97 @@ Examples of studies in software engineering include the works of Gerosa et al.~\
 Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored various applications of LLMs, such as persona-based interviews, multi-persona focus groups, survey simulations, and observational studies employing multimodal models. They examined how LLMs can emulate human responses and behaviors while addressing critical ethical concerns, biases, and methodological challenges. The authors advocated for a hybrid approach that integrates AI-generated and human-generated data to improve research scalability and effectiveness while ensuring that human subjects are not entirely replaced.
 Bano et al.~\cite{bano2025doessoftwareengineerlook} investigated how LLMs, specifically GPT-4 and Microsoft Copilot, reinforce societal stereotypes in software engineering recruitment processes. They generated 300 candidate profiles and evaluated LLMs' ability to rank candidates for four distinct SE roles. Both textual and visual outputs were analyzed, uncovering biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly in senior positions. Their findings underline the risks of perpetuating exclusionary norms and present a replicable framework for assessing biases in LLM-generated data, emphasizing the need for equitable and inclusive AI integration in software engineering workflows.
 
-\emph{Advantages:} Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}. 
+\subsubsection{Advantages}
+
+Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}. 
 Furthermore, employing LLMs as subjects enables researchers to conduct empirical research under consistent and repeatable conditions, enhancing the reliability and scalability of the studies.
 \todo{How can studies be consistent and repeatable if the output is non-deterministic (see also our guidelines)?}
 
-\emph{Challenges:} However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using them as study subjects.
+\subsubsection{Challenges}
+
+However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using them as study subjects.
 One issue is that LLMs tend to \emph{misrepresent demographic group perspectives}, reflecting more the opinions of out-group members than those of in-group members.
 Further, LLMs often \emph{oversimplify demographic identities}, failing to capture the diversity of opinions and experiences within a group.
 The use of identity-based prompts can \emph{reduce identities to fixed and innate characteristics}, amplifying perceived differences between groups.
 To mitigate these issues, encoded identity names can be used instead of explicit labels, the temperature setting can be increased to enhance response diversity, and alternatives to demographic prompts can be employed when the goal is to broaden response coverage~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908}.
 
 
-\subsubsection{References}
+\subsection{Introduction: LLMs as Tools for Software Engineers}
+
+\todo{Write section intro}
+
+
+\subsection{Studying LLM Usage in Software Engineering}
+
+\subsubsection{Description}
+
+Empirical studies can also focus on understanding how software engineers use LLMs in their workflows. 
+
+\subsubsection{Example(s)}
+
+This involves investigating the adoption, usage patterns, and perceived benefits and challenges of LLM-based tools. Surveys, interviews, and observational studies can provide insights into how LLMs are integrated into development processes, how they influence decision-making, and what factors affect their acceptance and effectiveness. Such studies can inform the design of more user-friendly and effective LLM-based tools.
+For example, Khojah et al. investigated the use of ChatGPT by professional software engineers in a week-long observational study~\cite{DBLP:journals/pacmse/KhojahM0N24}.
+
+\subsubsection{Advantages}
+
+\todo{write paragraph}
+
+\subsubsection{Challenges}
+
+\todo{write paragraph}
+
+
+\subsection{LLMs for new Software Engineering Tools}
+
+\subsubsection{Description}
+
+LLMs are being integrated into new tools designed to support software engineers in their daily tasks.
+
+\subsubsection{Example(s)}
+
+These tools can include intelligent code editors that provide real-time code suggestions, automated documentation generators, and advanced debugging assistants. Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. For example, Choudhuri et al. conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks~\cite{DBLP:conf/icse/ChoudhuriLSGS24}.
+
+\subsubsection{Advantages}
+
+By assessing the impact of LLM-powered tools, researchers can identify best practices and areas for further improvement.
+
+\subsubsection{Challenges}
+
+\todo{write paragraph}
+
+
+\subsection{Benchmarking LLMs for Software Engineering Tasks}
+
+\subsubsection{Description}
+
+Benchmarking is the process of evaluating the LLM output obtained from a \emph{standardized} datasets using a set of \emph{standardized} metrics.
+High-quality reference datasets, such as HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} for the task of code generation, are necessary to perform evaluation across studies.
+LLM output is compared against a ground truth from the dataset in the benchmark using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, a well as task-specific metrics, such as Pass@k for code generation.
+
+\subsubsection{Example(s)}
+
+In software engineering, benchmarking may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from curated real-world projects or synthetic SE specific datasets. Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
+RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
+The metrics are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
+SWE-Bench~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE python tasks extracted from GitHub pull requests.
+For scoring the performance of the LLMs on the tasks, the authors report first report whether the generated patch is applicable or not (i.e., it fails compilation) and, for successful patches, they use the percentage of test cases passed.
+
+\subsubsection{Advantages}
+
+Properly-built benchmarks provide objective evaluation across different tasks, enabling fair comparison of different models (and versions).
+Moreover, benchmarks build for specific SE tasks can help identify weaknesses of LLM and support their optimization/fine-tuning for such tasks.
+Benchmark built using real-world data can also help legitimize research results for practitioners, supporting industry-academia collaboration.
+Finally, benchmarks can foster open science practices, by providing a common ground for sharing data (e.g., as part of the benchmark itself) and results (e.g., of models run against a benchmark).
+
+\subsubsection{Challenges}
+
+Benchmark contamination~\cite{DBLP:journals/corr/abs-2410-16186} has recently been identified as an issue.
+The careful selection of samples and building of corresponding input prompts is particularly important, as correlations between prompts may bias benchmark results~\cite{DBLP:conf/acl/SiskaMAB24}.
+Recently, Cao et al.~\cite{cao2025should} has proposed guidelines for building benchmarks for LLMs related to coding tasks, grounded in a systematic survey of existing benchmarks. 
+In this process, they highlight current shortcomings related to reliability, transparency irreproducibility, low data quality, and inadequate validation measures.
+
+
+\subsection{References}
 
 \bibliographystyle{plain}
 \bibliography{../../literature.bib}
