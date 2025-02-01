@@ -1,12 +1,13 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
 \usepackage{hyperref}
 
 \begin{document}
 
 \subsection{Report Tool Architecture and Supplemental Data}
 
-\subsubsection{Context}
+\subsubsection{Recommendations}
 
 Oftentimes, there is a complex layer around the LLM that preprocesses data, prepares prompts, or filters user requests.
 One example is ChatGPT, which can, among others, use the GPT-4o model.
@@ -14,27 +15,32 @@ GitHub Copilot uses the same model as well, and researchers can build their own 
 The infrastructure around the bare model can significantly contribute to the performance of a model in a certain task.
 Therefore, it is crucial that researchers clearly describe what the LLM contributes to the tool or method presented in a research paper.
 
-\textbf{TODO:} Architecture (e.g., usage of RAG, agent-based architecture, etc.)
+\todo{Architecture (e.g., usage of RAG, agent-based architecture, etc.)}
 
-\textbf{TODO:} data dump of vector database if used
+\todo{data dump of vector database if used}
 
-\textbf{TODO:} finetuning? if yes, how? also: publish data used for finetuning (if not confidential)
+\todo{finetuning? if yes, how? also: publish data used for finetuning (if not confidential)}
 
-\subsubsection{Recommendations}
 
-\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
+\subsubsection{Example(s)}
 
-\subsubsection{Example}
+\todo{write paragraph}
 
-\textbf{TODO}
 
-\subsubsection{Benefits}
+\subsubsection{Advantages}
 
-\textbf{TODO}
+\todo{write paragraph}
+
 
 \subsubsection{Challenges}
 
-\textbf{TODO}
+\todo{write paragraph}
+
+
+\subsubsection{Study Types}
+
+\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
+
 
 \subsubsection{References}
 

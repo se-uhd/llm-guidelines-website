@@ -1,23 +1,15 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
 \usepackage{hyperref}
 
 \begin{document}
 
 \subsection{Report Prompts and their Development}
 
-\subsubsection{Context}
-
-Prompts can significantly influence the [output of LLMs~\cite{DBLP:journals/tosem/LiuLWTLLL24}, and sharing them allows other researchers to understand and reproduce the conditions of the study.
-
-\textbf{TODO:} Architecture (e.g., usage of RAG, agent-based architecture, etc.)
-
-\textbf{TODO:} data dump of vector database if used
-
-\textbf{TODO:} finetuning? if yes, how? also: publish data used for finetuning (if not confidential)
-
 \subsubsection{Recommendations}
 
+Prompts can significantly influence the [output of LLMs~\cite{DBLP:journals/tosem/LiuLWTLLL24}, and sharing them allows other researchers to understand and reproduce the conditions of the study.
 Reporting the exact prompts used in the study is essential for transparency and reproducibility.
 For example, including the specific questions or tasks given to the LLM helps in assessing the validity of the results and comparing them with other studies.
 This is an example where different types of studies require different information.
@@ -27,19 +19,32 @@ Prompts also need to be reported when LLMs are integrated into new tools, especi
 For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
 If a systematic approach was used, this process should be described in detail.
 
-\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
+\todo{Architecture (e.g., usage of RAG, agent-based architecture, etc.)}
 
-\subsubsection{Example}
+\todo{data dump of vector database if used}
 
-\textbf{TODO}
+\todo{finetuning? if yes, how? also: publish data used for finetuning (if not confidential)}
 
-\subsubsection{Benefits}
 
-\textbf{TODO}
+\subsubsection{Example(s)}
+
+\todo{write paragraph}
+
+
+\subsubsection{Advantages}
+
+\todo{write paragraph}
+
 
 \subsubsection{Challenges}
 
-\textbf{TODO}
+\todo{write paragraph}
+
+
+\subsubsection{Study Types}
+
+\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
+
 
 \subsubsection{References}
 

@@ -1,9 +1,12 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
+\usepackage{hyperref}
 
 \begin{document}
 
 
+<<<<<<< HEAD
 
 \section{Benchmarks, Baselines and Metric}
 % Introduction
@@ -115,11 +118,19 @@ The metric Mean Reciporcal Rank is often used for recommendation tasks.
 % Investigate what kind of data you have at hand from the benchmark by other reading through the paper of the benchmark or making an evaluation by yourself
 Before executing a benchmark, the authors recommend to investigate what kind of data the benchmark uses.
 Without knowing the underlying data of a benchmark, argumentating and dicussing the performance of a model becomes impossible.
+=======
+\subsubsection{Recommendations}
+
+\todo{outline context}
+
+\todo{What are suitable metrics and benchmarks for evaluating LLMs? A good starting point could be this paper~\cite{10.1145/3695988}.}
+>>>>>>> fa2adc1 (Revise structure)
 
 % In case benchmarks do not make sense, go one level deeper and investigate why and how a metric is calculated. It might be the case that different problems are present e.g. wrong formation
 In case of unexpected scores of metrics, results should be investigated in more detail, to uncover potential problems such as wrong formating.
 For example, formating of code highly influences some metric calculation such as BLEU or Exact Match.
 
+<<<<<<< HEAD
 % Execution of untrusted code --> use sandboxing
 Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
 To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
@@ -135,6 +146,11 @@ As long as hyperparameters (e.g. temperature, top-p and top-k) are not limiting 
 =======
 \textbf{TODO: Mention aspects such as repeating the generation to handle non-determinism (``When evaluating model performance, it is recommended to conduct multiple tests and average the results.''  \url{https://huggingface.co/deepseek-ai/DeepSeek-R1\#usage-recommendations}) how were repetitions aggregated?}
 >>>>>>> ee91890 (Fix minor issues, add new macro for TODOs)
+=======
+\todo{Maybe something along the lines of using different benchmarks? Being aware of their biases (e.g., focus on a particular programming language such as Python)?}
+
+\todo{Mention aspects such as repeating the generation to handle non-determinism (``When evaluating model performance, it is recommended to conduct multiple tests and average the results.''  \url{https://huggingface.co/deepseek-ai/DeepSeek-R1\#usage-recommendations}) how were repetitions aggregated?}
+>>>>>>> fa2adc1 (Revise structure)
 
 % Use multiple benchmarks to ease the bias.
 Distinctive benchmarks evaluated on a model strengthen the meaningfulness of statements derived from a metric.
@@ -142,6 +158,7 @@ A single benchmark only tests an isolated aspect on a model.
 The benchmark could have been leaked in the training data set, sophisticating the benchmark results.
 To mitigate this, the authors recommend to test a model on multiple benchmark and report each
 
+<<<<<<< HEAD
 % If appropirate use existing techniques such as static code analysis as comparison.
 If your model supplements traditional tools or approaches, the researcher should compare against them.
 
@@ -151,9 +168,14 @@ If your model supplements traditional tools or approaches, the researcher should
 % Reproducibility
 Experiment setup including hyperparameters must be reported to ensure reproducibility.
 
+=======
+\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
 
-\subsubsection{Example}
+\todo{In some cases, there might be tools/methods using ``traditional'' approaches (like static analysis) that the LLM-based approach needs to be compared with. This is what is meant by ``baselines'' in the title.}
+>>>>>>> fa2adc1 (Revise structure)
 
+
+<<<<<<< HEAD
 \begin{center}
 \begin{tabular}{||c c c||}
 \hline
@@ -174,9 +196,18 @@ TransCoder \cite{{DBLP:journals/corr/abs-2006-03511} & Code Translation & https:
 
 \end{tabular}
 \end{center}
+=======
+\subsubsection{Example(s)}
+>>>>>>> fa2adc1 (Revise structure)
 
-\subsubsection{Benefits}
+\todo{write paragraph}
 
+
+\subsubsection{Advantages}
+
+\todo{write paragraph}
+
+<<<<<<< HEAD
 % Provide comparability
 % Provide reproducability
 % Track progress
@@ -218,6 +249,18 @@ In many cases, the training data set for an LLM is not released in conjunction w
 The benchmark itself could be part of the model's training dataset.
 Such benchmark leakage may lead to the model remembering the actual solution from the training data rather than solving the new task based on the seen data.
 This leads to the model's artificially high performance on the benchmark; however, for unforeseen scenarios, the model performs poorly.
+=======
+
+\subsubsection{Challenges}
+
+\todo{write paragraph}
+
+
+\subsubsection{Study Types}
+
+\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
+
+>>>>>>> fa2adc1 (Revise structure)
 
 \subsubsection{References}
 
