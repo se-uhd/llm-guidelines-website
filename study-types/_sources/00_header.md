@@ -13,13 +13,13 @@ The development of empirical guidelines for studies involving large language mod
 We envision that a mature set of guidelines provides specific guidance for each of these study types, addressing their individual methodological idiosyncrasies.
 Moreover, we currently focus on large language models, that is, on natural language processing. In the future, we might extend our focus to multimodal foundation models.
 
-1. [LLMs as Tools for Software Engineeering Researchers](#llms-as-tools-for-software-engineering-researchers)
+1. [LLMs as Tools for Software Engineeering Researchers](#introduction-llms-as-tools-for-software-engineering-researchers)
     1. [LLMs as Annotators](#llms-as-annotators)
     2. [LLMs as Raters](#llms-as-raters)
     3. [LLMs for Synthesis](#llms-for-synthesis)
     4. [LLMs as Subjects](#llms-as-subjects)
     5. [References](#references)
-2. [LLMs as Tools for Software Engineers](#llms-as-tools-for-software-engineers)
+2. [LLMs as Tools for Software Engineers](#introduction-llms-as-tools-for-software-engineers)
     1. [Studying LLM Usage in Software Engineering](#studying-llm-usage-in-software-engineering)
     2. [LLMs for new Software Engineering Tools](#llms-for-new-software-engineering-tools)
     3. [Benchmarking LLMs for Software Engineering Tasks](#benchmarking-llms-for-software-engineering-tasks)
