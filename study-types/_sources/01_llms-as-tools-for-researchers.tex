@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
 
 \begin{document}
 
@@ -19,7 +20,7 @@ In our guidelines, the following study types and used to contextualize the recom
 In qualitative data analysis, manually annotating or coding text passages, e.g. in software artifacts, open-ended survey responses, or interview transcripts, is often a time-consuming manual process~\cite{DBLP:journals/ase/BanoHZT24}.
 LLMs can be used to augment or even replace human annotations, provide suggestions for new codes (see \textbf{LLMs for Synthesis}), or even automate the entire process.
 
-\emph{Examples:} Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
+\emph{Example(s):} Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
 Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
 They used three 7B-parameter models (Llama3, Gemma, and Mistral) with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
@@ -42,31 +43,28 @@ While pooling multiple outputs can improve reliability, this approach necessitat
 While generally cost-effective, LLM annotation requires careful management of per-token charges, particularly for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. Furthermore, achieving reliable annotations may require multiple runs of the same input to enable majority voting~\cite{DBLP:journals/corr/abs-2304-11085}, although exact cost comparisions between LLM-based and human annotation is controversaly discussed~\cite{DBLP:conf/chi/HeHDRH24}.
 Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}. %These biases are especially pronounced when dealing with newer topics, such as the Russo-Ukrainian conflict sentiment analysis.
 
+
 \subsubsection{LLMs as Raters}
 
 \emph{Description:} In empirical studies, LLMs can act as raters to evaluate the quality or other properties of software artifacts such as code, documentation, and design patterns.
 
-\emph{Example:}  For instance, LLMs can be trained to assess code readability, adherence to coding standards, or the quality of comments. 
+\emph{Example(s):}  For instance, LLMs can be trained to assess code readability, adherence to coding standards, or the quality of comments. \todo{Examples of such studies in software engineering include...}
 
-\emph{Promises:} By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human raters might introduce. 
+\emph{Advantages:} By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human raters might introduce. 
 This can lead to more reliable and reproducible results in empirical studies.
 
-\emph{Perils:} However, when relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
-
-\emph{Previous Work in SE:}  \textbf{TODO:} Examples of such studies in software engineering include...
+\emph{Challenges:} However, when relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
 
 
 \subsubsection{LLMs for Synthesis}
 
 \emph{Description:} LLMs can be used to synthesis large amounts of qualitative data.
 
-\emph{Example:}  For example, they can summarize or compare papers for literature reviews or support researchers in deriving codes and developing coding guides during the initial phase of qualitative data analysis. Those code can then later be used to annotate more data (see \textbf{annotation}).
+\emph{Example(s):}  For example, they can summarize or compare papers for literature reviews or support researchers in deriving codes and developing coding guides during the initial phase of qualitative data analysis. Those code can then later be used to annotate more data (see \textbf{annotation}). \todo{Examples of such studies in software engineering include...}
 
-\emph{Promises:} \textbf{TODO}
+\emph{Advantages:} \todo{write paragraph}
 
-\emph{Perils:} \textbf{TODO}
-
-\emph{Previous Work in SE:}  \textbf{TODO:}  \textbf{TODO:} Examples of such studies in software engineering include...
+\emph{Challenges:} \todo{write paragraph}
 
 
 \subsubsection{LLMs as Subjects}
@@ -75,32 +73,26 @@ This can lead to more reliable and reproducible results in empirical studies.
 To achieve this, prompt engineering techniques are widely employed, with a common approach being the use of the \textit{Personas Pattern}~\cite{DBLP:journals/corr/abs-2308-07702}, which involves tailoring LLM responses to align with predefined profiles or roles that emulate specific user archetypes. 
 Furthermore, recent sociological studies have emphasized that, to be effectively utilized in this capacity, LLMs—including their agentic versions tailored through prompt engineering—should meet four criteria of algorithmic fidelity~\cite{DBLP:journals/corr/abs-2209-06899}; generated responses should be: indistinguishable from human-produced texts; consistent with the attitudes and sociodemographic information of the conditioning context; naturally aligned with the form, tone, and content of the provided context; and reflective of patterns in relationships between ideas, demographics, and behavior observed in comparable human data.
 
-\emph{Example:} LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. 
-Examples include:
-\begin{itemize}
-    \item \textbf{Survey and Interview Studies:} LLMs can impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts.
-    \item \textbf{Usability Studies:} In software usability studies, LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas.
-    \item \textbf{Experimental Studies:} LLMs can participate in experiments that test collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes.
-    \item \textbf{Simulated Decision-Making Studies:} LLMs can emulate team members in simulated decision-making exercises, such as planning sprints or prioritizing software requirements, enabling researchers to analyze team dynamics under different configurations.
-\end{itemize}
+\emph{Example(s):} LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. 
+They can be used in \emph{survey and interview studies} to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts. In \emph{usability studies}, LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. In \emph{experimental studies}, LLMs can participate in experiments that test collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes. In \emph{simulated decision-making studies}, LLMs can emulate team members in simulated decision-making exercises, such as planning sprints or prioritizing software requirements, enabling researchers to analyze team dynamics under different configurations.
 Although not specifically focused on software engineering, Xu et al.~\cite{DBLP:journals/ipm/XuSRGPLSH24} have compiled various uses within the field of social science that are particularly relevant and transferable to the context of software development, given its socio-technical nature.
 
-\emph{Promises:} Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}. 
-Furthermore, employing LLMs as subjects enables researchers to conduct empirical research under consistent and repeatable conditions, enhancing the reliability and scalability of the studies.
-
-\emph{Perils:} However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using them as study subjects; examples of these include:
-\begin{itemize}
-    \item \textbf{Distorted Representation:} LLMs tend to misrepresent demographic group perspectives, reflecting more the opinions of out-group members than those of in-group members.
-    \item \textbf{Group Flattening:} LLMs often oversimplify demographic identities, failing to capture the diversity of opinions and experiences within a group.
-    \item \textbf{Essentialization of Identity:} The use of identity-based prompts can reduce identities to fixed and innate characteristics, amplifying perceived differences between groups.
-\end{itemize}
-To mitigate these issues, encoded identity names can be used instead of explicit labels, the temperature setting can be increased to enhance response diversity, and alternatives to demographic prompts can be employed when the goal is to broaden response coverage~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908}.
-
-\emph{Previous Work in SE:} The use of LLMs as subjects is not yet widely adopted in software engineering, although much of what is being explored in the field of social science is beginning to be transferred.
+\todo{Merge the SE related work below into the categories above}
 
 Examples of studies in software engineering include the works of Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} and Bano et al.~\cite{bano2025doessoftwareengineerlook}. 
 Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored various applications of LLMs, such as persona-based interviews, multi-persona focus groups, survey simulations, and observational studies employing multimodal models. They examined how LLMs can emulate human responses and behaviors while addressing critical ethical concerns, biases, and methodological challenges. The authors advocated for a hybrid approach that integrates AI-generated and human-generated data to improve research scalability and effectiveness while ensuring that human subjects are not entirely replaced.
 Bano et al.~\cite{bano2025doessoftwareengineerlook} investigated how LLMs, specifically GPT-4 and Microsoft Copilot, reinforce societal stereotypes in software engineering recruitment processes. They generated 300 candidate profiles and evaluated LLMs' ability to rank candidates for four distinct SE roles. Both textual and visual outputs were analyzed, uncovering biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly in senior positions. Their findings underline the risks of perpetuating exclusionary norms and present a replicable framework for assessing biases in LLM-generated data, emphasizing the need for equitable and inclusive AI integration in software engineering workflows.
+
+\emph{Advantages:} Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}. 
+Furthermore, employing LLMs as subjects enables researchers to conduct empirical research under consistent and repeatable conditions, enhancing the reliability and scalability of the studies.
+\todo{How can studies be consistent and repeatable if the output is non-deterministic (see also our guidelines)?}
+
+\emph{Challenges:} However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using them as study subjects.
+One issue is that LLMs tend to \emph{misrepresent demographic group perspectives}, reflecting more the opinions of out-group members than those of in-group members.
+Further, LLMs often \emph{oversimplify demographic identities}, failing to capture the diversity of opinions and experiences within a group.
+The use of identity-based prompts can \emph{reduce identities to fixed and innate characteristics}, amplifying perceived differences between groups.
+To mitigate these issues, encoded identity names can be used instead of explicit labels, the temperature setting can be increased to enhance response diversity, and alternatives to demographic prompts can be employed when the goal is to broaden response coverage~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908}.
+
 
 \subsubsection{References}
 
