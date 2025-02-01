@@ -1,17 +1,15 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
 \usepackage{hyperref}
 
 \begin{document}
 
 \subsection{Use an Open LLM as a Baseline}
 
-\subsubsection{Context}
-
-\textbf{TODO}
-
 \subsubsection{Recommendations}
 
+\todo{outline context}
 To ensure the reproducibility of results, we recommended findings be reported with an open LLM as a baseline.
 This applies both when using LLMs as tools for supporting researchers in empirical studies and when benchmarking LLMs for SE tasks.
 In case LLMs are integrated into new tools, this is also preferable if the architecture of the tool allows it.
@@ -21,22 +19,29 @@ A replication package for papers using LLMs should include clear instructions th
 This practice enhances the credibility of the study and allows for independent verification of the results. 
 Researchers could, e.g., mention that "results were compared with those obtained using Meta’s Code LLAMA, available on the Hugging Face platform" and point to a replication package.
 
-\textbf{TODO:} Inter-model agreement, model confidence
+\todo{Inter-model agreement, model confidence}
 
-\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
 
-\subsubsection{Example}
+\subsubsection{Example(s)}
 
-\textbf{TODO}
+\todo{write paragraph}
 
-\subsubsection{Benefits}
 
-\textbf{TODO}
+\subsubsection{Advantages}
+
+\todo{write paragraph}
+
 
 \subsubsection{Challenges}
 
 We are aware that the definition of an ``open'' model is actively being discussed, and many open models are essentially only ``open weight''~\cite{Gibney2024}.
 We consider the \emph{Open Source AI Definition} proposed by the \emph{Open Source Initiative} (OSI)~\cite{OSIAI2024} to be a first step towards defining true open-source models.
+
+
+\subsubsection{Study Types}
+
+\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
+
 
 \subsubsection{References}
 
