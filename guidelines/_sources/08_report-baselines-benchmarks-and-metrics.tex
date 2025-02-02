@@ -7,8 +7,11 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 \section{Benchmarks, Baselines and Metric}
+=======
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 % Introduction
 % - [ ] Maybe already mention limitations/ challenges
 Benchmarks, baselines, and metrics play a significant role in assessing the effectiveness of a model.
@@ -23,7 +26,11 @@ Thus, a baseline represents a reference point for the measured LLM.
 The following section describes benchmarks, metrics, and baselines used.
 For each, we provide examples, recommendations, and challenges researchers should be aware of.
 
+<<<<<<< HEAD
 \subsection{Benchmarks, Baselines and Metrics}
+=======
+\subsection{Benchmarks}
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 
 Benchmarks are model-independent standardized tests used to assess the performance of LLMs on specific tasks.
 In software engineering, benchmarks for LLMs are tailored for a specific task related to software engineering, such as code completion or code comprehension, allowing researchers to identify weaknesses and track improvements over time.
@@ -35,6 +42,7 @@ Each snippet consists of four parts: a prompt based on function definition and a
 The input of the LLM is the entire prompt.
 The output of the LLM is evaluated either against the canoncial solution or against the fullilment of all tests using metrics.
 
+<<<<<<< HEAD
 \subsection{Metrics}
 % Metrics
 Metrics capture the quality of a model's performance in a single value.
@@ -72,6 +80,11 @@ The resulting pass rate ranges from 0 to 1.
 A pass rate of 0 indicates that the model was not able to generate a single correct solution within k tries.
 A pass rate of 1 indicates that the model successfully generated at least one correct solution in k tries.
 % Choosing k-value
+=======
+Metrics capture the quality of a model's performance in a single value.
+In the context of code generation, pass@k, and edit distance are often reported.
+
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 \text{Pass@k} = 1 - \frac{\binom{n-c}{k}}{\binom{n}{k}}
 \begin{description}
     \item[n:] total number of generated samples per prompt
@@ -79,6 +92,15 @@ A pass rate of 1 indicates that the model successfully generated at least one co
     \item[k:] number of samples
 \end{description}
 
+<<<<<<< HEAD
+=======
+% Pass@k Metric
+Pass@k reports the likelihood of a model correctly completing a code snippet at least once within \emph{k} tries.
+The resulting pass rate ranges from 0 to 1.
+A pass rate of 0 indicates that the model was not able to generate a single correct solution within k tries.
+A pass rate of 1 indicates that the model successfully generated at least one correct solution in k tries.
+% Choosing k-value
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 Choosing an appropriate value for \emph{k} depends on the downstream task of the model and how end-users interact with the model.
 % k= 1 -- pass@1
 A high pass rate at pass@1 is highly desirable in tasks where the system only presents one solution or if a single solution requires high computational effort.
@@ -91,6 +113,7 @@ Human-in-the-loop workflows or selection implementations such as filtering and r
 For example, the end user might select between multiple suggestions in test case generation, making higher k-values acceptable.
 In code search, finding the most appropiate good snippet for a given context, a reranking algorithm mitgate low passrates at low k-values.
 
+<<<<<<< HEAD
 \subsubsection{Accuracy/ Accuracy@k}
 \todo{}
 
@@ -119,16 +142,80 @@ The metric Mean Reciporcal Rank is often used for recommendation tasks.
 Before executing a benchmark, the authors recommend to investigate what kind of data the benchmark uses.
 Without knowing the underlying data of a benchmark, argumentating and dicussing the performance of a model becomes impossible.
 =======
+=======
+The edit distance, is also known as Levenshtein distance
+
+\cite{10.1145/3695988} provides both a comprehensive overview of benchmarks categorized by software engineering tasks and overall used metrics.
+The corresponding table taken from the paper is provided below.
+
+\subsection{}
+
+<<<<<<< HEAD
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 \subsubsection{Recommendations}
 
 \todo{outline context}
 
 \todo{What are suitable metrics and benchmarks for evaluating LLMs? A good starting point could be this paper~\cite{10.1145/3695988}.}
+<<<<<<< HEAD
 >>>>>>> fa2adc1 (Revise structure)
 
 % In case benchmarks do not make sense, go one level deeper and investigate why and how a metric is calculated. It might be the case that different problems are present e.g. wrong formation
 In case of unexpected scores of metrics, results should be investigated in more detail, to uncover potential problems such as wrong formating.
 For example, formating of code highly influences some metric calculation such as BLEU or Exact Match.
+=======
+=======
+\subsubsection{Context}
+
+
+\subsection{New Stuff}
+
+% Baselines
+% Provide a reference point for existing research
+% - often include traditional non-LLM based
+% - used to show a difference between (often) low-cost solutions and
+% - should report the same metric e.g.
+% Example:
+% - LLM for test prioritisation
+% - LLM
+
+\subsubsection{Recommendations}
+
+%% ***TODO: For each metric***
+%% - [ ] Explain the metric in more detail?
+%% - [ ] Explain what is considered "good" and "bad" for a given context?
+%% - [ ] Add some examples
+%% - [ ] Categorize metrics based on the paper in metrics used for regression, code generation and classification?
+%% - [ ] Include mathematical notation? If yes, explain it in more detail to make it easier?/ provide python implementation/ example?
+
+% Investigate what kind of data you have at hand from the benchmark by other reading through the paper of the benchmark or making an evaluation by yourself
+% In case benchmarks do not make sense, go one level deeper and investigate why and how a metric is calculated. It might be the case that different problems are present e.g. wrong formation
+
+% Execution of untrusted code --> use sandboxing
+
+% Repeat the generation because of non-determinsm
+
+\textbf{TODO:} What are suitable metrics and benchmarks for evaluating LLMs? A good starting point could be this paper~\cite{10.1145/3695988}.
+>>>>>>> c5e0665 (Added first draft of benchmark+pass@k)
+
+% What is a benchmark?
+% -[  ] Definition of a benchmark
+
+% Broad definition of a benchmark
+% Subject: LLMs
+%
+
+% Evaluation techniques of benchmarks
+The challenge is to find the correct benchmark and metric for the given problem.
+
+### Code Generation
+
+For code generation the following metrics are reported. ***TODO Note: I think we should only explain the top n***
+
+* [pass@k](https://arxiv.org/pdf/2107.03374) Pass@1 Pass@2 Pass@5 Pass@10, reporting of k depends on the specific usecase of the tool. e.g. for code completion in an IDE pass@1 is essential because the user only get to see one result, pass@5 and pass@10 show that LLMs are somewhat capable of solving the given task (indication that through e.g. fine-tuning it might be possible to solve) or if users get multiple options to choose from (e.g. test generation)
+* [BLEU-N](https://aclanthology.org/P02-1040.pdf)
+* [CodeBLEU](https://arxiv.org/abs/2009.10297)
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 
 <<<<<<< HEAD
 % Execution of untrusted code --> use sandboxing
@@ -149,14 +236,27 @@ As long as hyperparameters (e.g. temperature, top-p and top-k) are not limiting 
 =======
 \todo{Maybe something along the lines of using different benchmarks? Being aware of their biases (e.g., focus on a particular programming language such as Python)?}
 
+<<<<<<< HEAD
 \todo{Mention aspects such as repeating the generation to handle non-determinism (``When evaluating model performance, it is recommended to conduct multiple tests and average the results.''  \url{https://huggingface.co/deepseek-ai/DeepSeek-R1\#usage-recommendations}) how were repetitions aggregated?}
 >>>>>>> fa2adc1 (Revise structure)
 
+<<<<<<< HEAD
 % Use multiple benchmarks to ease the bias.
 Distinctive benchmarks evaluated on a model strengthen the meaningfulness of statements derived from a metric.
 A single benchmark only tests an isolated aspect on a model.
 The benchmark could have been leaked in the training data set, sophisticating the benchmark results.
 To mitigate this, the authors recommend to test a model on multiple benchmark and report each
+=======
+\begin{enumerate}
+\item HumanEval \url{https://github.com/openai/human-eval}
+\item REPOCOD \url{https://huggingface.co/datasets/lt-asset/REPOCOD}
+\item CoderEval \url{https://github.com/CoderEval/CoderEval}
+\item ...
+\end{enumerate}
+=======
+%\todo{TODO: Mention aspects such as repeating the generation to handle non-determinism}
+>>>>>>> c5e0665 (Added first draft of benchmark+pass@k)
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 
 <<<<<<< HEAD
 % If appropirate use existing techniques such as static code analysis as comparison.
@@ -208,6 +308,7 @@ TransCoder \cite{{DBLP:journals/corr/abs-2006-03511} & Code Translation & https:
 \todo{write paragraph}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 % Provide comparability
 % Provide reproducability
 % Track progress
@@ -250,6 +351,8 @@ The benchmark itself could be part of the model's training dataset.
 Such benchmark leakage may lead to the model remembering the actual solution from the training data rather than solving the new task based on the seen data.
 This leads to the model's artificially high performance on the benchmark; however, for unforeseen scenarios, the model performs poorly.
 =======
+=======
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 
 \subsubsection{Challenges}
 
@@ -260,7 +363,39 @@ This leads to the model's artificially high performance on the benchmark; howeve
 
 \todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
 
+<<<<<<< HEAD
 >>>>>>> fa2adc1 (Revise structure)
+=======
+=======
+% Provide comparability
+% Provide reproducability
+% Track progress
+% leaderboards
+% Tool to select the best model for a given task
+
+\subsubsection{Challenges}
+
+% Choosing the right metric can be challenging
+Choosing the right metric is challenging.
+Each
+
+% Bias throughs Python
+
+
+% Closed source vs open source
+Closed models currently provide better performance on most tasks, however they do not provide full transparency and reproducability.
+
+% Not all metrics can be captured by fully automated metrics
+
+% Benchmarks might not generalize to real-world tasks / Benchmarks only measure one aspect in an isolated setting
+% Fail to capture other qualitiative aspects (e.g. readability, maintainability)
+Benchmarks might not reflect real-world tasks.
+
+% Overfitting to a specific task is a risk
+
+% Test data leakage
+>>>>>>> c5e0665 (Added first draft of benchmark+pass@k)
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 
 \subsubsection{References}
 
@@ -270,6 +405,36 @@ This leads to the model's artificially high performance on the benchmark; howeve
 \end{document}
 
 
+<<<<<<< HEAD
+=======
+%% ## (WIP) Report Suitable Benchmarking Metrics
+
+%% ### Metrics
+
+%% LLM metrics capture an aspect of a model, capturing performance and quality of a model tailored for a specific task.
+%% For example, one typical metric used for evaluating Large Language Model performance on code synthesis is pass@k.
+%% For code synthesis, pass@k reports how the likelihood of a model to correctly complete a code snippet at least once within k tries.
+%% However, pass@k is only one of many metrics uesd to evaluate code synthesis.
+
+%% [HOUS at. el.](https://arxiv.org/pdf/2308.10620) reviewed 395 LLM for software engineering papers and reported the most used metrics for a problem type.
+%% They categorized each metric in one of three problem categories: regression, classification and generation.
+%% The table of used metrics for each category is shown below.
+
+%% ![Usage of Evaluation Metrics](/assets/images/evaluation_metrics.png)
+%% *Usage of Evaluation Metrics taken from [HOUS at. el.](https://arxiv.org/pdf/2308.10620)*
+
+%% ***TODO: For each metric***
+%% - [ ] Explain the metric in more detail?
+%% - [ ] Explain what is considered "good" and "bad" for a given context?
+%% - [ ] Add some examples
+%% - [ ] Categorize metrics based on the paper in metrics used for regression, code generation and classification?
+%% - [ ] Include mathematical notation? If yes, explain it in more detail to make it easier?/ provide python implementation/ example?
+
+%% #### Code Generation
+
+%% For code generation the following metrics are reported. ***TODO Note: I think we should only explain the top n***
+
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 %% * [pass@k](https://arxiv.org/pdf/2107.03374) Pass@1 Pass@2 Pass@5 Pass@10, reporting of k depends on the specific usecase of the tool. e.g. for code completion in an IDE pass@1 is essential because the user only get to see one result, pass@5 and pass@10 show that LLMs are somewhat capable of solving the given task (indication that through e.g. fine-tuning it might be possible to solve) or if users get multiple options to choose from (e.g. test generation)
 %% * [BLEU-N](https://aclanthology.org/P02-1040.pdf)
 %% * [CodeBLEU](https://arxiv.org/abs/2009.10297)
@@ -292,7 +457,10 @@ This leads to the model's artificially high performance on the benchmark; howeve
 
 
 %% #### Domain-specific metrics
+<<<<<<< HEAD
 %%
+=======
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
 %% * If a tool is analyzed, the acceptance rate of generated artifacts could be interesting (how many artifacts were accepted/rejected by the user)
 %% * Inter-model-agreement (related to section on open LLM as baseline): Ask different LLMs or differently confidered LLMs and determine their agreement
 %% * Cross Cutting Metrics: Costs/Energy requirements to get the results (database community often reports on how expensive it was to get results, would be interesting for LLMs too but nobody does it yet)
@@ -330,6 +498,7 @@ This leads to the model's artificially high performance on the benchmark; howeve
 
 %% * [Avatar](https://arxiv.org/pdf/2108.11590)
 %% * [Transcoder](https://arxiv.org/pdf/2006.03511)
+<<<<<<< HEAD
 
 % #### Baselines
 
@@ -340,3 +509,5 @@ This leads to the model's artificially high performance on the benchmark; howeve
 % Example:
 % - LLM for test prioritisation
 % - LLM
+=======
+>>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
