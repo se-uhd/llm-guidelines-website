@@ -8,10 +8,15 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 \section{Benchmarks, Baselines and Metric}
 =======
 >>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
+=======
+
+\section{Benchmarks, Baselines and Metric}
+>>>>>>> 6150d76 (Added recommendations)
 % Introduction
 % - [ ] Maybe already mention limitations/ challenges
 Benchmarks, baselines, and metrics play a significant role in assessing the effectiveness of a model.
@@ -65,6 +70,7 @@ And for classification tasks, classical machine learning metrics such as Precisi
 \cite{10.1145/3695988} provides both a comprehensive overview of benchmarks categorized by software engineering tasks and overall used metrics.
 
 \subsubsection{BLEU-N}
+<<<<<<< HEAD
 
 BLEU-N \cite{DBLP:conf/acl/PapineniRWZ02} is a similarity score based on n-gram precision between two strings, ranging from 0 to 1.
 Values close to 0 depict dissimilar values closer to 1 represent similar content.
@@ -108,14 +114,19 @@ And for classification tasks, classical machine learning metrics such as Precisi
 \cite{10.1145/3695988} provides both a comprehensive overview of benchmarks categorized by software engineering tasks and overall used metrics.
 
 \subsubsection{BLEU}
+=======
+>>>>>>> 6150d76 (Added recommendations)
 
-BLEU is a similarity score based on n-gram precision between two strings in the range of 0 and 1. %TODO mention brevity penalty?
-While values close to 0 depict dissimilar values closer to 1 represent similar content.
-For code generation a value closer to 1 indicates that the model is more capable of generating the expected output.
-BLEU does not measure semantic correctness, thus a high BLEU score does not directly indicate that the generated code is executable.
-
-BLEU has multipe variations.
-The most common variations for used for assessing are CodeBLEU \cite{TODO} and CrystalBLEU \cite{TODO}.
+BLEU-N \cite{DBLP:conf/acl/PapineniRWZ02} is a similarity score based on n-gram precision between two strings, ranging from 0 to 1.
+Values close to 0 depict dissimilar values closer to 1 represent similar content.
+A value closer to 1 indicates that the model is more capable of generating the expected output for code generation.
+BLEU does not measure semantic correctness nor structural correctness; thus, a high BLEU score does not directly indicate that the generated code is executable.
+% Short description of BLEU
+The score measures how many n-grams from the generated output of a model appear in the target string.
+In isolation, this approach favors shorter over longer generated sequences because it is more likely to have fewer n-grams in an extensive target sequence than more.
+To mitigate this, the so-called brevity penalty is introduced to disincentivize short sequences when having longer target sequences.
+BLEU has multiple variations.
+CodeBLEU \cite{DBLP:journals/corr/abs-2009-10297} and CrystalBLEU \cite{DBLP:conf/kbse/EghbaliP22} are the most notable variations tailored to code, by introducing additional heuristics such as AST matching.
 
 \subsubsection{Pass@k}
 % Pass@k Metric
@@ -168,6 +179,7 @@ As the name suggests, the metric \emph{Exact Match} calculates the percentage of
 If the model is able to produce the exact target sequence a score of 1 is awarded; otherwise 0.
 Compared to BLEU-N, \emph{Exact Match} is a stricter measurement.
 Due to its strictness, reported scores are usually low.
+<<<<<<< HEAD
 
 \subsubsection{Mean Reciprocal Rank}
 
@@ -196,8 +208,12 @@ The edit distance, is also known as Levenshtein distance
 
 \subsubsection{Exact Math}
 \todo{}
+=======
+>>>>>>> 6150d76 (Added recommendations)
 
 \subsubsection{Mean Reciprocal Rank}
+
+The metric Mean Reciporcal Rank is often used for recommendation tasks.
 \todo{}
 
 \subsubsection{Precision, Recall, F1-score and Accuracy}
@@ -226,39 +242,78 @@ For example, formating of code highly influences some metric calculation such as
 \subsubsection{Context}
 \subsection{New Stuff}
 
-% Baselines
-% Provide a reference point for existing research
-% - often include traditional non-LLM based
-% - used to show a difference between (often) low-cost solutions and
-% - should report the same metric e.g.
-% Example:
-% - LLM for test prioritisation
-% - LLM
-
 \subsubsection{Recommendations}
 
 % Investigate what kind of data you have at hand from the benchmark by other reading through the paper of the benchmark or making an evaluation by yourself
+Before executing a benchmark, the authors recommend to investigate what kind of data the benchmark uses.
+Without knowing the underlying data of a benchmark, argumentating and dicussing the performance of a model becomes impossible.
+
 % In case benchmarks do not make sense, go one level deeper and investigate why and how a metric is calculated. It might be the case that different problems are present e.g. wrong formation
+In case of unexpected scores of metrics, results should be investigated in more detail, to uncover potential problems such as wrong formating.
+For example, formating of code highly influences some metric calculation such as BLEU or Exact Match.
 
 % Execution of untrusted code --> use sandboxing
+Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
+To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
 
 % Repeat the generation because of non-determinsm
+LLM generation is by-design non-determinisc making repeated experiments mandatory. % as long as temperature/ top-p / top-k is set correctly
+As long as hyperparameters (e.g. temperature, top-p and top-k) are not limiting randomness, researchers should execute experiments multiple times and calculate averages, confidence intervals or standard deviations across multiple runs.
+
 % Use multiple benchmarks to ease the bias.
+Distinctive benchmarks evaluated on a model strengthen the meaningfulness of statements derived from a metric.
+A single benchmark only tests an isolated aspect on a model.
+The benchmark could have been leaked in the training data set, sophisticating the benchmark results.
+To mitigate this, the authors recommend to test a model on multiple benchmark and report each
 
 <<<<<<< HEAD
 \textbf{TODO:} What are suitable metrics and benchmarks for evaluating LLMs? A good starting point could be this paper~\cite{10.1145/3695988}.
 >>>>>>> c5e0665 (Added first draft of benchmark+pass@k)
 =======
 % If appropirate use existing techniques such as static code analysis as comparison.
+<<<<<<< HEAD
 >>>>>>> 2f1f7de (Added challenges)
+=======
+If your model supplements traditional tools or approaches, the researcher should compare against them.
+>>>>>>> af6a433 (Added recommendations)
 
 %\textbf{TODO:} Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).
 
-% \subsubsection{Example} % Examples are integrated
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 % Evaluation techniques of benchmarks
 The challenge is to find the correct benchmark and metric for the given problem.
+=======
+% Reproducibility
+Experiment setup including hyperparameters must be reported to ensure reproducibility.
+
+
+\subsubsection{Example}
+
+\begin{center}
+\begin{tabular}{||c c c||}
+\hline
+Benchmark & Main SE Area & Reference Link % Add language?/ purpose?
+\hline\hline
+
+HumanEval \cite{DBLP:conf/acl/PapineniRWZ02} & Code Generation & https://github.com/openai/human-eval \\
+\hline
+
+MBPP \cite{DBLP:journals/corr/abs-2108-07732} & Code Generation & https://huggingface.co/datasets/google-research-datasets/mbpp \\
+\hline
+
+ClassEval \cite{DBLP:journals/corr/abs-2308-01861} & Code Generation & https://github.com/openai/human-eval \\
+\hline
+
+TransCoder \cite{{DBLP:journals/corr/abs-2006-03511} & Code Translation & https://github.com/facebookresearch/CodeGen \\
+\hline
+
+\end{tabular}
+\end{center}
+
+\subsubsection{Benefits}
+>>>>>>> af6a433 (Added recommendations)
 
 ### Code Generation
 
@@ -537,9 +592,13 @@ This leads to the model's artificially high performance on the benchmark; howeve
 
 %% #### Domain-specific metrics
 <<<<<<< HEAD
+<<<<<<< HEAD
 %%
 =======
 >>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
+=======
+%%
+>>>>>>> 6150d76 (Added recommendations)
 %% * If a tool is analyzed, the acceptance rate of generated artifacts could be interesting (how many artifacts were accepted/rejected by the user)
 %% * Inter-model-agreement (related to section on open LLM as baseline): Ask different LLMs or differently confidered LLMs and determine their agreement
 %% * Cross Cutting Metrics: Costs/Energy requirements to get the results (database community often reports on how expensive it was to get results, would be interesting for LLMs too but nobody does it yet)
@@ -578,6 +637,9 @@ This leads to the model's artificially high performance on the benchmark; howeve
 %% * [Avatar](https://arxiv.org/pdf/2108.11590)
 %% * [Transcoder](https://arxiv.org/pdf/2006.03511)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6150d76 (Added recommendations)
 
 % #### Baselines
 
@@ -588,5 +650,8 @@ This leads to the model's artificially high performance on the benchmark; howeve
 % Example:
 % - LLM for test prioritisation
 % - LLM
+<<<<<<< HEAD
 =======
 >>>>>>> 8e2d179 (Added first draft of benchmark+pass@k)
+=======
+>>>>>>> 6150d76 (Added recommendations)
