@@ -102,21 +102,21 @@ Furthermore, recent sociological studies have emphasized that, to be effectively
 
 \subsubsection{Example(s)}
 
-LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. 
-They can be used in \emph{survey and interview studies} to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts. In \emph{usability studies}, LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. In \emph{experimental studies}, LLMs can participate in experiments that test collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes. In \emph{simulated decision-making studies}, LLMs can emulate team members in simulated decision-making exercises, such as planning sprints or prioritizing software requirements, enabling researchers to analyze team dynamics under different configurations.
-Although not specifically focused on software engineering, Xu et al.~\cite{DBLP:journals/ipm/XuSRGPLSH24} have compiled various uses within the field of social science that are particularly relevant and transferable to the context of software development, given its socio-technical nature.
+LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants in controlled, repeatable scenarios. The broader applicability of LLM-based studies beyond software engineering has been compiled by Xu et al.~\cite{DBLP:journals/ipm/XuSRGPLSH24}, who examined various uses in social science research. Given the socio-technical nature of software development, many of these approaches are highly transferable to this domain, demonstrating the growing role of LLMs in empirical software engineering research.
 
-\todo{Merge the SE related work below into the categories above}
+LLMs can be applied in \textit{survey and interview studies} to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts. For instance, Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored persona-based interviews and multi-persona focus groups, demonstrating how LLMs can emulate human responses and behaviors while addressing ethical concerns, biases, and methodological challenges. Their study highlighted the potential of LLMs in enhancing research scalability while advocating for a hybrid approach that integrates AI-generated and human-generated data to preserve the validity of findings.
 
-Examples of studies in software engineering include the works of Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} and Bano et al.~\cite{bano2025doessoftwareengineerlook}. 
-Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored various applications of LLMs, such as persona-based interviews, multi-persona focus groups, survey simulations, and observational studies employing multimodal models. They examined how LLMs can emulate human responses and behaviors while addressing critical ethical concerns, biases, and methodological challenges. The authors advocated for a hybrid approach that integrates AI-generated and human-generated data to improve research scalability and effectiveness while ensuring that human subjects are not entirely replaced.
-Bano et al.~\cite{bano2025doessoftwareengineerlook} investigated how LLMs, specifically GPT-4 and Microsoft Copilot, reinforce societal stereotypes in software engineering recruitment processes. They generated 300 candidate profiles and evaluated LLMs' ability to rank candidates for four distinct SE roles. Both textual and visual outputs were analyzed, uncovering biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly in senior positions. Their findings underline the risks of perpetuating exclusionary norms and present a replicable framework for assessing biases in LLM-generated data, emphasizing the need for equitable and inclusive AI integration in software engineering workflows.
+In \textit{usability studies}, LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. This aligns with the work of Bano et al.~\cite{bano2025doessoftwareengineerlook}, who investigated biases in LLM-generated candidate profiles in software engineering recruitment processes. Their study, which analyzed both textual and visual outputs, revealed biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly for senior roles. This demonstrates how LLMs can be used to assess usability concerns, such as fairness and inclusivity, in AI-driven decision-making tools within software engineering.
+
+In \textit{experimental studies}, LLMs can participate in experiments testing collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes. 
+Similarly, in \textit{simulated decision-making studies}, LLMs can emulate team members in exercises such as sprint planning or software requirement prioritization, enabling researchers to analyze team dynamics under different configurations.
 
 \subsubsection{Advantages}
 
 Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}. 
 Furthermore, employing LLMs as subjects enables researchers to conduct empirical research under consistent and repeatable conditions, enhancing the reliability and scalability of the studies.
-\todo{How can studies be consistent and repeatable if the output is non-deterministic (see also our guidelines)?}
+
+An emerging challenge is the replicability and consistency of studies involving LLMs. The non-determinism of these models introduces potential issues in this regard. To mitigate these challenges, adjustments can be made to the model's temperature settings, or the number of personas simulated by LLMs can be increased. The latter strategy, in particular, could be complemented by inter-group analyses to verify and demonstrate the potential lack of impact of non-determinism, ensuring the consistency of the model's results.
 
 \subsubsection{Challenges}
 
@@ -152,7 +152,7 @@ For example, Khojah et al. investigated the use of ChatGPT by professional softw
 \todo{write paragraph}
 
 
-\subsection{LLMs for new Software Engineering Tools}
+\subsection{LLMs for New Software Engineering Tools}
 
 \subsubsection{Description}
 
@@ -164,7 +164,7 @@ In this regard, the advent of \textit{GenAI Agents} has enabled the development 
 
 Researchers can propose tools to facilitate technology transfer from the research environment to industry. 
 For instance, the work of Richards and Wessel introduced a preliminary GenAI Agent designed to assist developers in understanding source code by leveraging a conceptual theory (the reasoning component) based on the theory of mind~\cite{DBLP:conf/icsm/RichardsW24}. 
-Similarly, Yan et al. proposed \textsc{Ivie}, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}.
+Similarly, Yan et al. proposed IVIE, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}.
 
 Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. 
 For example, Choudhuri et al. conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks~\cite{DBLP:conf/icse/ChoudhuriLSGS24}.
@@ -191,18 +191,18 @@ LLM output is compared against a ground truth from the dataset in the benchmark 
 
 \subsubsection{Example(s)}
 
-In software engineering, benchmarking may include the evaluation of LLMs' ability to produce accurate and robust outputs for input data from curated real-world projects or synthetic SE specific datasets. Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
+In software engineering, benchmarking may include the evaluation of LLMs ability to produce accurate and robust outputs for input data obtined from curated real-world projects or from synthetic SE-specific datasets. Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
 RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
-The metrics are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
+The metrics used are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
 SWE-Bench~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE python tasks extracted from GitHub pull requests.
-For scoring the performance of the LLMs on the tasks, the authors report first report whether the generated patch is applicable or not (i.e., it fails compilation) and, for successful patches, they use the percentage of test cases passed.
+For scoring the performance of the LLMs on the tasks, the authors report whether the generated patch is applicable or not (i.e., it fails compilation) and, for successful patches, the percentage of test cases passed.
 
 \subsubsection{Advantages}
 
 Properly-built benchmarks provide objective evaluation across different tasks, enabling fair comparison of different models (and versions).
-Moreover, benchmarks build for specific SE tasks can help identify weaknesses of LLM and support their optimization/fine-tuning for such tasks.
+Moreover, benchmarks built for specific SE tasks can help identify LLM weaknesses and support their optimization/fine-tuning for such tasks.
 Benchmark built using real-world data can also help legitimize research results for practitioners, supporting industry-academia collaboration.
-Finally, benchmarks can foster open science practices, by providing a common ground for sharing data (e.g., as part of the benchmark itself) and results (e.g., of models run against a benchmark).
+Finally, benchmarks can foster open science practices by providing a common ground for sharing data (e.g., as part of the benchmark itself) and results (e.g., of models run against a benchmark).
 
 \subsubsection{Challenges}
 
