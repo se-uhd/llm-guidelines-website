@@ -9,10 +9,19 @@
 
 \subsubsection{Recommendations}
 
-While LLMs can automate many tasks, it is important to validate their outputs with human annotations, at least partially. For natural language processing tasks, a large-scale study has shown that LLMs have too large a variation in their results to be reliably used as a substitution for human raters~\cite{DBLP:journals/corr/abs-2406-18403}. Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
+While LLMs can automate many tasks, it is important to validate their outputs with human annotations, at least partially. 
+For natural language processing tasks, a large-scale study has shown that LLMs have too large a variation in their results to be reliably used as a substitution for human raters~\cite{DBLP:journals/corr/abs-2406-18403}. 
+Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
 Especially in studies where LLMs are used to support researchers, human validation should always be employed.
 For studies using LLMs as annotators, the proposed process by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}, which includes an initial few-shot learning and, given good results, the replacement of \emph{one} human annotator by an LLM, might be a way forward.
 
+Researchers may employ human validation to augment existing proxy measures.
+For example, proxies for software quality, such as complexity or the number of code smells may be augmented by human ratings of quality.
+In other cases, human validation may be the only way of measuring a specific construct.
+For example, measuring human factors, such as trust, cognitive load, and comprehension requires human validation.
+
+When conducting empirical measurements, researchers should clearly define the construct that they are measuring and the method of measurement they employ.
+Further, they should use established measurement methods and instruments~\cite{} that are empirically validated~\cite{}.
 
 \subsubsection{Example(s)}
 
@@ -26,10 +35,26 @@ Incorporating human judgment in the evaluation process adds a layer of quality c
 
 \subsubsection{Challenges}
 
+\todo{Elaborate on difficulty finding appropriate measurement methods for constructs}
+\todo{Elaborate on subjectivity}
+
 \todo{write paragraph}
 
 
 \subsubsection{Study Types}
+
+The guidelines apply to all study types if human validation is employed.
+
+MUST
+- Clearly define the construct measured by the human validation
+- Clearly describe the method of measurement and operationalization of the measured construct
+- Use established measurement methods and instruments
+
+SHOULD
+- Use empirically validated measures
+
+MAY
+- 
 
 \todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
 
