@@ -6,7 +6,7 @@ convert_tex_to_md() {
         [ -e "$tex_file" ] || continue
         md_file="${tex_file%.tex}.md"
         # debug: --verbose --log="pandoc.log"
-        pandoc --bibliography="literature.bib" --csl="ieee.csl" -s "$tex_file" -t markdown_strict --citeproc | perl -ne 'print if not /^---/.../^---/; END { print "\n" }' > "$md_file"
+        pandoc --bibliography="literature.bib" --csl="ieee.csl" -s "$tex_file" -t markdown_strict --citeproc --webtex | perl -ne 'print if not /^---/.../^---/; END { print "\n" }' > "$md_file"
     done
 }
 
