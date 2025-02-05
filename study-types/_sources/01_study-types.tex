@@ -20,7 +20,7 @@ In our guidelines, the following study types and used to contextualize the recom
 
 
 \subsection{LLMs as Annotators}
-
+\label{sec:annotate}
 \subsubsection{Description}
 
 LLMs can serve as annotators by automatically labeling artifacts with corresponding categories for data analysis based on a pre-defined coding guide.
@@ -58,14 +58,19 @@ Finally, research has identified consistent biases in label assignment, includin
 
 
 \subsection{LLMs as Raters}
+%neil
 
 \subsubsection{Description}
 
 In empirical studies, LLMs can act as raters to evaluate the quality or other properties of software artifacts such as code, documentation, and design patterns.
+This might include, for example, evaluating the code smells in a piece of code. 
+\emph{Rating} is distinct from the more qualitative task of assigning a code or label (see \ref{sec:annotate}) to (typically) unstructured text.
+It is also distinct from the software engineering tasks of \textbf{using} LLMs to e.g. understand if a requirement is ambiguous~\cite{10.1145/3510003.3510157}.
 
 \subsubsection{Example(s)}
 
 For instance, LLMs can be trained to assess code readability, adherence to coding standards, or the quality of comments. \todo{Examples of such studies in software engineering include...}
+
 
 \subsubsection{Advantages}
 
@@ -74,7 +79,8 @@ This can lead to more reliable and reproducible results in empirical studies.
 
 \subsubsection{Challenges}
 
-However, when relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
+When relying on the judgment of LLMs, researchers have to make sure to build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently.
+Avoid the temptation to assign objectivity to an LLM; evidence shows different LLMs behave differently. 
 
 
 \subsection{LLMs for Synthesis}
