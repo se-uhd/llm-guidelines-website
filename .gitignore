@@ -52,6 +52,7 @@ Thumbs.db
 *.cut
 *.loc
 *.soc
+*.fls
 
 ###################
 # Ruby and Jekyll #
