@@ -27,9 +27,9 @@ LLMs can be used to augment or even replace human annotations, provide suggestio
 
 Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
 Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
-They used three 7B-parameter models (Llama3, Gemma, and Mistral) with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
+They used three models (Llama3, Gemma, and Mistral) of comparable size  with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
-Training on their MJAR dataset improved classifier performance. BERT achieved higher F1 (78.62\%) and accuracy (80.36\%) than when trained on single-model annotations (Mistral: 72.56\%, Gemma: 75.84\%, Llama3: 77.48\%). RoBERTa also saw a 1.73\% F1 increase with MJAR, highlighting the benefits of multi-model annotation.
+Training on the resulting multi-model annotated dataset yielded improved classifier performance compared to single-model annotations. Both BERT and RoBERTa models showed meaningful improvements in F1 score and accuracy when trained on the multi-model annotated dataset versus individual model annotations, highlighting the benefits of their approach.
 
 \subsubsection{Advantages}
 
