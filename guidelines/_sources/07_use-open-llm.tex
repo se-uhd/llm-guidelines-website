@@ -9,16 +9,14 @@
 
 \subsubsection{Recommendations}
 
-\todo{outline context}
 To ensure that empirical studies using Large Language Models (LLMs) in software engineering are reproducible and comparable, we recommend incorporating an open LLM as a baseline for analysis. This applies whether you're using LLMs to explore something or evaluating them on on specific software engineering tasks. 
 Sometimes, including an open LLM baseline might be impossible. Even in that case, using an open LLM on an early version of your product before it is final is a good idea.
 You can access open LLMs through places like Hugging Face or run them on your computer using tools like Ollama or LM Studio. 
-You must provide a replication package to facilitate other researchers checking your work. This should have clear, step-by-step instructions on how to get the same results you did using open LLM models. This makes your research more believable and lets others confirm what you found. For example, researchers could report: "We compared our results to Meta's Code Llama, which is available on Hugging Face." Afterwards, researchers shall include a link to the replication package.
+We reccomend providing a replication package to facilitate other researchers checking your work. This should have clear, step-by-step instructions on how to get the same results you did using open LLM models. This makes your research more believable and lets others confirm what you found. For example, researchers could report: "We compared our results to Meta's Code Llama, which is available on Hugging Face." Afterwards, researchers shall include a link to the replication package.
 
 \citet{widder2024open} discusses three types of openness (transparency, reusability and extensibility) and  what openness in AI can and cannot provide. The Open Source Initiative (OSI) \cite{OSIAI2024} provides a definition of open-source AI that serves as a useful framework for evaluating the openness of AI models. In simple terms, according to OSI, open-source AI means you have access to everything you need to use the AI, such as understanding, modifying, sharing, retraining, and recreating. Thus, researchers must be clear about what "open" means in their context.
 
-Finally, we suggest reporting inter-model agreement metrics when you're looking at how well LLMs are performing. This shows how consistently your LLM agrees with the open LLM baseline. Moreover, if you can, you shall provide model confidence scores. This gives some insights into how sure the model thinks it is about its answers. 
-
+Finally, we recommend reporting and analysing inter-model agreement metrics. These metrics quantify the consistency between your model's outputs and the baseline, thus they support the identification of potential biases or disagreement areas.  Moreover, we recommend reporting the model confidence scores to analyse the model uncertainty.  The analysis of inter-model agreement and model confidence provides valuable insights into the reliability and robustness of LLM performance, allowing a deeper understanding of their capabilities and limitations.
 
 
 \subsubsection{Example(s)}
