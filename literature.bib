@@ -1201,3 +1201,50 @@ keywords = {Software Engineering, Large Language Model, Survey}
  author={Ezzini, Saad and Abualhaija, Sallam and Arora, Chetan and Sabetzadeh, Mehrdad}, 
  year={2022}, month=may, pages={187-199} }
 
+@inproceedings{panHumanCenteredDesignRecommendations2024,
+  title = {Human-{{Centered Design Recommendations}} for {{LLM-as-a-Judge}}},
+  booktitle = {{{ACL}} 2024 {{Workshop HuCLLM}}},
+  author = {Pan, Qian and Ashktorab, Zahra and Desmond, Michael and Cooper, Martin Santillan and Johnson, James and Nair, Rahul and Daly, Elizabeth and Geyer, Werner},
+  year = {2024},
+  month = jul,
+  eprint = {2407.03479},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2407.03479},
+  urldate = {2025-02-06},
+  abstract = {Traditional reference-based metrics, such as BLEU and ROUGE, are less effective for assessing outputs from Large Language Models (LLMs) that produce highly creative or superior-quality text, or in situations where reference outputs are unavailable. While human evaluation remains an option, it is costly and difficult to scale. Recent work using LLMs as evaluators (LLM-as-a-judge) is promising, but trust and reliability remain a significant concern. Integrating human input is crucial to ensure criteria used to evaluate are aligned with the human's intent, and evaluations are robust and consistent. This paper presents a user study of a design exploration called EvaluLLM, that enables users to leverage LLMs as customizable judges, promoting human involvement to balance trust and cost-saving potential with caution. Through interviews with eight domain experts, we identified the need for assistance in developing effective evaluation criteria aligning the LLM-as-a-judge with practitioners' preferences and expectations. We offer findings and design recommendations to optimize humanassisted LLM-as-judge systems.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  keywords = {baltes,Computer Science - Human-Computer Interaction},
+  file = {/Users/nernst/Zotero/storage/U3BBBQ2M/Pan et al. - 2024 - Human-Centered Design Recommendations for LLM-as-a.pdf}
+}
+@misc{bavaresco2024llmsinsteadhumanjudges,
+      title={LLMs instead of Human Judges? A Large Scale Empirical Study across 20 NLP Evaluation Tasks}, 
+      author={Anna Bavaresco and Raffaella Bernardi and Leonardo Bertolazzi and Desmond Elliott and Raquel Fernández and Albert Gatt and Esam Ghaleb and Mario Giulianelli and Michael Hanna and Alexander Koller and André F. T. Martins and Philipp Mondorf and Vera Neplenbroek and Sandro Pezzelle and Barbara Plank and David Schlangen and Alessandro Suglia and Aditya K Surikuchi and Ece Takmaz and Alberto Testoni},
+      year={2024},
+      eprint={2406.18403},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2406.18403}, 
+}
+
+@inproceedings{zhou-etal-2024-llm,
+    title = "Is {LLM} a Reliable Reviewer? A Comprehensive Evaluation of {LLM} on Automatic Paper Reviewing Tasks",
+    author = "Zhou, Ruiyang  and
+      Chen, Lu  and
+      Yu, Kai",
+    editor = "Calzolari, Nicoletta  and
+      Kan, Min-Yen  and
+      Hoste, Veronique  and
+      Lenci, Alessandro  and
+      Sakti, Sakriani  and
+      Xue, Nianwen",
+    booktitle = "Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING 2024)",
+    month = may,
+    year = "2024",
+    address = "Torino, Italia",
+    publisher = "ELRA and ICCL",
+    url = "https://aclanthology.org/2024.lrec-main.816/",
+    pages = "9340--9351",
+    abstract = "The use of large language models (LLM), especially ChatGPT, to help with research has come into practice. Researchers use it for timely advice and hope to obtain in-depth feedback. However, can LLM be a qualified and reliable reviewer? Although there already exist several review-related datasets, few works have carefully and thoroughly inspected model`s capability as a reviewer, especially the correctness of generated reviews. In this paper, we first evaluate GPT-3.5 and GPT-4 (the current top-performing LLM) on 2 types of tasks under different settings: the score prediction task and the review generation task. In addition, we propose a dataset containing 197 review-revision multiple-choice questions (RR-MCQ) with detailed labels from the review-rebuttal forum in ICLR-2023. By asking questions from technical details to the overall presentation and quality, our RR-MCQ data provides a more complete model ability assessment. The results show that LLM is generally helpful, but great caution is needed as it always makes mistakes. Although it can give passable decisions ({\ensuremath{>}} 60{\%} accuracy) on single options, completely correct answers are still rare (about 20{\%}); models are still weak on long paper processing, zero-shot scoring, and giving critical feedback like human reviewers."
+}
