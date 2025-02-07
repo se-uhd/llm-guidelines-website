@@ -58,8 +58,8 @@ Finally, research has identified consistent biases in label assignment, includin
 
 \subsubsection{Description}
 
-In empirical studies, LLMs can act as raters (also known as judges in the literature) to evaluate the quality or other properties of software artifacts.% such as code, documentation, and design patterns.
-For instance, LLMs can be trained to assess code readability, adherence to coding standards, or the quality of comments. 
+In empirical studies, LLMs can act as raters (also known as judges) to evaluate properties of software artifacts.% such as code, documentation, and design patterns.
+For instance, LLMs can be used to assess code readability, adherence to coding standards, or the quality of code comments. 
 \emph{Rating} is distinct from the more qualitative task of assigning a code or label (see \ref{sec:annotate}) to (typically) unstructured text.
 It is also distinct from the software engineering tasks of \textbf{using} LLMs, as we discuss in \ref{sec:llm4se} to e.g. understand if LLMs can find ambiguity in requirements~\cite{10.1145/3510003.3510157}, which is then compared to a human-created gold standard.
 
@@ -83,6 +83,8 @@ Lubos et al. then evaluated the LLM's output against human raters, to assess how
 
 Agreement can be measured in many ways; this study used the conventional Cohen's kappa measure~\cite{cohen60}. The study found moderate agreement on the simple requirements dataset, and poor agreement on the more complex requirements. However, evaluating machine ratings may not be the same as human-human ratings and is an open area of research. See Elangovan et al.~\cite{elangovan2025correlationimpacthumanuncertainty} for more. 
 
+Another study by Ahmed et al.~\cite{ahmed2025llmsreplacemanualannotation} looked at LLMs-as-raters across five datasets and ten annotation tasks. They used a variety of different LLMs to compare model to model performance. For tasks where humans do not agree with one another (in this case, evaluating conciseness of code summaries) models also do poorly; but ``if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task~\cite[p.6]{ahmed2025llmsreplacemanualannotation}.
+
 % % Other examples, for future:
 % - ClarifyGPT rates AI code wrt requirements 10.1145/3660810
 % - Security assessment using LLMs - https://ieeexplore.ieee.org/abstract/document/10647161
@@ -95,7 +97,7 @@ Agreement can be measured in many ways; this study used the conventional Cohen's
 \subsubsection{Advantages}
 
 By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human raters might introduce. 
-This may lead to more reliable and reproducible results in empirical studies, to the extent these models can be reproduced or checkpointed.
+This may lead to more reliable and reproducible results in empirical studies, to the extent these models can be reproduced or checkpointed. % TODO: add reference to relevant guideline?
 
 LLMs can be much more efficient than the equivalent human approach. The main constraint, which varies by model and budget, is the input context size, i.e., the number of tokens one can pass into a model. For example, the upper bound on context that can be passed into OpenAi's \textsf{o1-mini} model is 32k\footnote{https://help.openai.com/en/articles/9855712-openai-o1-models-faq-chatgpt-enterprise-and-edu, accessed 25-02-09}. 
 
@@ -103,13 +105,13 @@ LLMs can be much more efficient than the equivalent human approach. The main con
 
 When relying on the judgment of LLMs, researchers must build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently~\cite{schroeder2024trustllmjudgmentsreliability}.
 
-Avoid the temptation to assign objectivity to an LLM; evidence shows LLMs can behave differently, for instance, when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}. In more human datasets (such as human discussions of pull requests) LLMs have well documented biases and issues with fairness~\cite{Gallegos2023BiasAF}.
+Avoid the temptation to assign objectivity to an LLM; evidence shows LLMs can behave differently, for instance, when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}. In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well documented biases and issues with fairness~\cite{Gallegos2023BiasAF}.
 
 Rating large numbers of items---for example, to perform fault localization on the thousands of bugs big open-source projects deal with---comes with costs in clock time, compute time, and environmental sustainability.
 
 One researcher choice in such studies is the number of examples (training data) provided to the LLM. This might involve zero tuning (zero-shot), several example (few-shot), or more conventional training data with many examples. In the example above, Lubos et al. chose zero-shot tuning, providing no specific guidance besides the project's context, i.e., they did not show the LLM what a yes or no answer might look like. 
 
-Research is ongoing as to how suitable LLMs are as standalone raters. Questions around bias, accuracy, and trust remain~\cite{bavaresco2024llmsinsteadhumanjudges}. There is reason for concern about LLMs judging student assignments or doing peer review of scientific papers~\cite{zhou-etal-2024-llm}. Even beyond questions of technical capacity, ethical questions remain as well. Involving a human in the rating loop---for example, to contextualize the scoring---is one approach~\cite{panHumanCenteredDesignRecommendations2024}.
+Research is ongoing as to how suitable LLMs are as standalone raters. Questions around bias, accuracy, and trust remain~\cite{bavaresco2024llmsinsteadhumanjudges}. There is reason for concern about LLMs judging student assignments or doing peer review of scientific papers~\cite{zhou-etal-2024-llm}. Even beyond questions of technical capacity, ethical questions remain, particularly if there is some implicit expectation that a human is rating the output, such as a quiz. Involving a human in the rating loop---for example, to contextualize the scoring---is one approach~\cite{panHumanCenteredDesignRecommendations2024}.
 
 \subsection{LLMs for Synthesis}
 
