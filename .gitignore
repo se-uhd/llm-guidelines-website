@@ -74,6 +74,9 @@ guidelines/_sources/*.pdf
 study-types/index.md
 study-types/_sources/*.md
 study-types/_sources/*.pdf
+scope/index.md
+scope/_sources/*.md
+scope/_sources/*.pdf
 
 ########
 # Misc #

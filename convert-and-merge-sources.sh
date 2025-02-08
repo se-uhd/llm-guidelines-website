@@ -10,9 +10,11 @@ convert_tex_to_md() {
     done
 }
 
+convert_tex_to_md "scope/_sources"
 convert_tex_to_md "study-types/_sources"
 convert_tex_to_md "guidelines/_sources"
 
+cat scope/_sources/*.md > scope/index.md
 cat guidelines/_sources/*.md > guidelines/index.md
 cat study-types/_sources/*.md > study-types/index.md
 
