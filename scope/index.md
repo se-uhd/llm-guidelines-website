@@ -64,9 +64,9 @@ part of the training data or not.
 
 Given the exponential growth in LLM usage across all research domains,
 it is useful to clarify the scope of study types to which these
-guidelines apply. First, as mentioned on the [**Study
-Types**](/study-types/) page, we currently focus on large language
-models, that is, on natural language processing, and not on multimodal
+guidelines apply. First, as mentioned on the [Study
+Types](/study-types/) page, we currently focus on large language models,
+that is, on natural language processing, and not on multimodal
 foundation models in general. Second, LLMs are already widely used to
 support several aspects of the overall research process – from fairly
 simple tasks such as proof-reading, spell-checking, text translation

@@ -36,7 +36,7 @@ To make such comparisons between traditional and LLM-based approaches, or compar
 In general, we recommend to use established metrics whenever possible (see summary below), as this enables secondary research.
 We further recommend researchers to carefully argue why the selected metrics are suitable for the given task or study. 
 If an LLM-based tool that is supposed to support humans is evaluated, an relevant metric might be the acceptance rate, meaning the ratio of all accepted artifacts (e.g., test cases, code snippets) in relation to all artifacts that were generated and presented to the user.
-Another way of evaluating LLM-based tools is calculating inter-model agreement (see also Section \textbf{Use an Open LLM as a Baseline}).
+Another way of evaluating LLM-based tools is calculating inter-model agreement (see also Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
 This also allows researchers to assess how dependent a tool's performance is on specific models.
 
 LLM-based generation is non-deterministic by-design.
@@ -140,7 +140,7 @@ As a result, performance may degrade if programming languages other than Python 
 
 Many closed-source models, such as those released by OpenAI, achieve exceptional performance on certain tasks but lack transparency and reproducibility.
 Benchmark leaderboards, particularly for code generation, are led by close-sourced models.
-While researchers should compare performance against these models, they must consider that providers might discontinue them or apply undisclosed pre- or postprocessing beyond the researcher's control (see also Section \textbf{Use an Open LLM as a Baseline}).
+While researchers should compare performance against these models, they must consider that providers might discontinue them or apply undisclosed pre- or postprocessing beyond the researcher's control (see also Section see also Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
 %The lack of transparency introduces challenges in analyzing mistakes, limiting the understanding of model failures.
 %Open-source models offer greater transparency since the entire process is under the researcher's control; however, they require appropriate hardware.
 
