@@ -87,7 +87,7 @@ Lubos et al. then evaluated the LLM's output against human raters, to assess how
 
 Agreement can be measured in many ways; this study used the conventional Cohen's kappa measure~\cite{cohen60}. The study found moderate agreement on the simple requirements dataset, and poor agreement on the more complex requirements. However, evaluating machine ratings may not be the same as human-human ratings and is an open area of research. See Elangovan et al.~\cite{DBLP:journals/corr/abs-2410-03775} for more. 
 
-Another study by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-0553} looked at LLMs-as-raters across five datasets and ten annotation tasks. They used a variety of different LLMs to compare model to model performance. For tasks where humans do not agree with one another (in this case, evaluating conciseness of code summaries) models also do poorly; but ``if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task~\cite[p.6]{DBLP:journals/corr/abs-2408-0553}.
+Another study by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} looked at LLMs-as-raters across five datasets and ten annotation tasks. They used a variety of different LLMs to compare model to model performance. For tasks where humans do not agree with one another (in this case, evaluating conciseness of code summaries) models also do poorly; but ``if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task~\cite[p.6]{DBLP:journals/corr/abs-2408-05534}.
 
 % % Other examples, for future:
 % - ClarifyGPT rates AI code wrt requirements 10.1145/3660810
@@ -109,7 +109,7 @@ LLMs can be much more efficient than the equivalent human approach. The main con
 
 When relying on the judgment of LLMs, researchers must build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently~\cite{DBLP:journals/corr/abs-2412-12509}.
 
-Avoid the temptation to assign objectivity to an LLM; evidence shows LLMs can behave differently, for instance, when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}. In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well documented biases and issues with fairness~\cite{Gallegos2023BiasAF}.
+Avoid the temptation to assign objectivity to an LLM; evidence shows LLMs can behave differently, for instance, when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}. In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well documented biases and issues with fairness~\cite{Gallegos2024BiasAF}.
 
 Rating large numbers of items---for example, to perform fault localization on the thousands of bugs big open-source projects deal with---comes with costs in clock time, compute time, and environmental sustainability.
 
