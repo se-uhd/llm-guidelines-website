@@ -1,7 +1,23 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
-\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
 \usepackage{hyperref}
+\usepackage{xspace}
+\usepackage{amsmath}
+
+% custom commands:
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
+
+% RFC 2119 (https://www.rfc-editor.org/rfc/rfc2119)
+% MUST: absolute requirement
+\newcommand{\must}{\textbf{MUST}\xspace}
+% MUST NOT: absolute prohibition
+\newcommand{\mustnot}{\textbf{MUST NOT}\xspace}
+% SHOULD: there may exist valid reasons in particular circumstances to ignore a  particular item, but the full implications must be understood and carefully weighed before choosing a different course
+\newcommand{\should}{\textbf{SHOULD}\xspace}
+% SHOULD NOT: there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label
+\newcommand{\shouldnot}{\textbf{SHOULD NOT}\xspace}
+% MAY: an item is truly optional
+\newcommand{\may}{\textbf{MAY}\xspace}
 
 \begin{document}
 
@@ -9,7 +25,7 @@
 
 \subsubsection{Recommendations}
 
-LLMs are frequently updated, and different versions may produce varying results.
+LLMs (especially when used as a service) are frequently updated, and different versions may produce varying results.
 Moreover, the model configuration and parameters influence the output generation of the models.
 It is crucial to document the specific version of the LLM used in the study, along with the date when the experiments were conducted, and the exact configuration being used.
 Furthermore, detailed documentation of the configuration and parameters used during the study is necessary for reproducibility. 
@@ -28,7 +44,7 @@ Additionally, a thorough description of the hosting environment of the LLM or LL
 \subsubsection{Example(s)}
 
 For an OpenAI model, researchers might report that "A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
-However, there are also related challenges (see section below).
+However, there are also related challenges (see Section \href{/guidelines/#challenges-1}{Challenges}).
 
 \todo{Talk about local or self-hosted models as well.}
 
