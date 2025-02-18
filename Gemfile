@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem "jekyll"
 gem "just-the-docs"
 
-# prevent deprecation warnings (https://github.com/jekyll/jekyll/issues/9686#issuecomment-2362850868)
-#gem "sass-embedded", "~> 1.78.0"
+# prevent deprecation warnings (https://github.com/just-the-docs/just-the-docs/issues/1541)
+gem "sass-embedded", "~> 1.78.0"
 
 # get rid of warnings
 gem "csv"

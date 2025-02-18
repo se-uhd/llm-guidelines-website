@@ -1,50 +1,81 @@
 \documentclass[11pt]{article}
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
-\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
 \usepackage{hyperref}
+\usepackage{xspace}
+\usepackage{amsmath}
+
+% custom commands:
+\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
+
+% RFC 2119 (https://www.rfc-editor.org/rfc/rfc2119)
+% MUST: absolute requirement
+\newcommand{\must}{\textbf{MUST}\xspace}
+% MUST NOT: absolute prohibition
+\newcommand{\mustnot}{\textbf{MUST NOT}\xspace}
+% SHOULD: there may exist valid reasons in particular circumstances to ignore a  particular item, but the full implications must be understood and carefully weighed before choosing a different course
+\newcommand{\should}{\textbf{SHOULD}\xspace}
+% SHOULD NOT: there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label
+\newcommand{\shouldnot}{\textbf{SHOULD NOT}\xspace}
+% MAY: an item is truly optional
+\newcommand{\may}{\textbf{MAY}\xspace}
 
 \begin{document}
 
 \subsection{Report Prompts and their Development}
 
 \subsubsection{Recommendations}
+Prompts are critical in empirical software engineering studies involving LLMs. Depending on the task, prompts may include various types of content, such as source code, execution traces, error messages, natural language descriptions, or even screenshots and other multi-modal inputs. These elements significantly influence the model’s output, and understanding how exactly they were formatted and integrated is essential for transparency and reproducibility.
 
-Prompts can significantly influence the [output of LLMs~\cite{DBLP:journals/tosem/LiuLWTLLL24}, and sharing them allows other researchers to understand and reproduce the conditions of the study.
-Reporting the exact prompts used in the study is essential for transparency and reproducibility.
-For example, including the specific questions or tasks given to the LLM helps in assessing the validity of the results and comparing them with other studies.
-This is an example where different types of studies require different information.
-When studying LLM usage, the researchers ideally collect and publish the prompts written by the users (if confidentiality allows).
-Otherwise, summaries and examples can be provided.
-Prompts also need to be reported when LLMs are integrated into new tools, especially if study participants were able to formulate (parts of) the prompts.
-For all other types of studies, researchers should discuss how they arrived at their final set of prompts.
-If a systematic approach was used, this process should be described in detail.
+Researchers \textbf{MUST} report the full text of prompts used, along with any surrounding instructions, metadata, or contextual information. The exact structure of the prompt should be described, including the order and format of each element. For example, when using code snippets, researchers should specify whether they were enclosed in markdown-style code blocks (e.g., triple backticks), if line breaks and whitespace were preserved, and whether additional annotations (e.g., comments) were included. Similarly, for other artifacts such as error messages, stack traces, or non-text elements like screenshots, researchers should explain how these were presented. If rich media was involved, such as in multi-modal models, details on how these inputs were encoded or referenced in the prompt are crucial.
 
-\todo{Architecture (e.g., usage of RAG, agent-based architecture, etc.)}
+When dealing with extensive or complex prompts, such as those involving large codebases or multiple error logs, researchers \textbf{MUST} describe strategies they used for handling input length constraints. Approaches might include truncating, summarizing, or splitting prompts into multiple parts. Token optimization measures, such as simplifying code formatting or removing unnecessary comments, should also be documented if applied.
 
-\todo{data dump of vector database if used}
+In terms of strategy, prompts can vary widely based on the task design. Researchers \textbf{MUST} specify whether zero-shot, one-shot, or few-shot prompting was used. For few-shot prompts, the examples provided to the model should be clearly outlined, along with the rationale for selecting them. If multiple versions of a prompt were tested, researchers should describe how these variations were evaluated and how the final design was chosen.
 
-\todo{finetuning? if yes, how? also: publish data used for finetuning (if not confidential)}
+In cases where prompts are generated dynamically—such as through preprocessing, template structures, or retrieval-augmented generation (RAG)—the process \textbf{MUST} be thoroughly documented. This includes explaining any automated algorithms or rules that influenced prompt generation. For studies involving human participants, where users might create or modify prompts themselves, researchers \textbf{MUST} describe how these prompts were collected and analyzed. If full disclosure is not feasible due to privacy concerns, summaries and representative examples should be provided.
 
+To ensure full reproducibility, researchers \textbf{MUST} make all prompts and prompt variations publicly available in an online appendix, replication package, or repository. If the full set of prompts is too extensive to include in the paper itself, researchers \textbf{SHOULD} still provide representative examples and describe variations in the main body of the paper. For example, a recent paper by Anandayuvaraj et al.~\cite{anandayuvaraj2024fail} is a good example of making prompts available online. In the paper, the authors analyze software failures reported in news articles and use prompting to automate tasks such as filtering relevant articles, merging reports, and extracting detailed failure information. Their online appendix contains all the prompts used in the study, providing valuable transparency and supporting reproducibility.
+
+Prompt development is often iterative, involving collaboration between human researchers and AI tools. Researchers \textbf{SHOULD} report any instances where LLMs were used to suggest prompt refinements, as well as how those suggestions were incorporated. Furthermore, prompts may need to be revised in response to failure cases where the model produced incorrect or incomplete outputs. Iterative changes based on human feedback and pilot testing results should also be included in the documentation.
+
+Finally, pilot testing and prompt evaluation are vital for ensuring that prompts yield reliable results. If such testing was conducted, researchers \textbf{SHOULD} summarize key insights, including how different prompt variations affected output quality and which criteria were used to finalize the prompt design.
 
 \subsubsection{Example(s)}
+A debugging study may use a prompt structured like this:
 
-\todo{write paragraph}
+\begin{quote}
+\begin{verbatim}
 
+You are a coding assistant. Below is a Python script that fails with an error. Analyze the code and suggest a fix.
+Code:
+```
+def divide(a, b):
+    return a / b
+
+print(divide(10, 0))
+```
+Error message:
+ZeroDivisionError: division by zero
+
+\end{verbatim}
+\end{quote}
+
+The study should document that the code was enclosed in triple backticks, specify whether additional context (e.g., stack traces or annotations) was included, and explain how variations of the prompt were tested.
+
+A good example of comprehensive prompt reporting is provided by Liang et al.~\cite{Liang2024}. The authors make the exact prompts available in their online appendix on Figshare, including details such as code blocks being enclosed in triple backticks. While this level of detail would not fit within the paper itself, the paper thoroughly explains the rationale behind the prompt design and data output format. It also includes one overview figure and two concrete examples, ensuring transparency and reproducibility while keeping the main text concise.
 
 \subsubsection{Advantages}
-
-\todo{write paragraph}
-
+Providing detailed documentation of prompts enhances reproducibility and comparability. It allows other researchers to replicate the study under similar conditions, refine prompts based on documented improvements, and evaluate how different types of content (e.g., source code vs. execution traces) influence LLM behavior. This transparency also enables a better understanding of how formatting, prompt length, and structure impact results across various studies.
 
 \subsubsection{Challenges}
+One challenge is the complexity of prompts that combine multiple components, such as code, error messages, and explanatory text. Formatting differences—such as whether markdown or plain text was used—can affect how LLMs interpret inputs. Additionally, prompt length constraints may require careful management, particularly for tasks involving extensive artifacts like large codebases.
 
-\todo{write paragraph}
+For multi-modal studies, handling non-text artifacts such as screenshots introduces additional complexity. Researchers must decide how to represent such inputs, whether by textual descriptions, image encoding, or data references. Lastly, proprietary LLMs (e.g., Copilot) may obscure certain details about internal prompt processing, limiting full transparency.
 
+Privacy and confidentiality concerns can also hinder prompt sharing, especially when sensitive data is involved. In these cases, researchers should provide anonymized examples and summaries wherever possible.
 
 \subsubsection{Study Types}
-
-\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
-
+Reporting requirements may vary depending on the study type. For tool evaluation studies, researchers \textbf{MUST} explain how prompts were generated and structured within the tool. Controlled experiments \textbf{MUST} provide exact prompts for all conditions, while observational studies \textbf{SHOULD} summarize common prompt patterns and provide representative examples if full prompts cannot be shared.
 
 \subsubsection{References}
 
