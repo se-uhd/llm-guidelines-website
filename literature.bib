@@ -1336,6 +1336,27 @@ keywords = {Software Engineering, Large Language Model, Survey}
   publisher={ACM New York, NY, USA}
 }
 
+@ARTICLE{inter-dataset-lopez2025,
+  author={Lopez, Jose Antonio Hernandez and Chen, Boqi and Saad, Mootez and Sharma, Tushar and Varro, Daniel},
+  journal={ IEEE Transactions on Software Engineering },
+  title={{On Inter-Dataset Code Duplication and Data Leakage in Large Language Models}},
+  year={2025},
+  volume={51},
+  number={01},
+  ISSN={1939-3520},
+  pages={192-205},
+  abstract={ Motivation. Large language models (LLMs) have exhibited remarkable proficiency in diverse software engineering (SE) tasks, such as code summarization, code translation, and code search. Handling such tasks typically involves acquiring foundational coding knowledge on large, general-purpose datasets during a pre-training phase, and subsequently refining on smaller, task-specific datasets as part of a fine-tuning phase. Problem statement. Data leakage i.e., using information of the test set to perform the model training, is a well-known issue in training of machine learning models. A manifestation of this issue is the intersection of the training and testing splits. While intra-dataset code duplication examines this intersection within a given dataset and has been addressed in prior research, inter-dataset code duplication, which gauges the overlap between different datasets, remains largely unexplored. If this phenomenon exists, it could compromise the integrity of LLM evaluations because of the inclusion of fine-tuning test samples that were already encountered during pre-training, resulting in inflated performance metrics. Contribution. This paper explores the phenomenon of inter-dataset code duplication and its impact on evaluating LLMs across diverse SE tasks. Study design. We conduct an empirical study using the CodeSearchNet dataset (csn), a widely adopted pre-training dataset, and five fine-tuning datasets used for various SE tasks. We first identify the intersection between the pre-training and fine-tuning datasets using a deduplication process. Next, we pre-train two versions of LLMs using a subset of csn: one leaky LLM, which includes the identified intersection in its pre-training set, and one non-leaky LLM that excludes these samples. Finally, we fine-tune both models and compare their performances using fine-tuning test samples that are part of the intersection. Results. Our findings reveal a potential threat to the evaluation of LLMs across multiple SE tasks, stemming from the inter-dataset code duplication phenomenon. We also demonstrate that this threat is accentuated by the chosen fine-tuning technique. Furthermore, we provide evidence that open-source models such as CodeBERT, GraphCodeBERT, and UnixCoder could be affected by inter-dataset duplication. Based on our findings, we delve into prior research that may be susceptible to this threat. Additionally, we offer guidance to SE researchers on strategies to prevent inter-dataset code duplication. },
+  keywords={Codes;Cloning;Training;Data models;Software development management;Tuning;Source coding;Software engineering;Context modeling;Transformers},
+  doi={10.1109/TSE.2024.3504286},
+  url = {https://doi.ieeecomputersociety.org/10.1109/TSE.2024.3504286},
+  publisher={IEEE Computer Society},
+  address={Los Alamitos, CA, USA},
+  month=jan
+}
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LLMs as judges — Start
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
