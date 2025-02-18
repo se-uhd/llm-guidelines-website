@@ -1345,8 +1345,6 @@ keywords = {Software Engineering, Large Language Model, Survey}
   number={01},
   ISSN={1939-3520},
   pages={192-205},
-  abstract={ Motivation. Large language models (LLMs) have exhibited remarkable proficiency in diverse software engineering (SE) tasks, such as code summarization, code translation, and code search. Handling such tasks typically involves acquiring foundational coding knowledge on large, general-purpose datasets during a pre-training phase, and subsequently refining on smaller, task-specific datasets as part of a fine-tuning phase. Problem statement. Data leakage i.e., using information of the test set to perform the model training, is a well-known issue in training of machine learning models. A manifestation of this issue is the intersection of the training and testing splits. While intra-dataset code duplication examines this intersection within a given dataset and has been addressed in prior research, inter-dataset code duplication, which gauges the overlap between different datasets, remains largely unexplored. If this phenomenon exists, it could compromise the integrity of LLM evaluations because of the inclusion of fine-tuning test samples that were already encountered during pre-training, resulting in inflated performance metrics. Contribution. This paper explores the phenomenon of inter-dataset code duplication and its impact on evaluating LLMs across diverse SE tasks. Study design. We conduct an empirical study using the CodeSearchNet dataset (csn), a widely adopted pre-training dataset, and five fine-tuning datasets used for various SE tasks. We first identify the intersection between the pre-training and fine-tuning datasets using a deduplication process. Next, we pre-train two versions of LLMs using a subset of csn: one leaky LLM, which includes the identified intersection in its pre-training set, and one non-leaky LLM that excludes these samples. Finally, we fine-tune both models and compare their performances using fine-tuning test samples that are part of the intersection. Results. Our findings reveal a potential threat to the evaluation of LLMs across multiple SE tasks, stemming from the inter-dataset code duplication phenomenon. We also demonstrate that this threat is accentuated by the chosen fine-tuning technique. Furthermore, we provide evidence that open-source models such as CodeBERT, GraphCodeBERT, and UnixCoder could be affected by inter-dataset duplication. Based on our findings, we delve into prior research that may be susceptible to this threat. Additionally, we offer guidance to SE researchers on strategies to prevent inter-dataset code duplication. },
-  keywords={Codes;Cloning;Training;Data models;Software development management;Tuning;Source coding;Software engineering;Context modeling;Transformers},
   doi={10.1109/TSE.2024.3504286},
   url = {https://doi.ieeecomputersociety.org/10.1109/TSE.2024.3504286},
   publisher={IEEE Computer Society},
@@ -1354,8 +1352,163 @@ keywords = {Software Engineering, Large Language Model, Survey}
   month=jan
 }
 
+@article{10.1093/database/bay011,
+    author = {Lakiotaki, Kleanthi and Vorniotakis, Nikolaos and Tsagris, Michail and Georgakopoulos, Georgios and Tsamardinos, Ioannis},
+    title = {BioDataome: a collection of uniformly preprocessed and automatically annotated datasets for data-driven biology},
+    journal = {Database},
+    volume = {2018},
+    pages = {bay011},
+    year = {2018},
+    month = {03},
+    issn = {1758-0463},
+    doi = {10.1093/database/bay011},
+    url = {https://doi.org/10.1093/database/bay011},
+    eprint = {https://academic.oup.com/database/article-pdf/doi/10.1093/database/bay011/27438490/bay011.pdf},
+}
 
+@article{10.1145/3133908,
+author = {Lopes, Cristina V. and Maj, Petr and Martins, Pedro and Saini, Vaibhav and Yang, Di and Zitny, Jakub and Sajnani, Hitesh and Vitek, Jan},
+title = {D\'{e}j\`{a}Vu: a map of code duplicates on GitHub},
+year = {2017},
+issue_date = {October 2017},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {1},
+number = {OOPSLA},
+url = {https://doi.org/10.1145/3133908},
+doi = {10.1145/3133908},
+journal = {Proc. ACM Program. Lang.},
+month = oct,
+articleno = {84},
+numpages = {28},
+keywords = {Source Code Analysis, Clone Detection}
+}
 
+@inproceedings{10.1145/3359591.3359735,
+author = {Allamanis, Miltiadis},
+title = {The adverse effects of code duplication in machine learning models of code},
+year = {2019},
+isbn = {9781450369954},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3359591.3359735},
+doi = {10.1145/3359591.3359735},
+booktitle = {Proceedings of the 2019 ACM SIGPLAN International Symposium on New Ideas, New Paradigms, and Reflections on Programming and Software},
+pages = {143–153},
+numpages = {11},
+keywords = {machine learning, duplication, dataset collection, code naturalness, big code},
+location = {Athens, Greece},
+series = {Onward! 2019}
+}
+
+@misc {technology_innovation_institute_2023,
+	author       = { {Technology Innovation Institute} },
+	title        = { falcon-refinedweb (Revision 184df75) },
+	year         = 2023,
+	url          = { https://huggingface.co/datasets/tiiuae/falcon-refinedweb },
+	doi          = { 10.57967/hf/0737 },
+	publisher    = { Hugging Face }
+}
+
+@software{together2023redpajama,
+  author = {Together Computer},
+  title = {RedPajama: an Open Dataset for Training Large Language Models},
+  month = October,
+  year = 2023,
+  url = {https://github.com/togethercomputer/RedPajama-Data}
+}
+
+@inproceedings{lee-etal-2022-deduplicating,
+    title = "Deduplicating Training Data Makes Language Models Better",
+    author = "Lee, Katherine  and
+      Ippolito, Daphne  and
+      Nystrom, Andrew  and
+      Zhang, Chiyuan  and
+      Eck, Douglas  and
+      Callison-Burch, Chris  and
+      Carlini, Nicholas",
+    editor = "Muresan, Smaranda  and
+      Nakov, Preslav  and
+      Villavicencio, Aline",
+    booktitle = "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.acl-long.577/",
+    doi = "10.18653/v1/2022.acl-long.577",
+    pages = "8424--8445",
+}
+
+@article{10.1007/s10664-022-10275-7,
+author = {Karmakar, Anjan and Allamanis, Miltiadis and Robbes, Romain},
+title = {JEMMA: An extensible Java dataset for ML4Code applications},
+year = {2023},
+issue_date = {Mar 2023},
+publisher = {Kluwer Academic Publishers},
+address = {USA},
+volume = {28},
+number = {2},
+issn = {1382-3256},
+url = {https://doi.org/10.1007/s10664-022-10275-7},
+doi = {10.1007/s10664-022-10275-7},
+journal = {Empirical Softw. Engg.},
+month = mar,
+numpages = {45},
+keywords = {Software engineering, Machine learning, Empirical datasets}
+}
+
+@inproceedings{balloccu-etal-2024-leak,
+    title = "Leak, Cheat, Repeat: Data Contamination and Evaluation Malpractices in Closed-Source LLMs",
+    author = "Balloccu, Simone and  Schmidtová, Patrícia and Lango, Mateusz and Dušek, Ondřej",
+    booktitle = "Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics",
+    year = "2024",
+    publisher = "Association for Computational Linguistics",
+}
+
+@INPROCEEDINGS {10174227,
+author = { Jesse, Kevin and Ahmed, Toufique and Devanbu, Premkumar T. and Morgan, Emily },
+booktitle = { 2023 IEEE/ACM 20th International Conference on Mining Software Repositories (MSR) },
+title = {{ Large Language Models and Simple, Stupid Bugs }},
+year = {2023},
+volume = {},
+ISSN = {},
+pages = {563-575},
+keywords = {Training;Codes;Computer bugs;Production;Writing;Programming;Software},
+doi = {10.1109/MSR59073.2023.00082},
+url = {https://doi.ieeecomputersociety.org/10.1109/MSR59073.2023.00082},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+month =May}
+
+@article{doi:10.1148/radiol.232411,
+author = {Li, David and Gupta, Kartik and Bhaduri, Mousumi and Sathiadoss, Paul and Bhatnagar, Sahir and Chong, Jaron},
+title = {Comparing GPT-3.5 and GPT-4 Accuracy and Drift in Radiology Diagnosis Please Cases},
+journal = {Radiology},
+volume = {310},
+number = {1},
+pages = {e232411},
+year = {2024},
+doi = {10.1148/radiol.232411},
+URL = {https://doi.org/10.1148/radiol.232411},
+eprint = {https://doi.org/10.1148/radiol.232411}}
+
+@inproceedings{10.1145/3673791.3698432,
+author = {Staudinger, Moritz and Kusa, Wojciech and Piroi, Florina and Lipani, Aldo and Hanbury, Allan},
+title = {A Reproducibility and Generalizability Study of Large Language Models for Query Generation},
+year = {2024},
+isbn = {9798400707247},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3673791.3698432},
+doi = {10.1145/3673791.3698432},
+booktitle = {Proceedings of the 2024 Annual International ACM SIGIR Conference on Research and Development in Information Retrieval in the Asia Pacific Region},
+pages = {186–196},
+numpages = {11},
+keywords = {boolean query, llms, query generation, systematic reviews},
+location = {Tokyo, Japan},
+series = {SIGIR-AP 2024}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LLMs as judges — Start

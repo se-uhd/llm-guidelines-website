@@ -7,58 +7,79 @@
 \subsubsection{Recommendations}
 When using large language models (LLMs) in empirical studies for software engineering, researchers face unique challenges and potential limitations that can influence the validity, reliability, and reproducibility~\cite{sallou2024breaking} of their findings including:
 
-\textbf{Reproducibility and Generalization}:
+\textbf{Reproducibility}:
 \begin{itemize}
   \item Non-deterministic outputs of LLMs: LLMs may produce non-deterministic results due to inherent randomness in their outputs, especially when a temperature setting greater than 0 is used.
   \item Sampling/Evaluation Bias: The selection of testing dataset, and researchers evaluating LLM outputs manually may introduce subjective bias or cognitive fatigue, particularly for large datasets.
-  \item Model update/version:  The behavior of LLMs can depend on external factors such as API updates, model version changes and very sensitivive to Prompt Variations, even because of time-based output drift.
+  \item Model update/version:  The behavior of LLMs can depend on external factors such as API updates, model version changes and very sensitive to Prompt Variations, even because of time-based output drift.
   \item Closed source model leading to model evolution unpredictability. Researchers may lack insight into the model's inner workings, hindering the ability to fully understand and trust its outputs.
+\end{itemize}
+
+\textbf{Generalization}:
+Even though the topic of generalizability is not new, it has gained new relevance with the increasing interest in LLMs. In LLM studies generalizability boils down to two main concerns: 
+\begin{itemize}
+  \item First, are the results specific to a LLM model or can they be achieved with other LLMs too? If generalizability to other LLMs is not in scope of the research, this MUST be clearly explained. If in scope, researchers MUST compare their results or subsets of the results if not possible (e.g. due to computational cost) with other LLMs to assess the generalizability of their findings. If possible, researchers SHOULD also employ open LLMs to set a reproducible baseline (see Use Open LLM as a Baseline).
+  \item Second, will these results still be valid in the future? Multiple studies (~\cite{DBLP:journals/corr/abs-2307-09009}, ~\cite{doi:10.1148/radiol.232411}) found, that the performance of ChatGPT within the same version drastically decreased over time. Reporting the model version and configuration is not sufficient in such cases. To date, the only way of migitating this limitation is the usage of an Open LLM with a transparently communicated versioning and archiving (see Use Open LLM as a Baseline). Hence researchers SHOULD employ such models. If this is not possible, researchers SHOULD test and report their results over an extended period of time as a proxy of the results relevance over time.
 \end{itemize}
 
 \textbf{Data Leakage}:
 Data leakage/contamination/overfitting occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates. With the growing reliance on big datasets, the risks of inter-dataset duplication (i.e. samples duplication between datasets) increases (e.g. ~\cite{10.1145/3133908}, ~\cite{10.1145/3359591.3359735}). 
 In the context of LLMs for software engineering, this can manifest as inter-dataset duplication, where samples from one dataset (e.g. pre-train dataset) appear in another (e.g. fine-tune dataset), potentially compromising the validity of evaluation results ~\cite{inter-dataset-lopez2025}. 
-Hence, to ensure the validity of the evaluation results, researchers SHOULD carefully select the fine-tuning and evaluation datasets to prevent inter-dataset duplication. If information about the pre-train dataset of the employed LLM model is available, researchers SHOULD assess the inter-dataset duplication and MUST discuss the potential data leakage.
+Hence, to ensure the validity of the evaluation results, researchers SHOULD carefully select the fine-tuning and evaluation datasets to prevent inter-dataset duplication. If information about the pre-train dataset of the employed LLM is available, researchers SHOULD assess the inter-dataset duplication and MUST discuss the potential data leakage.
+In addition, researchers MUST NOT leak their fine-tune or evaluation datasets into the improvement process of the LLM (e.g. OpenAI's functionality called "Improve the model for everyone"), as this potentially impacts further evaluation rounds (e.g. think about pass@k), and exacerbates the issue of reproducibility.
 If training a LLM from scratch, researchers MAY consider to use open datasets (such as Together AI's RedPajama~\cite{together2023redpajama}) that already incorporate duplication (with the positive side-effect of improving performance ~\cite{lee-etal-2022-deduplicating}).
 
-\textbf{Scalability and Cost}:
+\textbf{Scalability and Cost}: TODO
 Conducting multiple repetitions or large-scale experiments can be computationally expensive, especially with proprietary APIs.
 
-\textbf{Misleading Performance Metrics}:
+\textbf{Misleading Performance Metrics}: TODO
 Metrics like BLEU or ROUGE, often used in text-based tasks, may not capture important aspects of software engineering tasks (e.g., functional correctness, runtime performance).
 
-\textbf{Ethical Concerns with Proprietary Data}:
+\textbf{Ethical Concerns with Proprietary Data}: TODO
 Using LLMs for tasks involving proprietary or sensitive software engineering data (e.g., private bug reports), especially in closed-source LLMs may raise privacy and IP concerns.
 
-\textbf{Clear info:} 
+\textbf{Clear info:} TODO
 \begin{itemize}
   \item Number of repetitions (``When evaluating model performance, it is recommended to conduct multiple tests and average the results.'' \url{https://huggingface.co/deepseek-ai/DeepSeek-R1\#usage-recommendations}), how were repetitions aggregated?, discuss limitations and mitigations
   \item Model version, fixed random seeds
   \item etc...
 \end{itemize}
 
-\todo{Discuss what makes the results of a presented study generalizable and why they are not model-dependent. Argue why the results will likely hold for a different (future) model or the next release of the LLM-based tool that was studied (e.g., ChatGPT)?}
-
+\textbf{Performance and Resource Consumption}: TODO
 \todo{Discuss aspects as such increased performance (see benchmarking guidelines) vs. increased resource consumption and non-determinism.}
-
-\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
-
+1. Resource Consumption of solution
+SHOULD report cost associated to executing study. ~\cite{10.1145/3673791.3698432} "To obtain all the presented results, we spent 120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM-cost of our reproducibility study was 150 USD."
+2. Resource Consumption needed for replication
+MUST provide evidence so computation is not necessary
+SHOULD provide samples to replicate results partially (however, might introduce bias again)
 \todo{Balance of evaluation dataset: ``We have chosen our test samples to be small enough to perform manual semantic analysis, but large enough to draw conclusions''~\cite{tinnessoftware}}
 
 
 \subsubsection{Example(s)}
+\textbf{Reproducibility}: TODO
+~\cite{10.1145/3673791.3698432} "When comparing our results, with the results presented by Wang et al. [54], we saw similar trends to them, but were unable to repro- duce their results. In general, we found that our results are neither reproducible nor reliable when rerunning the same prompts with different seeds, which led to a high variance in the obtained re- sults. With the results fluctuating considerably, we do not consider any of the obtained results reliable enough for the critical task of systematic reviews."
+
 \textbf{Data Leakage}:
-Since much research in software engineering evolves around code, inter-dataset code duplication has been extensively researched and addressed over the years to curate deduplicated datasets (e.g. by Lopes in 2017 ~\cite{10.1145/3133908}, Allamanis in 2019 ~\cite{10.1145/3359591.3359735}, or Lopez in 2025 ~\cite{inter-dataset-lopez2025}).
+Since much research in software engineering evolves around code, inter-dataset code duplication has been extensively researched and addressed over the years to curate deduplicated datasets (e.g. by Lopes in 2017 ~\cite{10.1145/3133908}, Allamanis in 2019 ~\cite{10.1145/3359591.3359735}, Karmakar in 2023 ~\cite{10.1007/s10664-022-10275-7}, or Lopez in 2025 ~\cite{inter-dataset-lopez2025}).
 The issue of inter-dataset duplication has also attracted interest in other disciplines, with growing demands for data mining. For example in the biology field, Lakiotaki et al. ~\cite{10.1093/database/bay011} acknowledge and address the overlap between multiple commonly disease datasets. 
-When employing Falcon LLMs the issue of inter-dataset duplication can be partially assessed and mitigated. The technology innovation institute publicly provides access to parts of its training data for the Falcon LLM models ~\cite{technology_innovation_institute_2023} via Huggingface.
+When employing Falcon LLMs the issue of inter-dataset duplication can be partially assessed and mitigated. The technology innovation institute publicly provides access to parts of its training data for the Falcon LLMs ~\cite{technology_innovation_institute_2023} via Huggingface.
+To prevent actively leaking data yourself into a LLMs improvment process ensure, that the data is not used to train the model (e.g. via OpenAI's data control functionality, or the OpenAI API instead of the web interface) ~\cite{balloccu-etal-2024-leak}.
+
+\textbf{Generalization}:
+\begin{itemize}
+  \item To analyze whether the results of proprietary LLMs transfer to open LLMs, Staudinger et al. ~\cite{10.1145/3673791.3698432} benchmarked previous results using GPT3.5 and GPT4 against Mistral and Zephyr. They found, that the employed open source models could not deliver the same performance as the proprietary models.
+  \item Individual studies already started to highlight the uncertainty about the generalizability of their results in the future. In ~\cite{10174227} Jesse et al. acknowledge the issue that LLMs evolve over time and this evolution impact the generation.
+\end{itemize}
 
 
 \todo{write paragraph}
 
-
 \subsubsection{Advantages}
 \textbf{Data Leakage}:
 Assessing and mitigating the effects of inter-dataset duplication strengthens a studies' validity and reliability, as it prevents overly optimistic performance estimates that do not apply to previously unkown samples.
+
+\textbf{Generalization}:
+Mitigating threats to generalizability through the integration of open LLMs as a baseline or the reporting of results over an extended period of time can increase the validity, reliability and replicability of a study's results.
 
 \todo{write paragraph}
 
@@ -67,11 +88,14 @@ Assessing and mitigating the effects of inter-dataset duplication strengthens a 
 \textbf{Data Leakage}:
 Most LLM providers do not publicly offer information about the datasets employed for pre-training, impeding the assessment of inter-dataset duplication effects.
 
+\textbf{Generalization}:
+With commercial LLMs evolving over time, the generalizability of results to future versions of the model is uncertain. Employing open LLMs as a baseline can mitigate this limitation, but may not always be feasible due to computational cost.
+
+
 \todo{write paragraph}
 
 
 \subsubsection{Study Types}
-
 \todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
 
 
