@@ -17,7 +17,7 @@ Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM 
 This project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussion during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
-Workstream Leads:
+Project Coordinators:
 
 * [Sebastian Baltes](https://empirical-software.engineering/), University of Bayreuth (Germany)
 * [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), Technical University of Munich (Germany)
