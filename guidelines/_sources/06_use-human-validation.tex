@@ -9,14 +9,14 @@
 
 \subsubsection{Recommendations}
 
-While LLMs can automate many tasks, it is important to validate their outputs with human annotations, at least partially. 
+While LLMs can automate many tasks, it is important to validate their outputs with human judgment.
 For natural language processing tasks, a large-scale study has shown that LLMs have too large a variation in their results to be reliably used as a substitution for human raters~\cite{DBLP:journals/corr/abs-2406-18403}. 
 Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
 Especially in studies where LLMs are used to support researchers, human validation should always be employed.
 For studies using LLMs as annotators, the proposed process by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}, which includes an initial few-shot learning and, given good results, the replacement of \emph{one} human annotator by an LLM, might be a way forward.
 
-Researchers may employ human validation to augment existing proxy measures.
-For example, proxies for software quality, such as code complexity or the number of code smells may be augmented by human ratings of quality.
+Researchers may employ human validation to augment existing measures for software-related constructs.
+For example, proxies for software quality, such as code complexity or the number of code smells, may be augmented by human ratings of quality.
 In the case of more abstract variables or psychometric measurements, human validation may be the only way of measuring a specific construct.
 For example, measuring human factors, such as trust, cognitive load, and the level comprehension may implicitly require human measurement.
 
@@ -27,7 +27,6 @@ When employing human validation, additional confounding factors should be contro
 
 \subsubsection{Example(s)}
 
-\todo{write paragraph}
 As an example, Khojah et al.~\cite{DBLP:journals/pacmse/KhojahM0N24} augmented the results of their study using human measurement.
 Specifically, they asked participants to provide ratings regarding their experience, trust, perceived effectiveness and efficiency, and scenarios and lessons learned in their experience with ChatGPT.
 
@@ -43,10 +42,8 @@ In their study, they recorded the students' screens, evaluated the answers they 
 
 Incorporating human judgment in the evaluation process adds a layer of quality control and increases the trustworthiness of the study’s findings, especially when explicitly reporting inter-rater reliability metrics. For instance, ``A subset of 20\% of the LLM-generated annotations were reviewed and validated by experienced software engineers to ensure accuracy. An inter-rater reliability of 90\% was reached.''
 
-Adding human feedback from individuals from the target population may also help grounding the study results 
-
-positively impact the practical application of the LLMs in the future.
-Researchers may uncover additional opportunities to further improve the LLM or LLM-based tool based on these experiences.
+Adding human feedback from individuals from the target population may also help to ground the study results in a real-world context and positively impact the transfer of study results to practice.
+Researchers may uncover additional opportunities to further improve the LLM or LLM-based tool based on the reported experiences.
 
 \subsubsection{Challenges}
 
@@ -61,18 +58,19 @@ Researchers must balance the cost and time investment required for the recruitme
 
 \subsubsection{Study Types}
 
+All study types may use human validation.
 The guidelines apply to all study types if human validation is employed.
 
-MUST
+\textbf{MUST}
 - Clearly define the construct measured by the human validation
 - Clearly describe the method of measurement and operationalization of the measured construct
 - Use established measurement methods and instruments
 
-SHOULD
+\textbf{SHOULD}
 - Use empirically validated measures
 - Augment automated or machine-generated measures with human validation where possible
 
-MAY
+\textbf{MAY}
 - Use multiple different measures for human validation
 
 
