@@ -18,11 +18,13 @@ This project was initiated by a [position paper](https://arxiv.org/abs/2411.0766
 To contribute to the guidelines, you can open an issue or a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 
 Workstream Leads:
+
 * [Sebastian Baltes](https://empirical-software.engineering/), University of Bayreuth (Germany)
 * [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), Technical University of Munich (Germany)
 
 Team:
-* [Paris Avgeriou](https://www.cs.rug.nl/~paris/), University of Groningen (Netherlands)
+
+* [Florian Angermeir](https://angermeir.me/), fortiss (Germany) and Blekinge Institute of Technology (Sweden)
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), Technical University of Munich (Germany)
 * [Lukas Böhme](https://www.hpi.uni-potsdam.de/hirschfeld/people/boehme/index.html), HPI, University of Potsdam (Germany)
 * [Fabio Calefato](https://collab.di.uniba.it/fabio/), University of Bari (Italy)
@@ -34,5 +36,4 @@ Team:
 * [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
 * [Stefano Lambiase](https://stefanolambiase.github.io), University of Salerno (Italy)
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
-* [Margaret-Anne Storey](https://www.margaretstorey.com), University of Victoria (Canada)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
