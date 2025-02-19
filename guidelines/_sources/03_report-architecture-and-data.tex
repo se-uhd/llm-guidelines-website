@@ -1,23 +1,4 @@
-\documentclass[11pt]{article}
-\usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
-\usepackage{hyperref}
-\usepackage{xspace}
-\usepackage{amsmath}
-
-% custom commands:
-\newcommand{\todo}[1]{{\textbf{TODO:}\ \textit{#1}}} % command for TODOs
-
-% RFC 2119 (https://www.rfc-editor.org/rfc/rfc2119)
-% MUST: absolute requirement
-\newcommand{\must}{\textbf{MUST}\xspace}
-% MUST NOT: absolute prohibition
-\newcommand{\mustnot}{\textbf{MUST NOT}\xspace}
-% SHOULD: there may exist valid reasons in particular circumstances to ignore a  particular item, but the full implications must be understood and carefully weighed before choosing a different course
-\newcommand{\should}{\textbf{SHOULD}\xspace}
-% SHOULD NOT: there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label
-\newcommand{\shouldnot}{\textbf{SHOULD NOT}\xspace}
-% MAY: an item is truly optional
-\newcommand{\may}{\textbf{MAY}\xspace}
+\input{../../header.tex}
 
 \begin{document}
 
@@ -25,38 +6,44 @@
 
 \subsubsection{Recommendations}
 
-Oftentimes, there is a complex layer around the LLM that preprocesses data, prepares prompts, or filters user requests.
-One example is ChatGPT, which can, among others, use the GPT-4o model.
-GitHub Copilot uses the same model as well, and researchers can build their own tools utilizing GPT-4o directly (e.g., via the OpenAI API).
-The infrastructure around the bare model can significantly contribute to the performance of a model in a certain task.
-Therefore, it is crucial that researchers clearly describe what the LLM contributes to the tool or method presented in a research paper.
+Oftentimes, there is a layer around the LLM that preprocesses data, prepares prompts or filters user requests. One example is ChatGPT, which, at the time of writing these guidelines, primarily uses the GPT-4o model. GitHub Copilot also relies on the same model, and researchers can build their own tools utilizing GPT-4o directly (\textit{e.g.}, via the OpenAI API). The infrastructure around the bare model can significantly contribute to the performance of a model in a given task.
+Therefore, it is important that researchers clearly describe the architecture and what the LLM contributes to the tool or method presented in a research paper.
 
-\todo{Architecture (e.g., usage of RAG, agent-based architecture, etc.)}
+% Architecture
 
-\todo{data dump of vector database if used}
+If the LLM is used as a standalone system (\textit{e.g.}, ChatGPT-4o API without additional architecture layers), researchers \should provide a brief explanation of how it was used rather than detailing a full system architecture. However, if the LLM is integrated into a more complex system with preprocessing, retrieval mechanisms, fine-tuning, or autonomous agents, researchers \must clearly document the tool architecture, including how the LLM interacts with other components such as databases, retrieval mechanisms, external APIs, and reasoning frameworks. A high-level architectural diagram \should be provided in these cases to improve transparency. To enhance clarity, researchers \should explain design decisions, particularly regarding model access (\textit{e.g.}, API-based, fine-tuned, self-hosted) and retrieval mechanisms (\textit{e.g.}, keyword search, semantic similarity matching, rule-based extraction). Researchers \mustnot omit critical architectural details that could impact reproducibility, such as hidden dependencies or proprietary tools that influence model behavior.
 
-\todo{finetuning? if yes, how? also: publish data used for finetuning (if not confidential)}
+% Architecture for Agent-Based LLM Systems
 
+If the LLM is part of an agent-based system that autonomously plans, reasons, or executes tasks, researchers \must describe its architecture, including the agent's role (\textit{e.g.}, planner, executor, coordinator), whether it is a single-agent or multi-agent system, how it interacts with external tools and users, and the reasoning framework used (\textit{e.g.}, chain-of-thought, self-reflection, multi-turn dialogue, tool usage). Researchers \mustnot present an agent-based system without detailing how it makes decisions and executes tasks.
+
+% Retrieval-Augmented Generation (RAG), Fine-Tuning, and Supplemental Data
+
+If a retrieval or augmentation method is used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses. This includes specifying the type of storage or database used (\textit{e.g.}, vector databases, relational databases, knowledge graphs) and how the retrieved information is selected and used. Stored data used for context augmentation \must be reported, including details on data preprocessing, versioning, and update frequency. If this data is not confidential, an anonymized snapshot of the data used for context augmentation \should be made available.
+
+Similarly, if the LLM is fine-tuned, researchers \must describe the fine-tuning goal (\textit{e.g.}, domain adaptation, task specialization), procedure (\textit{e.g.}, full fine-tuning, parameter-efficient fine-tuning), and dataset (source, size, preprocessing, availability). They should include training details (\textit{e.g.}, compute resources, hyperparameters, loss function) and performance metrics (benchmarks, baseline comparison). If the data used for fine-tuning is not confidential, an anonymized snapshot of the data used for fine-tuning the model \should be made available.
 
 \subsubsection{Example(s)}
 
-\todo{write paragraph}
+Some empirical studies in software engineering involving LLMs have documented the architecture and supplemental data aligning with the recommended guidelines. Hereafter, we provide two examples.
 
+% I could have hit on specific aspects of these studies (published recently at TSE and ICSA), but they were, in general, well-described. I decided to keep it more abstract so that I could use them as "good examples".
+
+Sch{\"{a}}fer \textit{et al.} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}. The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce corresponding unit tests. The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites. The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation. It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
+
+Dhar \textit{et al.} conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions~\cite{DBLP:conf/icsa/DharVV24}. The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system. The study provides information on the fine-tuning approach and datasets used for evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
 
 \subsubsection{Advantages}
 
-\todo{write paragraph}
-
+Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility, transparency, and trust~\cite{DBLP:journals/software/LuZXXW24}. In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking. Clear documentation of RAG, fine-tuning, and data storage enables comparison, optimizes efficiency, and upholds scientific rigor and accountability, fostering reliable and reusable research.
 
 \subsubsection{Challenges}
 
-\todo{write paragraph}
-
+Researchers face challenges in documenting LLM-based architectures, including proprietary APIs and dependencies that restrict disclosure, managing large-scale retrieval databases, and ensuring efficient query execution. They must also balance transparency with data privacy concerns, adapt to the evolving nature of LLM integrations, and, depending on the context, handle the complexity of multi-agent interactions and decision-making logic, all of which can impact reproducibility and system clarity.
 
 \subsubsection{Study Types}
 
-\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
-
+This guideline \must be followed for all empirical study types involving LLMs, especially those using fine-tuned or self-hosted models, retrieval-augmented generation (RAG) or alternative retrieval methods, API-based model access, and agent-based systems where LLMs handle autonomous planning and execution.
 
 \subsubsection{References}
 
