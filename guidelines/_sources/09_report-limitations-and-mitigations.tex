@@ -18,8 +18,8 @@ When using large language models (LLMs) in empirical studies for software engine
 \textbf{Generalization}:
 Even though the topic of generalizability is not new, it has gained new relevance with the increasing interest in LLMs. In LLM studies generalizability boils down to two main concerns: 
 \begin{itemize}
-  \item First, are the results specific to a LLM model or can they be achieved with other LLMs too? If generalizability to other LLMs is not in scope of the research, this MUST be clearly explained. If in scope, researchers MUST compare their results or subsets of the results if not possible (e.g. due to computational cost) with other LLMs to assess the generalizability of their findings. If possible, researchers SHOULD also employ open LLMs to set a reproducible baseline (see Use Open LLM as a Baseline).
-  \item Second, will these results still be valid in the future? Multiple studies (~\cite{DBLP:journals/corr/abs-2307-09009}, ~\cite{doi:10.1148/radiol.232411}) found, that the performance of ChatGPT within the same version drastically decreased over time. Reporting the model version and configuration is not sufficient in such cases. To date, the only way of migitating this limitation is the usage of an Open LLM with a transparently communicated versioning and archiving (see Use Open LLM as a Baseline). Hence researchers SHOULD employ such models. If this is not possible, researchers SHOULD test and report their results over an extended period of time as a proxy of the results relevance over time.
+  \item First, are the results specific to a LLM or can they be achieved with other LLMs too? If generalizability to other LLMs is not in scope of the research, this MUST be clearly explained. If in scope, researchers MUST compare their results or subsets of the results (if not possible e.g. due to computational cost) with other LLMs to assess the generalizability of their findings. If possible, researchers SHOULD also employ open LLMs to set a reproducible baseline (see Use Open LLM as a Baseline).
+  \item Second, will these results still be valid in the future? Multiple studies (~\cite{DBLP:journals/corr/abs-2307-09009}, ~\cite{doi:10.1148/radiol.232411}) found, that the performance of ChatGPT within the same version drastically decreased over time. Reporting the model version and configuration is not sufficient in such cases. To date, the only way of migitating this limitation is the usage of an Open LLM with a transparently communicated versioning and archiving (see Use Open LLM as a Baseline). Hence researchers SHOULD employ such models. If this is not possible, researchers SHOULD test and report their results over an extended period of time as a proxy of the results' relevance over time.
 \end{itemize}
 
 \textbf{Data Leakage}:
@@ -32,8 +32,11 @@ Hence, to ensure the validity of the evaluation results, researchers SHOULD care
 In addition, researchers MUST NOT leak their fine-tune or evaluation datasets into the improvement process of the LLM (e.g. OpenAI's functionality called "Improve the model for everyone"), as this potentially impacts further evaluation rounds (e.g. think about pass@k), and exacerbates the issue of reproducibility.
 If training a LLM from scratch, researchers MAY consider to use open datasets (such as Together AI's RedPajama~\cite{together2023redpajama}) that already incorporate duplication (with the positive side-effect of improving performance ~\cite{lee-etal-2022-deduplicating}).
 
-\textbf{Scalability and Cost}: TODO
-Conducting multiple repetitions or large-scale experiments can be computationally expensive, especially with proprietary APIs.
+\textbf{Scalability and Cost}:
+Conducting studies with LLMs is a resource demanding endeavour. For self-hosted LLMs, the respective hardware needs to be provided, for managed LLMs, the service cost has to be considered. Thie challenge becomes more pronounced as LLMs grow larger, research architectures get more complex, and experiements become more computationally expensive e.g. multiple repetitions to assess performance in the face of non-determinism (see Report Suitable Baselines, Benchmarks, and Metrics).
+Consequently, resource-intensive research remains predominantly the domain of well-funded researchers, hindering researcher with limited resources from replicating or extending the study results.
+Hence, for transparency reasons, researchers SHOULD report cost associated with executing the study. If the study employed self-hosted LLMs, researchers SHOULD report the hardware used. If the study employed managed LLMs, the service cost SHOULD be reported.
+To ensure research result validity and replicability, researchers MUST provide the LLM outputs as evidence for validation at different granularities (e.g. when employing multi agent systems). Additionally, researchers SHOULD include a sample, selected using an accepted sampling strategy, to allow partial replication of results.
 
 \textbf{Misleading Performance Metrics}: TODO
 Metrics like BLEU or ROUGE, often used in text-based tasks, may not capture important aspects of software engineering tasks (e.g., functional correctness, runtime performance).
@@ -50,13 +53,7 @@ Using LLMs for tasks involving proprietary or sensitive software engineering dat
 
 \textbf{Performance and Resource Consumption}: TODO
 \todo{Discuss aspects as such increased performance (see benchmarking guidelines) vs. increased resource consumption and non-determinism.}
-1. Resource Consumption of solution
-SHOULD report cost associated to executing study. ~\cite{10.1145/3673791.3698432} "To obtain all the presented results, we spent 120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM-cost of our reproducibility study was 150 USD."
-2. Resource Consumption needed for replication
-MUST provide evidence so computation is not necessary
-SHOULD provide samples to replicate results partially (however, might introduce bias again)
 \todo{Balance of evaluation dataset: ``We have chosen our test samples to be small enough to perform manual semantic analysis, but large enough to draw conclusions''~\cite{tinnessoftware}}
-
 
 \subsubsection{Example(s)}
 \textbf{Reproducibility}: TODO
@@ -74,6 +71,8 @@ To prevent actively leaking data yourself into a LLMs improvment process ensure,
   \item Individual studies already started to highlight the uncertainty about the generalizability of their results in the future. In ~\cite{10174227} Jesse et al. acknowledge the issue that LLMs evolve over time and this evolution impact the generation.
 \end{itemize}
 
+\textbf{Scalability and Cost}:
+For example, in their comparison of performance of proprietary and open LLMs Staudinger et al. specified the costs as "120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM-cost of our reproducibility study was 150 USD". ~\cite{10.1145/3673791.3698432}
 
 \todo{write paragraph}
 
@@ -83,6 +82,10 @@ Assessing and mitigating the effects of inter-dataset duplication strengthens a 
 
 \textbf{Generalization}:
 Mitigating threats to generalizability through the integration of open LLMs as a baseline or the reporting of results over an extended period of time can increase the validity, reliability and replicability of a study's results.
+
+\textbf{Scalability and Cost}:
+Reporting the cost associated with executing a study not only increases transparency, but also supports secondary literature in setting primary research into perspective.
+Providing replication packages entailing direct LLM output evidence as well as samples for partial replicability are paramount steps towards open and inclusive research in the light of resource inequality among researchers.
 
 \todo{write paragraph}
 
@@ -94,7 +97,9 @@ Most LLM providers do not publicly offer information about the datasets employed
 \textbf{Generalization}:
 With commercial LLMs evolving over time, the generalizability of results to future versions of the model is uncertain. Employing open LLMs as a baseline can mitigate this limitation, but may not always be feasible due to computational cost.
 
-
+\textbf{Scalability and Cost}:
+Consistently keeping track of the cost involved in a research endeavour is challenging.
+Building a coherent replication package that includes LLM outputs and samples for partial replicability requires additional effort and resources.
 \todo{write paragraph}
 
 
