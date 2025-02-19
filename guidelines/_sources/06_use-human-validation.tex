@@ -9,10 +9,10 @@
 While LLMs can automate many tasks, it is important to validate their outputs with human judgment.
 For natural language processing tasks, a large-scale study has shown that LLMs have significant variation in their results, which limits their reliability as a direct substitute for human raters~\cite{DBLP:journals/corr/abs-2406-18403}. 
 Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
-Especially in studies where LLMs are used to support researchers, human validation is generally recommended to ensure validity.
-For studies using LLMs as annotators, the proposed process by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}, which includes an initial few-shot learning and, given good results, the replacement of \emph{one} human annotator by an LLM, might be a way forward.
+Especially in studies where LLMs are used to support researchers, human validation is generally recommended to ensure validity. \comment{add a reference here}
+For studies using LLMs as annotators, the proposed process by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}, which includes an initial few-shot learning and, given good results, the replacement of \emph{one} human annotator by an LLM, might be a way forward. \comment{may be personal preference, but our recommendations should take a stronger stand (and be updated when that might change)}
 
-Researchers may employ human validation to complement existing measures of software-related constructs.
+Researchers may employ human validation to complement existing measures of software-related constructs. \comment{this does not seem LLM specific? }
 For example, proxies for software quality, such as code complexity or the number of code smells, may be complemented by human ratings of maintainability, readability, or understandability.
 In the case of more abstract variables or psychometric measurements, human validation may be the only way of measuring a specific construct.
 For example, measuring human factors such as trust, cognitive load, and comprehension levels may inherently require human evaluation.
@@ -37,6 +37,7 @@ Specifically, they asked participants to provide ratings regarding their experie
 
 Choudhuri et al.~\cite{DBLP:conf/icse/ChoudhuriLSGS24} evaluated the perceptions of students of their experience with ChatGPT in a controlled experiment.
 They added this data to extend their results from the task performance in a series of software engineering tasks.
+\comment{it might be good to expand on how this helped. In this case, I am guessing the student perceptions were a way of triangulating what the metrics reported? i.e. validating that the LLM outputs were usefuL?}
 
 Xue et al.~\cite{DBLP:conf/icse/XueCBTH24} conducted a controlled experiment in which they evaluated the impact of ChatGPT on the performance and perceptions of students in an introductory programming course.
 They employed multiple measures to judge the impact of the LLM from the perspective of humans.
@@ -46,18 +47,25 @@ In their study, they recorded the students' screens, evaluated the answers they 
 
 \subsubsection{Advantages}
 
-Incorporating human judgment in the evaluation process adds a layer of quality control and increases the trustworthiness of the study’s findings, especially when explicitly reporting inter-rater reliability metrics. For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.''
+Incorporating human judgment in the evaluation process adds a layer of quality control and increases the trustworthiness of the study's findings, especially when explicitly reporting inter-rater reliability metrics. For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.''
+\comment{is this from a particualr study? it might be stornger to quote this directly from e.g. Christoph's paper}
+\comment{we might want to say something about sampling logic: exactly how many should be sampled, and how? }
+\comment{IRR is not applicable in the previous examples, though: we are comparing ChatGPT's code suggestions to student qualitative feedback about how useful that was. How should people report that type of agreement?}
 
 Incorporating feedback from individuals from the target population strengthens external validity by grounding study findings in real-world usage scenarios and may positively impact the transfer of study results to practice.
 Researchers may uncover additional opportunities to further improve the LLM or LLM-based tool based on the reported experiences.
+\comment{good point here: is the "human" in the human validation section about the researcher doing the study, or the people being studied? }
 
 \subsubsection{Challenges}
 
 Measuring variables through human validation can be challenging.
+\comment{not clear what 'variable' means here - can be confused with programming variables. Maybe refer to some of the literature on rater agreement?}
 Ensuring that the operationalization of a desired construct and the method of measuring it are appropriate requires a good understanding of the studied concept and construct validity in general, and a systematic design approach for the measurement instruments.
+\comment{and is in any case poorly done in our field!}
 
 Human judgment is often very subjective and may lead to large variability between different subjects due to differences in expertise, interpretation, and biases among evaluators.
 Controlling for this subjectivity will require additional rigor when conducting the statistical analysis of the study results.
+\comment{assuming statistical analysis is being done?}
 
 Recruiting participants as human validators will always incur additional resources compared to machine-generated measures.
 Researchers must weigh the cost and time investment incurred by the recruitment process against the potential benefits for the validity of their study results.
@@ -65,7 +73,7 @@ Researchers must weigh the cost and time investment incurred by the recruitment 
 \subsubsection{Study Types}
 
 These guidelines apply to any study type that incorporates human validation.
-
+\comment{i think it applies to "any study type that uses LLM output" i.e. always - it would be good to just list  a set of hyperlinks to the study types }
 \textbf{MUST}
 \begin{itemize}
     \item Clearly define the construct measured through human validation.
@@ -73,9 +81,12 @@ These guidelines apply to any study type that incorporates human validation.
     \item Employ established and widely accepted measurement methods and instruments.
 \end{itemize}
 
+\comment{the MUST points seem like general construct validity comments, and not specific enough to LLM use?}
+
 \textbf{SHOULD}
+\comment{i think @sbaltes defined macros for these? \should}
 \begin{itemize}
-    \item Use empirically validated measures.
+    \item Use empirically validated measures. \comment{suich as ... kappa, etc.}
     \item Complement automated or machine-generated measures with human validation where possible.
 \end{itemize}
 
