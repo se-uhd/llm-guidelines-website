@@ -23,6 +23,9 @@ Even though the topic of generalizability is not new, it has gained new relevanc
 \end{itemize}
 
 \textbf{Data Leakage}:
+
+\comment{This paper also seems related: \cite{zhou2025lessleakbenchinvestigationdataleakage}}
+
 Data leakage/contamination/overfitting occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates. With the growing reliance on big datasets, the risks of inter-dataset duplication (i.e. samples duplication between datasets) increases (e.g. ~\cite{10.1145/3133908}, ~\cite{10.1145/3359591.3359735}). 
 In the context of LLMs for software engineering, this can manifest as inter-dataset duplication, where samples from one dataset (e.g. pre-train dataset) appear in another (e.g. fine-tune dataset), potentially compromising the validity of evaluation results ~\cite{inter-dataset-lopez2025}. 
 Hence, to ensure the validity of the evaluation results, researchers SHOULD carefully select the fine-tuning and evaluation datasets to prevent inter-dataset duplication. If information about the pre-train dataset of the employed LLM is available, researchers SHOULD assess the inter-dataset duplication and MUST discuss the potential data leakage.
