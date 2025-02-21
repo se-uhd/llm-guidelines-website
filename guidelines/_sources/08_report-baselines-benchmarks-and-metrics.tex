@@ -160,8 +160,15 @@ For unforeseen scenarios, however, the model might perform much worse.
 
 \todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
 
-%This guideline \must be followed for all study types that target the performance of LLMs for a given task independent of the implementation of the downstream task.
-%Those include Benchmarking LLMs for Software Engineering Tasks 
+This guideline must be followed for all study types that evaluate the performance of plain LLMs on a given task.
+
+For example, if you use an LLM as an annotator and the research goal is to assess which model annotates best based on a test dataset, you \must report an appropriate metric that reflects the nature of your task and you \should disclose the used dataset for evaluation.
+Annotation tasks can vary significantly: Are multiple labels allowed for the same sequence? Are the available labels predefined, or should the LLM generate a set of labels independently?
+Due to this task dependence, you \should justify your choice of metric, explaining what aspects of the task it captures and what its limitations are.
+
+If you are conducting a well-established task, such as code generation, you \should report standard metrics like pass@k and compare to other models.
+
+\todo{Describe more study types. Copy common outline for this section.}
 
 \subsubsection{References}
 
