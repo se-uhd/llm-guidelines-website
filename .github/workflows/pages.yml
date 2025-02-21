@@ -46,6 +46,8 @@ jobs:
           sudo apt-get -y install texlive
           wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb
           sudo dpkg -i pandoc-3.6.1-1-amd64.deb
+      - name: Check Latex and Bibtex files
+        run: ./compile-latex.sh
       - name: Convert and merge source files
         run: ./convert-and-merge-sources.sh
       - name: Build with Jekyll
