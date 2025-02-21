@@ -63,14 +63,14 @@ A value closer to $1$ indicates that the model is more capable of generating the
 %The score measures how many n-grams from the generated output of a model appear in the target string.
 %In isolation, this approach favors shorter over longer generated sequences because it is more likely to have fewer n-grams in an extensive target sequence than more.
 %To mitigate this, the so-called brevity penalty is introduced to disincentivize short sequences when having longer target sequences.
-\emph{BLEU} has multiple variations.
-\todo{Is BLEU a synonym for BLEU-N?}
+\emph{BLEU-N} has multiple variations.
 \emph{CodeBLEU} \cite{DBLP:journals/corr/abs-2009-10297} and \emph{CrystalBLEU} \cite{DBLP:conf/kbse/EghbaliP22} are the most notable variations tailored to code, by introducing additional heuristics such as AST matching.
 As mentioned above, researchers should motivate why they chose a certain metric or variant thereof for their particular study.
 
 The metric \emph{pass@k} reports the likelihood of a model correctly completing a code snippet at least once within \emph{k} tries.
-\todo{Who came up with pass@k? Reference?}
-What correctness is depends on the given task.
+To the best of our knowledge, the basic concept of pass@k was first used in \cite{DBLP:journals/corr/abs-1906-04908} for evaluating code synthesis under the name \emph{success rate at B}, where B denotes the budget of trials.
+The term pass@k was later popularized by \cite{DBLP:journals/corr/abs-2107-03374} as a metric for code generation correctness.
+The exact definition of correctness varies depending on the task
 For code generation, correctness is often defined based on test cases. A passing test then means that the solution is correct.
 The resulting pass rate ranges from $0$ to $1$.
 A pass rate of $0$ indicates that the model was not able to generate a single correct solution within $k$ tries.
@@ -103,7 +103,9 @@ For example, an end user might choose between multiple suggestions for generated
 %Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
 %To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
 
-\todo{Add SE papers that use some of the benchmarks and metrics discussed above}
+Common examples for papers using pass@k are papers introducing new models for code generation such as \cite{DBLP:journals/corr/abs-2308-12950, DBLP:journals/corr/abs-2401-14196, DBLP:journals/corr/abs-2409-12186, DBLP:journals/corr/abs-2305-06161}.
+%\todo{Add SE papers that use some of the benchmarks and metrics discussed above}
+\todo{Find SE papers which uses other benchmarks than pass@k & other papers which do not introduce a new model.}
 
 \subsubsection{Advantages}
 
@@ -125,11 +127,14 @@ While researchers should compare performance against these models, they must con
 %The lack of transparency introduces challenges in analyzing mistakes, limiting the understanding of model failures.
 %Open-source models offer greater transparency since the entire process is under the researcher's control; however, they require appropriate hardware.
 
-Challenges with individual metrics include that, for example, \emph{BLEU} is a syntactic metric and hence does not measure semantic correctness or structural correctness.
-Thus, a high \emph{BLEU} score does not directly indicate that the generated code is executable.
-\todo{Mention that alternatives exist? Do they come with other downsides?}
+Challenges with individual metrics include that, for example, \emph{BLEU-N} is a syntactic metric and hence does not measure semantic correctness or structural correctness.
+Thus, a high \emph{BLEU-N} score does not directly indicate that the generated code is executable.
+%\todo{Mention that alternatives exist? Do they come with other downsides?}
+While alternatives exist, they often come with their own limitations.
+For instance, \emph{Exact Match} is a strict measurement that does not account for functional equivalence but syntactically different code.
+Execution-based metrics (e.g. pass@k) directly evaluate correctness by running test cases, but they require a setup with an execution environment.
 When researchers observe unexpected values for certain metrics, the specific results should be investigated in more detail to uncover potential problems.
-Such problems can, for example, be related to formatting, since code formatting highly influences metrics such as \emph{BLEU} or \emph{Exact Match}.
+These problems can, for example, be related to formatting since code formatting highly influences metrics such as \emph{BLEU-N} or \emph{Exact Match}.
 
 Another challenge to consider is that metrics usually capture one specific aspect of a task or solution.
 For instance, metrics such as \emph{pass@k} do not reflect qualitative aspects of code such as maintainability, cognitive load, or readability.
@@ -154,6 +159,9 @@ For unforeseen scenarios, however, the model might perform much worse.
 \subsubsection{Study Types}
 
 \todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
+
+%This guideline \must be followed for all study types that target the performance of LLMs for a given task independent of the implementation of the downstream task.
+%Those include Benchmarking LLMs for Software Engineering Tasks 
 
 \subsubsection{References}
 
