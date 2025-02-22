@@ -42,8 +42,7 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install texlive and pandoc
         run: |
-          sudo apt-get update
-          sudo apt-get -y install texlive-full && sudo tlmgr update --self
+          sudo apt-get update && sudo apt-get -y install texlive-full
           wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb && sudo dpkg -i pandoc-3.6.1-1-amd64.deb
       - name: Check Latex and Bibtex files
         run: ./compile-latex.sh
