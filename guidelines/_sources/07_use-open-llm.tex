@@ -9,13 +9,16 @@
 To ensure that empirical studies using Large Language Models (LLMs) in software engineering are reproducible and comparable, 
 we recommend incorporating an open LLM as a baseline for analysis. This applies whether you're using LLMs to explore something or evaluating them
 on on specific software engineering tasks. 
-Sometimes, including an open LLM baseline might be impossible. Even in that case, using an open LLM on an early version of your product before 
-it is final is a good idea.
+\comment{I'd rephrase: "whether you're using LLMs to explore something" = "whether LLMs are used to explore a phenomenon"}
+Sometimes, including an open LLM baseline might be impossible. 
+\comment{I'd rephrase: "Sometimes, including an open LLM baseline might be impossible." = "Under certain circumstances, it might be impossible to include an open LLM baseline."}
+Even in that case, using an open LLM on an early version of your product before it is final is a good idea.
+\comment{"before it is final" seem redundant to me}\comment{Playing devils advocate here (so feel free to ignore): But why it is a good idea?}
 Open LLMs are available in places like Hugging Face or it is possible to run them on a local computer using tools like Ollama or LM Studio. 
-We reccomend providing a replication package to facilitate other researchers checking your work.This should have clear, step-by-step instructions
-on how to get the same results you did using open LLM models. This makes the research more reliable since it allows others to confirm what you found.
-For example, researchers could report: "We compared our results to Meta's Code Llama, which is available on Hugging Face." and researchers shall include a link to the
- replication package.
+\comment{Given that models surved (in the sense of run) via hugging face are mainly for demonstration purposes, I'd distinguish here between the Hugging Face Hub which provides a space to store and download models, and hosting of models (either self-hosted or through model hosting providers such as [together.ai](https://together.ai))}\comment{I'd directly link to [Ollama](https://ollama.com/) and [LM Studio](https://lmstudio.ai/)}
+We recommend providing a replication package to facilitate other researchers checking your work.This should have clear, step-by-step instructions on how to get the same results you did using open LLM models. This makes the research more reliable since it allows others to confirm what you found.
+\comment{I guess we should add this to the list under "Study Types" then.}
+For example, researchers could report: "We compared our results to Meta's Code Llama, which is available on Hugging Face." and researchers shall include a link to the replication package.
 
 The term Open when applied to an LLM can have various meanings. \cite{widder2024open} discusses three types of openness (transparency, reusability 
 and extensibility) and  what openness in AI can and cannot provide. Moreover, the Open Source Initiative (OSI) \cite{OSIAI2024} provides a definition of 
@@ -27,18 +30,21 @@ Finally, we recommend reporting and analysing inter-model agreement metrics. The
 and the baseline, thus they support the identification of potential biases or disagreement areas.  Moreover, we recommend reporting the model 
 confidence scores to analyse the model uncertainty.  The analysis of inter-model agreement and model confidence provides valuable insights into 
 the reliability and robustness of LLM performance, allowing a deeper understanding of their capabilities and limitations.
+\comment{(I don't have a reference at hand, so feel free to ignore this one) So far in my experience confidence values of LLMs (e.g. through logprobs) are not a reliable indicator of model certainty.}
+\comment{Independen of my previous comment it might make sense to offer guidance on how to calculate confidence scores? One example could be [this python package for LLM confidence score calculate](https://github.com/VATBox/llm-confidence)}
 
 
 \subsubsection{Example(s)}
 \begin{itemize}
-    \item Benchmarking a Proprietary LLM: Researchers want to know how good their own LLM is at writing code. They might compare it against something like StarCoderBase, which everyone can use. We recommend to report exactly the versions of each model , the details of the HW, and the precise prompts. They could look at things like pass@k scores and how fast it provides answers.
+    \item Benchmarking a Proprietary LLM: Researchers want to know how good their own LLM is at writing code. They might compare it against something like StarCoderBase, which everyone can use. We recommend to report exactly the versions of each model, the details of the HW, and the precise prompts. They could look at things like pass@k scores and how fast it provides answers. \comment{I'd rephrase: "against something like StarCoderBase, which everyone can use." = "against an open LLM such as StarCoderBase."}\comment{I'd remove the recommendations here, as they are described in more detail in other sections}
     \item Evaluating an LLM-Powered Tool: A team developing an AI-driven code review tool might want to assess the quality of suggestions generated by both a proprietary LLM and an open alternative. Human evaluators could then independently rate the relevance and correctness of the suggestions, providing an objective measure of the tool's effectiveness.
     \item Ensuring Reproducibility with a Replication Package: A study on bug localization that uses a closed-source LLM could support Reproducibility by including a replication package. This package might contain a script that automatically reruns the same experiments using an open-source LLM—such as Llama 3—and generates a comparative report.
 \end{itemize}
+\comment{I assume no, but are there any references that already implement what we describe as examples here? If there was any, it would be great to reference them here.}
 
 \subsubsection{Advantages}
 \begin{itemize}
-    \item	Improved Reproducibility: researchers can independently replicate experiments.
+    \item	Improved Reproducibility: Researchers can independently replicate experiments.
     \item	More Objective Comparisons: Using a standardized baseline allows for more unbiased evaluations.
     \item	Greater Transparency: Open models enable the analysis of how data is processed, which supports researchers in identifying potential biases and limitations.
     \item	Long-Term Accessibility: Unlike proprietary models, which may become unavailable, open LLMs remain available for future studies.
@@ -57,10 +63,10 @@ the reliability and robustness of LLM performance, allowing a deeper understandi
 
 \subsubsection{Study Types}
 \begin{itemize}
-    \item Tool Evaluation: An open LLM baseline must be included if technically feasible. If integration is too complex, researchers should at least report initial benchmarking results using open models.
-    \item Benchmarking Studies and Controlled Experiments: An open LLM must be one of the models evaluated.
-    \item Observational Studies: If an open LLM is impossible, the researchers should acknowledge its absence and discuss potential impacts on their findings.
-    \item Qualitative Studies: If the LLM is used for exploratory data analysis or to compare alternative interpretations of results then an LLM baseline may be reported.
+    \item Tool Evaluation: An open LLM baseline \MUST be included if technically feasible. If integration is too complex, researchers \SHOULD at least report initial benchmarking results using open models.
+    \item Benchmarking Studies and Controlled Experiments: An open LLM \MUST be one of the models evaluated.
+    \item Observational Studies: If an open LLM is impossible, the researchers \SHOULD acknowledge its absence and discuss potential impacts on their findings.
+    \item Qualitative Studies: If the LLM is used for exploratory data analysis or to compare alternative interpretations of results then an LLM baseline \MAY be reported.
 \end{itemize}
 
 \subsubsection{References}
