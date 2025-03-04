@@ -26,7 +26,7 @@ Our recommendations is to report:
 For an OpenAI model, researchers might report that "A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
 Similar statements can be made for self-hosted models, for which supplementary material can report specific instructions for reproducing results.
 For example, for models provisioned using \href{https://ollama.com/library/}{ollama}, one can report the specific tag and checksum of the model being used, e.g., `llama3.3, tag 70b-instruct-q8\_0, checksum d5b5e1b84868`.
-Given suitable hardware, running the corresponding model in its default configuration is than as easy as executing \texttt{ollama run llama3.3:70b-instruct-q8\_0} (see Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
+Given suitable hardware, running the corresponding model in its default configuration is then as easy as executing \texttt{ollama run llama3.3:70b-instruct-q8\_0} (see Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
 
 Kang et al.~provide a similar statement in their paper on exploring LLM-based general bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
 
@@ -40,7 +40,10 @@ Our guidelines additionally suggest to report a checksum and exact dates, but ot
 \subsubsection{Advantages}
 
 The recommended information is a prerequisite to enable reproducibility of LLM-based studies under the same or similar conditions.
-However, this information alone is generally not sufficient.
+% Mircea: The following lines no not read exactly as Advantages. 
+% But I also don't know what to do with them :) They are valuable. 
+% Could they be moved to Challenges? 
+However, this information alone is generally not sufficient. 
 Depending on the specific study setup, additional information about the architecture and data (\href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}), prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}), interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}), and specific limitations an mitigations (\href{/guidelines/#report-limitations-and-mitigations}{Report Limitations and Mitigations}) need to be reported.
 
 \subsubsection{Challenges}
@@ -55,10 +58,12 @@ While, as motived above, open models significantly simplify re-running experimen
 
 \subsubsection{Study Types}
 
-This guideline \must be followed for all study types for which the researcher has control over the model and its configuration.
+This guideline \must be followed for all study types for which the researcher has control over the model and its configuration. % Mircea: "control" or "access" to configuration? 
 When \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, for example the usage of commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their studies.
 The model name and date \must always be reported.
 In those cases, reporting other aspects such as prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}) and interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}) is essential.
+% I Like this discussion! I like the nuance of, if you can't ensure well enough the reproducibility, then at least make the effort to report interaction logs! 
+% I wonder if this part could be consolidated together with the one above in Advantages that I was whether it fits well enough there. 
 
 \subsubsection{References}
 
