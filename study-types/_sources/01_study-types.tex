@@ -218,29 +218,28 @@ LLMs are being integrated into new tools designed to support software engineers 
 Such integration is important to tailor the tools to the specific needs of a development team and to enhance their capabilities, as well as to influence their behavior in accordance with company policies.
 In this regard, the advent of \textit{GenAI Agents} has enabled the development of a standardized architecture, where the LLM is guided by a reasoning component (related to prompt engineering), tools (understood as interfacing with external systems via APIs or databases), and a user communication interface that is not necessarily limited to a chat.
 \comment{Is struggle to find a resource that describes this architecture. I think referencing this resource could help to justify why we suggest this architecture perspective over other architecture perspectives (e.g. [LangChain Agent Architecture](https://langchain-ai.github.io/langgraph/concepts/agentic_concepts/), [Prompt Engineering Guide](https://www.promptingguide.ai/research/llm-agents)). "Perspective", as the resources I mentioned might be considered as instantiations of the here described architecture.}
-\comment{I could imagine, that it makes sense here to also mention the evaluation of the tools performance as part of the study (e.g. performance, quality, satisfaction). This way also the example would feel more connected. :)}
+Other than propose tools, researcher can also evaluate the effectiveness of these tools in improving developer experience (for example, in terms of productivity, artefact quality, and developer satisfaction) and testing with different implementations of the above mentioned architecture in order to improve the tools.
+
 \subsubsection{Example(s)}
 
 Researchers can propose tools to facilitate technology transfer from the research environment to industry. 
-For instance, the work of Richards and Wessel introduced a preliminary GenAI Agent designed to assist developers in understanding source code by leveraging a conceptual theory (the reasoning component) based on the theory of mind~\cite{DBLP:conf/icsm/RichardsW24}. 
-Similarly, Yan et al. proposed IVIE, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}.
-\comment{Would it make sense for coherence reasons to also explicitly mention the relation to the before described architecture?}
+For instance, Richards and Wessel introduced a preliminary GenAI agent designed to assist developers in understanding source code by incorporating a reasoning component grounded in the theory of mind~\cite{DBLP:conf/icsm/RichardsW24}. Their work specifically emphasized the reasoning aspect of the architecture, leveraging the theory of mind to develop tailored agents while also demonstrating their effectiveness.
+Similarly, Yan et al. proposed IVIE, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}. In this case, the authors focused more on the presentation part of the architecture, providing a user-friendly interface to interact with the LLM. 
 
-Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. 
-\comment{As mentioned in the other comment, I'd suggest to make make this statement generic (e.g., "artefact quality" instead of "code quality") and move it to the description.}
+Empirical studies can evaluate the effectiveness of these tools in improving productivity, artefact quality, and developer satisfaction.
 For example, Choudhuri et al. conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks~\cite{DBLP:conf/icse/ChoudhuriLSGS24}.
 
 \subsubsection{Advantages}
 
 By assessing the impact of LLM-powered tools, researchers can identify best practices and areas for further improvement.
-Moreover, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. Moreover, compared to the past, the accessibility of open-source models and their advanced capabilities make building such tools a potentially easier task, especially considering the ease of guiding them through prompt engineering techniques.
-\comment{I am not sure it I understood the last sentence correctly. Is the implication, that open models are easier to guide through prompt engineering than proprietary ones?}\comment{I suggest we use  "open models" instead of "open-source models", to stay coherent with \href{/guidelines/use-open-llm}{Use an Open LLM as a Baseline}}
+Moreover, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. 
+Moreover, the increased accessibility of open models and their advanced capabilities have made the development of such tools more feasible and democratized than in the past.
 
 \subsubsection{Challenges}
 
 
 In this context, the non-determinism of generative AI models—although potentially mitigated through prompt engineering—poses a significant challenge in both the development and evaluation of tools integrating GenAI. 
-Additionally, while open-source models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open-source models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
+Additionally, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
 
 
 \subsection{Benchmarking LLMs for Software Engineering Tasks}
