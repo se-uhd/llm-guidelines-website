@@ -25,7 +25,7 @@ Our recommendation is to report:
 \item Whether historical context was considered when generating responses.
 \end{itemize}
 
-\comment{I think we should add a section related to fine tuning? It is becoming more and more common and without that information reproducibility is heavily affected. For example:
+\comment{I think we should add a section related to fine tuning? It is becoming more and more common and without that information reproducibility is heavily affected. Example below.}
 ``For fine-tuned models, researchers \textbf{must} additionally report:
 \begin{itemize}
 \item Base model used before fine-tuning
@@ -35,9 +35,8 @@ Our recommendation is to report:
 \item Validation metrics used during fine-tuning
 \item If possible, a link to the fine-tuned model weights or a description of how to access them.''
 \end{itemize}
-}
 
-\comment{This also leads me to another point. In my review of LLMs as annotators, I've found several examples of ensemble models. I think we might also want to add a section about ensemble models. For example:
+\comment{This also leads me to another point. In my review of LLMs as annotators, I've found several examples of ensemble models. I think we might also want to add a section about ensemble models. Example below.}
 ``When multiple models are used together (e.g., in ensemble or pipeline architectures), researchers \textbf{MUST} additionally:
 \begin{itemize}
 \item Report version and configuration details for each model separately;
@@ -45,7 +44,6 @@ Our recommendation is to report:
 \item Explain the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing);
 \item Document any logic that determines which model handles which inputs.
 \end{itemize}
-}
 
 \subsubsection{Recommendations (Architecture and Data)}
 
@@ -89,7 +87,7 @@ Kang et al.~provide a similar statement in their paper on exploring LLM-based ge
 
 Our guidelines additionally suggest to report a checksum and exact dates, but otherwise this example is close to our recommendations. 
 
-\comment{Commercial tools have limited information. This is a bit tricky. What about a little more guidance?
+\comment{Commercial tools have limited information. This is a bit tricky. What about a little more guidance? Example below.}
 When studying commercial tools where configuration access is limited:
 \begin{itemize}
 \item Report product name, version number, and access date (e.g., "GitHub Copilot in Visual Studio Code v1.2.3, accessed between January-March 2024");
@@ -97,7 +95,6 @@ When studying commercial tools where configuration access is limited:
 \item Archive interaction logs showing tool behavior (see section \href{/guidelines/report-interaction-logs}{Report Interaction Logs});
 \item Acknowledge limitations in reproducibility due to the closed nature of the tool.
 \end{itemize}
-}
 
 \subsubsection{Example(s) (Architecture and Data)}
 

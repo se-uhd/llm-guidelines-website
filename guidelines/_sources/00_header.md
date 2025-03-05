@@ -16,12 +16,11 @@ The wording of the recommendations follows [RFC 2119](https://www.rfc-editor.org
 ## Overview
 
 1. [Declare LLM Usage and Role](#declare-llm-usage-and-role)
-2. [Report Model Version and Configuration](#report-model-version-and-configuration)
-3. [Report Tool Architecture and Supplemental Data](#report-tool-architecture-and-supplemental-data)
-4. [Report Prompts and their Development](#report-prompts-and-their-development)
-5. [Report Interaction Logs](#report-interaction-logs)
-6. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
-7. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
-8. [Report Suitable Baselines, Benchmarks, and Metrics](#report-suitable-baselines-benchmarks-and-metrics)
-9. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
+2. [Report Version, Configuration, Architecture, and Data](#report-version-configuration-architecture-and-data)
+3. [Report Prompts and their Development](#report-prompts-and-their-development)
+4. [Report Interaction Logs](#report-interaction-logs)
+5. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
+6. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
+7. [Report Suitable Baselines, Benchmarks, and Metrics](#report-suitable-baselines-benchmarks-and-metrics)
+8. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
 
