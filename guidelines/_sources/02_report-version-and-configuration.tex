@@ -69,8 +69,6 @@ When studying commercial tools where configuration access is limited:
 \end{itemize}
 }
 
-\comment{Should we also address how API rate limits and usage constraints can affect experiments?}
-
 \subsubsection{Advantages}
 
 The recommended information is a prerequisite to enable reproducibility of LLM-based studies under the same or similar conditions.
@@ -78,6 +76,8 @@ Please note that this information alone is generally not sufficient.
 Therefore, depending on the specific study setup, researchers \should provide additional information about architecture and data (\href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}), prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}), interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}), and specific limitations an mitigations (\href{/guidelines/#report-limitations-and-mitigations}{Report Limitations and Mitigations}).
 
 \subsubsection{Challenges}
+
+\comment{Should we also address how API rate limits and usage constraints can affect experiments?}
 
 Different model providers and modes of operating the models allow for varying degrees of information.
 For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output.
