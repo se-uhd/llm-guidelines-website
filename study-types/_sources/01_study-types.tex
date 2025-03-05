@@ -263,30 +263,33 @@ Additionally, while open models are accessible, the most performant ones require
 
 Benchmarking is the process of evaluating the LLM output obtained from a \emph{standardized} datasets using a set of \emph{standardized} metrics.
 High-quality reference datasets, such as HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} for the task of code generation, are necessary to perform evaluation across studies.
-LLM output is compared against a ground truth from the dataset in the benchmark using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, a well as task-specific metrics, such as Pass@k for code generation.
+LLM output is compared against a ground truth from the dataset in the benchmark using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, as well as task-specific metrics, such as Pass@k for code generation.
 
 \subsubsection{Example(s)}
 
-In software engineering, benchmarking may include the evaluation of LLMs ability to produce accurate and robust outputs for input data obtined from curated real-world projects or from synthetic SE-specific datasets. Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
+In software engineering, benchmarking may include the evaluation of LLMs ability to produce accurate and robust outputs for input data obtained from curated real-world projects or from synthetic SE-specific datasets.\comment{What are "robust" outputs? Outputs following a specific structure? In that case, "accurate" also describes that feature}
+Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
 RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
 The metrics used are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
-SWE-Bench~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE python tasks extracted from GitHub pull requests.
-For scoring the performance of the LLMs on the tasks, the authors report whether the generated patch is applicable or not (i.e., it fails compilation) and, for successful patches, the percentage of test cases passed.
+SWE-Bench~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE Python tasks extracted from GitHub pull requests.
+For scoring the performance of the LLMs on the tasks, the authors report whether the generated patch is applicable (i.e., it fails compilation) and, for successful patches, the percentage of test cases passed.
 
 \subsubsection{Advantages}
 
-Properly-built benchmarks provide objective evaluation across different tasks, enabling fair comparison of different models (and versions).
+Properly-built benchmarks provide objective, reproducible evaluation across different tasks, enabling fair comparison of different models (and versions).
 Moreover, benchmarks built for specific SE tasks can help identify LLM weaknesses and support their optimization/fine-tuning for such tasks.
 Benchmark built using real-world data can also help legitimize research results for practitioners, supporting industry-academia collaboration.
 Finally, benchmarks can foster open science practices by providing a common ground for sharing data (e.g., as part of the benchmark itself) and results (e.g., of models run against a benchmark).
 
 \subsubsection{Challenges}
 
-Benchmark contamination~\cite{DBLP:journals/corr/abs-2410-16186} has recently been identified as an issue.
+Benchmark contamination, the inclusion of the benchmark in the training dataset of the LLM,~\cite{DBLP:journals/corr/abs-2410-16186} has recently been identified as an issue.
 The careful selection of samples and building of corresponding input prompts is particularly important, as correlations between prompts may bias benchmark results~\cite{DBLP:conf/acl/SiskaMAB24}.
+While LLMs might perform well on a specific benchmark, such as HumanEval, it does not necessarily perform well on another benchmark.
+Benchmark metrics such as perplexity or BLEU-N do not always reflect human judgment.
 Recently, Cao et al.~\cite{cao2025should} has proposed guidelines for building benchmarks for LLMs related to coding tasks, grounded in a systematic survey of existing benchmarks. 
 In this process, they highlight current shortcomings related to reliability, transparency irreproducibility, low data quality, and inadequate validation measures.
-
+\comment{I like the last reference to guildelines for building a benchmark. Should we include some challenges from the paper, too?}
 
 \subsection{References}
 
