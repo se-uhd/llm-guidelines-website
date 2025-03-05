@@ -2,9 +2,13 @@
 
 \begin{document}
 
-\subsection{Report Model Version and Configuration}
+\subsection{Report Version, Configuration, Architecture, and Data}
 
 \subsubsection{Recommendations}
+
+\todo{Merge previously separated sections}
+
+\subsubsection{Recommendations (Version and Configuration)}
 
 LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce varying results for the same input.
 Moreover, configuration parameters such as the temperature affect content generation.
@@ -43,7 +47,33 @@ Our recommendation is to report:
 \end{itemize}
 }
 
+\subsubsection{Recommendations (Architecture and Data)}
+
+Oftentimes, there is a layer around the LLM that preprocesses data, prepares prompts or filters user requests. One example is ChatGPT, which, at the time of writing these guidelines, primarily uses the GPT-4o model. GitHub Copilot also relies on the same model, and researchers can build their own tools utilizing GPT-4o directly (\textit{e.g.}, via the OpenAI API). The infrastructure around the bare model can significantly contribute to the performance of a model in a given task.
+Therefore, it is important that researchers clearly describe the architecture and what the LLM contributes to the tool or method presented in a research paper.
+
+% Architecture
+
+If the LLM is used as a standalone system (\textit{e.g.}, ChatGPT-4o API without additional architecture layers), researchers \should provide a brief explanation of how it was used rather than detailing a full system architecture. However, if the LLM is integrated into a more complex system with preprocessing, retrieval mechanisms, fine-tuning, or autonomous agents, researchers \must clearly document the tool architecture, including how the LLM interacts with other components such as databases, retrieval mechanisms, external APIs, and reasoning frameworks. A high-level architectural diagram \should be provided in these cases to improve transparency. To enhance clarity, researchers \should explain design decisions, particularly regarding model access (\textit{e.g.}, API-based, fine-tuned, self-hosted) and retrieval mechanisms (\textit{e.g.}, keyword search, semantic similarity matching, rule-based extraction). Researchers \mustnot omit critical architectural details that could impact reproducibility, such as hidden dependencies or proprietary tools that influence model behavior.
+
+Additionally, when performance or time-sensitive measurements are relevant, researchers \should explicitly describe the hosting environment of the LLM or LLM-based tool, as this can significantly impact results. This description \should specify not only where the model runs (e.g., local infrastructure, cloud-based services, or dedicated hardware) but also relevant details about the environment, such as hardware specifications, resource allocation, and latency considerations.
+
+% Architecture for Agent-Based LLM Systems
+
+If the LLM is part of an agent-based system that autonomously plans, reasons, or executes tasks, researchers \must describe its architecture, including the agent's role (\textit{e.g.}, planner, executor, coordinator), whether it is a single-agent or multi-agent system, how it interacts with external tools and users, and the reasoning framework used (\textit{e.g.}, chain-of-thought, self-reflection, multi-turn dialogue, tool usage). Researchers \mustnot present an agent-based system without detailing how it makes decisions and executes tasks.
+
+% Retrieval-Augmented Generation (RAG), Fine-Tuning, and Supplemental Data
+
+If a retrieval or augmentation method is used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses. This includes specifying the type of storage or database used (\textit{e.g.}, vector databases, relational databases, knowledge graphs) and how the retrieved information is selected and used. Stored data used for context augmentation \must be reported, including details on data preprocessing, versioning, and update frequency. If this data is not confidential, an anonymized snapshot of the data used for context augmentation \should be made available.
+
+Similarly, if the LLM is fine-tuned, researchers \must describe the fine-tuning goal (\textit{e.g.}, domain adaptation, task specialization), procedure (\textit{e.g.}, full fine-tuning, parameter-efficient fine-tuning), and dataset (source, size, preprocessing, availability). They should include training details (\textit{e.g.}, compute resources, hyperparameters, loss function) and performance metrics (benchmarks, baseline comparison). If the data used for fine-tuning is not confidential, an anonymized snapshot of the data used for fine-tuning the model \should be made available.
+
+
 \subsubsection{Example(s)}
+
+\todo{Merge previously separated sections}
+
+\subsubsection{Example(s) (Version and Configuration)}
 
 For an OpenAI model, researchers might report that ``A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
 Similar statements can be made for self-hosted models, for which supplementary material can report specific instructions for reproducing results.
@@ -69,13 +99,37 @@ When studying commercial tools where configuration access is limited:
 \end{itemize}
 }
 
+\subsubsection{Example(s) (Architecture and Data)}
+
+Some empirical studies in software engineering involving LLMs have documented the architecture and supplemental data aligning with the recommended guidelines. Hereafter, we provide two examples.
+
+% I could have hit on specific aspects of these studies (published recently at TSE and ICSA), but they were, in general, well-described. I decided to keep it more abstract so that I could use them as "good examples".
+
+Sch{\"{a}}fer \textit{et al.} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}. The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce corresponding unit tests. The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites. The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation. It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
+
+Dhar \textit{et al.} conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions~\cite{DBLP:conf/icsa/DharVV24}. The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system. The study provides information on the fine-tuning approach and datasets used for evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
+
+
 \subsubsection{Advantages}
+
+\todo{Merge previously separated sections}
+
+\subsubsection{Advantages (Model and Configuration)}
 
 The recommended information is a prerequisite to enable reproducibility of LLM-based studies under the same or similar conditions.
 Please note that this information alone is generally not sufficient.
 Therefore, depending on the specific study setup, researchers \should provide additional information about architecture and data (\href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}), prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}), interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}), and specific limitations an mitigations (\href{/guidelines/#report-limitations-and-mitigations}{Report Limitations and Mitigations}).
 
+\subsubsection{Advantages (Architecture and Data)}
+
+Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility, transparency, and trust~\cite{DBLP:journals/software/LuZXXW24}. In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking. Clear documentation of RAG, fine-tuning, and data storage enables comparison, optimizes efficiency, and upholds scientific rigor and accountability, fostering reliable and reusable research.
+
+
 \subsubsection{Challenges}
+
+\todo{Merge previously separated sections}
+
+\subsubsection{Challenges (Model and Configuration)}
 
 \comment{Should we also address how API rate limits and usage constraints can affect experiments?}
 
@@ -87,7 +141,16 @@ As a beta feature, OpenAI also lets users set a seed parameter to receive ``(mos
 However, the seed value does not allow for full reproducibility and the fingerprint changes frequently. 
 While, as motived above, open models significantly simplify re-running experiments, they also come with challenges in terms of reproducibility, as generated outputs can be inconsistent despite setting the temperature to 0 and using a seed value (see \href{https://github.com/ollama/ollama/issues/5321}{GitHub issue for Llama3}).
 
+\subsubsection{Challenges (Architecture and Data)}
+
+Researchers face challenges in documenting LLM-based architectures, including proprietary APIs and dependencies that restrict disclosure, managing large-scale retrieval databases, and ensuring efficient query execution. They must also balance transparency with data privacy concerns, adapt to the evolving nature of LLM integrations, and, depending on the context, handle the complexity of multi-agent interactions and decision-making logic, all of which can impact reproducibility and system clarity.
+
+
 \subsubsection{Study Types}
+
+\todo{Merge previously separated sections}
+
+\subsubsection{Study Types (Model and Configuration)}
 
 This guideline \must be followed for all study types for which the researcher has access to (parts of) the model's configuration.
 They \must always report the configuration that is visible to them, acknowledging the reproducibility challenges of commercial tools and models offered as-a-service. 
@@ -96,6 +159,11 @@ The model name and date \must always be reported.
 In those cases, reporting other aspects such as prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}) and interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}) is essential.
 
 \comment{Beside guidelines I believe research would benefit from a structured format that tehy could easily follow, otherwise we risk inconsistent reporting across studies. Let's think about a template.}
+
+\subsubsection{Study Types (Architecture and Data)}
+
+This guideline \must be followed for all empirical study types involving LLMs, especially those using fine-tuned or self-hosted models, retrieval-augmented generation (RAG) or alternative retrieval methods, API-based model access, and agent-based systems where LLMs handle autonomous planning and execution.
+
 
 \subsubsection{References}
 
