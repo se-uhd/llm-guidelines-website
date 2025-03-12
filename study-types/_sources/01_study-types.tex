@@ -6,7 +6,7 @@
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies.
 They can automate various tasks such as data collection, preprocessing, and analysis.
-For example, LLMs can apply pre-defined coding guides to large qualitative datasets (\href{/study-types/#llms-as-annotators}{LLMs as Annotators}), assess the quality of software artifacts (\href{/study-types/#llms-as-raters}{LLMs as Raters}), generate summaries of research papers (\href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}), and even simulate human behavior in empirical studies (\href{/study-types/#llms-as-subjects}{LLMs as Subjects}).
+For example, LLMs can apply pre-defined coding guides to large qualitative datasets (\href{/study-types/#llms-as-annotators}{LLMs as Annotators}), assess the quality of software artifacts (\href{/study-types/#llms-as-judges}{LLMs as Judges}), generate summaries of research papers (\href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}), and even simulate human behavior in empirical studies (\href{/study-types/#llms-as-subjects}{LLMs as Subjects}).
 This can significantly reduce the time and effort required by researchers, allowing them to focus on more complex aspects of their studies.
 However, all these applications also come with limitations, potential threats to validity, and implications for the reproducibility of study results.
 In our guidelines, the following study types and used to contextualize the recommendations we provide.
@@ -50,14 +50,14 @@ While generally cost-effective, LLM annotation requires careful management of pe
 Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}. %These biases are especially pronounced when dealing with newer topics, such as the Russo-Ukrainian conflict sentiment analysis.
 
 
-\subsection{LLMs as Raters}
+\subsection{LLMs as Judges}
 %neil
 
 \subsubsection{Description}
 
-In empirical studies, LLMs can act as raters (also known as judges) to evaluate properties of software artifacts.% such as code, documentation, and design patterns.
-For instance, LLMs can be used to assess code readability, adherence to coding standards, or the quality of code comments. LLM rating could be used to assess research artifact quality, such as generated documentation from a research tool.
-\emph{Rating} is distinct from the more qualitative task of assigning a code or label (see Section \href{/study-types/#llms-as-annotators}{LLMs as Annotators}) to (typically) unstructured text.
+LLMs can act as judges (also known as LLM-as-rater) to evaluate properties of software artifacts.% such as code, documentation, and design patterns.
+For instance, LLMs can be used to assess code readability, adherence to coding standards, or the quality of code comments. LLM judgments could be used to assess research artifact quality, such as generated documentation from a research tool.
+\emph{Judgment} is distinct from the more qualitative task of assigning a code or label (see Section \href{/study-types/#llms-as-annotators}{LLMs as Annotators}) to (typically) unstructured text.
 It is also distinct from the software engineering tasks of \textbf{using} LLMs, as we discuss in Section \href{/study-types/#introduction-llms-as-tools-for-software-engineers}{LLMs as Tools for SE}, to e.g. understand if LLMs can find ambiguity in requirements~\cite{DBLP:conf/icse/EzziniA0S22}, which is then compared to a human-created gold standard.
 
 % Neil's note: There are plenty of papers looking at using LLMs to generate code, evaluate bugginess, compare binaries, etc. But these would fall into the LLMs for SE category. Many fewer studies using them as raters; most studies still compare outputs to a manual gold set and report accuracy etc.
@@ -77,11 +77,12 @@ Evaluate the quality of the following requirement: \{requirement\}.\\
 Explain your decision and suggest an improved version.\\
 \end{quote}
 
-Lubos et al. then evaluated the LLM's output against human raters, to assess how well the LLM matched experts. They did this in 2 phases: in one, the humans were unaware of the LLM's decision, and in the other, with foreknowledge. This second aspect measured the extent to which the LLM might \emph{convince} the human to change their mind. 
+Lubos et al. then evaluated the LLM's output against human raters, to assess how well the LLM matched experts. 
+% They did this in 2 phases: in one, the humans were unaware of the LLM's decision, and in the other, with foreknowledge. This second aspect measured the extent to which the LLM might \emph{convince} the human to change their mind. 
+% \comment{I wonder if the second aspect is a bit distracting here and could be misunderstood as suggesting that studies should do such a thing. Interesting study though!}
+Agreement can be measured in many ways; this study used Cohen's kappa measure~\cite{cohen60}. The study found moderate agreement on the simple requirements dataset, and poor agreement on the more complex requirements. However, evaluating machine judgment may not be the same as human-human judgments, and is an open area of research~\cite{DBLP:journals/corr/abs-2410-03775}. 
 
-Agreement can be measured in many ways; this study used Cohen's kappa measure~\cite{cohen60}. The study found moderate agreement on the simple requirements dataset, and poor agreement on the more complex requirements. However, evaluating machine ratings may not be the same as human-human ratings and is an open area of research~\cite{DBLP:journals/corr/abs-2410-03775}. 
-
-The study by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} looked at LLMs-as-raters across five datasets and ten annotation tasks. They used a variety of different LLMs to compare model to model performance. For tasks where humans do not agree with one another (in this case, evaluating conciseness of code summaries) models also do poorly; but ``if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task~\cite[p.6]{DBLP:journals/corr/abs-2408-05534}.
+The study by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} looked at LLMs-as-judges across five datasets and ten annotation tasks. They used a variety of different LLMs to compare model to model performance. For tasks where humans do not agree with one another (in this case, evaluating conciseness of code summaries) models also do poorly; but ``if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task~\cite[p.6]{DBLP:journals/corr/abs-2408-05534}.
 
 % % Other examples, for future:
 % - ClarifyGPT rates AI code wrt requirements 10.1145/3660810
@@ -94,24 +95,28 @@ The study by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} looked at LLM
 
 \subsubsection{Advantages}
 
-By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human raters might introduce. 
+By providing---depending on the model configuration---consistent and relatively ``objective'' evaluations, LLMs can help mitigate certain biases and part of the variability that human judges might introduce. 
 This may lead to more reliable and reproducible results in empirical studies, to the extent these models can be reproduced or checkpointed (see \href{/guidelines/#report-model-version-and-configuration}{"Report Model Version and Configuration"} and \href{/guidelines/#report-prompts-and-their-development}{"Report Prompts and their Development"} for more).
 
 LLMs can be much more efficient, and scale far more easily, than the equivalent human approach. With LLM automation, entire datasets could be labeled, as opposed to subsets. The main constraint, which varies by model and budget, is the input context size, i.e., the number of tokens one can pass into a model. For example, the upper bound on context that can be passed into OpenAi's \textsf{o1-mini} model is \href{https://help.openai.com/en/articles/9855712-openai-o1-models-faq-chatgpt-enterprise-and-edu}{32k}. 
 
 \subsubsection{Challenges}
 
-When relying on the judgment of LLMs, researchers must build a reliable process for generating ratings that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently~\cite{DBLP:journals/corr/abs-2412-12509}. For example, the order of options has been shown to affect LLM outputs in multiple-choice settings~\cite{DBLP:conf/naacl/PezeshkpourH24}.
+When relying on the judgment of LLMs, researchers must build a \textit{reliable} process for generating judgment labels that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently~\cite{DBLP:journals/corr/abs-2412-12509}. For example, the order of options has been shown to affect LLM outputs in multiple-choice settings~\cite{DBLP:conf/naacl/PezeshkpourH24}. 
+In addition to reliability, other quality attributes include \textit{accuracy} of the labels, and the speed and \textit{scalability} of the LLM tool. 
+A reliable LLM might be reliably inaccurate and wrong. 
+Evaluating and judging large numbers of items---for example, to perform fault localization on the thousands of bugs big open-source projects deal with---comes with costs in clock time, compute time, and environmental sustainability.
+% \comment{I wonder if it would make sense to explicitly call out that reliability is not the only important thing -- if the LLM or even multiple LLMs produce reliable output, i.e., always the same answer for the same input, this does not tell us anything about accuracy yet. LLM might just be reliably wrong.}
 
 Avoid the temptation to assign objectivity to an LLM; evidence shows LLMs can behave differently, for instance, when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}. In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well documented biases and issues with fairness~\cite{Gallegos2024BiasAF}. 
-For tasks where human raters themselves disagree significantly, it is not clear if an LLM rater should reflect the majority opinion or act as an independent rater. The underlying statistical framework of an LLM usually pushes outputs towards the most likely (majority) answer. 
-
-Rating large numbers of items---for example, to perform fault localization on the thousands of bugs big open-source projects deal with---comes with costs in clock time, compute time, and environmental sustainability.
+For tasks where human judges themselves disagree significantly, it is not clear if an LLM judge should reflect the majority opinion or act as an independent judge. The underlying statistical framework of an LLM usually pushes outputs towards the most likely (majority) answer. 
 
 One researcher choice in such studies is the number of examples (training data) provided to the LLM. This might involve zero tuning (zero-shot), several examples (few-shot), or more conventional training data with many examples. In the example above, Lubos et al. chose zero-shot tuning, providing no specific guidance besides the project's context, i.e., they did not show the LLM what a yes or no answer might look like. 
 
-Research is ongoing as to how suitable LLMs are as standalone raters. Questions around bias, accuracy, and trust remain~\cite{DBLP:journals/corr/abs-2406-18403}. There is reason for concern about LLMs judging student assignments or doing peer review of scientific papers~\cite{DBLP:conf/coling/ZhouC024}. Even beyond questions of technical capacity, ethical questions remain, particularly if there is some implicit expectation that a human is rating the output, such as a quiz. Involving a human in the rating loop---for example, to contextualize the scoring---is one approach~\cite{panHumanCenteredDesignRecommendations2024}.
+Research is ongoing as to how suitable LLMs are as standalone judges. Questions around bias, accuracy, and trust remain~\cite{DBLP:journals/corr/abs-2406-18403}. There is reason for concern about LLMs judging student assignments or doing peer review of scientific papers~\cite{DBLP:conf/coling/ZhouC024}. Even beyond questions of technical capacity, ethical questions remain, particularly if there is some implicit expectation that a human is judging the output, such as a quiz. Involving a human in the judgment loop---for example, to contextualize the scoring---is one approach~\cite{panHumanCenteredDesignRecommendations2024}. 
 
+A lack of large-scale ground truth datasets for benchmarking LLM performance on judgment studies is hindering progress on evaluating research in this area.
+% \comment{would it make sense to mention lack of large-scale ground truth data as a challenge?}
 
 \subsection{LLMs for Synthesis}
 % kalinowski
@@ -216,27 +221,29 @@ Further, in longitudinal case studies, the timing of the study may have a signif
 
 LLMs are being integrated into new tools designed to support software engineers in their daily tasks.
 Such integration is important to tailor the tools to the specific needs of a development team and to enhance their capabilities, as well as to influence their behavior in accordance with company policies.
-In this regard, the advent of \textit{GenAI Agents} has enabled the development of a standardized architecture, where the LLM is guided by a reasoning component (related to prompt engineering), tools (understood as interfacing with external systems via APIs or databases), and a user communication interface that is not necessarily limited to a chat.
+In this regard, the advent of \textit{GenAI Agents} has enabled the development of a standardized architecture, where the LLM is guided by a reasoning component (related to prompt engineering), tools (understood as interfacing with external systems via APIs or databases), and a user communication interface that is not necessarily limited to a chat~\cite{DBLP:conf/icsm/RichardsW24, DBLP:journals/tmlr/SumersYN024, DBLP:journals/corr/abs-2309-07870}.
+Other than propose tools, researcher can also evaluate the effectiveness of these tools in improving developer experience (for example, in terms of productivity, artefact quality, and developer satisfaction) and testing with different implementations of the above mentioned architecture in order to improve the tools.
 
 \subsubsection{Example(s)}
 
 Researchers can propose tools to facilitate technology transfer from the research environment to industry. 
-For instance, the work of Richards and Wessel introduced a preliminary GenAI Agent designed to assist developers in understanding source code by leveraging a conceptual theory (the reasoning component) based on the theory of mind~\cite{DBLP:conf/icsm/RichardsW24}. 
-Similarly, Yan et al. proposed IVIE, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}.
+For instance, Richards and Wessel introduced a preliminary GenAI agent designed to assist developers in understanding source code by incorporating a reasoning component grounded in the theory of mind~\cite{DBLP:conf/icsm/RichardsW24}. Their work specifically emphasized the reasoning aspect of the architecture, leveraging the theory of mind to develop tailored agents while also demonstrating their effectiveness.
+Similarly, Yan et al. proposed IVIE, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}. In this case, the authors focused more on the presentation part of the architecture, providing a user-friendly interface to interact with the LLM. 
 
-Empirical studies can evaluate the effectiveness of these tools in improving productivity, code quality, and developer satisfaction. 
+Empirical studies can evaluate the effectiveness of these tools in improving productivity, artefact quality, and developer satisfaction.
 For example, Choudhuri et al. conducted an experiment with students in which they measured the impact of ChatGPT on the correctness and time taken to solve programming tasks~\cite{DBLP:conf/icse/ChoudhuriLSGS24}.
 
 \subsubsection{Advantages}
 
 By assessing the impact of LLM-powered tools, researchers can identify best practices and areas for further improvement.
-Moreover, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. Moreover, compared to the past, the accessibility of open-source models and their advanced capabilities make building such tools a potentially easier task, especially considering the ease of guiding them through prompt engineering techniques.
+Moreover, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. 
+Moreover, the increased accessibility of open models and their advanced capabilities have made the development of such tools more feasible and democratized than in the past.
 
 \subsubsection{Challenges}
 
 
 In this context, the non-determinism of generative AI models—although potentially mitigated through prompt engineering—poses a significant challenge in both the development and evaluation of tools integrating GenAI. 
-Additionally, while open-source models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open-source models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
+Additionally, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
 
 
 \subsection{Benchmarking LLMs for Software Engineering Tasks}
