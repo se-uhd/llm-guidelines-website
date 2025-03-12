@@ -9,9 +9,9 @@ When using large language models (LLMs) in empirical studies for software engine
 \textbf{Reproducibility}:
 A cornerstone of open science is the ability to reproduce research results. Even though the inherent non-deterministic nature of LLMs is a strength in many use cases, its impact on reproducibility is a challenge. To enable reproducibility, researchers 
 \begin{itemize}
-  \item \must disclose a replication package for their study and
+  \item \must disclose a replication package for their study and %Comment: This is also requested in "Use an Open LLM as a Baseline"
   \item \should perform multiple evaluation iterations of their experiments (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}) to account for non-deterministic outputs of LLMs or
-  \item \may disable reduce output variability by setting the temperature to 0 and stating a seed value if the research allows for it.
+  \item \may disable reduce output variability by setting the temperature to 0 and stating a seed value and fingerprint if the research and the LLM provider allows for it.
 \end{itemize}
 Besides non-determinism, the behavior of an LLM depends on many external factors, such as model version, API updates, or prompt variations. To ensure reproducibility, researchers
 \begin{itemize}
@@ -24,12 +24,11 @@ Besides non-determinism, the behavior of an LLM depends on many external factors
 \end{itemize}
 
 \textbf{Generalization}:
-\comment{I've noticed in this section and in some of the other sections, that some of the guidelines only apply in specific cases, or that there is a choice between two or more guidelines depending on the type of study. This could potentially be confusing, as some readers might expect that this information would be in the "study types" section, with a description of which types of studies the guidelines apply to. However, as we only differentiate between the study types described in the "study types" section, the fine-grained information mentioned here would not fit there. I did not make any changes regarding this, as I'm unsure if there is a better way to notify readers of small and fine-grained conditions for guidelines. This could be a topic of discussion for one of the meetings.}
 Even though the topic of generalizability is not new, it has gained new relevance with the increasing interest in LLMs. In LLM studies, generalizability boils down to two main concerns:
 First, are the results specific to an LLM, or can they be achieved with other LLMs too? 
 \begin{itemize}
   \item If generalizability to other LLMs is not in the scope of the research, this \must be clearly explained or
-  \item if generalizability is in scope, researchers \must compare their results or subsets of the results (if not possible e.g., due to computational cost) with other LLMs to assess the generalizability of their findings. 
+  \item if generalizability is in scope, researchers \must compare their results or subsets of the results (if not possible e.g., due to computational cost) with other LLMs that are similar (e.g. in size, general performance) to assess the generalizability of their findings. %Comment: Partially overlaps with "Use an Open LLM as a Baseline"
 \end{itemize}
 Second, will these results still be valid in the future? Multiple studies (\cite{DBLP:journals/corr/abs-2307-09009},~\cite{doi:10.1148/radiol.232411}) found, that the performance of proprietary LLMs (like GPT) within the same version (e.g. GPT 4) decreased over time. Reporting the model version and configuration is not sufficient in such cases. To date, the only way of mitigating this limitation is the usage of an Open LLM with a transparently communicated versioning and archiving (see \href{/guidelines/#use-open-llm}{Use an Open LLM as a Baseline}). Hence, researchers
 \begin{itemize}
@@ -55,7 +54,7 @@ Consequently, resource-intensive research remains predominantly the domain of we
   \item \should report the cost associated with executing the study. 
   \item If the study employed self-hosted LLMs, researchers \should report the hardware used. 
   \item If the study employed managed LLMs, the service cost \should be reported.
-  \item To ensure research result validity and replicability, researchers \must provide the LLM outputs as evidence for validation at different granularities (e.g., outputs of individual LLMs when employing multi-agent systems).
+  \item To ensure research result validity and replicability, researchers \must provide the LLM outputs as evidence for validation at different granularities (e.g., outputs of individual LLMs when employing multi-agent systems). %Comment: This overlaps partially with "Report Interaction Logs"
   \item Additionally, researchers \should include a subset of they employed validation dataset, selected using an accepted sampling strategy, to allow partial replication of the results.
 \end{itemize}
 
@@ -92,9 +91,9 @@ To report the environmental impact of a study, researchers
     \item \should use software such as \href{https://github.com/mlco2/codecarbon}{CodeCarbon} or \href{experiment-impact-tracker}{Experiment Impact Tracker} to track and quantify the carbon footprint of the study or
     \item \should report an estimation of the carbon footprint through tools like \href{https://mlco2.github.io/impact/#about}{MLCO2 Impact} or
     \item \should detail the LLM version and configuration as described in \href{/guidelines/report-version-and-configuration}{Report Model Version and Configuration}, state the hardware or hosting provider of the model and report the total number of requests, accumulated input tokens, and output tokens.
-    \item \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (also see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}).
+    \item \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (also see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}).%Comment: This overlaps with "Report Suitable Baselines, Benchmarks, and Metrics"
 \end{itemize}
-\comment{This set of guidelines on the environmental impact is combined through the use of "or" meaning that if one does not follow one guideline, they should follow another. I think this connects to the earlier comment I made above regarding "conditional guidelines". We should potentially consider finding a common way of clearly representing which guidelines apply in all and which apply just in specific cases. Again, I have no specific change suggestions, but would like to note this as a potential point of discussion for the future.}
+%Comment: This set of guidelines on the environmental impact is combined through the use of "or" meaning that if one does not follow one guideline, they should follow another. I think this connects to the earlier comment I made above regarding "conditional guidelines". We should potentially consider finding a common way of clearly representing which guidelines apply in all and which apply just in specific cases. Again, I have no specific change suggestions, but would like to note this as a potential point of discussion for the future.
 
 \subsubsection{Example(s)}
 \textbf{Reproducibility}:
