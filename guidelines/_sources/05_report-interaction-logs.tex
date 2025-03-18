@@ -60,9 +60,11 @@ Detailed logs enable future replication studies to compare results using the sam
 
 \subsubsection{Challenges}
 
+Not all systems allow the reporting of interaction logs with the same ease. At one end of the spectrum, chatbots can be easily documented because the conversations are typically text-based and can be logged directly. At the other end, auto-complete systems (e.g., GitHub Copilot) make it nearly impossible to report full interactions: to replicate a recommendation provided by Copilot during a coding session, one would need to recreate the exact state of the codebase at that moment, which is often impractical. One way to report interactions with auto-complete systems would be recording screencasts of the coding sessions which would capture the real-time interactions and recommendations made by the system. Another method would be to use version control to document the state of the codebase when a recommendation was made. This would allows researchers to track changes and understand the context in which the recommendation occurred.
+
+
 Given that {\em chat transcripts} are easy to generate, a study might end up with a very large appendix. Consequently, online storage might be needed. Services such as \href{https://zenodo.org}{zenodo}, \href{https://figshare.com/}{figshare}, or other similar long term storage for research artifacts \should be used in such situations.
 
-Not all systems allow the reporting of interaction logs with the same ease. E.g. chat bot systems are easy to report the interactions with, while auto-complete systems like GitHub Copilot, will be much harder to report. Indeed, the fact that Copilot provided a recommendation during a coding session can not be replicated unless one re-creates the whole codebase state at that given point in time -- which seems quite unrealistic. One way to report that would be sharing a screencast of the coding session. Another one is to use version control to report the state of the system when a recommendation was made.
 
 % \comment{I think actually these tools do have logging, eg. https://docs.github.com/en/copilot/troubleshooting-github-copilot/viewing-logs-for-github-copilot-in-your-environment}
 % \comment{Mircea: the logs are for debugging things that don't work }
