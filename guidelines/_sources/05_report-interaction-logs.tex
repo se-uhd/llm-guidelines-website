@@ -10,17 +10,16 @@
 
 Previous guidelines aim to address the reproducibility problem by encouraging the reporting of full version and parameters, but this will still not be always sufficient. Indeed, LLMs can still behave non-deterministically even if decoding strategies and parameters are fixed because non-determinism can arise from batching, input preprocessing, and floating point arithmetic on GPUs ~\cite{Chann2023}. Thus, in order to establish a fixed point from which a given study can be reproducible, a study \should report the full interaction logs with a LLM if possible. 
 
-Reporting this is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to replicate it. 
+
+Reporting this is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to replicate it. \comment{is this paragraph needed?}
 
 To intuitively explain why this can be important, consider a study in which the researchers evaluated the correctness of bug fixing capabilities of LLM-based tools and consider that the researchers only provided the prompt without the LLM answer. One of the multiple prompts would include the buggy function below in which the function returns the wrong variable. 
 
 \begin{quote}
 \begin{verbatim}
 
-You are a coding assistant. 
 Below is a Python function that is buggy. 
 Analyze the code and suggest a fix.
-Code:
 
 def remove_duplicates_buggy(input_list):
     unique_list = []
@@ -32,7 +31,7 @@ def remove_duplicates_buggy(input_list):
 \end{verbatim}
 \end{quote}
 
-If a paper doesn't include the output and simply states that the fix was correct, it lacks crucial information needed for reproducibility. Without this information, fellow researchers can't assess whether the solution was efficient or if it was written in a non-idiomatic way (e.g., the function could have been implemented more elegantly using Python list comprehensions). There could be other potential issues that researchers won't be able to verify if the detailed response is not provided.
+If a paper doesn't include the output and simply states that the fix was correct, it will lack crucial information needed for reproducibility. Without this information, fellow researchers can't assess whether the solution was efficient or if it was written in a non-idiomatic way (e.g., the function could have been implemented more elegantly using Python list comprehensions). There could be other potential issues that researchers won't be able to verify if the detailed response is not provided.
 
 This guideline is similar to reporting interview transcripts in qualitative research. In both cases, it's important to document the entire interaction between the interviewer and the participant. Just as a human participant might give different answers to the same question asked two months apart, the responses from OpenAI ChatGPT can also vary over time. Therefore, keeping a record of the actual conversation is crucial for accuracy and context.
 
@@ -51,12 +50,12 @@ In their paper ``Investigating ChatGPT's Potential to Assist in Requirements Eli
 
 The advantage of following this guideline is the transparency and increased reproducibility of the resulting research. 
 
-Moreover, the guideline is easy to follow. Transcripts are easy to obtain (if we continue with the mental model of a LLM as an interviewee, this is especially evident in contrast with obtaining transcripts with human users). Even for systems where the interaction is based on voice, the interaction is first translated to text using speech-to-text methods, so it can also be easily obtained. In this sense, there is no excuse for researchers not reporting full transcripts. 
+The guideline is straightforward to follow. Obtaining transcripts is simple, especially when considering a large language model (LLM) as an interviewee, compared to obtaining transcripts from human participants. Even in systems where interactions are voice-based, these interactions are first converted to text using speech-to-text methods, making transcripts easily accessible. Therefore, there is no valid reason for researchers not to report full transcripts.
 
-One other advantage is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can (e.g. as of beginning of 2025, the for-profit OpenAI company allows the sharing of chat transcripts: https://openai.com/policies/sharing-publication-policy/). 
+Another advantage is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can (e.g. as of beginning of 2025, the for-profit OpenAI company allows the sharing of chat transcripts: https://openai.com/policies/sharing-publication-policy/). 
 
+Detailed logs enable future replication studies to compare results using the same prompts. This could be valuable for tracking changes in LLM responses over time or across different versions of the model. A body of knowledge would also be collected that would allow researchers to analyze how consistent the LLM's responses are and identify any variations or improvements in its performance.
 
-Another advantage is that a future replication paper might be able to compare future results for the same prompts with past results for the LLM.
 
 
 \subsubsection{Challenges}
