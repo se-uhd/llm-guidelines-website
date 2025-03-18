@@ -26,10 +26,9 @@ def remove_duplicates_buggy(input_list):
     return input_list 
 '''
 
-If the paper does not report the output and just concludes that the fix was correct, the study will be missing critical information for reproducibility. The solution might have been very inefficient, or the solution was correct and efficient, but was written in a way that is not idiomatic Python (e.g. the function in the example could have been implemented much more elegantly in Python by using list comprehensions). There could be any other number of downsides, that the fellow researchers will never be able to investigate if the response is not proided. 
+If a paper doesn't include the output and simply states that the fix was correct, it lacks crucial information needed for reproducibility. Without this information, fellow researchers can't assess whether the solution was efficient or if it was written in a non-idiomatic way (e.g., the function could have been implemented more elegantly using Python list comprehensions). There could be other potential issues that researchers won't be able to verify if the detailed response is not provided.
 
-
-In a sense, this guideline is not different than reporting transcripts of interviews in qualitative studies: there researchers also report the full interaction between the interviewers and the participants. Intuitively, this is the same because both a human participant and the OpenAI ChatGPT might {\em provide different answers} if asked the same question at two months distance; thus the transcript of the actual conversation is important to be tracked.
+This guideline is similar to reporting interview transcripts in qualitative research. In both cases, it's important to document the entire interaction between the interviewer and the participant. Just as a human participant might give different answers to the same question asked two months apart, the responses from OpenAI ChatGPT can also vary over time. Therefore, keeping a record of the actual conversation is crucial for accuracy and context.
 
 % \comment{the intro does not make it super clear *why* this helps reproducibility. If the AI has changed, how does the log really help us, as the answer might be different. I would argue, like in qual research, the value is to show the researchers have engaged substnatially with the respondent, i.e. that the process was not superficial}
 % \comment{I also don't really see a clear distinction with report prompts and their development. This one is arguing for transcripts of the interactions? }
