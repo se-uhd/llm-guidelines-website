@@ -187,9 +187,11 @@ Therefore, it is important to clearly separate and describe them.
 Empirical studies can also focus on understanding how software engineers use LLMs in their workflows.
 In these types of studies, researchers attempt to gain a detailed view of the current state of practice in software engineering.
 Observations and data gathering occurs in a real-world context based on information from practitioners.
-This involves investigating the adoption, usage patterns, and perceived benefits and challenges of LLM-based tools. 
+This involves investigating the adoption, usage patterns, and perceived benefits and challenges of LLM-based tools.
 Surveys, interviews, and observational studies can provide insights into how LLMs are integrated into development processes, how they influence decision-making, and what factors affect their acceptance and effectiveness. 
+
 Such studies can inform the design of more user-friendly and effective LLM-based tools and uncover new best practices for the LLM-assisted software engineering process.
+Moreover, they might uncover risks associated with the inclusion of LLM during the creation of software and point out problematic use cases.
 
 \subsubsection{Example(s)}
 
@@ -199,6 +201,10 @@ Ananza et al. conducted a case study evaluating the impact of introducing LLMs t
 
 Surveys can help researchers quickly provide a wider overview of the current perceptions of LLM use.
 For example, Jahic and Sami surveyed 15 software companies regarding their practices on LLMs in software engineering~\cite{DBLP:conf/icsa/JahicS24}.
+
+Retrospective studies analyzing the data generated during the use of LLMs by software engineers can provide additional insights into human LLM interactions.
+For example, researchers my employ data mining methods to build large-scale conversation datasets, such as the DevGPT dataset introduced by Xiao et al~\cite{DBLP:conf/msr/XiaoTHM24}.
+Conversations can then be analyzed using quantitative~\cite{DBLP:conf/msr/RabbiCZI24} and qualitative~\cite{DBLP:conf/msr/MohamedPP24} analysis methods.
 
 \subsubsection{Advantages}
 
@@ -212,7 +218,13 @@ Due to the studies taking place in real-world environments as opposed to more co
 The usage environment and choice of LLMs in a real-world context can often be extremely diverse.
 In practice, the process integration of LLMs can range from the use of specific LLMs based on company policy to the unregulated use of any available LLM. 
 Both extremes may influence the use of LLMs by software engineers in different ways, and as such should be addressed differently by the study methodology.
+Researchers should directly address these factors in their study design, by clearly describing and documenting the study environment, including organizational context, participant characteristics, and LLM tools used, as well as any relevant policies or guidelines that govern their use.
+These factors should then be utilized when interpreting the study results and when attempting to generalize the study results from the case to the population, for example by considering how the findings might apply to other organizations or contexts with similar characteristics.
+
 Further, in longitudinal case studies, the timing of the study may have a significant impact on its result, as LLMs are quickly being developed and replaced by newer versions.
+This difficulty is exacerbated by the relative novelty of LLMs in the SE process.
+Developers are still learning how to best make use of the new technology and best practices are being established.
+To mitigate these challenges, researchers should actively track changes in LLMs, such as updates or new releases, as well as changes in developer practices, and collect data at multiple points during their study, allowing them to capture the evolution of LLM use over time and assess the impact of these changes on their findings.
 
 \subsection{LLMs for New Software Engineering Tools}
 
