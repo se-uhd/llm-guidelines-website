@@ -12,21 +12,21 @@ Previous guidelines aim to address the reproducibility problem by encouraging th
 
 Reporting this is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to replicate it. 
 
-To intuitively explain why this can be important, consider a study in which the researchers evaluated the correctness of bug fixing capabilities of LLM-based tools and consider that the researchers only provided the prompt without the LLM answer: 
+To intuitively explain why this can be important, consider a study in which the researchers evaluated the correctness of bug fixing capabilities of LLM-based tools and consider that the researchers only provided the prompt without the LLM answer. One of the multiple prompts would include the buggy function below in which the function returns the wrong variable. 
 
 ```
-You are a coding assistant. Below is a Python script that fails with an error. Analyze the code and suggest a fix.
+You are a coding assistant. Below is a Python function that is buggy. Analyze the code and suggest a fix.
 Code:
 
-def divide(a, b):
-    return a / b
-
-print(divide(10, 0))
-Error message:
-ZeroDivisionError: division by zero
+def remove_duplicates_buggy(input_list):
+    unique_list = []
+    for item in input_list:
+        if item not in unique_list:
+            unique_list.append(item)
+    return input_list 
 '''
 
-If the paper does not report the output and just concludes that the fix was correct, the study will be missing critical information for reproducibility. The researchers might have missed some way in which the code was incorrect, or even, the code was correct but it was not written in idiomatic Python, or could have any other number of downsides, that the readers will never be able to investigate. 
+If the paper does not report the output and just concludes that the fix was correct, the study will be missing critical information for reproducibility. The solution might have been very inefficient, or the solution was correct and efficient, but was written in a way that is not idiomatic Python (e.g. the function in the example could have been implemented much more elegantly in Python by using list comprehensions). There could be any other number of downsides, that the fellow researchers will never be able to investigate if the response is not proided. 
 
 
 In a sense, this guideline is not different than reporting transcripts of interviews in qualitative studies: there researchers also report the full interaction between the interviewers and the participants. Intuitively, this is the same because both a human participant and the OpenAI ChatGPT might {\em provide different answers} if asked the same question at two months distance; thus the transcript of the actual conversation is important to be tracked.
