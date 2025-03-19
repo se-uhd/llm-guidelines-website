@@ -4,8 +4,11 @@
 
 \subsection{Report Prompts and their Development}
 
+\comment{I found it a bit hard to understand when to use \textbf{MUST} and \textbf{SHOULD} in this section. I think we need to clarify this. Sorry, computer networks lecturer's taking over, but we could follow the RFC2119 that defines requirements levels in Internet protocol specifications (https://datatracker.ietf.org/doc/html/rfc2119). Something along this line?  \textbf{MUST}: An absolute requirement for reproducibility.  \textbf{SHOULD}: A strongly recommended practice that may be omitted with justification. \textbf{MAY}: An optional practice.}
+
 \subsubsection{Recommendations}
-Prompts are critical in empirical software engineering studies involving LLMs. Depending on the task, prompts may include various types of content, such as source code, execution traces, error messages, natural language descriptions, or even screenshots and other multi-modal inputs. These elements significantly influence the model’s output, and understanding how exactly they were formatted and integrated is essential for transparency and reproducibility.
+\comment{These examples are fine but as scenarios they might be more representative of developers rather than researchers' activities? What if we took of prompts that are relevant for the examples from the Section Study Types (annotators, raters, synthesis, etc.)?}
+Prompts are critical in empirical software engineering studies involving LLMs. Depending on the task, prompts may include various types of content, such as source code, execution traces, error messages, natural language descriptions, or even screenshots and other multi-modal inputs. These elements significantly influence the model’s output, and understanding how exactly they were formatted and integrated is essential for transparency and reproducibility. We indicate absolute requirements for reproducibility using the keyword \textbf{MUST} and strongly recommended practices that could be omitted if justified using the keyword \textbf{SHOULD}.
 
 Researchers \textbf{MUST} report the full text of prompts used, along with any surrounding instructions, metadata, or contextual information. The exact structure of the prompt should be described, including the order and format of each element. For example, when using code snippets, researchers should specify whether they were enclosed in markdown-style code blocks (e.g., triple backticks), if line breaks and whitespace were preserved, and whether additional annotations (e.g., comments) were included. Similarly, for other artifacts such as error messages, stack traces, or non-text elements like screenshots, researchers should explain how these were presented. If rich media was involved, such as in multi-modal models, details on how these inputs were encoded or referenced in the prompt are crucial.
 
@@ -17,12 +20,19 @@ In cases where prompts are generated dynamically—such as through preprocessing
 
 To ensure full reproducibility, researchers \textbf{MUST} make all prompts and prompt variations publicly available in an online appendix, replication package, or repository. If the full set of prompts is too extensive to include in the paper itself, researchers \textbf{SHOULD} still provide representative examples and describe variations in the main body of the paper. For example, a recent paper by Anandayuvaraj et al.~\cite{anandayuvaraj2024fail} is a good example of making prompts available online. In the paper, the authors analyze software failures reported in news articles and use prompting to automate tasks such as filtering relevant articles, merging reports, and extracting detailed failure information. Their online appendix contains all the prompts used in the study, providing valuable transparency and supporting reproducibility.
 
-Prompt development is often iterative, involving collaboration between human researchers and AI tools. Researchers \textbf{SHOULD} report any instances where LLMs were used to suggest prompt refinements, as well as how those suggestions were incorporated. Furthermore, prompts may need to be revised in response to failure cases where the model produced incorrect or incomplete outputs. Iterative changes based on human feedback and pilot testing results should also be included in the documentation.
+When reporting prompts, researchers \textbf{MUST} also reference the model version as specified in Section X ('Report Model Version and Configuration'), as prompt effectiveness varies across model versions. For example: \textit{This prompt performed differently with GPT-4 (effective) versus Llama 2 (less effective) despite identical parameters.}
+
+Prompt development is often iterative, involving collaboration between human researchers and AI tools. Researchers \textbf{SHOULD} report any instances where LLMs were used to suggest prompt refinements, as well as how those suggestions were incorporated. Furthermore, prompts may need to be revised in response to failure cases where the model produced incorrect or incomplete outputs. Iterative changes based on human feedback and pilot testing results should also be included in the documentation. A prompt changelog can help track and report the evolution of prompts throughout a research project, including key revisions, reasons for changes, and versioning (e.g., v1.0: initial prompt; v1.2: added output formatting; v2.0: incorporated examples of ideal responses).
+\comment{We might want to add some sort of guidance on tracking and reporting prompt evolution throughout research projects? Such as recommendation for maintaining a \textit{prompt changelog}. For example: - Initial design (v1.0): initial prompt text; - Key revision (v1.2): Added specific output formatting requirements; - Final version (v2.0): Incorporated examples of ideal responses.}
 
 Finally, pilot testing and prompt evaluation are vital for ensuring that prompts yield reliable results. If such testing was conducted, researchers \textbf{SHOULD} summarize key insights, including how different prompt variations affected output quality and which criteria were used to finalize the prompt design.
 
+\comment{Maybe the document could establish a connections to guidelines in  `Report Model Version and Configuration'? Something along this line? ``When reporting prompts, researchers \textbf{MUST} also reference the model version as specified in Section X ('Report Model Version and Configuration'), as prompt effectiveness varies across model versions. For example: \textit{This prompt performed differently with GPT-4 (effective) versus Llama 2 (less effective) despite identical parameters.}''.}
+
 \subsubsection{Example(s)}
 A debugging study may use a prompt structured like this:
+
+\comment{Do you think a larger variety of examples would be beneficial? Something from requirements engineering, code generation, and testing?}
 
 \begin{quote}
 \begin{verbatim}
@@ -53,7 +63,9 @@ One challenge is the complexity of prompts that combine multiple components, suc
 
 For multi-modal studies, handling non-text artifacts such as screenshots introduces additional complexity. Researchers must decide how to represent such inputs, whether by textual descriptions, image encoding, or data references. Lastly, proprietary LLMs (e.g., Copilot) may obscure certain details about internal prompt processing, limiting full transparency.
 
-Privacy and confidentiality concerns can also hinder prompt sharing, especially when sensitive data is involved. In these cases, researchers should provide anonymized examples and summaries wherever possible.
+Privacy and confidentiality concerns can also hinder prompt sharing, especially when sensitive data is involved. In these cases, researchers should provide anonymized examples and summaries wherever possible. For prompts containing sensitive information, researchers \textbf{MUST}: (i) Anonymize personal identifiers. (ii) Replace proprietary code with functionally equivalent examples. (iii) Clearly mark modified sections.
+
+\comment{I think we need to add something about handling sensive data or proprietary information in prompts. Something along this line? \textit{``For prompts containing sensitive information, researchers \textbf{MUST}: (i) Anonymize personal identifiers. (ii )Replace proprietary code with functionally equivalent examples. (iii )Clearly mark modified sections.'}.}
 
 \subsubsection{Study Types}
 Reporting requirements may vary depending on the study type. For tool evaluation studies, researchers \textbf{MUST} explain how prompts were generated and structured within the tool. Controlled experiments \textbf{MUST} provide exact prompts for all conditions, while observational studies \textbf{SHOULD} summarize common prompt patterns and provide representative examples if full prompts cannot be shared.
