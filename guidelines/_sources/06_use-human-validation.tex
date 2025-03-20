@@ -13,7 +13,7 @@ Especially in studies where LLMs are used to support researchers, human validati
 We recommend that researchers plan for validation in humans from the outset and develop their methodology with this validation in mind.
 Study reference models for comparing humans with LLMs~\cite{Schneider2025ReferenceModel} can help provide a template to ease the design process.
 In some cases, a hybrid approach between human and machine-generated annotations can improve annotation efficiency.
-However, researchers should use systematic approaches to decide what and how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}. \comment{may be personal preference, but our recommendations should take a stronger stand (and be updated when that might change)}
+However, researchers should use systematic approaches to decide what and how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
 
 When evaluating the capability of LLMs to generate SE-related artifacts, may employ human validation to complement machine-generated measures.
 For example, proxies for software quality, such as code complexity or the number of code smells, may be complemented by human ratings of maintainability, readability, or understandability.
@@ -37,7 +37,6 @@ For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed a
 For instance, ``Model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff’s α is 0.68-0.76. 
 Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48
 for the first three categories.''~\cite{DBLP:journals/corr/abs-2408-05534}.
-\comment{IRR is not applicable in the previous examples, though: we are comparing ChatGPT's code suggestions to student qualitative feedback about how useful that was. How should people report that type of agreement?}
 
 \subsubsection{Example(s)}
 
@@ -46,7 +45,7 @@ Specifically, they asked participants to provide ratings regarding their experie
 
 Choudhuri et al.~\cite{DBLP:conf/icse/ChoudhuriLSGS24} evaluated the perceptions of students of their experience with ChatGPT in a controlled experiment.
 They added this data to extend their results from the task performance in a series of software engineering tasks.
-\comment{it might be good to expand on how this helped. In this case, I am guessing the student perceptions were a way of triangulating what the metrics reported? i.e. validating that the LLM outputs were usefuL?}
+This way, they were to employ questionnaires to measure the cognitive load, document any perceived faults in the system, and inquire about the participants intention to continue using the tool.
 
 Xue et al.~\cite{DBLP:conf/icse/XueCBTH24} conducted a controlled experiment in which they evaluated the impact of ChatGPT on the performance and perceptions of students in an introductory programming course.
 They employed multiple measures to judge the impact of the LLM from the perspective of humans.
@@ -63,7 +62,6 @@ Incorporating human judgment in the evaluation process adds a layer of quality c
 
 Incorporating feedback from individuals from the target population strengthens external validity by grounding study findings in real-world usage scenarios and may positively impact the transfer of study results to practice.
 Researchers may uncover additional opportunities to further improve the LLM or LLM-based tool based on the reported experiences.
-\comment{good point here: is the "human" in the human validation section about the researcher doing the study, or the people being studied? }
 
 \subsubsection{Challenges}
 
@@ -98,8 +96,6 @@ When conducting their studies, researchers
     \item Describe how the construct is operationalized in the study, specifying the method of measurement.
     \item Employ established and widely accepted measurement methods and instruments.
 \end{itemize}
-
-\comment{the MUST points seem like general construct validity comments, and not specific enough to LLM use?}
 
 \should
 \begin{itemize}
