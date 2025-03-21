@@ -1,10 +1,27 @@
-\documentclass[11pt]{article}
+\documentclass[pdftex,11pt,a4paper]{article}
 
+% language and encoding
+\usepackage[utf8]{inputenc} % set document encoding to UTF-8
+\usepackage[main=english, ngerman]{babel} % adjust language depending on thesis language (affects hyphenation)
+\usepackage[T1]{fontenc} % set font encoding so that special characters are displayed correctly
+
+% layout and formatting
+\usepackage[paper=a4paper, inner=30mm, outer=25mm, top=30mm, bottom=25mm]{geometry}  % set page margins
 \usepackage[parfill]{parskip} % use newlines for paragraphs (more similar to Markdown)
+\usepackage{xspace}  % control whitespaces
+\usepackage[hyphens]{url} % line breaks in URLs
 \usepackage{hyperref}
-\usepackage{xspace} 
+\usepackage{csquotes}% environment for quotes
+\newcommand*{\enq}[1]{\enquote{{\itshape#1}}} % use italics font for quotes
+
+% math formulas
 \usepackage{amsmath}
-\usepackage{csquotes}
+\usepackage{amssymb} 
+\usepackage{eucal} % more curly versions for \mathcal{...}
+\usepackage{nicefrac} % nicer fractions
+\usepackage{bm} % bold math symbols
+
+% citations
 \usepackage[square,numbers,sort&compress ]{natbib}
 
 % editorial commands
