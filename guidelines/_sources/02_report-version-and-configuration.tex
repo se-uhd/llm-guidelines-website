@@ -6,27 +6,27 @@
 
 \subsubsection{Recommendations}
 
-LLMs (especially when used as a service) are frequently updated, and different versions may produce varying results.
-Moreover, the model configuration and parameters influence the output generation of the models.
-It is crucial to document the specific version of the LLM used in the study, along with the date when the experiments were conducted, and the exact configuration being used.
-Furthermore, detailed documentation of the configuration and parameters used during the study is necessary for reproducibility. 
-Depending on the specific study context, additional information regarding the architecture of the tool or experiment needs to be reported (see Section \href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}).
-Our recommendations is to report:
+LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce varying results for the same input.
+Moreover, configuration parameters such as the temperature affect content generation.
+Therefore, researchers \must document the specific model or tool version used in a study, along with the date when the experiments were conducted, and the exact configuration being used.
+Since default values might change over time, researchers \should always report all configuration values, even if they used the defaults.
+Depending on the specific study context, additional information regarding the architecture of the tool or experiment \should be reported (see Section \href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}).
+Our recommendation is to report:
 
 \begin{itemize}
-\item Model name.
-\item Model version (including a checksum if available).
-\item The configured temperature that controls randomness, and all other relevant parameters that affect output generation (e.g., whether a seed value was configured).
+\item Model/tool name.
+\item Model/tool version (including a checksum if available).
+\item The configured temperature that controls randomness, and all other relevant parameters that affect output generation (e.g., seed values).
 \item The context window (number of tokens).
 \item Whether historical context was considered when generating responses.
 \end{itemize}
 
 \subsubsection{Example(s)}
 
-For an OpenAI model, researchers might report that "A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
+For an OpenAI model, researchers might report that ``A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
 Similar statements can be made for self-hosted models, for which supplementary material can report specific instructions for reproducing results.
 For example, for models provisioned using \href{https://ollama.com/library/}{ollama}, one can report the specific tag and checksum of the model being used, e.g., `llama3.3, tag 70b-instruct-q8\_0, checksum d5b5e1b84868`.
-Given suitable hardware, running the corresponding model in its default configuration is than as easy as executing \texttt{ollama run llama3.3:70b-instruct-q8\_0} (see Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
+Given suitable hardware, running the corresponding model in its default configuration is then as easy as executing \texttt{ollama run llama3.3:70b-instruct-q8\_0} (see Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
 
 Kang et al.~provide a similar statement in their paper on exploring LLM-based general bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
 
@@ -40,8 +40,8 @@ Our guidelines additionally suggest to report a checksum and exact dates, but ot
 \subsubsection{Advantages}
 
 The recommended information is a prerequisite to enable reproducibility of LLM-based studies under the same or similar conditions.
-However, this information alone is generally not sufficient.
-Depending on the specific study setup, additional information about the architecture and data (\href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}), prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}), interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}), and specific limitations an mitigations (\href{/guidelines/#report-limitations-and-mitigations}{Report Limitations and Mitigations}) need to be reported.
+Please note that this information alone is generally not sufficient.
+Therefore, depending on the specific study setup, researchers \should provide additional information about architecture and data (\href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}), prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}), interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}), and specific limitations an mitigations (\href{/guidelines/#report-limitations-and-mitigations}{Report Limitations and Mitigations}).
 
 \subsubsection{Challenges}
 
@@ -55,14 +55,15 @@ While, as motived above, open models significantly simplify re-running experimen
 
 \subsubsection{Study Types}
 
-This guideline \must be followed for all study types for which the researcher has control over the model and its configuration.
-When \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, for example the usage of commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their studies.
+This guideline \must be followed for all study types for which the researcher has access to (parts of) the model's configuration.
+They \must always report the configuration that is visible to them, acknowledging the reproducibility challenges of commercial tools and models offered as-a-service. 
+When \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, for example the usage of commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their study setup.
 The model name and date \must always be reported.
 In those cases, reporting other aspects such as prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}) and interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}) is essential.
 
 \subsubsection{References}
 
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{../../literature.bib}
 
 \end{document}
