@@ -267,7 +267,8 @@ LLM output is compared against a ground truth from the dataset in the benchmark 
 
 \subsubsection{Example(s)}
 
-In software engineering, benchmarking may include the evaluation of LLMs ability to produce accurate and robust outputs for input data obtained from curated real-world projects or from synthetic SE-specific datasets.\comment{What are "robust" outputs? Outputs following a specific structure? In that case, "accurate" also describes that feature}
+In software engineering, benchmarking may include the evaluation of LLMs ability to produce accurate and reliable outputs for input data obtained from curated real-world projects or from synthetic SE-specific datasets.
+%\comment{What are "robust" outputs? Outputs following a specific structure? In that case, "accurate" also describes that feature}
 Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
 RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
 The metrics used are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the Abstract Syntax Tree of the first generated patch matches the one of the ground truth patch).
