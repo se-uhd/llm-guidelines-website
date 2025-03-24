@@ -11,7 +11,17 @@
 Previous guidelines aim to address the reproducibility problem by encouraging the reporting of full version and parameters, but this will still not be always sufficient. Indeed, LLMs can still behave non-deterministically even if decoding strategies and parameters are fixed because non-determinism can arise from batching, input preprocessing, and floating point arithmetic on GPUs ~\cite{Chann2023}. Thus, in order to establish a fixed point from which a given study can be reproducible, a study \should report the full interaction logs with a LLM if possible. 
 
 
-Reporting this is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to replicate it. \comment{is this paragraph needed?}
+Reporting this is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to replicate it. 
+
+
+
+The rationale for this guideline is similar to the rationale for reporting interview transcripts in qualitative research. In both cases, it's important to document the entire interaction between the interviewer and the participant. Just as a human participant might give different answers to the same question asked two months apart, the responses from OpenAI ChatGPT can also vary over time. Therefore, keeping a record of the actual conversation is crucial for accuracy and context.
+
+% \comment{the intro does not make it super clear *why* this helps reproducibility. If the AI has changed, how does the log really help us, as the answer might be different. I would argue, like in qual research, the value is to show the researchers have engaged substnatially with the respondent, i.e. that the process was not superficial}
+% \comment{I also don't really see a clear distinction with report prompts and their development. This one is arguing for transcripts of the interactions? }
+
+
+\subsubsection{Example(s)}
 
 To intuitively explain why this can be important, consider a study in which the researchers evaluated the correctness of bug fixing capabilities of LLM-based tools and consider that the researchers only provided the prompt without the LLM answer. One of the multiple prompts would include the buggy function below in which the function returns the wrong variable. 
 
@@ -33,17 +43,10 @@ def remove_duplicates_buggy(input_list):
 
 If a paper doesn't include the output and simply states that the fix was correct, it will lack crucial information needed for reproducibility. Without this information, fellow researchers can't assess whether the solution was efficient or if it was written in a non-idiomatic way (e.g., the function could have been implemented more elegantly using Python list comprehensions). There could be other potential issues that researchers won't be able to verify if the detailed response is not provided.
 
-This guideline is similar to reporting interview transcripts in qualitative research. In both cases, it's important to document the entire interaction between the interviewer and the participant. Just as a human participant might give different answers to the same question asked two months apart, the responses from OpenAI ChatGPT can also vary over time. Therefore, keeping a record of the actual conversation is crucial for accuracy and context.
-
-% \comment{the intro does not make it super clear *why* this helps reproducibility. If the AI has changed, how does the log really help us, as the answer might be different. I would argue, like in qual research, the value is to show the researchers have engaged substnatially with the respondent, i.e. that the process was not superficial}
-% \comment{I also don't really see a clear distinction with report prompts and their development. This one is arguing for transcripts of the interactions? }
-
-
-\subsubsection{Example(s)}
 
 In their paper ``Investigating ChatGPT's Potential to Assist in Requirements Elicitation Processes'' \cite{ronanki2023investigating}, Ronanki et al. report the full answers of ChatGPT and they upload them in a Zenodo record \href{https://zenodo.org/records/8124936}. 
 
-\comment{I would suggest expanding on the details a bit, to support the point of transparency made earlier. Why is this record helpful? ML: I'm waiting to go through the ICSE papers in the hope that I'll find a better example there.}
+% \comment{I would suggest expanding on the details a bit, to support the point of transparency made earlier. Why is this record helpful? ML: I'm waiting to go through the ICSE papers in the hope that I'll find a better example there.}
 
 
 \subsubsection{Advantages}
@@ -52,7 +55,7 @@ The advantage of following this guideline is the transparency and increased repr
 
 The guideline is straightforward to follow. Obtaining transcripts is simple, especially when considering a large language model (LLM) as an interviewee, compared to obtaining transcripts from human participants. Even in systems where interactions are voice-based, these interactions are first converted to text using speech-to-text methods, making transcripts easily accessible. Therefore, there is no valid reason for researchers not to report full transcripts.
 
-Another advantage is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can (e.g. as of beginning of 2025, the for-profit OpenAI company allows the sharing of chat transcripts: https://openai.com/policies/sharing-publication-policy/). 
+Another advantage is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can (e.g. as of beginning of 2025, the for-profit OpenAI company \href{https://openai.com/policies/sharing-publication-policy/}{allows sharing of chat transcripts}.
 
 Detailed logs enable future replication studies to compare results using the same prompts. This could be valuable for tracking changes in LLM responses over time or across different versions of the model. A body of knowledge would also be collected that would allow researchers to analyze how consistent the LLM's responses are and identify any variations or improvements in its performance.
 
@@ -60,7 +63,14 @@ Detailed logs enable future replication studies to compare results using the sam
 
 \subsubsection{Challenges}
 
-Not all systems allow the reporting of interaction logs with the same ease. At one end of the spectrum, chatbots can be easily documented because the conversations are typically text-based and can be logged directly. At the other end, auto-complete systems (e.g., GitHub Copilot) make it nearly impossible to report full interactions: to replicate a recommendation provided by Copilot during a coding session, one would need to recreate the exact state of the codebase at that moment, which is often impractical. One way to report interactions with auto-complete systems would be recording screencasts of the coding sessions which would capture the real-time interactions and recommendations made by the system. Another method would be to use version control to document the state of the codebase when a recommendation was made. This would allows researchers to track changes and understand the context in which the recommendation occurred.
+
+
+Not all systems allow the reporting of interaction logs with the same ease. At one end of the spectrum, chatbots can be easily documented because the conversations are typically text-based and can be logged directly. At the other end, auto-complete systems (e.g., GitHub Copilot) make it harder to report full interactions. 
+
+
+While some tools, such as Continue\footnote{https://blog.continue.dev/its-time-to-collect-data-on-how-you-build-software/}, facilitate logging interacitons within the IDE, understanding the value of a Copilot suggestion during a coding session might require recreating the exact state of the codebase at the time the suggestion was made -- a challenging context to report. One solution is to use version control to capture the state of the codebase when a recommendation occurred, allowing researchers to track changes and analyze the context behind the suggestion.
+
+% One way to report interactions with auto-complete systems would be recording screencasts of the coding sessions which would capture the real-time interactions and recommendations made by the system. 
 
 
 Given that {\em chat transcripts} are easy to generate, a study might end up with a very large appendix. Consequently, online storage might be needed. Services such as \href{https://zenodo.org}{Zenodo}, \href{https://figshare.com/}{Figshare}, or other similar long term storage for research artifacts \should be used in such situations.
