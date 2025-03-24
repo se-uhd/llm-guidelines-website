@@ -1,0 +1,30 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+name: Build and convert Latex sources
+
+on:
+  pull_request:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install texlive and pandoc
+        run: |
+          sudo apt-get update && sudo apt-get -y install texlive-full
+          wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb && sudo dpkg -i pandoc-3.6.1-1-amd64.deb
+      - name: Check Latex and Bibtex files
+        run: ./compile-latex.sh
+      - name: Convert and merge source files
+        run: ./convert-and-merge-sources.sh

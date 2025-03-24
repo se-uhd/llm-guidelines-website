@@ -3,16 +3,15 @@
 \begin{document}
 
 \subsection{Report Limitations and Mitigations}
-
 \subsubsection{Recommendations}
 When using large language models (LLMs) in empirical studies for software engineering, researchers face unique challenges and potential limitations that can influence the validity, reliability, and reproducibility~\cite{sallou2024breaking} of their findings including:
 
 \textbf{Reproducibility}:
 A cornerstone of open science is the ability to reproduce research results. Even though the inherent non-deterministic nature of LLMs is a strength in many use cases, its impact on reproducibility is a challenge. To enable reproducibility, researchers 
 \begin{itemize}
-  \item \must disclose a replication package for their study and
+  \item \must disclose a replication package for their study and %Comment: This is also requested in "Use an Open LLM as a Baseline"
   \item \should perform multiple evaluation iterations of their experiments (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}) to account for non-deterministic outputs of LLMs or
-  \item \may disable non-determinism by setting the temperature to 0 and stating a seed value if the research allows for it
+  \item \may disable reduce output variability by setting the temperature to 0 and stating a seed value and fingerprint if the research and the LLM provider allows for it.
 \end{itemize}
 Besides non-determinism, the behavior of an LLM depends on many external factors, such as model version, API updates, or prompt variations. To ensure reproducibility, researchers
 \begin{itemize}
@@ -21,103 +20,112 @@ Besides non-determinism, the behavior of an LLM depends on many external factors
   \item \should follow the best practices described in \href{/guidelines/report-prompts}{Report Prompts and their Development} and
   \item \should follow the best practices described in \href{/guidelines/report-interaction-logs}{Report Interaction Logs} and
   \item \should follow the best practices described in \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics} and
-  \item \should address generalization challenges (see below) to ensure reproducibility over time
+  \item \should address generalization challenges (see below) to ensure reproducibility over time.
 \end{itemize}
 
 \textbf{Generalization}:
-Even though the topic of generalizability is not new, it has gained new relevance with the increasing interest in LLMs. In LLM studies generalizability boils down to two main concerns: 
+Even though the topic of generalizability is not new, it has gained new relevance with the increasing interest in LLMs. In LLM studies, generalizability boils down to two main concerns:
 First, are the results specific to an LLM, or can they be achieved with other LLMs too? 
 \begin{itemize}
   \item If generalizability to other LLMs is not in the scope of the research, this \must be clearly explained or
-  \item If generalizability is in scope, researchers \must compare their results or subsets of the results (if not possible e.g., due to computational cost) with other LLMs to assess the generalizability of their findings. 
+  \item if generalizability is in scope, researchers \must compare their results or subsets of the results (if not possible e.g., due to computational cost) with other LLMs that are similar (e.g. in size, general performance) to assess the generalizability of their findings. %Comment: Partially overlaps with "Use an Open LLM as a Baseline"
 \end{itemize}
-Second, will these results still be valid in the future? Multiple studies (~\cite{DBLP:journals/corr/abs-2307-09009}, ~\cite{doi:10.1148/radiol.232411}) found, that the performance of proprietary LLMs (like GPT) within the same version (e.g. GPT 4) decreased over time. Reporting the model version and configuration is not sufficient in such cases. To date, the only way of mitigating this limitation is the usage of an Open LLM with a transparently communicated versioning and archiving (see \href{/guidelines/#use-open-llm}{Use an Open LLM as a Baseline}). 
+Second, will these results still be valid in the future? Multiple studies (\cite{DBLP:journals/corr/abs-2307-09009},~\cite{doi:10.1148/radiol.232411}) found, that the performance of proprietary LLMs (like GPT) within the same version (e.g. GPT 4) decreased over time. Reporting the model version and configuration is not sufficient in such cases. To date, the only way of mitigating this limitation is the usage of an Open LLM with a transparently communicated versioning and archiving (see \href{/guidelines/#use-open-llm}{Use an Open LLM as a Baseline}). Hence, researchers
 \begin{itemize}
-  \item Hence researchers \should employ open LLMs to set a reproducible baseline (see \href{/guidelines/#use-open-llm}{Use an Open LLM as a Baseline}).
-  \item If this is not possible, researchers \should test and report their results over an extended period of time as a proxy of the results' relevance over time.
+  \item \should employ open LLMs to set a reproducible baseline (see \href{/guidelines/#use-open-llm}{Use an Open LLM as a Baseline}) and
+  \item if employing an open LLM is not possible, researchers \should test and report their results over an extended period of time as a proxy of the results' relevance over time.
 \end{itemize}
 
 \textbf{Data Leakage}:
-Data leakage/contamination/overfitting occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates. With the growing reliance on big datasets, the risks of inter-dataset duplication increases (e.g., ~\cite{DBLP:journals/pacmpl/LopesMMSYZSV17}, ~\cite{DBLP:conf/oopsla/Allamanis19}). 
-In the context of LLMs for software engineering, this can for example manifest as samples from the pre-train dataset appearing in the fine-tune or evaluation dataset, potentially compromising the validity of evaluation results ~\cite{DBLP:journals/tse/LopezCSSV25}. 
+Data leakage/contamination/overfitting occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates. With the growing reliance on big datasets, the risks of inter-dataset duplication increases (e.g.,~\cite{DBLP:journals/pacmpl/LopesMMSYZSV17},~\cite{DBLP:conf/oopsla/Allamanis19}). 
+In the context of LLMs for software engineering, this can, for example, manifest as samples from the pre-train dataset appearing in the fine-tune or evaluation dataset, potentially compromising the validity of evaluation results~\cite{DBLP:journals/tse/LopezCSSV25}. For example the functionality ``Improve the model for everyone`` of ChatGPT can result in unintentional data leakage.
+Hence, to ensure the validity of the evaluation results, researchers
 \begin{itemize}
-  \item Hence, to ensure the validity of the evaluation results, researchers \should carefully curate the fine-tuning and evaluation datasets to prevent inter-dataset duplication. 
+  \item \should carefully curate the fine-tuning and evaluation datasets to prevent inter-dataset duplication and
+  \item \mustnot leak their fine-tune or evaluation datasets into the improvement process of the LLM.
   \item If information about the pre-train dataset of the employed LLM is available, researchers \should assess the inter-dataset duplication and \must discuss the potential data leakage.
-  \item In addition, researchers \mustnot leak their fine-tune or evaluation datasets into the improvement process of the LLM (e.g., OpenAI's functionality called ``Improve the model for everyone``), as this potentially impacts further evaluation rounds (e.g., think about pass@k), and exacerbates the issue of reproducibility.
-  \item If training a LLM from scratch, researchers \may consider using open datasets (such as Together AI's RedPajama~\cite{together2023redpajama}) that already incorporate duplication (with the positive side-effect of potentially improving performance ~\cite{DBLP:conf/acl/LeeINZECC22}).
+  \item If training a LLM from scratch, researchers \may consider using open datasets (such as Together AI's RedPajama~\cite{together2023redpajama}) that already incorporate duplication (with the positive side effect of potentially improving performance~\cite{DBLP:conf/acl/LeeINZECC22}).
 \end{itemize}
 
 \textbf{Scalability and Cost}:
 Conducting studies with LLMs is a resource demanding endeavor. For self-hosted LLMs, the respective hardware needs to be provided, for managed LLMs, the service cost has to be considered. The challenge becomes more pronounced as LLMs grow larger, research architectures get more complex, and experiments become more computationally expensive e.g., multiple repetitions to assess performance in the face of non-determinism (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}).
-Consequently, resource-intensive research remains predominantly the domain of well-funded researchers, hindering researchers with limited resources from replicating or extending the study results.
+Consequently, resource-intensive research remains predominantly the domain of well-funded researchers, hindering researchers with limited resources from replicating or extending the study results. Hence, for transparency reasons, researchers
 \begin{itemize}
-  \item Hence, for transparency reasons, researchers \should report the cost associated with executing the study. If the study employed self-hosted LLMs, researchers \should report the hardware used. If the study employed managed LLMs, the service cost \should be reported.
-  \item To ensure research result validity and replicability, researchers \must provide the LLM outputs as evidence for validation at different granularities (e.g., when employing multi-agent systems). 
-  \item Additionally, researchers \should include a sample, selected using an accepted sampling strategy, to allow partial replication of results.
+  \item \should report the cost associated with executing the study. 
+  \item If the study employed self-hosted LLMs, researchers \should report the hardware used. 
+  \item If the study employed managed LLMs, the service cost \should be reported.
+  \item To ensure research result validity and replicability, researchers \must provide the LLM outputs as evidence for validation at different granularities (e.g., outputs of individual LLMs when employing multi-agent systems). %Comment: This overlaps partially with "Report Interaction Logs"
+  \item Additionally, researchers \should include a subset of they employed validation dataset, selected using an accepted sampling strategy, to allow partial replication of the results.
 \end{itemize}
 
 \textbf{Misleading Performance Metrics}:
-While metrics such as BLEU or ROUGE are commonly used to evaluate the performance of LLMs, they may not capture other relevant, software engineering-specific aspects such as functional correctness or the runtime performance of automatically generated code ~\cite{DBLP:conf/nips/LiuXW023}.
+While metrics such as BLEU or ROUGE are commonly used to evaluate the performance of LLMs, they may not capture other relevant, software engineering-specific aspects such as functional correctness or the runtime performance of automatically generated code~\cite{DBLP:conf/nips/LiuXW023}. Researchers
 \begin{itemize}
-  \item Researchers \should clarify and state all relevant requirements, and employ and report the metrics to measure their satisfaction (e.g., test-case success rate). 
-  \item Researchers \should follow the best practices described in \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}.
+  \item \should clarify and state all relevant requirements, and employ and report the metrics to measure the satisfaction of the requirements (e.g., test-case success rate) and
+  \item \should follow the best practices described in \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}.
 \end{itemize}
 
 \textbf{Ethical Concerns with Sensitive Data}:
-Sensitive data can range from personal to proprietary data, each with its own set of ethical concerns. A big threat of prorpietary LLMs and sensitive data is that the data's usage for model improvements (see ``Data Leakage``). Hence using sensitive data can lead to privacy and IP violations.
+Sensitive data can range from personal to proprietary data, each with its own set of ethical concerns. A big threat of proprietary LLMs and sensitive data is the data's usage for model improvements (see ``Data Leakage``). Hence, using sensitive data can lead to privacy and IP violations.
 Another threat is the implicit bias of LLMs potentially leading to discrimination or unfair treatment of individuals or groups.
 To mitigate these concerns, researchers:
 \begin{itemize}
   \item \should minimize the sensitive data used in their studies and
   \item \must follow applicable regulations (e.g., GDPR) and individual processing agreements and
   \item \should create a data management plan outlining how the data is handled and protected against leakage and discrimination and
-  \item \should apply for approval from the ethics committee of their organization (if required)
+  \item \should apply for approval from the ethics committee of their organization (if required).
 \end{itemize}
 
 \textbf{Performance and Resource Consumption}:
-\enquote{The field of AI is currently primarily driven by research that seeks to maximize model accuracy — progress is often used synonymously with improved prediction quality. This endless pursuit of higher accuracy over the decade of AI research has significant implications for computational resource requirements and environmental footprint. To develop AI technologies responsibly, we must achieve competitive model accuracy at a fixed or even reduced computational and environmental cost.} ~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22}
+\enquote{The field of AI is currently primarily driven by research that seeks to maximize model accuracy — progress is often used synonymously with improved prediction quality. This endless pursuit of higher accuracy over the decade of AI research has significant implications for computational resource requirements and environmental footprint. To develop AI technologies responsibly, we must achieve competitive model accuracy at a fixed or even reduced computational and environmental cost.}~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22}
 
 The performance of an LLM is usually measured in terms of traditional metrics such as accuracy, precision, and recall or more contemporary metrics such as pass@k, or BLEU-N (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}). However, given how resource-hungry LLMs are, resource consumption has to become a key indicator for performance to assess research progress responsibly. 
-While research predominantly focused on the energy consumption during the early phases of LLMs (e.g., data center manufacturing, data acquisition, training), inference - i.e. the use of the LLM - often becomes similarly or even more resource-intensive (~\cite{de2023growing}, ~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22}, ~\cite{DBLP:journals/corr/abs-2410-02950}, ~\cite{JIANG2024202}, ~\cite{mitu2024hidden}).
+While research predominantly focused on the energy consumption during the early phases of LLMs (e.g., data center manufacturing, data acquisition, training), inference - i.e. the use of the LLM - often becomes similarly or even more resource-intensive (~\cite{de2023growing},~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22},~\cite{DBLP:journals/corr/abs-2410-02950},~\cite{JIANG2024202},~\cite{mitu2024hidden}).
 Hence, researchers:
 \begin{itemize}
-  \item \should aim for lower resource consumption on the model side. This can be achieved by selecting smaller (e.g., GPT 4o mini instead of GPT 4o) or newer models as a base model for the study or by employing techniques such as model pruning, quantization, knowledge distillation, etc. ~\cite{mitu2024hidden}.
-  \item \should reduce resource consumption when using the LLMs, e.g. by restricting the number of queries, input tokens, or output tokens ~\cite{mitu2024hidden}, with different prompt engineering techniques (e.g., on average zero-shot prompts seem to emit less CO2 than Chain Of Thought prompts), or by carefully sampling smaller datasets for fine-tuning and evaluation instead of using large datasets in their entirety.
+  \item \should aim for lower resource consumption on the model side. This can be achieved by selecting smaller (e.g., GPT 4o mini instead of GPT 4o) or newer models as a base model for the study or by employing techniques such as model pruning, quantization, knowledge distillation, etc.~\cite{mitu2024hidden}.
+  \item \should reduce resource consumption when using the LLMs, e.g. by restricting the number of queries, input tokens, or output tokens~\cite{mitu2024hidden}, with different prompt engineering techniques (e.g., on average zero-shot prompts seem to emit less CO2 than Chain Of Thought prompts), or by carefully sampling smaller datasets for fine-tuning and evaluation instead of using large datasets in their entirety.
 \end{itemize}
-To report the environmental impact of a study researchers:
+To report the environmental impact of a study, researchers
 \begin{itemize}
     \item \should use software such as \href{https://github.com/mlco2/codecarbon}{CodeCarbon} or \href{experiment-impact-tracker}{Experiment Impact Tracker} to track and quantify the carbon footprint of the study or
     \item \should report an estimation of the carbon footprint through tools like \href{https://mlco2.github.io/impact/#about}{MLCO2 Impact} or
-    \item \should detail the LLM version and configuration as described in \href{/guidelines/report-version-and-configuration}{Report Model Version and Configuration}, state the hardware or model-hoster and report the total number of requests, accumulated input tokens, and output tokens.
-    \item \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (also see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}).
+    \item \should detail the LLM version and configuration as described in \href{/guidelines/report-version-and-configuration}{Report Model Version and Configuration}, state the hardware or hosting provider of the model and report the total number of requests, accumulated input tokens, and output tokens.
+    \item \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (also see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}).%Comment: This overlaps with "Report Suitable Baselines, Benchmarks, and Metrics"
 \end{itemize}
+%Comment: This set of guidelines on the environmental impact is combined through the use of "or" meaning that if one does not follow one guideline, they should follow another. I think this connects to the earlier comment I made above regarding "conditional guidelines". We should potentially consider finding a common way of clearly representing which guidelines apply in all and which apply just in specific cases. Again, I have no specific change suggestions, but would like to note this as a potential point of discussion for the future.
 
 \subsubsection{Example(s)}
 \textbf{Reproducibility}:
-An example highlighting the need for caution around replicability is the study of Staudinger et al. ~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} who attempted the repliaction of an LLM study. They aimed to replicate the results of a previous study that did not provide a replication package. However, they were not able to reproduce the exact results, even though they saw similar trends to the original study. They consider their results as not reliable enough for a systematic review.
+An example highlighting the need for caution around replicability is the study of Staudinger et al.~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} who attempted the replication of an LLM study. They aimed to replicate the results of a previous study that did not provide a replication package. However, they were not able to reproduce the exact results, even though they saw similar trends to the original study. They consider their results as not reliable enough for a systematic review.
 
 \textbf{Generalization}:
-To analyze whether the results of proprietary LLMs transfer to open LLMs, Staudinger et al. ~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} benchmarked previous results using GPT3.5 and GPT4 against Mistral and Zephyr. They found, that the employed open-source models could not deliver the same performance as the proprietary models, restricting the effect to certain proprietary models.
-Individual studies already started to highlight the uncertainty about the generalizability of their results in the future. In ~\cite{DBLP:conf/msr/JesseADM23} Jesse et al. acknowledge the issue that LLMs evolve over time and that this evolution might impact the study's results.
+To analyze whether the results of proprietary LLMs transfer to open LLMs, Staudinger et al.~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} benchmarked previous results using GPT3.5 and GPT4 against Mistral and Zephyr. They found that the employed open-source models could not deliver the same performance as the proprietary models, restricting the effect to certain proprietary models.
+Individual studies already started to highlight the uncertainty about the generalizability of their results in the future. In~\cite{DBLP:conf/msr/JesseADM23} Jesse et al. acknowledge the issue that LLMs evolve over time and that this evolution might impact the study's results.
 
 \textbf{Data Leakage}:
-Since much research in software engineering evolves around code, inter-dataset code duplication has been extensively researched and addressed over the years to curate deduplicated datasets (e.g., by Lopes in 2017 ~\cite{DBLP:journals/pacmpl/LopesMMSYZSV17}, Allamanis in 2019 ~\cite{10.1145/3359591.3359735}, Karmakar in 2023 ~\cite{DBLP:journals/ese/KarmakarAR23}, or Lopez in 2025 ~\cite{DBLP:journals/tse/LopezCSSV25}).
-The issue of inter-dataset duplication has also attracted interest in other disciplines, with growing demands for data mining. For example in the biology field, Lakiotaki et al. ~\cite{DBLP:journals/biodb/LakiotakiVTGT18} acknowledge and address the overlap between multiple common disease datasets. 
-In the domain of code generation, Coignion et al. ~\cite{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce leet code. To mitigate the issue of inter-dataset duplication, they only used leet code problems published after 01.01.2023, reducing the likelihood of LLMs having seen those problems before. Further, they discuss the performance differences of LLMs on different datasets in light of potential inter-dataset duplication.
-In ~\cite{zhou2025lessleakbenchinvestigationdataleakage} Zhou et al. performed an empirical evaluation of data leakage in 83 software engineering benchmarks. While most benchmarks suffer from minimal leakage, very few suffered from leakage of up to 100\%. They found a high impact of data leakage on the performance evaluation.
-A starting point for studies that aim to assess and mitigate inter-dataset duplication are the Falcon LLMs. The technology innovation institute publicly provides access to parts of its training data for the Falcon LLMs ~\cite{technology_innovation_institute_2023} via Huggingface. Through this dataset, it is possible to reduce the overlap between the pre-train and evaluation data, improving the validity of the evaluation results.
-A starting point to prevent actively leaking data into a LLM improvement process, is to ensure that the data is not used to train the model (e.g., via OpenAI's data control functionality, or the OpenAI API instead of the web interface) ~\cite{DBLP:conf/eacl/BalloccuSLD24}.
+Since much research in software engineering evolves around code, inter-dataset code duplication has been extensively researched and addressed over the years to curate deduplicated datasets (e.g., by Lopes in 2017~\cite{DBLP:journals/pacmpl/LopesMMSYZSV17}, Allamanis in 2019~\cite{DBLP:conf/oopsla/Allamanis19}, Karmakar in 2023~\cite{DBLP:journals/ese/KarmakarAR23}, or Lopez in 2025~\cite{DBLP:journals/tse/LopezCSSV25}).
+The issue of inter-dataset duplication has also attracted interest in other disciplines, with growing demands for data mining. For example, in the biology field, Lakiotaki et al.~\cite{DBLP:journals/biodb/LakiotakiVTGT18} acknowledge and address the overlap between multiple common disease datasets. 
+In the domain of code generation, Coignion et al.~\cite{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce leet code. To mitigate the issue of inter-dataset duplication, they only used leet code problems published after 2023-01-01, reducing the likelihood of LLMs having seen those problems before. Further, they discuss the performance differences of LLMs on different datasets in light of potential inter-dataset duplication.
+In~\cite{zhou2025lessleakbenchinvestigationdataleakage} Zhou et al. performed an empirical evaluation of data leakage in 83 software engineering benchmarks. While most benchmarks suffer from minimal leakage, very few suffered from leakage of up to 100\%. They found a high impact of data leakage on the performance evaluation.
+A starting point for studies that aim to assess and mitigate inter-dataset duplication are the Falcon LLMs. The technology innovation institute publicly provides access to parts of its training data for the Falcon LLMs~\cite{technology_innovation_institute_2023} via Huggingface. Through this dataset, it is possible to reduce the overlap between the pre-train and evaluation data, improving the validity of the evaluation results.
+A starting point to prevent actively leaking data into a LLM improvement process is to ensure that the data is not used to train the model (e.g., via OpenAI's data control functionality, or the OpenAI API instead of the web interface)~\cite{DBLP:conf/eacl/BalloccuSLD24}.
 
 \textbf{Scalability and Cost}:
-An example of stating the cost of a study can be found in ~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} by Staudinger et al.m who specified the costs for the study as \enquote{120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM cost of our reproducibility study was 150 USD}.
+An example of stating the cost of a study can be found in a study by Staudinger et al.~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} who specified the costs for the study as \enquote{120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM cost of our reproducibility study was 150 USD}.
 
 \textbf{Ethical Concerns with Sensitive Data}:
-Bias can occur in datasets as well as in LLMs that have been trained on them and results in various types of discrimination. Gallegos et al. propose metrics to quantify biases in various tasks (e.g., text generation, classification, question answering) ~\cite{DBLP:journals/corr/abs-2309-00770}.
+Bias can occur in datasets as well as in LLMs that have been trained on them and may result in various types of discrimination. Gallegos et al. propose metrics to quantify biases in various tasks (e.g., text generation, classification, question answering)~\cite{DBLP:journals/corr/abs-2309-00770}.
 
 \textbf{Performance and Resource Consumption}:
-In ~\cite{tinnessoftware} Tinnes et al. balanced the dataset size between the need for manual semantic analysis and computational resource consumption.
+In their study, Tinnes et al.~\cite{tinnessoftware} balanced the dataset size between the need for manual semantic analysis and computational resource consumption.
 
 \subsubsection{Advantages}
+\textbf{Reproducibility}:
+Ensuring reproducibility allows for the independent replication and verification of study results.
+Reproducing study results under similar conditions by different parties greatly increases their validity and promotes transparency in research.
+Independent verification is of particular importance in studies involving LLMs, due to the randomness of their outputs and the potential for biases in their predictions and in training, fine-tuning, and evaluation datasets.
+
 \textbf{Generalization}:
 Mitigating threats to generalizability through the integration of open LLMs as a baseline or the reporting of results over an extended period of time can increase the validity, reliability, and replicability of a study's results.
 
@@ -148,7 +156,7 @@ Defining all requirements beforehand to ensure the usage of suitable metrics can
 In this growing field of research, finding the right metrics to evaluate the performance of LLMs in software engineering for specific tasks is challenging. \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics} can serve as a starting point.
 
 \textbf{Ethical Concerns with Sensitive Data}:
-Ensuring compliance across jurisdictions is difficult with different regions having different regulations and requirements (e.g., GDPR in the EU, CCPA in California).
+Ensuring compliance across jurisdictions is difficult with different regions having different regulations and requirements (e.g., GDPR and the AI Act in the EU, CCPA in California).
 Selecting datasets and models with less bias is challenging, as the bias in LLMs is often not transparently reported.
 
 \textbf{Performance and Resource Consumption}:
@@ -160,7 +168,7 @@ The limitations and mitigations \should be followed for all study types in a sen
 
 \subsubsection{References}
 
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{../../literature.bib}
 
 \end{document}

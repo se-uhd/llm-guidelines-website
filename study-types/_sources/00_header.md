@@ -15,7 +15,7 @@ Moreover, we currently focus on large language models, that is, on natural langu
 
 1. [LLMs as Tools for Software Engineeering Researchers](#introduction-llms-as-tools-for-software-engineering-researchers)
     1. [LLMs as Annotators](#llms-as-annotators)
-    2. [LLMs as Raters](#llms-as-raters)
+    2. [LLMs as Judges](#llms-as-judges)
     3. [LLMs for Synthesis](#llms-for-synthesis)
     4. [LLMs as Subjects](#llms-as-subjects)
     5. [References](#references)
