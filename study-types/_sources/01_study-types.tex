@@ -11,7 +11,6 @@ This can significantly reduce the time and effort required by researchers, allow
 However, all these applications also come with limitations, potential threats to validity, and implications for the reproducibility of study results.
 In our guidelines, the following study types and used to contextualize the recommendations we provide.
 
-
 \subsection{LLMs as Annotators}
 
 \subsubsection{Description}
@@ -20,11 +19,13 @@ LLMs can serve as annotators by automatically labeling artifacts with correspond
 In qualitative data analysis, manually annotating or coding text passages, e.g. in software artifacts, open-ended survey responses, or interview transcripts, is often a time-consuming manual process~\cite{DBLP:journals/ase/BanoHZT24}.
 LLMs can be used to augment or even replace human annotations, provide suggestions for new codes (see Section \href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}), or even automate the entire process.
 
+\comment{Sorry for opening this PR so late. Overall, the section is well-written, and this is my only comment. I found a paper that would be interesting to integrate into the examples, advantages, and challenges. "Can LLMs Replace Manual Annotation of Software Engineering Artifacts?" accepted at MSR 2025 (preprint here: https://arxiv.org/abs/2408.05534). One of the authors is Christoph Treude. It is specific to the SE context and would provide a nice complement to the literature from the other areas. I like the current example, but IMHO focuses on comparing metrics between models and provides the impression that using LLMs as annotators would be complex (e.g., require combining several models). However, its usage to support humans in annotating SE artifacts may be much simpler (and the guidelines would nicely support such simpler usage scenarios as well). I will leave it up to you to decide if you want to integrate the findings of this study}.
+
 \subsubsection{Example(s)}
 
 Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
 Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
-They used three models (Llama3, Gemma, and Mistral) of comparable size  with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
+They used three models (Llama3, Gemma, and Mistral) of comparable size with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). 
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
 Training on the resulting multi-model annotated dataset yielded improved classifier performance compared to single-model annotations. Both BERT and RoBERTa models showed meaningful improvements in F1 score and accuracy when trained on the multi-model annotated dataset versus individual model annotations, highlighting the benefits of their approach.
 
