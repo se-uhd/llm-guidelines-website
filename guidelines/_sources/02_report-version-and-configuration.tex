@@ -27,6 +27,28 @@ Our recommendation is to report:
 \item Whether historical context was considered when generating responses.
 \end{itemize}
 
+\comment{I think we should add a section related to fine tuning? It is becoming more and more common and without that information reproducibility is heavily affected. For example:
+``For fine-tuned models, researchers \textbf{must} additionally report:
+\begin{itemize}
+\item Base model used before fine-tuning
+\item Fine-tuning dataset characteristics (size, source, preprocessing steps)
+\item Fine-tuning hyperparameters (learning rate, epochs, batch size)
+\item Training objective (e.g., next token prediction, instruction tuning)
+\item Validation metrics used during fine-tuning
+\item If possible, a link to the fine-tuned model weights or a description of how to access them.''
+\end{itemize}
+}
+
+\comment{This also leads me to another point. In my review of LLMs as annotators, I've found several examples of ensemble models. I think we might also want to add a section about ensemble models. See example below.}
+
+When multiple models are used together (e.g., in ensemble or pipeline architectures), researchers \textbf{MUST} additionally:
+\begin{itemize}
+\item Report version and configuration details for each model separately;
+\item Describe the interaction between models;
+\item Explain the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing);
+\item Document any logic that determines which model handles which inputs.
+\end{itemize}
+
 \subsubsection{Example(s)}
 
 For an OpenAI model, researchers might report that ``A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
@@ -42,6 +64,17 @@ Kang et al.~provide a similar statement in their paper on exploring LLM-based ge
 \end{quote}
 
 Our guidelines additionally suggest to report a checksum and exact dates, but otherwise this example is close to our recommendations. 
+
+\comment{Commercial tools have limited information. This is a bit tricky. What about a little more guidance? See example below.}
+
+When studying commercial tools where configuration access is limited:
+\begin{itemize}
+\item Report product name, version number, and access date (e.g., "GitHub Copilot in Visual Studio Code v1.2.3, accessed between January-March 2024");
+\item Document any user-configurable settings and their values, such as temperature and maximum tokens (e.g., "For Codex, we set the temperature to 0.7, and the maximum number of tokens to 256.");
+\item Archive interaction logs showing tool behavior (see section \href{/guidelines/report-interaction-logs}{Report Interaction Logs});
+\item Acknowledge limitations in reproducibility due to the closed nature of the tool.
+\end{itemize}
+
 
 \subsubsection{Advantages}
 
@@ -59,6 +92,8 @@ As a beta feature, OpenAI also lets users set a seed parameter to receive ``(mos
 However, the seed value does not allow for full reproducibility and the fingerprint changes frequently. 
 While, as motived above, open models significantly simplify re-running experiments, they also come with challenges in terms of reproducibility, as generated outputs can be inconsistent despite setting the temperature to 0 and using a seed value (see \href{https://github.com/ollama/ollama/issues/5321}{GitHub issue for Llama3}).
 
+\comment{Should we also address how API rate limits and usage constraints can affect experiments?}
+
 \subsubsection{Study Types}
 
 This guideline \must be followed for all study types for which the researcher has access to (parts of) the model's configuration.
@@ -66,6 +101,9 @@ They \must always report the configuration that is visible to them, acknowledgin
 When \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, for example the usage of commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their study setup.
 The model name and date \must always be reported.
 In those cases, reporting other aspects such as prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}) and interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}) is essential.
+
+\comment{Beside guidelines I believe research would benefit from a structured format that tehy could easily follow, otherwise we risk inconsistent reporting across studies. Let's think about a template.}
+
 
 \subsubsection{References}
 
