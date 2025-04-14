@@ -2,6 +2,7 @@ version: 2
 updates:
   - package-ecosystem: bundler
     directory: /
+    open-pull-requests-limit: 0  # disable version updates, only allow security updates
     schedule:
       interval: daily
     allow:
@@ -9,3 +10,7 @@ updates:
     ignore:
       - dependency-name: "sass-embedded"
         versions: [">= 1.79.0"]  # prevent deprecation warnings https://github.com/jekyll/jekyll/issues/9686#issuecomment-2362850868
+    groups:  # group updates
+      bundler-packages:
+        patterns:
+          - "*"
