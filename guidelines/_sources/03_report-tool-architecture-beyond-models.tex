@@ -4,48 +4,50 @@
 
 \subsection{Report Tool Architecture Beyond Models}
 
-\todo{Revise this section to focus on tool architecture, including RAG and agent-based systems, and move fine-tuning the previous section.}
 
 \subsubsection{Recommendations}
 
-\todo{indicate what information is supposed to be reported in the \paper or in the \supplementarymaterial}
+Oftentimes, LLM-based tool have \emph{complex software layers} around the model (or models) that pre-processes data, prepares prompts, filters user requests, or post-processes responses.
+One example is ChatGPT, which allows users to select from different GPT models, including GPT-4o.
+GitHub Copilot allows users to select the same model, but answers may significantly differ between the two tools as GitHub Copilot automatically adds context from the software project it is used in.
+Finally, researchers can build their own tools utilizing GPT-4o directly (\textit{e.g.}, via the OpenAI API).
+The infrastructure and business logic around the bare model can significantly contribute to the performance of a tool for a given task.
+Therefore, researchers \must clearly describe the tool architecture and what exactly the LLM (or LLMs) contribute to the tool or method presented in a research paper.
 
-\todo{double-check usage of \must, \should, etc.}
+If the LLM is used as a \emph{standalone system}, for example, by sending prompts directly to a GPT-4o model via the OpenAI API without pre-processing the prompts or post-processing the responses, a brief explanation about this is usually sufficient.
+However, if LLMs are integrated into a more \emph{complex system} with pre-processing, retrieval mechanisms, or autonomous agents, researchers \must provide a more detailed description of the system architecture in the \paper.
+Aspects to consider are how the LLM interacts with other components such as databases, external APIs, and frameworks.
+If the LLM is part of an \emph{agent-based system} that autonomously plans, reasons, or executes tasks, researchers \must describe its exact architecture, including the agents' roles (e.g., planner, executor, coordinator), whether it is a single-agent or multi-agent system, how it interacts with external tools and users, and the reasoning framework used (e.g., chain-of-thought, self-reflection, multi-turn dialogue, tool usage).
+%Researchers \mustnot present an agent-based system without detailing how it makes decisions and executes tasks.
 
-\todo{Discuss RAG and agent-based systems}
+Researchers \should provide a high-level architectural diagram to improve transparency.
+To enhance clarity, researchers \should explain design decisions, particularly regarding how the models were hosted and accessed (e.g., API-based, self-hosted, etc.) and which retrieval mechanisms were implemented (e.g., keyword search, semantic similarity matching, rule-based extraction, etc.).
+Researchers \mustnot omit critical architectural details that could impact reproducibility, such as dependencies to proprietary tools that influence the tool behavior. 
+Especially for \emph{time-sensitive measurements}, the before-mentioned description of the hosting environment is central, as it can significantly impact results.
+Researchers \must clarify whether local infrastructure or cloud services were used, including detailed (virtual) hardware specifications and latency considerations.
 
-Oftentimes, there is a layer around the LLM that preprocesses data, prepares prompts or filters user requests. One example is ChatGPT, which, at the time of writing these guidelines, primarily uses the GPT-4o model. GitHub Copilot also relies on the same model, and researchers can build their own tools utilizing GPT-4o directly (\textit{e.g.}, via the OpenAI API). The infrastructure around the bare model can significantly contribute to the performance of a model in a given task.
-Therefore, it is important that researchers clearly describe the architecture and what the LLM contributes to the tool or method presented in a research paper.
+If \emph{retrieval or augmentation methods} were used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses.
+This includes specifying the type of storage or database used (e.g., vector databases, relational databases, knowledge graphs) and how the retrieved information is selected and used.
+Stored data used for context augmentation \must be reported, including details on data preprocessing, versioning, and update frequency.
+If this data is not confidential, an anonymized snapshot of the data used for context augmentation \should be made available.
 
-% Architecture
+For \emph{ensemble models}, besides following the \modelversion guideline for each model, researchers \must describe the architecture that connects the models.
+The \paper \must at least contain a high-level description, and details can be reported in the \supplementarymaterial.
+Aspects to consider are documenting the logic that determines which model handles which input, the interaction between models, and the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing).
 
-If the LLM is used as a standalone system (\textit{e.g.}, ChatGPT-4o API without additional architecture layers), researchers \should provide a brief explanation of how it was used rather than detailing a full system architecture. However, if the LLM is integrated into a more complex system with preprocessing, retrieval mechanisms, fine-tuning, or autonomous agents, researchers \must clearly document the tool architecture, including how the LLM interacts with other components such as databases, retrieval mechanisms, external APIs, and reasoning frameworks. A high-level architectural diagram \should be provided in these cases to improve transparency. To enhance clarity, researchers \should explain design decisions, particularly regarding model access (\textit{e.g.}, API-based, fine-tuned, self-hosted) and retrieval mechanisms (\textit{e.g.}, keyword search, semantic similarity matching, rule-based extraction). Researchers \mustnot omit critical architectural details that could impact reproducibility, such as dependencies or proprietary tools that influence model behavior. 
-
-Additionally, when performance or time-sensitive measurements are relevant, researchers \should explicitly describe the hosting environment of the LLM or LLM-based tool, as this can significantly impact results. This description \should specify not only where the model runs (e.g., local infrastructure, cloud-based services, or dedicated hardware) but also relevant details about the environment, such as hardware specifications, resource allocation, and latency considerations.
-
-% Architecture for Agent-Based LLM Systems
-
-If the LLM is part of an agent-based system that autonomously plans, reasons, or executes tasks, researchers \must describe its architecture, including the agent's role (\textit{e.g.}, planner, executor, coordinator), whether it is a single-agent or multi-agent system, how it interacts with external tools and users, and the reasoning framework used (\textit{e.g.}, chain-of-thought, self-reflection, multi-turn dialogue, tool usage). Researchers \mustnot present an agent-based system without detailing how it makes decisions and executes tasks.
-
-% Retrieval-Augmented Generation (RAG), Fine-Tuning, and Supplemental Data
-
-If a retrieval or augmentation method is used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses. This includes specifying the type of storage or database used (\textit{e.g.}, vector databases, relational databases, knowledge graphs) and how the retrieved information is selected and used. Stored data used for context augmentation \must be reported, including details on data preprocessing, versioning, and update frequency. If this data is not confidential, an anonymized snapshot of the data used for context augmentation \should be made available.
-
-Similarly, if the LLM is fine-tuned, researchers \must describe the fine-tuning goal (\textit{e.g.}, domain adaptation, task specialization), procedure (\textit{e.g.}, full fine-tuning, parameter-efficient fine-tuning), and dataset (source, size, preprocessing, availability). They should include training details (\textit{e.g.}, compute resources, hyperparameters, loss function) and performance metrics (benchmarks, baseline comparison). If the data used for fine-tuning is not confidential, an anonymized snapshot of the data used for fine-tuning the model \should be made available.
 
 \subsubsection{Example(s)}
 
 Some empirical studies in software engineering involving LLMs have documented the architecture and supplemental data aligning with the recommended guidelines. Hereafter, we provide two examples.
 
-% I could have hit on specific aspects of these studies (published recently at TSE and ICSA), but they were, in general, well-described. I decided to keep it more abstract so that I could use them as "good examples".
-
 Sch{\"{a}}fer \textit{et al.} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}. The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce corresponding unit tests. The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites. The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation. It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
 
-Dhar \textit{et al.} conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions~\cite{DBLP:conf/icsa/DharVV24}. The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system. The study provides information on the fine-tuning approach and datasets used for evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
+\todo{Sebastian: Where's the second example?}
+
 
 \subsubsection{Advantages}
 
-Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility, transparency, and trust~\cite{DBLP:journals/software/LuZXXW24}. In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking. Clear documentation of RAG, fine-tuning, and data storage enables comparison, optimizes efficiency, and upholds scientific rigor and accountability, fostering reliable and reusable research.
+Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility, transparency, and trust~\cite{DBLP:journals/software/LuZXXW24}. In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking. A clear documentation of the architecture and supplemental data being used enables comparison and upholds scientific rigor and accountability, fostering reliable and reusable research.
 
 \subsubsection{Challenges}
 
@@ -53,7 +55,11 @@ Researchers face challenges in documenting LLM-based architectures, including pr
 
 \subsubsection{Study Types}
 
-This guideline \must be followed for all empirical study types involving LLMs, especially those using fine-tuned or self-hosted models, retrieval-augmented generation (RAG) or alternative retrieval methods, API-based model access, and agent-based systems where LLMs handle autonomous planning and execution.
+This guideline \must be followed for all studies that develop tools beyond bare LLMs, from thin layers that pre-process user input and post-process LLM responses over tools that use retrieval-augmented generation (RAG) to complex agent-based systems.
+In particular it applies to the study types \newtools and \benchmarkingtasks.
+
+\todo{Sebastian: Is there something we can say about study types from the LLMs for researchers section? Any papers that, e.g., use agent-based systems or RAG for research purposes?}
+
 
 \subsubsection{References}
 

@@ -4,58 +4,54 @@
 
 \subsection{Report Model Version, Configuration, and Customizations}
 
-\todo{Add customization (e.g., fine-tuning) that currently resides in the architecture guideline.}
-
 \subsubsection{Recommendations}
 
-\todo{indicate what information is supposed to be reported in the \paper or in the \supplementarymaterial}
-
-\todo{double-check usage of \must, \should, etc.}
-
-\todo{Add a recommendations that researchers \must motivate why certain models, versions, and configurations were selected. For example due to monetary or technical reasons, based on previous work using the same models, etc. This applies also the the model size, as smaller models might have been selected due to hardware constraints. This is totally fine, but needs to be reported.}
-
-LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce varying results for the same input.
+LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce different results for the same input.
 Moreover, configuration parameters such as the temperature affect content generation.
-Therefore, researchers \must document the specific model or tool version used in a study, along with the date when the experiments were conducted, and the exact configuration being used.
+Therefore, researchers \must document the specific model or tool version used in a study, along with the date when the experiments were conducted, and the exact configuration that was used, in the \paper.
 Since default values might change over time, researchers \should always report all configuration values, even if they used the defaults.
-Depending on the specific study context, additional information regarding the architecture of the tool or experiment \should be reported (see Section \href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}).
-Our recommendation is to report:
+Depending on the study context, other properties such as the context window size (number of tokens) \may be reported.
+Researchers \should motivate in the \paper why they selected certain models, versions, and configurations.
+Potential reasons can be monetary (e.g., no funding to integrate large commercial models), technical (e.g., existing hardware only supports smaller models), or methodological (e.g., planned comparison to previous work).
+Depending on the specific study context, additional information regarding tool architecture or the experiment setup \should be reported (see Section \toolarchitecture).
+
+A common customization approach for existing LLMs is fine-tuning. If a model was fine-tuned, researchers \must describe the fine-tuning goal (e.g., improving the performance for a specific task), the fine-tuning procedure (e.g., full fine-tuning vs. Low-Rank Adaptation (LoRA), selected hyperparameters, loss function, etc.), and the fine-tuning dataset (e.g., data sources, the preprocessing pipeline, dataset size) in the \paper.
+Researchers \should either share the fine-tuning dataset as part of the \supplementarymaterial or explain in the \paper why the data cannot be shared (e.g., because it contains confidential or personal data that could not be anonymized).
+The same applies to the fine-tuned model weights.
+Suitable benchmarks and metrics \should be used to compare the base model to the fine-tuned model (see Section \benchmarksmetrics).
+
+In summary our recommendation is to report:
 
 \begin{itemize}
-\item Model/tool name.
-\item Model/tool version (including a checksum if available).
-\item The configured temperature that controls randomness, and all other relevant parameters that affect output generation (e.g., seed values).
-\item The context window (number of tokens).
-\item Whether historical context was considered when generating responses.
+\item Model/tool name and version (including a checksum/fingerprint if available) (\must, \paper).
+\item All relevant configured parameters that affect output generation (e.g., temperature, seed values, consideration of historical context) (\must, \paper).
+\item Default values of all available parameters (\should).
+\item Additional properties (e.g., context window size) (\may).
 \end{itemize}
 
-\comment{I think we should add a section related to fine tuning? It is becoming more and more common and without that information reproducibility is heavily affected. See example below.}
-For fine-tuned models, researchers \textbf{must} additionally report:
+For fine-tuned models, additional recommendations apply:
+
 \begin{itemize}
-\item Base model used before fine-tuning
-\item Fine-tuning dataset characteristics (size, source, preprocessing steps)
-\item Fine-tuning hyperparameters (learning rate, epochs, batch size)
-\item Training objective (e.g., next token prediction, instruction tuning)
-\item Validation metrics used during fine-tuning
-\item If possible, a link to the fine-tuned model weights or a description of how to access them.''
+\item Fine-tuning goal (e.g., improving the performance for a specific task) (\must, \paper).
+\item Fine-tuning dataset creation and characterization (e.g., data collection, preprocessing, descriptive statistics) (\must, \paper).
+\item Fine-tuning parameters and procedure (e.g., learning rate, epochs, batch size, next token prediction, instruction tuning) (\must, \paper).
+\item Fine-tuning dataset and fine-tuned model weights (\should).
+\item Validation metrics and benchmarks (\should).
 \end{itemize}
 
-\comment{This also leads me to another point. In my review of LLMs as annotators, I've found several examples of ensemble models. I think we might also want to add a section about ensemble models. See example below.}
+Commercial models (e.g., GPT-4o) or LLM-based tools (e.g., ChatGPT) might not give researchers access to all required information.
+Our suggestion is to report what is available, and openly acknowledge limitations that hinder reproducibility (see also Sections \prompts and \limitationsmitigations).
 
-When multiple models are used together (e.g., in ensemble or pipeline architectures), researchers \textbf{MUST} additionally:
-\begin{itemize}
-\item Report version and configuration details for each model separately;
-\item Describe the interaction between models;
-\item Explain the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing);
-\item Document any logic that determines which model handles which inputs.
-\end{itemize}
 
 \subsubsection{Example(s)}
 
-For an OpenAI model, researchers might report that ``A  \texttt{gpt-4} model was integrated via the Azure OpenAI Service, and configured with a temperature of 0.7, top\_p set to 0.8, and a maximum token length of 512. We used version \texttt{0125-Preview}, system fingerprint \texttt{fp\_6b68a8204b}, seed value \texttt{23487}, and ran our experiment on 10th January 2025''~\cite{OpenAI25, Azure25}.
-Similar statements can be made for self-hosted models, for which supplementary material can report specific instructions for reproducing results.
-For example, for models provisioned using \href{https://ollama.com/library/}{ollama}, one can report the specific tag and checksum of the model being used, e.g., `llama3.3, tag 70b-instruct-q8\_0, checksum d5b5e1b84868`.
-Given suitable hardware, running the corresponding model in its default configuration is then as easy as executing \texttt{ollama run llama3.3:70b-instruct-q8\_0} (see Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
+Based on the documentation that OpenAI and Azure provide~\cite{OpenAI25, Azure25}, researchers might, for example, report:
+
+\begin{quote}
+\it
+ ``We integrated a  \texttt{gpt-4} model in version \texttt{0125-Preview} via the Azure OpenAI Service, and configured it with a temperature of 0.7, top\_p set to 0.8, a maximum token length of 512, and the  seed value \texttt{23487}.
+ We ran our experiment on 10th January 2025' (system fingerprint \texttt{fp\_6b68a8204b}).
+\end{quote}
 
 Kang et al.~provide a similar statement in their paper on exploring LLM-based general bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
 
@@ -64,24 +60,25 @@ Kang et al.~provide a similar statement in their paper on exploring LLM-based ge
 ``We access OpenAI Codex via its closed beta API, using the code-davinci-002 model. For Codex, we set the temperature to 0.7, and the maximum number of tokens to 256.''
 \end{quote}
 
-Our guidelines additionally suggest to report a checksum and exact dates, but otherwise this example is close to our recommendations. 
+Our guidelines additionally suggest to report a checksum/fingerprint and exact dates, but otherwise this example is close to our recommendations. 
 
-\comment{Commercial tools have limited information. This is a bit tricky. What about a little more guidance? See example below.}
+Similar statements can be made for self-hosted models.
+However, when self-hosting models, the \supplementarymaterial can become a true replication package, providing specific instructions for reproducing study results.
+For example, for models provisioned using \href{https://ollama.com/library/}{ollama}, one can report the specific tag and checksum of the model being used, e.g., \emph{``llama3.3, tag 70b-instruct-q8\_0, checksum d5b5e1b84868.''}
+Given suitable hardware, running the corresponding model in its default configuration is then as easy as executing one command in the command line (see also Section \openllm):
 
-When studying commercial tools where configuration access is limited: \todo{To be even more precise, one needs to distinguish between models (accessed via APIs) and tools. The list below contains both tools (Copilot) and commercial models (Codex).}
-\begin{itemize}
-\item Report product name, version number, and access date (e.g., "GitHub Copilot in Visual Studio Code v1.2.3, accessed between January-March 2024");
-\item Document any user-configurable settings and their values, such as temperature and maximum tokens (e.g., "For Codex, we set the temperature to 0.7, and the maximum number of tokens to 256.");
-\item Archive interaction logs showing tool behavior (see section \href{/guidelines/report-interaction-logs}{Report Interaction Logs});
-\item Acknowledge limitations in reproducibility due to the closed nature of the tool. \todo{Add link to corresponding guideline}
-\end{itemize}
+\begin{verbatim}
+ollama run llama3.3:70b-instruct-q8_0
+\end{verbatim}
+
+An example of a study involving fine-tuning is Dhar et al.'s work~\cite{DBLP:conf/icsa/DharVV24}.
+They conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions. The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system. The study provides information on the fine-tuning approach and datasets used for evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
 
 
 \subsubsection{Advantages}
 
-The recommended information is a prerequisite to enable reproducibility of LLM-based studies under the same or similar conditions.
-Please note that this information alone is generally not sufficient.
-Therefore, depending on the specific study setup, researchers \should provide additional information about architecture and data (\href{/guidelines/#report-tool-architecture-and-supplemental-data}{Report Tool Architecture and Supplemental Data}), prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}), interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}), and specific limitations an mitigations (\href{/guidelines/#report-limitations-and-mitigations}{Report Limitations and Mitigations}).
+Reporting the information that we have outlined in our recommendations is a prerequisite for the reproduction and replication of LLM-based studies under the same or similar conditions.
+However, that this information alone is generally not sufficient.
 
 \subsubsection{Challenges}
 
@@ -89,19 +86,23 @@ Different model providers and modes of operating the models allow for varying de
 For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output.
 However, the fingerprint is indeed just intended to detect changes to the model or its configuration.
 As a user, one cannot go back to a certain fingerprint.
-As a beta feature, OpenAI also lets users set a seed parameter to receive ``(mostly) consistent output''~\cite{OpenAI23}.
+As a beta feature, OpenAI lets users set a seed parameter to receive ``(mostly) consistent output''~\cite{OpenAI23}.
 However, the seed value does not allow for full reproducibility and the fingerprint changes frequently. 
 While, as motived above, open models significantly simplify re-running experiments, they also come with challenges in terms of reproducibility, as generated outputs can be inconsistent despite setting the temperature to 0 and using a seed value (see \href{https://github.com/ollama/ollama/issues/5321}{GitHub issue for Llama3}).
 
-\comment{Should we also address how API rate limits and usage constraints can affect experiments?}
+%\comment{Should we also address how API rate limits and usage constraints can affect experiments?}
 
 \subsubsection{Study Types}
 
 This guideline \must be followed for all study types for which the researcher has access to (parts of) the model's configuration.
 They \must always report the configuration that is visible to them, acknowledging the reproducibility challenges of commercial tools and models offered as-a-service. 
-When \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, for example the usage of commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their study setup.
-The model name and date \must always be reported.
-In those cases, reporting other aspects such as prompts (\href{/guidelines/#report-prompts-and-their-development}{Report Prompts and their Development}) and interaction logs (\href{/guidelines//#report-interaction-logs}{Report Interaction Logs}) is essential.
+
+Depending on the specific study type, researchers \should provide additional information regarding the architecture of a tool they built (see Section \toolarchitecture), prompts and interactions logs (see Section \prompts), and specific limitations an mitigations (see Section \limitationsmitigations).
+
+
+For example, when \llmusage by focusing on commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their study setup.
+The configured model name, version, and the date when the experiment was conducated \must always be reported.
+In those cases, reporting other aspects such as prompts and interaction logs is essential.
 
 
 \subsubsection{References}
