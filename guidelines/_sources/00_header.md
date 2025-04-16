@@ -11,12 +11,12 @@ This set of guidelines is currently a DRAFT and based on a discussion session wi
 This draft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving large language models (LLMs).
 See also the pages on [study types](/study-types) and [scope](/scope).
 
-The wording of the recommendations follows [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [8174](https://www.rfc-editor.org/rfc/rfc8174).
-Throughout the guidelines, we mention what information we expect to be reported in the paper or in the supplementary material.
+The wording of the recommendations (**MUST**, **SHOULD**, **MAY**) follows [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [8174](https://www.rfc-editor.org/rfc/rfc8174).
+Throughout the guidelines, we mention what information we expect to be reported in the PAPER or in the SUPPLEMENTARY MATERIAL.
 We are aware that different venues have different page limits and that not everything can be reported in the paper.
 It is of course better to report essential information that we expect to be reported in the paper in the supplementary material than not at all.
-Unless explicitly mentioned otherwise, we expect information to be reported in the paper and/or the supplementary material.
-If information **MUST** be reported in the paper, we explicitly mention this in the specific guidelines.
+Unless explicitly mentioned otherwise, we expect information to be reported either in the PAPER and/or the SUPPLEMENTARY MATERIAL.
+If information **MUST** be reported in the PAPER, we explicitly mention this in the specific guidelines.
 
 ## Overview
 
