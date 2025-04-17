@@ -6,49 +6,43 @@
 
 \subsubsection{Recommendations}
 
-\todo{indicate what information is supposed to be reported in the \paper or in the \supplementarymaterial}
-
-\todo{double-check usage of \must, \should, etc.}
-
-Empirical software engineering showed the importance of validating tools supporting software engineering \cite{DBLP:conf/icse/PerryPV00, DBLP:conf/ease/Hasselbring21}.
-Thus, it is of pivotal importance to empirically assess the effectiveness of LLMs or LLM-based tools.
-%Benchmarks, baselines, and metrics play a significant role in assessing the effectiveness of a model.
-%Effectively solving software engineering tasks requires evaluating how well the given model addresses a specific problem.
+Benchmarks, baselines, and metrics play a significant role in assessing the effectiveness of an LLM or LLM-based tool.
 Benchmarks are model- and tool-independent standardized tests used to assess the performance of LLMs on specific tasks such as code summarization or code generation.
 A benchmark consists of multiple standardized test cases, each with at least a task and an expected result.
 Metrics are used to quantify the performance for the benchmark tasks, enabling a comparison.
-%Metrics capture a single aspect of the model's quality and enable comparing diverse models.
-%Researchers can pick the best model for the given task based on the metrics.
+A baseline represents a reference point for the measured LLM.
 Since LLMs require substantial hardware resources, baselines serve as a comparison to assess their performance against traditional algorithms with lower computational costs.
-%A baseline represents a reference point for the measured LLM.
-%The following section describes benchmarks, metrics, and baselines used.
-%For each, we provide examples, recommendations, and challenges researchers should be aware of.
-When selecting benchmarks, it is important to understand both the contained task to solve and the expected result because this determines what the benchmark assesses.
-We recommend that researchers briefly summarize the selected benchmark and why it is suitable for their study.
-They should report why the given tasks and corresponding expected benchmark results reflect the problem the researcher wants to solve.
-In addition, reporting the total number of unique benchmark test cases and illustrating an example of a single test case allows other researchers to assess what the model is tested on.
-If multiple benchmark exist for the same task, the goal should be to compare performance between benchmarks.
-We recommend the use of the most specific benchmarks given the context.
 
-Furthermore, the representativeness of a benchmark is important to report.
+When selecting benchmarks, it is important to fully understand the benchmark tasks and the expected result, because they determine what the benchmark actually assesses.
+Researchers \must briefly summarize why they selected certain benchmarks in the \paper, 
+They \should also summarize the structure and tasks of the selected benchmark(s), including the programming language(s) and descriptive statistics such as the number of contained tasks and test cases.
+Researchers \should also discuss the limitations of the selected benchmark(s).
 For example, many benchmarks focus heavily on Python, and often on isolated functions.
 This assesses a very specific part of software development, which is certainly not representative for the full breadth of software engineering.
 
-The use of LLMs might not always be justifiable if traditional approaches achieve similar performance. 
+Researchers \may include an example of a task and corresponding test case(s) the illustrate the structure of the benchmark.
+If multiple benchmark exist for the same task, researchers \should compare performance between benchmarks.
+If selecting only a subset of benchmarks, researchers \should use of the most specific benchmarks given the context.
+
+The use of LLMs might not always be reasonable if traditional approaches achieve similar performance. 
 For many tasks LLMs are being evaluated for, there exist traditional non-LLM-based approaches (e.g., for program repair) that can serve as a baseline.
 Even if LLM-based tools perform better, the question is whether the resources consumed justify the potentially marginal improvements.
-We recommend researchers to always check whether such traditional baselines exist and if they do, compare them with the LLM or LLM-based tool using suitable metrics.
-To make such comparisons between traditional and LLM-based approaches, or comparison between LLM-based tools based on a benchmark for the given context.
-In general, we recommend to use established metrics whenever possible (see summary below), as this enables secondary research.
-We further recommend researchers to carefully argue why the selected metrics are suitable for the given task or study. 
-If an LLM-based tool that is supposed to support humans is evaluated, a relevant metric might be the acceptance rate, meaning the ratio of all accepted artifacts (e.g., test cases, code snippets) in relation to all artifacts that were generated and presented to the user.
+Researchers \should always check whether such traditional baselines exist and if they do, compare them with the LLM or LLM-based tool using suitable metrics.
+
+For comparing traditional and LLM-based approaches or different LLM-based tools, researchers \should use established metrics whenever possible (see examples below), as this enables secondary research.
+Researchers \must argue why the selected metrics are suitable for the given task or study. 
+If a study evaluates an LLM-based tool that is supposed to support humans, a relevant metric might be the acceptance rate, meaning the ratio of all accepted artifacts (e.g., test cases, code snippets) in relation to all artifacts that were generated and presented to the user.
 Another way of evaluating LLM-based tools is calculating inter-model agreement (see also Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
 This also allows researchers to assess how dependent a tool's performance is on specific models.
+\todo{What are suitable metrics for comparing inter-model agreement?}
 
 LLM-based generation is non-deterministic by-design.
-This non-determinism requires the repetition of experiments to statistically assess the performance of a model or tool using the arithmetic mean, confidence intervals, and standard deviations.
+Due to this non-determinism, researchers \should repeat experiments to statistically assess the performance of a model or tool, for example using the arithmetic mean, confidence intervals, and standard deviations.
+
 
 \subsubsection{Example(s)}
+
+\todo{Sebastian: Examples of SE papers using certain benchmarks, baseline, or metrics are still missing. See also the TODO at the end of this section, which was added during the previous review round.}
 
 Two benchmarks used for code generation are \emph{HumanEval} (\href{https://github.com/openai/human-eval}{GitHub}) \cite{DBLP:conf/acl/PapineniRWZ02} and \emph{MBPP} (\href{https://huggingface.co/datasets/google-research-datasets/mbpp}{GitHub}) \cite{DBLP:journals/corr/abs-2108-07732}.
 Both benchmarks consist of code snippets written in Python sourced from publicly available repositories.
@@ -101,20 +95,20 @@ Pass rates for higher $k$ values (e.g., $2$, $5$, $10$) indicate whether the mod
 For downstream tasks that permit multiple solutions or user interaction, strong performance at k > 1 can be justified. 
 For instance, a user selecting the correct test case from multiple suggestions allows for some model errors.
 %In code search, finding the most appropriate good snippet for a given context, a reranking algorithm mitigate low pass rates at low k-values.
+Common examples for papers using pass@k are papers introducing new models for code generation such as \cite{DBLP:journals/corr/abs-2308-12950, DBLP:journals/corr/abs-2401-14196, DBLP:journals/corr/abs-2409-12186, DBLP:journals/corr/abs-2305-06161}.
+
+\todo{Find SE papers which uses other benchmarks than pass@k \& other papers which do not introduce a new model.}
 
 %\subsubsection{Exact Match}
 
-%As the name suggests, the metric \emph{Exact Match} calculates the percentage of replicas a model can produce.
-%If the model is able to produce the exact target sequence a score of 1 is awarded; otherwise 0.
-%Compared to BLEU-N, \emph{Exact Match} is a stricter measurement.
+\emph{Exact match} is another metric that calculates the percentage of replicas a model can produce.
+If the model is able to produce the exact target sequence a score of 1 is awarded; otherwise 0.
+Compared to BLEU-N, \emph{exact match} is a stricter measurement.
 %Due to its strictness, reported scores are usually low.
 
 %Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
 %To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
 
-Common examples for papers using pass@k are papers introducing new models for code generation such as \cite{DBLP:journals/corr/abs-2308-12950, DBLP:journals/corr/abs-2401-14196, DBLP:journals/corr/abs-2409-12186, DBLP:journals/corr/abs-2305-06161}.
-%\todo{Add SE papers that use some of the benchmarks and metrics discussed above}
-\todo{Find SE papers which uses other benchmarks than pass@k \& other papers which do not introduce a new model.}
 
 \subsubsection{Advantages}
 
@@ -169,13 +163,15 @@ For unforeseen scenarios, however, the model might perform much worse.
 
 \todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
 
-This guideline must be followed for all study types that evaluate the performance of plain LLMs on a given task.
+This guideline \must be followed for all study types that evaluate the performance of LLMs or LLM-based tools.
 
-For example, if you use an LLM as an annotator and the research goal is to assess which model annotates best based on a test dataset, you \must report an appropriate metric that reflects the nature of your task and you \should disclose the used dataset for evaluation.
-Annotation tasks can vary significantly: Are multiple labels allowed for the same sequence? Are the available labels predefined, or should the LLM generate a set of labels independently?
-Due to this task dependence, you \should justify your choice of metric, explaining what aspects of the task it captures and what its limitations are.
+For example, for \annotators, the research goal might be to assess which model comes closes to a ground truth dataset created by human annotators.
+Especially for open annotation tasks, it is important to select suitable metrics to compare LLM-generated an human-generated labels.
+In general, annotation tasks can vary significantly: Are multiple labels allowed for the same sequence? Are the available labels predefined, or should the LLM generate a set of labels independently?
+Due to this task dependence, it is important that researches justify their metric choice, explaining what aspects of the task it captures and what its limitations are.
 
-If you are conducting a well-established task, such as code generation, you \should report standard metrics like pass@k and compare to other models.
+\todo{Sebastian: Extend this and look at the comment below that is still unresolved.}
+If researchers assess a well-established task, such as code generation, they \should report standard metrics like pass@k and compare to other models.
 
 \todo{Describe more study types. Copy common outline for this section.}
 
