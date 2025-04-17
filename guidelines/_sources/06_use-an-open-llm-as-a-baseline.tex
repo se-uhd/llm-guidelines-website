@@ -6,30 +6,28 @@
 
 \subsubsection{Recommendations}
 
-\todo{indicate what information is supposed to be reported in the \paper or in the \supplementarymaterial}
+Empirical studies using LLMs in software engineering, especially the ones targeting commercial tools or model, \should incorporate an open LLM as a baseline and report established metrics for inter-model agreement (see Section \benchmarksmetrics).
+\todo{Sebastian: Please check that the cited section contains the required information. If not, add it there.}
+We acknowledge that including an open LLM baseline might not always be possible, for example if the study involves human participants and letting them work on the tasks using two different models might not be feasible.
+However, open models allow other researchers to verify research results and build upon them, even without access to commercial models.
+Comparing commercial and open models also allows to contextualize model performance.
+Researchers \should provide a full replication package as part of their \supplementarymaterial, including clear, step-by-step instructions on how to verify and reproduce the results reported in the paper.
 
-\todo{double-check usage of \must, \should, etc.}
+Open LLMs are available on platforms such as \href{https://huggingface.co/}{Hugging Face}.
+Depending on the size, and the local computing power, open LLMs can be hosted on a local computer or server using frameworks such as \href{https://ollama.com/}{Ollama} or \href{https://lmstudio.ai/}{LM Studio}.
+They can also be run on cloud-based services such as \href{https://together.ai/}{Together AI} or large hyperscalers such as AWS, Azure, Alibaba Cloud, and Google Cloud.
 
-To ensure that empirical studies using Large Language Models (LLMs) in software engineering are reproducible and comparable, 
-we recommend incorporating an open LLM as a baseline for analysis. This applies whether you're using LLMs to explore something or evaluating them
-on on specific software engineering tasks. 
-Sometimes, including an open LLM baseline might be impossible. In such cases, researchers should at least use an open LLM on an early version of their product.
-Open LLMs are available for inspection and download in places like Hugging Face. Depending on the size, and the local computing power, open LLMs can be hosted on a local computer or server employing LLM management systems such as \href{https://ollama.com/}{Ollama} and \href{https://lmstudio.ai/}{LM Studio}. Otherwise, such models can also be run on cloud-based services like \href{https://together.ai/}{Together AI}.
-We recommend providing a replication package to facilitate other researchers checking your work. This should have clear, step-by-step instructions on how to get the same results you did using open LLM models. This makes the research more reliable since it allows others to confirm what you found.
-For example, researchers could report: "We compared our results to Meta's Code Llama, which is available on Hugging Face." and researchers shall include a link to the replication package.
+The term ``open'' can have different meanings in context of LLMs.
+Widder et al. discuss three types of openness: transparency, reusability and extensibility~\cite{widder2024open}.
+They also discuss what openness in AI can and cannot provide.
+Moreover, the Open Source Initiative (OSI) \cite{OSIAI2024} provides a definition of open-source AI that serves as a useful framework for evaluating the openness of AI models.
+In simple terms, according to OSI, open-source AI means  you have access to everything you need to use the AI, such as understanding, modifying, sharing, retraining, and recreating.
 
-The term Open when applied to an LLM can have various meanings. \cite{widder2024open} discusses three types of openness (transparency, reusability 
-and extensibility) and  what openness in AI can and cannot provide. Moreover, the Open Source Initiative (OSI) \cite{OSIAI2024} provides a definition of 
-open-source AI that serves as a useful framework for evaluating the openness of AI models. In simple terms, according to OSI, open-source AI means 
-you have access to everything you need to use the AI, such as understanding, modifying, sharing, retraining, and recreating. Thus, researchers must 
-be clear about what "open" means in their context.
-
-Finally, we recommend reporting and analysing inter-model agreement metrics. These metrics quantify the consistency between your model's outputs 
-and the baseline, thus they support the identification of potential biases or disagreement areas.  Moreover, we recommend reporting the model 
-confidence scores to analyse the model uncertainty. The analysis of inter-model agreement and model confidence provides valuable insights into 
-the reliability and robustness of LLM performance, allowing a deeper understanding of their capabilities and limitations.
 
 \subsubsection{Example(s)}
+
+\todo{Sebastian: Artificial examples should only be used in case we can't find any SE or non-SE papers that use open LLMs as a baseline. Please add suitable examples here.}
+
 \begin{itemize}
     \item Benchmarking a Proprietary LLM: Researchers want to know how good their own LLM is at writing code. They might compare it against an open LLM such as StarCoderBase.
     \item Evaluating an LLM-Powered Tool: A team developing an AI-driven code review tool might want to assess the quality of suggestions generated by both a proprietary LLM and an open alternative. Human evaluators could then independently rate the relevance and correctness of the suggestions, providing an objective measure of the tool's effectiveness.
@@ -37,6 +35,9 @@ the reliability and robustness of LLM performance, allowing a deeper understandi
 \end{itemize}
 
 \subsubsection{Advantages}
+
+\todo{Sebastian: Please formulate a text based on the bullet points (see earlier guidelines for inspiration).}
+
 \begin{itemize}
     \item	Improved Reproducibility: Researchers can independently replicate experiments.
     \item	More Objective Comparisons: Using a standardized baseline allows for more unbiased evaluations.
@@ -47,6 +48,9 @@ the reliability and robustness of LLM performance, allowing a deeper understandi
 
 
 \subsubsection{Challenges}
+
+\todo{Sebastian: Please formulate a text based on the bullet points (see earlier guidelines for inspiration).}
+
 \begin{itemize}
     \item Performance Differences: Open models may not always match the latest proprietary LLMs in accuracy or efficiency, making it harder to demonstrate improvements.
     \item Computational Demands: Running large open models requires hardware resources, including high-performance GPUs and significant memory.
@@ -56,6 +60,9 @@ the reliability and robustness of LLM performance, allowing a deeper understandi
 \end{itemize}
 
 \subsubsection{Study Types}
+
+\todo{Sebastian: Please formulate a text based on the bullet points (see earlier guidelines for inspiration) and use the command from \texttt{header.tex} to refer to the study types.}
+
 \begin{itemize}
     \item Tool Evaluation: An open LLM baseline \must be included if technically feasible. If integration is too complex, researchers \should at least report initial benchmarking results using open models.
     \item Benchmarking Studies and Controlled Experiments: An open LLM \must be one of the models evaluated.
