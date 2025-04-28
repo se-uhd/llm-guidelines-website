@@ -164,8 +164,7 @@ For unforeseen scenarios, however, the model might perform much worse.
 \subsubsection{Study Types}
 
 This guideline \must be followed for all study types that automatically evaluates the performance of LLMs or LLM-based tools.
-
-The guideline recommendations are divided into recommendations for benchmark creation and the usage of a benchmark for evaluation.
+The design of a benchmark and the selection of appropriate metrics are highly dependent on the specific study type and research goal.
 
 For example, for \annotators, the research goal might be to assess which model comes closes to a ground truth dataset created by human annotators.
 Especially for open annotation tasks, it is important to select suitable metrics to compare LLM-generated an human-generated labels.
@@ -174,10 +173,7 @@ Due to this task dependence, it is important that researches justify their metri
 
 If researchers assess a well-established task, such as code generation, they \should report standard metrics like pass@k and compare to other models.
 If non-standard metrics are used they \must state the reasoning.
-
-Researcher \should follow existing guidelines for benchmark creation such as \cite{cao2025should} independent of the study type.
-
-\todo{Connect guideline to study types and for each type have bullet point lists with information that MUST, SHOULD, or MAY be reported (usage of those terms according to RFC 2119~\cite{rfc2119}).}
+If non-standard metrics are used they \must state the reasoning.
 
 % What are characteristics of a specific study type?
 % - 
