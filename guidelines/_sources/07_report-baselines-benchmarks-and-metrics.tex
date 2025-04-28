@@ -103,11 +103,11 @@ Compared to BLEU-N, \emph{exact match} is a stricter measurement.
 
 The choice of metrics strongly depends on the specific task.
 Consequently, papers addressing different research questions employ different metrics.
-For example, \cite{DBLP:conf/nips/LiuXW023} assesses LLM models for their correctness on code generation using pass@k.
+For example, Liu et al. assesses LLM models for their correctness on code generation using pass@k~\cite{DBLP:conf/nips/LiuXW023}.
 However, pass@k is not an universal metric suitable for every problem at hand.
-For instance, for creative or open-ended tasks such as comment generation, pass@k is not a suitable metric since not a single correct result exists.
-Thus, \cite{DBLP:conf/icse/GengWD00JML24} evaluates LLMs for code comment generation using BLEU, ROUGE-L and METEOR as evaluation metrics.
-\cite{DBLP:journals/ase/LiuJZNLL25} investigates the performance of LLMs on automated refactorings tasks and proposes a novel metric tailored to the unique characteristics of this problem.
+For instance, for creative or open-ended tasks such as comment generation, pass@k is not a suitable metric since not only one single correct result exists.
+Thus, Geng et al. evaluates LLMs for code comment generation using BLEU, ROUGE-L and METEOR as evaluation metrics~\cite{DBLP:conf/icse/GengWD00JML24}.
+Liu et al. investigates the performance of LLMs on automated refactorings tasks and proposes a novel metric tailored to the unique characteristics of this problem \cite{DBLP:journals/ase/LiuJZNLL25}.
 
 %Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
 %To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
@@ -163,18 +163,18 @@ For unforeseen scenarios, however, the model might perform much worse.
 
 \subsubsection{Study Types}
 
-This guideline \must be followed for all study types that automatically evaluates the performance of LLMs or LLM-based tools.
+This guideline \must be followed for all study types that automatically evaluate the performance of LLMs or LLM-based tools.
 The design of a benchmark and the selection of appropriate metrics are highly dependent on the specific study type and research goal.
+Recommending specific metrics for specific study types is beyond the scope of these guidelines, but Cao et al. provide a good starting point and overview of existing metrics for evaluating LLMs~\cite{10.1145/3695988}.
+Section \humanvalidation provides an overview of integrating human evaluation in LLM-based studies. 
 
-For example, for \annotators, the research goal might be to assess which model comes closes to a ground truth dataset created by human annotators.
-Especially for open annotation tasks, it is important to select suitable metrics to compare LLM-generated an human-generated labels.
+Furthermore, for \annotators, the research goal might be to assess which model comes close to a ground truth dataset created by human annotators.
+Especially for open annotation tasks, selecting suitable metrics to compare LLM-generated and human-generated labels is important.
 In general, annotation tasks can vary significantly: Are multiple labels allowed for the same sequence? Are the available labels predefined, or should the LLM generate a set of labels independently?
 Due to this task dependence, it is important that researches justify their metric choice, explaining what aspects of the task it captures and what its limitations are.
 
-If researchers assess a well-established task, such as code generation, they \should report standard metrics like pass@k and compare to other models.
+If researchers assess a well-established task, e.g. code generation, they \should report standard metrics pass@k and compare to other models.
 If non-standard metrics are used they \must state the reasoning.
-If non-standard metrics are used they \must state the reasoning.
-
 % What are characteristics of a specific study type?
 % - 
 
