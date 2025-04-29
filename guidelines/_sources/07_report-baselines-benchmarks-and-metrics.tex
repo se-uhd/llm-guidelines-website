@@ -168,10 +168,10 @@ The design of a benchmark and the selection of appropriate metrics are highly de
 Recommending specific metrics for specific study types is beyond the scope of these guidelines, but Cao et al. provide a good starting point and overview of existing metrics for evaluating LLMs~\cite{10.1145/3695988}.
 Section \humanvalidation provides an overview of integrating human evaluation in LLM-based studies. 
 
-Furthermore, for \annotators, the research goal might be to assess which model comes close to a ground truth dataset created by human annotators.
+For example, for \annotators, the research goal might be to assess which model comes close to a ground truth dataset created by human annotators.
 Especially for open annotation tasks, selecting suitable metrics to compare LLM-generated and human-generated labels is important.
 In general, annotation tasks can vary significantly: Are multiple labels allowed for the same sequence? Are the available labels predefined, or should the LLM generate a set of labels independently?
-Due to this task dependence, it is important that researches justify their metric choice, explaining what aspects of the task it captures and what its limitations are.
+Due to this task dependence, researchers \must justify their metric choice, explaining what aspects of the task it captures and its limitations.
 
 If researchers assess a well-established task, e.g. code generation, they \should report standard metrics pass@k and compare to other models.
 If non-standard metrics are used they \must state the reasoning.
