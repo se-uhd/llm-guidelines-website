@@ -12,7 +12,7 @@ When using LLMs for empirical studies in software engineering, researchers face 
 A cornerstone of open science is the ability to reproduce research results.
 Even though the inherent non-deterministic nature of LLMs is a strength in many use cases, its impact on \emph{reproducibility} is a challenge. To enable reproducibility, researchers \must disclose a replication package for their study.
 \todo{Sebastian: This is not possible for all study types. If we keep it that generic, it's rather a \should. Or we contextualize by study type.} 
- They \should perform multiple evaluation repetitions of their experiments (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}) to account for non-deterministic outputs of LLMs or
+They \should perform multiple evaluation repetitions of their experiments (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}) to account for non-deterministic outputs of LLMs or
 In same cases, they \may reduce output variability by setting the temperature to a value close to 0 and configure a seed value for more deterministic results.
 However, configuring a lower temperature can impair task performance, and not all models allow configuring seed values.
 Besides non-determinism, the behavior of an LLM depends on many external factors, such as model version, API updates, or prompt variations.
@@ -32,8 +32,7 @@ For example ChatGPT's functionality to ``improve the model for everyone'' can re
 Hence, to ensure the validity of the evaluation results, researchers \should carefully curate the fine-tuning and evaluation datasets to prevent inter-dataset duplication and \mustnot leak their fine-tuned or evaluation datasets into the improvement process of the LLM.
 However, when publishing the results, researchers \should of course still follow open science practices and publish the datasets as part of their \supplementarymaterial.
 If information about the pre-train dataset of the employed LLM is available, researchers \should assess the inter-dataset duplication and \must discuss the potential data leakage in the \paper.
-When training an LLM from scratch, researchers \may consider using open datasets such as Together AI's RedPajama~\cite{together2023redpajama} that already incorporate duplication (with the positive side effect of potentially improving performance~\cite{DBLP:conf/acl/LeeINZECC22}).
-\todo{Sebastian: Is incorporate the right word here? Sounds like the dataset contains duplicates.}
+When training an LLM from scratch, researchers \may consider using open datasets such as Together AI's RedPajama~\cite{together2023redpajama} that already are built with deduplication in mind (with the positive side effect of potentially improving performance~\cite{DBLP:conf/acl/LeeINZECC22}).
 
 Conducting studies with LLMs is a resource-intensive endeavor.
 For self-hosted LLMs, the respective hardware needs to be provided, for managed LLMs, the service \emph{cost} has to be considered.
