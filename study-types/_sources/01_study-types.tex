@@ -194,11 +194,11 @@ Another example are usability studies, in which LLMs can simulate end-user feedb
 
 \subsubsection{Advantages}
 
-Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}.
-
-\todo{Sebastian: Can be be a bit more specific here on the ``valuable insights'' and advantages that using LLMs as subjects provides?} 
-
-Furthermore, employing LLMs as subjects enables researchers to conduct empirical research under consistent and repeatable conditions, enhancing the reliability and scalability of the studies.
+Using LLMs as subjects offers valuable insights while significantly reducing the need to recruit human participants—a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}—by augmenting existing datasets or, in some cases, even replacing human participants. 
+Their use has potential applications across a wide range of empirical research methods.
+In controlled experiments, LLMs could allow for collecting more data from a diverse (simulated) population, provided that their non-deterministic nature is minimized (e.g., by adjusting parameters such as temperature) to meet the experimenter's requirements.
+In interviews and survey studies, they can simulate diverse respondent profiles, thus enhancing scalability and enabling access to underrepresented populations, which can strengthen the generalizability of findings. 
+In data mining studies, LLMs can generate synthetic data to fill gaps where real-world data is unavailable or underrepresented.
 
 \subsubsection{Challenges}
 
@@ -303,17 +303,16 @@ Additionally, while open models are accessible, the most performant ones require
 \subsubsection{Description}
 
 Benchmarking is the process of evaluating the LLM output for standardized tasks using standardized metrics.
-High-quality reference datasets, such as HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} for the task of code generation, are necessary to perform evaluation across studies.
-\todo{Sebastian: What makes us think that HumanEval is high-quality? It is certainly frequently used. Maybe that is what we should mention here?}
-LLM output is compared against a ground truth in the benchmark dataset using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, or task-specific metrics, such as pass@k for code generation.
-\todo{Sebastian: pass@k is not specific for code generation. There are code-specific metrics, though. See the corresponding guideline.}
+Hence, high-quality reference datasets are necessary to perform evaluation across studies.
+For example, HumanEval~\cite{DBLP:journals/corr/abs-2107-03374} is increasingly being used for the code generation, establishing it as de-facto standard for this task.   
+LLM output is compared against a ground truth in the benchmark dataset using general metrics for text generation, such as ROUGE, BLEU, or METEOR~\cite{10.1145/3695988}, or task-specific metrics, such as CodeBLEU for code generation.
 
 \subsubsection{Example(s)}
 
-In software engineering, benchmarking may include the evaluation of an LLM's ability to produce accurate and reliable outputs for input data obtained from curated real-world projects or from synthetic SE-specific datasets.
+In software engineering, benchmarking may include the evaluation of an LLM's ability to produce accurate and reliable outputs for a given input, usually a task description which may be accompanied by data obtained from curated real-world projects or from synthetic SE-specific datasets (e.g., for few-shot prompting).
 %\comment{What are "robust" outputs? Outputs following a specific structure? In that case, "accurate" also describes that feature}
-Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks---i.e., anaphora resolution---interesting for subfields such a Requirements Engineering. 
-\todo{Sebastian: What is anaphora resolution? We need to explain that for the audience.}
+Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks, such as anaphora resolution (i.e., the task of identifying the referring expression of a word or phrase occurring earlier in the text), interesting for subfields such a Requirements Engineering. 
+
 RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
 The metrics used are Plausible@1 (i.e., the probability that the first generated patch passes all test cases) and AST Match@1 (i.e., the probability that the abstract syntax tree of the first generated patch matches the one of the ground truth patch).
 SWE-Bench~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE Python tasks extracted from GitHub pull requests.
