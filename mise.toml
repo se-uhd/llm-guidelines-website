@@ -1,0 +1,6 @@
+[tools]
+ruby   = "3.4.1"
+pandoc = "3.6.2"
+java   = "temurin-jre-21.0.7+6.0.LTS"
+python = "3.13.3"
+

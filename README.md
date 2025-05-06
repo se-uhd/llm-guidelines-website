@@ -7,7 +7,7 @@ Changes are made to Latex files, which are then converted to Markdown and render
 
 You can test changes to the website locally as follows:
 
-1. Either install `ruby` and `pandoc` directly or using [asdf](https://asdf-vm.com/) (see [.tool-versions](https://github.com/se-ubt/llm-guidelines-website/blob/main/.tool-versions)). If you're on Windows, we suggest using [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+1. Either install `ruby` and `pandoc` directly or using [mise](https://asdf-vm.com/) (see [mise.toml](https://github.com/se-ubt/llm-guidelines-website/blob/main/mise.toml)). If you're on Windows, we suggest using [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 2. Run `gem install bundler jekyll`.
 3. Run `bundle install` in the root directory of this repo.
 4. Run `./convert-and-merge-sources.sh` to convert the Latex files to Markdown.
