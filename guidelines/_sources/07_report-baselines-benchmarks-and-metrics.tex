@@ -13,6 +13,9 @@ Metrics are used to quantify the performance for the benchmark tasks, enabling a
 A baseline represents a reference point for the measured LLM.
 Since LLMs require substantial hardware resources, baselines serve as a comparison to assess their performance against traditional algorithms with lower computational costs.
 
+\citet{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
+They analyzed 191 benchmarks and categorized them based on the specific task they address, making the paper a valuable resource for identifying relevant existing benchmarks.
+
 When selecting benchmarks, it is important to fully understand the benchmark tasks and the expected result, because they determine what the benchmark actually assesses.
 Researchers \must briefly summarize why they selected certain benchmarks in the \paper, 
 They \should also summarize the structure and tasks of the selected benchmark(s), including the programming language(s) and descriptive statistics such as the number of contained tasks and test cases.
@@ -115,11 +118,11 @@ Liu et al. investigates the performance of LLMs on automated refactorings tasks 
 
 \subsubsection{Advantages}
 
-% Provide comparability
-% Provide reproducability
-% Track progress
-% leaderboards
-% Tool to select the best model for a given task
+Benchmarks are an essential tool for assessing prompts and models' performance for software engineering tasks.
+Due to inherent variations of LLMs, both the choice of models and prompt can lead to substantial differences in performance.
+Reproducible benchmarks measure and assess the performance of both prompts and models for a specific software engineering task, creating a tool for comparison.
+The comparison enables progress tracking and steering, for example, during prompt engineering by iteratively comparing benchmark results after changes.
+For practitioners, leaderboards, published benchmark results of models, enable a swift selection of models for downstream tasks.
 
 \subsubsection{Challenges}
 
