@@ -19,16 +19,13 @@ Researchers \should use established reference models for comparing humans with L
 In some cases, a hybrid approach between human and machine-generated annotations can improve annotation efficiency.
 However, researchers \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
 
-%Neil: I don't get where this fits in the guideline. Machine measures are not LLM outputs, so I don't get the guideline here. Maybe something like "also consider metrics to validate ?"
-% When evaluating the capability of LLMs to generate SE-related artifacts, may employ human validation to complement machine-generated measures.
-% For example, proxies for software quality, such as code complexity or the number of code smells, may be complemented by human ratings of maintainability, readability, or understandability.
-% In the case of more abstract variables or psychometric measurements, human validation may be the only way of measuring a specific construct.
-% For example, measuring human factors such as trust, cognitive load, and comprehension levels may inherently require human evaluation.
-
 When conducting empirical measurements of human validation, researchers \must clearly define the construct that they are measuring and \must specify the methods used for measurement. 
 Further, they should use established measurement methods and instruments that are empirically validated~\cite{DBLP:journals/fcomp/HoffmanMKL23, DBLP:conf/chi/PerrigSB23}.
 Measuring a construct \may require aggregating input from multiple subjects. 
 For example, a study might assess inter-rater agreement of humans and LLMs using measures such as Cohen's Kappa or Krippendorff's Alpha before aggregating ratings.
+
+Researchers \should employ human validation of LLM outputs whenever there either is no established reference dataset or benchmark or when automated metrics alone cannot fully capture the qualities they are concerned with.
+These cases my include studies such as user-facing interactive studies (e.g., debugging or collaborative coding agents), auditing bias or fairness, controlled experiments on developer productivity or quality (e.g., usefulness evaluation of LLM based IDE plugin).
 
 In some cases, researchers can also combine multiple measures into single composite measures.
 As an example, they may evaluate both the time taken and accuracy when completing a task and aggregate them into a composite measure for the participants' overall performance.
@@ -41,22 +38,11 @@ When multiple humans are annotating the same artifact, researchers should valida
 
 \subsubsection{Example(s)}
 
-\todo{Neil: I have put these next two into examples}
 For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.'' \todo{citation?}
 
 For instance, ``Model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff’s $\alpha$ is 0.68-0.76. 
 Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48
 for the first three categories.''~\cite{DBLP:journals/corr/abs-2408-05534}.
-
-
-Khojah et al.~\cite{DBLP:journals/pacmse/KhojahM0N24} validated the results of their study using human measurement.
-Specifically, they asked participants to provide ratings regarding their experience, trust, perceived effectiveness and efficiency, and scenarios and lessons learned in their experience with ChatGPT.
-\todo{Neil: I don't understand the above. What is the LLM output being validated?}
-
-Choudhuri et al.~\cite{DBLP:conf/icse/ChoudhuriLSGS24} evaluated the perceptions of students of their experience with ChatGPT in a controlled experiment.
-They added this data to extend their results from the task performance in a series of software engineering tasks.
-This way, they were to employ questionnaires to measure the cognitive load, document any perceived faults in the system, and inquire about the participants intention to continue using the tool.
-\todo{Neil: also not an example of LLM output validation? To me this is more about using LLMs in studies}
 
 Xue et al.~\cite{DBLP:conf/icse/XueCBTH24} conducted a controlled experiment in which they evaluated the impact of ChatGPT on the performance and perceptions of students in an introductory programming course.
 They employed multiple measures to judge the impact of the LLM from the perspective of humans.
