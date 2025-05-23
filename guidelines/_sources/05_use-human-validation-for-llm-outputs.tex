@@ -6,61 +6,58 @@
 
 \subsubsection{Recommendations}
 
-\todo{Sebastian: Revise the recommendations to make clear what we recommend using \must, \should, etc.. Also indicate which information we expect to be reported in the \paper or in the \supplementarymaterial. Note the general comments in the introduction of the guidelines: \url{https://llm-guidelines.org/guidelines\#guidelines} Some content in this subsection reads more like examples, advantages, or challenges. Please revise this as well.}
-
 While LLMs can automate many tasks in research and software development that have traditionally been executed by humans, it is important to validate LLM outputs with human judgment.
 For example, in natural language processing tasks, a large-scale study has shown that LLMs have significant variation in their results, which limits their reliability as a direct substitute for human judges~\cite{DBLP:journals/corr/abs-2406-18403}. 
+Moreover, LLMs fail to match human annotators in labeling tasks for natural language inference, stance detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
 Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
 
-In studies where LLMs are used to support researchers, human validation \must be done to ensure validity.
-For example, in annotation tasks, LLMs fail to match human annotators for natural language inference, stance detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
-Researchers \should plan for with humans from the outset and develop their methodology with this validation in mind.
-Researchers \should use established reference models for comparing humans with LLMs.
-For example, the reference model by Schneider et al.~\cite{Schneider2025ReferenceModel} provides researchers with an overview describing the groups, activities, and artifacts involved in studies comparing LLMs with humans.
-Further, they illustrate the relationship between these entitities, the order of required steps in the study design, and which design decisions should be documented.
-
+Researchers \should employ human validation of LLM outputs whenever there either is no established reference dataset or benchmark or when automated metrics alone cannot fully capture the qualities they are concerned with.
+These cases may include studies such as user-facing interactive studies (e.g., debugging or collaborative coding agents), auditing bias or fairness, controlled experiments on developer productivity or quality (e.g., usefulness evaluation of LLM based IDE plugin).
 In annotation tasks where LLMs have shown high accuracy, researchers \may consider employing LLMs to label a majority of the study samples to improve annotation efficiency.
 However, researchers \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
 Their suggested method involves the use of a jury of multiple LLMs, where the model to model agreement is determined for a selection of a smaller set of annotation tasks.
 Based on the level of agreement between the LLMs, more or less human ratings are replaced with LLM ratings.
 
-When conducting empirical measurements of human validation, researchers \must clearly define the construct that they are measuring and \must specify the methods used for measurement. 
+Researchers \should plan for validation with humans from the outset and develop their methodology with this validation in mind.
+Researchers \should use established reference models for comparing humans with LLMs.
+For example, the reference model by Schneider et al.~\cite{Schneider2025ReferenceModel} provides researchers with an overview describing the groups, activities, and artifacts involved in studies comparing LLMs with humans.
+Further, they illustrate the relationship between these entitities, the order of required steps in the study design, and which design decisions should be documented.
+
+When conducting empirical measurements of human validation, researchers \must clearly define the construct that they are measuring and \must specify the methods used for measurement in their \paper.
 Further, they \should use established measurement methods and instruments that are empirically validated~\cite{DBLP:journals/fcomp/HoffmanMKL23, DBLP:conf/chi/PerrigSB23}.
-Measuring a construct \may require aggregating input from multiple subjects. 
-For example, a study might assess inter-rater agreement of humans and LLMs using measures such as Cohen's Kappa or Krippendorff's Alpha before aggregating ratings.
+When creating prepared instruments to instruct human participants in validating LLM outputs (e.g., questionnaires, study tasks), researchers \should share the instruments in their \supplementarymaterial.
 
-Researchers \should employ human validation of LLM outputs whenever there either is no established reference dataset or benchmark or when automated metrics alone cannot fully capture the qualities they are concerned with.
-These cases my include studies such as user-facing interactive studies (e.g., debugging or collaborative coding agents), auditing bias or fairness, controlled experiments on developer productivity or quality (e.g., usefulness evaluation of LLM based IDE plugin).
-
-In some cases, researchers can also combine multiple measures into single composite measures.
-As an example, they may evaluate both the time taken and accuracy when completing a task and aggregate them into a composite measure for the participants' overall performance.
+Validating the output of an LLM \may involve the aggregation of inputs from multiple human subjects.
 In these cases, researchers \should clearly describe their method of aggregation and document their reasoning for doing so.
-
-When employing human validation, additional confounding factors \should be controlled for, such as the level of expertise or experience with LLM-based applications or their general attitude towards AI-based tools.
+When multiple humans are annotating the same artifact, researchers \should validate the objectivity of annotations through measures of inter-rater reliability such as Cohen's Kappa or Krippendorff's Alpha.
+When employing human validation, additional confounding factors \should be controlled for, such as the experience or expertise in the relevant domain.
 Researchers should control for these factors through methods such as stratified sampling or by categorizing participants based on experience levels.
 Where applicable, researchers \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
-When multiple humans are annotating the same artifact, researchers should validate the objectivity of annotations through measures of inter-rater reliability.
 
-When conducting their studies with human validation, researchers
-
-\must
+In summary, when considering whether to employ human validation, researchers
 \begin{itemize}
-    \item Clearly define the construct measured through human validation.
-    \item Describe how the construct is operationalized in the study, specifying the method of measurement.
-    \item Employ established and widely accepted measurement methods and instruments.
+    \item \should employ human validation of LLM outputs whenever there either is no established reference dataset, benchmark or when automated metrics alone cannot fully capture the qualities they are concerned with.
+    \item \may consider employing LLMs to label a majority of the study samples if LLMs have shown high annotation accuracy.
+    \item \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones.
 \end{itemize}
 
-\should
+When designing their methodology, researchers
 \begin{itemize}
-    \item Assess the characteristics of the human validators to control for factors influencing the validation results (e.g., years of experience, familiarity with the task, etc.)
-    \item Use empirically validated measures.
-    \item Complement automated or machine-generated measures with human validation where possible.
-    \item Should ensure consistency among human validators by establishing shared understanding in training sessions or pilot studies and by assessing inter-rater agreement.
+    \item \should plan for validation with humans from the outset and develop their methodology with this validation in mind.
+    \item \should use established reference models for comparing humans with LLMs.
+    \item \should use established measurement methods and instruments that are empirically validated.
+    \item \may aggregate inputs from multiple human subjects.
+    \item \should validate the objectivity of multiple validators through measures of inter-rater reliability such as Cohen's Kappa or Krippendorff's Alpha.
+    \item \should control for human confounding factors (e.g., experience/expertise in the relevant domain). 
+    \item \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
 \end{itemize}
 
-\may
+When reporting the results of the human validation, researchers
 \begin{itemize}
-    \item Use multiple different measures (e.g., expert ratings, surveys, task performance) for human validation.
+    \item \must clearly define the construct that they are measuring in their \paper.
+    \item \must specify the methods used for human validation in their \paper.
+    \item \should include any measurement instruments (e.g., questionnaires, study tasks) in their \supplementarymaterial.
+    \item \should clearly describe their method of aggregation and document their reasoning for doing so in their \paper when aggregating measures from multiple subjects.
 \end{itemize}
 
 \subsubsection{Example(s)}
@@ -102,9 +99,6 @@ Recruiting participants as human validators will always incur additional resourc
 Researchers must weigh the cost and time investment incurred by the recruitment process against the potential benefits for the validity of their study results.
 
 \subsubsection{Study Types}
-
-\todo{Sebastian: This section rather reads like the actual recommendations. The intention of this section was rather to focus on the study types where the guidelines is most important. For example, when evaluating an LLM-based tool for program repair, with existing benchmarks and non-LLM-baselines, why do I need human validation?}
-\todo{Neil: tried to fix this ..}
 
 For \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, researchers \should consider the validity of their evaluation criteria.
 In studies where there exist arguably objective evaluation criteria, such as \href{/study-types/#benchmarking-llms-for-software-engineering-tasks}{Benchmarking LLMs for Software Engineering Tasks}, there is little need for human validation, as the benchmark is (hopefully) already validated.
