@@ -15,7 +15,7 @@ Researchers \should employ human validation of LLM outputs whenever there is no 
 These cases may include user-facing interactive studies (e.g., debugging or collaborative coding agents), auditing bias or fairness, and controlled experiments on developer productivity or quality (e.g., usefulness evaluation of LLM-based IDE plugin).
 However, researchers \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
 Their suggested method involves using a jury of three LLMs with 3-4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using Krippendorff's Alpha.
-Based on the level of agreement between the LLMs, more or less human ratings are replaced with LLM outputs.
+If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with a with an LLM-generated one.
 In cases of low model-to-model agreement (alpha $\le$ 0.5), they then evaluate the prediction confidence of the model, selectively replacing annotations where the model confidence is high ($\ge$ 0.8).
 
 Researchers \should plan human validation from the outset and integrate it into their study design.
@@ -63,7 +63,7 @@ When reporting the results of the human validation, researchers
 
 \subsubsection{Example(s)}
 
-For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.''
+For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by 4 experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.''
 
 For instance, ``Model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff’s $\alpha$ is 0.68-0.76. 
 Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48
@@ -92,7 +92,7 @@ Researchers may uncover additional opportunities to further improve the LLM or L
 Measurement through human validation can be challenging.
 Ensuring that the operationalization of a desired construct and the method of measuring it are appropriate requires a good understanding of the studied concept and construct validity in general, and a systematic design approach for the measurement instruments~\cite{DBLP:journals/tse/SjobergB23}.
 
-Human judgment is often very subjective and may lead to large variability between different subjects due to differences in expertise, interpretation, and biases among evaluators~\cite{DBLP:journals/pacmhci/McDonaldSF19}.
+Human judgment is subjective, which may lead to variability between different subjects due to differences in expertise, interpretation, and biases among evaluators~\cite{DBLP:journals/pacmhci/McDonaldSF19}.
 Controlling for this subjectivity will require additional rigor when analyzing the study results.
 Different individuals might have different expectations and experiences that might impact the results of human evaluation. For example, \enquote{the struggle with adapting to AI-assisted work is more common for racially minoritized developers. That group also rated the quality of the output of AI-assisted coding tools significantly lower than other groups}~\cite{hicks_lee_foster-marks_2025}.
 
