@@ -11,8 +11,7 @@ For example, in natural language processing tasks, a large-scale study has shown
 Moreover, LLMs fail to match human annotators in labeling tasks for natural language inference, stance detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
 Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
 
-Researchers \should employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities they are concerned with.
-These cases may include user-facing interactive studies (e.g., debugging or collaborative coding agents), auditing bias or fairness, and controlled experiments on developer productivity or quality (e.g., usefulness evaluation of LLM-based IDE plugin).
+Researchers \must employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities they are concerned with.
 However, researchers \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
 Their suggested method involves using a jury of three LLMs with 3-4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using Krippendorff's Alpha.
 If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with a with an LLM-generated one.
@@ -32,13 +31,12 @@ When creating prepared instruments to instruct human participants in validating 
 Validating the output of an LLM \may involve the aggregation of inputs from multiple human judges.
 In these cases, researchers \should clearly describe their method of aggregation and document their reasoning for doing so.
 When multiple humans are annotating the same artifact, researchers \should validate the agreement between multiple validators with inter-rater reliability measures such as Cohen's Kappa or Krippendorff's Alpha.
-When employing human validation, additional confounding factors \should be controlled for, such as the experience or expertise in the relevant domain.
-Researchers should control for these factors through methods such as stratified sampling or by categorizing participants based on experience levels.
+When employing human validation, additional confounding factors \should be controlled for through methods such as stratified sampling or by categorizing participants based on experience levels.
 Where applicable, researchers \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
 
 In summary, when considering whether to employ human validation, researchers
 \begin{itemize}
-    \item \should employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities.
+    \item \must employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities.
     \item \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones.
 \end{itemize}
 
@@ -49,7 +47,7 @@ When designing their methodology, researchers
     \item \should use established measurement methods and instruments that are empirically validated.
     \item \may aggregate validations from multiple human judges.
     \item \should validate the agreement between multiple validators through inter-rater reliability measures such as Cohen's Kappa or Krippendorff's Alpha.
-    \item \should control for human confounding factors (e.g., experience/expertise in the relevant domain). 
+    \item \should control for human confounding factors (e.g., experience in the relevant domain). 
     \item \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
 \end{itemize}
 
@@ -65,9 +63,11 @@ When reporting the results of the human validation, researchers
 
 For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by 4 experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.''
 
+Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} evaluated the how human annotations can be replaced by LLM generated labels.
+In their study, they explicitly report the calculated agreement metrics between the models and between the humans.
 For instance, ``Model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff’s $\alpha$ is 0.68-0.76. 
 Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48
-for the first three categories.''~\cite{DBLP:journals/corr/abs-2408-05534}.
+for the first three categories.''.
 
 Xue et al.~\cite{DBLP:conf/icse/XueCBTH24} conducted a controlled experiment in which they evaluated the impact of ChatGPT on the performance and perceptions of students in an introductory programming course.
 They employed multiple measures to judge the impact of the LLM from the perspective of humans.
