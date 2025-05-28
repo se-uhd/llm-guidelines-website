@@ -6,48 +6,66 @@
 
 \subsubsection{Recommendations}
 
-\todo{Sebastian: Revise the recommendations to make clear what we recommend using \must, \should, etc.. Also indicate which information we expect to be reported in the \paper or in the \supplementarymaterial. Note the general comments in the introduction of the guidelines: \url{https://llm-guidelines.org/guidelines\#guidelines} Some content in this subsection reads more like examples, advantages, or challenges. Please revise this as well.}
-
-While LLMs can automate many tasks in research and software development that have traditionally been executed by humans, it remains important to validate their outputs with human judgment.
-For natural language processing tasks, a large-scale study has shown that LLMs have significant variation in their results, which limits their reliability as a direct substitute for human raters~\cite{DBLP:journals/corr/abs-2406-18403}. 
+While LLMs can automate many tasks in research and software development that have traditionally been performed by humans, it is important to validate LLM outputs with human judgment.
+For example, in natural language processing tasks, a large-scale study has shown that LLMs have a significant variation in their results, which limits their reliability as a direct substitute for human judges~\cite{DBLP:journals/corr/abs-2406-18403}. 
+Moreover, LLMs fail to match human annotators in labeling tasks for natural language inference, stance detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
 Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
-Especially in studies where LLMs are used to support researchers, human validation is generally recommended to ensure validity~\cite{DBLP:conf/chi/Wang0RMM24}.
-We recommend that researchers plan for validation in humans from the outset and develop their methodology with this validation in mind.
-Study reference models for comparing humans with LLMs~\cite{Schneider2025ReferenceModel} can help provide a template to ease the design process.
-In some cases, a hybrid approach between human and machine-generated annotations can improve annotation efficiency.
-However, researchers should use systematic approaches to decide what and how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
 
-When evaluating the capability of LLMs to generate SE-related artifacts, may employ human validation to complement machine-generated measures.
-For example, proxies for software quality, such as code complexity or the number of code smells, may be complemented by human ratings of maintainability, readability, or understandability.
-In the case of more abstract variables or psychometric measurements, human validation may be the only way of measuring a specific construct.
-For example, measuring human factors such as trust, cognitive load, and comprehension levels may inherently require human evaluation.
+Researchers \must employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities they are concerned with.
+However, researchers \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
+Their suggested method involves using a jury of three LLMs with 3-4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using Krippendorff's Alpha.
+If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with a with an LLM-generated one.
+In cases of low model-to-model agreement (alpha $\le$ 0.5), they then evaluate the prediction confidence of the model, selectively replacing annotations where the model confidence is high ($\ge$ 0.8).
 
-When conducting empirical measurements, researchers should clearly define the construct that they are measuring and specify the methods used for measurement. 
-Further, they should use established measurement methods and instruments that are empirically validated~\cite{DBLP:journals/fcomp/HoffmanMKL23, DBLP:conf/chi/PerrigSB23}.
-Measuring a construct may require aggregating input from multiple subjects. 
-For example, a study may assess inter-rater agreement using measures such as Cohen's Kappa or Krippendorff’s Alpha before aggregating ratings.
-In some cases, researchers may also combine multiple measures into single composite measures.
-As an example, they may evaluate both the time taken and accuracy when completing a task and aggregate them into a composite measure for the participants' overall performance.
-In these cases, researchers should clearly describe their method of aggregation and document their reasoning for doing so.
+Researchers \should plan human validation from the outset and integrate it into their study design.
+Integrating human participants in the study design will require additional considerations including a recruitment strategy, annotation guidelines, training sessions, or ethical approvals.
+Researchers \should use established reference models for comparing humans with LLMs.
+For example, the reference model by Schneider et al.~\cite{Schneider2025ReferenceModel} provides researchers with an overview of the design considerations studies comparing LLMs with humans.
+They outline the relevant groups (researchers, experimenters, subjects), activities (study planning, task assignment, results analysis, interpretation), and artifacts (study design, tasks, results, conclusion).
+Further, they illustrate the relationship between these entities, the order of steps, and which design decisions need to be considered.
 
-When employing human validation, additional confounding factors should be controlled for, such as the level of expertise or experience with LLM-based applications or their general attitude towards AI-based tools.
-Researchers should control for these factors through methods such as stratified sampling or by categorizing participants based on experience levels.
-Where applicable, researchers should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
-When multiple humans are annotating the same artifact, researchers should validate the objectivity of annotations through measures of inter-rater reliability.
-For instance, ``A subset of 20\% of the LLM-generated annotations was reviewed and validated by experienced software engineers to ensure accuracy. Using Cohen's Kappa, an inter-rater reliability of $\kappa = 0.90$ was reached.''
+When conducting empirical measurements through human validation, researchers \must clearly define the construct that they are measuring and \must specify the methods used for measurement in their \paper.
+Further, they \should use established measurement methods and instruments that are empirically validated~\cite{DBLP:journals/fcomp/HoffmanMKL23, DBLP:conf/chi/PerrigSB23}.
+When creating prepared instruments to instruct human participants in validating LLM outputs (e.g., questionnaires, study tasks), researchers \should share the instruments in their \supplementarymaterial.
 
-For instance, ``Model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff’s $\alpha$ is 0.68-0.76. 
-Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48
-for the first three categories.''~\cite{DBLP:journals/corr/abs-2408-05534}.
+Validating the output of an LLM \may involve the aggregation of inputs from multiple human judges.
+In these cases, researchers \should clearly describe their method of aggregation and document their reasoning for doing so.
+When multiple humans are annotating the same artifact, researchers \should validate the agreement between multiple validators with inter-rater reliability measures such as Cohen's Kappa or Krippendorff's Alpha.
+When employing human validation, additional confounding factors \should be controlled for through methods such as stratified sampling or by categorizing participants based on experience levels.
+Where applicable, researchers \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
+
+In summary, when considering whether to employ human validation, researchers
+\begin{itemize}
+    \item \must employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities.
+    \item \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones.
+\end{itemize}
+
+When designing their methodology, researchers
+\begin{itemize}
+    \item \should plan human validation from the outset and integrate it into their study design.
+    \item \should use established reference models for comparing humans with LLMs.
+    \item \should use established measurement methods and instruments that are empirically validated.
+    \item \may aggregate validations from multiple human judges.
+    \item \should validate the agreement between multiple validators through inter-rater reliability measures such as Cohen's Kappa or Krippendorff's Alpha.
+    \item \should control for human confounding factors (e.g., experience in the relevant domain). 
+    \item \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
+\end{itemize}
+
+When reporting the results of the human validation, researchers
+\begin{itemize}
+    \item \must clearly define the construct that they are measuring in their \paper.
+    \item \must specify the methods used for human validation in their \paper.
+    \item \should include any measurement instruments (e.g., questionnaires, study tasks) in their \supplementarymaterial.
+    \item \should clearly describe their method of aggregation and document their reasoning for doing so in their \paper when aggregating measures from multiple subjects.
+\end{itemize}
 
 \subsubsection{Example(s)}
 
-As an example, Khojah et al.~\cite{DBLP:journals/pacmse/KhojahM0N24} augmented the results of their study using human measurement.
-Specifically, they asked participants to provide ratings regarding their experience, trust, perceived effectiveness and efficiency, and scenarios and lessons learned in their experience with ChatGPT.
-
-Choudhuri et al.~\cite{DBLP:conf/icse/ChoudhuriLSGS24} evaluated the perceptions of students of their experience with ChatGPT in a controlled experiment.
-They added this data to extend their results from the task performance in a series of software engineering tasks.
-This way, they were to employ questionnaires to measure the cognitive load, document any perceived faults in the system, and inquire about the participants intention to continue using the tool.
+Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} evaluated the how human annotations can be replaced by LLM generated labels.
+In their study, they explicitly report the calculated agreement metrics between the models and between the humans.
+For instance, ``Model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff’s $\alpha$ is 0.68-0.76. 
+Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48
+for the first three categories.''.
 
 Xue et al.~\cite{DBLP:conf/icse/XueCBTH24} conducted a controlled experiment in which they evaluated the impact of ChatGPT on the performance and perceptions of students in an introductory programming course.
 They employed multiple measures to judge the impact of the LLM from the perspective of humans.
@@ -55,8 +73,10 @@ In their study, they recorded the students' screens, evaluated the answers they 
 
 Hymel et al.~\cite{hymel2025analysisllmsvshuman} evaluated the capability of ChatGPT-4.0 to generate requirements documents. 
 Specifically, they evaluated two requirements documents based on the same business use case, one document generated with the LLM and one document created by a human expert.
-The documents were then reviewed by experts and judged in terms of alignment with the original business use case, requirements quality and whether they believed it was created by a human or an LLM.
+The documents were then reviewed by experts and judged in terms of alignment with the original business use case (scale of 1-10), requirements completion (Not Complete, Fairly Complete, Fully Complete), and whether they believed it was created by a human or an LLM.
 Finally, they analyzed the influence of the participants' familiarity with AI tools on the study results.
+Participants self-reported their AI tool proficiency (Novice, Intermediate, Advanced, Expert) and usage frequency (Daily, Weekly, Monthly, Never), which were then correlated with their ratings of the requirements documents.
+
 
 \subsubsection{Advantages}
 
@@ -70,49 +90,22 @@ Researchers may uncover additional opportunities to further improve the LLM or L
 Measurement through human validation can be challenging.
 Ensuring that the operationalization of a desired construct and the method of measuring it are appropriate requires a good understanding of the studied concept and construct validity in general, and a systematic design approach for the measurement instruments~\cite{DBLP:journals/tse/SjobergB23}.
 
-Human judgment is often very subjective and may lead to large variability between different subjects due to differences in expertise, interpretation, and biases among evaluators~\cite{DBLP:journals/pacmhci/McDonaldSF19}.
+Human judgment is subjective, which may lead to variability between different subjects due to differences in expertise, interpretation, and biases among evaluators~\cite{DBLP:journals/pacmhci/McDonaldSF19}.
 Controlling for this subjectivity will require additional rigor when analyzing the study results.
+Different individuals might have different expectations and experiences that might impact the results of human evaluation. For example, \enquote{the struggle with adapting to AI-assisted work is more common for racially minoritized developers. That group also rated the quality of the output of AI-assisted coding tools significantly lower than other groups}~\cite{hicks_lee_foster-marks_2025}.
 
 Recruiting participants as human validators will always incur additional resources compared to machine-generated measures.
 Researchers must weigh the cost and time investment incurred by the recruitment process against the potential benefits for the validity of their study results.
 
 \subsubsection{Study Types}
 
-\todo{Sebastian: This section rather reads like the actual recommendations. The intention of this section was rather to focus on the study types where the guidelines is most important. For example, when evaluating an LLM-based tool for program repair, with existing benchmarks and non-LLM-baselines, why do I need human validation?}
+For \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}, researchers \should consider the validity of their evaluation criteria.
+In studies where there exist arguably objective evaluation criteria, such as \href{/study-types/#benchmarking-llms-for-software-engineering-tasks}{Benchmarking LLMs for Software Engineering Tasks}, there is little need for human validation, as the benchmark is (hopefully) already validated.
 
-These guidelines apply to all study types:
+Where criteria are more unclear, such as \href{/study-types/#llms-as-annotators}{LLMs as Annotators}, \href{/study-types/#llms-as-subjects}{LLMs as Subjects}, or \href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}, human validation is important, and these guidelines apply. When using \href{/study-types/#llms-as-judges}{LLMs as Judges}, it is common to have a human first co-create the rating criteria. 
 
-\begin{itemize}
-    \item \href{/study-types/#llms-as-annotators}{LLMs as Annotators}
-    \item \href{/study-types/#llms-as-judges}{LLMs as Judges}
-    \item \href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}
-    \item \href{/study-types/#llms-as-subjects}{LLMs as Subjects}
-    \item \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}
-    \item \href{/study-types/#llms-for-new-software-engineering-tools}{LLMs for New Software Engineering Tools}
-    \item \href{/study-types/#benchmarking-llms-for-software-engineering-tasks}{Benchmarking LLMs for Software Engineering Tasks}
-\end{itemize}
-
-When conducting their studies, researchers
-
-\must
-\begin{itemize}
-    \item Clearly define the construct measured through human validation.
-    \item Describe how the construct is operationalized in the study, specifying the method of measurement.
-    \item Employ established and widely accepted measurement methods and instruments.
-    \item Should assess the characteristics of the human validators to control for factors influencing the validation results (e.g., years of experience, familiarity with the task, etc.)
-\end{itemize}
-
-\should
-\begin{itemize}
-    \item Use empirically validated measures.
-    \item Complement automated or machine-generated measures with human validation where possible.
-    \item Should ensure consistency among human validators by establishing shared understanding in training sessions or pilot studies and by assessing inter-rater agreement.
-\end{itemize}
-
-\may
-\begin{itemize}
-    \item Use multiple different measures (e.g., expert ratings, surveys, task performance) for human validation.
-\end{itemize}
+In developing \href{/study-types/#llms-for-new-software-engineering-tools}{LLMs for New Software Engineering Tools}, human validation of the LLM output is critical to ensure the outputs are expected.
+Researchers \should make sure to follow the guidelines outlined in this section when employing human validation.
 
 \subsubsection{References}
 
