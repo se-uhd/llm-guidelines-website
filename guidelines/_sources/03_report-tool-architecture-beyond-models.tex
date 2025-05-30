@@ -38,6 +38,9 @@ For \emph{ensemble models}, besides following the \modelversion guideline for ea
 The \paper \must at least contain a high-level description, and details can be reported in the \supplementarymaterial.
 Aspects to consider are documenting the logic that determines which model handles which input, the interaction between models, and the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing).
 
+\begin{quote}
+\underline{tl;dr:} Researchers \must describe in the \paper the full architecture of any LLM-based tool beyond the model itself. This includes the role of the LLM, interactions with other components (e.g., APIs, databases, agents), and system behavior. If autonomous agents are used, researchers \must specify agent roles, reasoning framework, and communication flow. Hosting and access details (e.g., API, self-hosted), hardware setup, and latency \must be reported. For tools using retrieval or augmentation (e.g., RAG), data sources, integration mechanisms, and update/versioning strategies \must be described. In ensemble setups, the coordination logic between models \must be explained. Researchers SHOULD include architectural diagrams and justify design decisions. Confidential or proprietary components \must be acknowledged as reproducibility limitations.
+\end{quote}
 
 \subsubsection{Example(s)}
 
