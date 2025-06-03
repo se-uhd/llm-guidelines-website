@@ -67,6 +67,9 @@ To report the environmental impact of a study, researchers \should use software 
 They \should detail the LLM version and configuration as described in \modelversion, state the hardware or hosting provider of the model as described in \toolarchitecture and report the total number of requests, accumulated input tokens, and output tokens.
 Researchers \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (see also Section \benchmarksmetrics).
 
+\begin{quote}
+\underline{tl;dr:} Researchers \must report known limitations such as non-determinism, model version drift, generalizability, and potential data leakage. They \should include the number of evaluation repetitions, hardware or service provider details, environmental impact estimates (e.g., via CodeCarbon), and a justification for choosing LLMs over alternatives. Dataset handling practices, including duplication checks and sample release, \should be described. Outputs from the LLM (at all relevant system levels) \must be shared, along with validation data subsets and cost breakdowns. Legal and ethical compliance (e.g., GDPR, ethics approval) \must be addressed. \paper and \should summarize benchmark structure, task types, and limitations. Where possible, traditional (non-LLM) baselines \should be used for comparison. Researchers \should use established metrics and \must explain why they are suitable. Due to LLM non-determinism, experiments \should be repeated and reported with statistical measures (e.g., mean, CI, SD).
+\end{quote}
 
 \subsubsection{Example(s)}
 
