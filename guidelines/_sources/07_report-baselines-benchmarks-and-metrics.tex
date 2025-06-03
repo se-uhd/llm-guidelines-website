@@ -13,7 +13,7 @@ Metrics are used to quantify the performance for the benchmark tasks, enabling a
 A baseline represents a reference point for the measured LLM.
 Since LLMs require substantial hardware resources, baselines serve as a comparison to assess their performance against traditional algorithms with lower computational costs.
 
-\citet{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
+Hu et al.~\citet{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
 They analyzed 191 benchmarks and categorized them based on the specific task they address, making the paper a valuable resource for identifying relevant existing benchmarks.
 
 When selecting benchmarks, it is important to fully understand the benchmark tasks and the expected result, because they determine what the benchmark actually assesses.
@@ -42,6 +42,9 @@ Metrics used to measure inter-model agreements are percent agreement, Cohen's ka
 LLM-based generation is non-deterministic by-design.
 Due to this non-determinism, researchers \should repeat experiments to statistically assess the performance of a model or tool, for example using the arithmetic mean, confidence intervals, and standard deviations.
 
+\begin{quote}
+\underline{tl;dr:} Researchers \must justify benchmark and metric choices in the \paper and \should summarize benchmark structure, task types, and limitations. Where possible, traditional (non-LLM) baselines \should be used for comparison. Researchers \should use established metrics and \must explain why they are suitable. Due to LLM non-determinism, experiments \should be repeated and reported with statistical measures (e.g., mean, CI, SD).
+\end{quote}
 
 \subsubsection{Example(s)}
 
