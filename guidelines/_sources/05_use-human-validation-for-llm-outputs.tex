@@ -6,6 +6,10 @@
 
 \subsubsection{Recommendations}
 
+\begin{quote}
+\underline{tl;dr:} Researchers \must use human validation for LLM outputs when no reference dataset exists or when automated metrics are insufficient. They \must define the measured construct and motivate and describe the validation method in the \paper. Researchers \should plan the human validation from the outset, use validated instruments, build on established reference models for human-LLM comparison, and share the instruments as \supplementarymaterial. When aggregating judgments, methods and rationale \should be reported and inter-rater agreement \should be assessed. Confounding factors \should be controlled for, and power analysis \should be conducted to ensure statistical robustness.
+\end{quote}
+
 While LLMs can automate many tasks in research and software development that have traditionally been performed by humans, it is important to validate LLM outputs with human judgment.
 For example, in natural language processing tasks, a large-scale study has shown that LLMs have a significant variation in their results, which limits their reliability as a direct substitute for human judges~\cite{DBLP:journals/corr/abs-2406-18403}. 
 Moreover, LLMs fail to match human annotators in labeling tasks for natural language inference, stance detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
@@ -34,34 +38,6 @@ When multiple humans are annotating the same artifact, researchers \should valid
 When employing human validation, additional confounding factors \should be controlled for through methods such as stratified sampling or by categorizing participants based on experience levels.
 Where applicable, researchers \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
 
-In summary, when considering whether to employ human validation, researchers
-\begin{itemize}
-    \item \must employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities.
-    \item \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones.
-\end{itemize}
-
-When designing their methodology, researchers
-\begin{itemize}
-    \item \should plan human validation from the outset and integrate it into their study design.
-    \item \should use established reference models for comparing humans with LLMs.
-    \item \should use established measurement methods and instruments that are empirically validated.
-    \item \may aggregate validations from multiple human judges.
-    \item \should validate the agreement between multiple validators through inter-rater reliability measures such as Cohen's Kappa or Krippendorff's Alpha.
-    \item \should control for human confounding factors (e.g., experience in the relevant domain). 
-    \item \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
-\end{itemize}
-
-When reporting the results of the human validation, researchers
-\begin{itemize}
-    \item \must clearly define the construct that they are measuring in their \paper.
-    \item \must specify the methods used for human validation in their \paper.
-    \item \should include any measurement instruments (e.g., questionnaires, study tasks) in their \supplementarymaterial.
-    \item \should clearly describe their method of aggregation and document their reasoning for doing so in their \paper when aggregating measures from multiple subjects.
-\end{itemize}
-
-\begin{quote}
-\underline{tl;dr:} Researchers \must use human validation for LLM outputs when no reference dataset exists or when automated metrics are insufficient. They \must define the measured construct and validation methods in the \paper. Researchers \should plan validation early, use validated instruments, reference established comparison models, and include materials in the \supplementarymaterial. When aggregating judgments, methods and rationale \should be reported, and inter-rater agreement \should be assessed. Confounding factors \should be controlled (e.g., via stratified sampling), and power analysis \should be conducted to ensure statistical robustness. LLM-generated annotations \may be used if supported by systematic agreement/confidence methods.
-\end{quote}
 
 \subsubsection{Example(s)}
 

@@ -11,6 +11,10 @@ In any way, as soon as an LLM is involved, the information outlined in this guid
 
 \subsubsection{Recommendations}
 
+\begin{quote}
+\underline{tl;dr:} Researchers \must report in the \paper the exact LLM model or tool version, configuration, and experiment date. For fine-tuned models, they \must describe the fine-tuning goal, dataset, and procedure. Researchers \should include default parameters, explain model choices, compare base- and fine-tuned model using suitable metrics and benchmarks, and share fine-tuning data, weights (or justify why they cannot share them).
+\end{quote}
+
 LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce different results for the same input.
 Moreover, configuration parameters such as the temperature affect content generation.
 Therefore, researchers \must document the specific model or tool version used in a study, along with the date when the experiments were conducted, and the exact configuration that was used, in the \paper.
@@ -46,10 +50,6 @@ For fine-tuned models, additional recommendations apply:
 
 Commercial models (e.g., GPT-4o) or LLM-based tools (e.g., ChatGPT) might not give researchers access to all required information.
 Our suggestion is to report what is available, and openly acknowledge limitations that hinder reproducibility (see also Sections \prompts and \limitationsmitigations).
-
-\begin{quote}
-\underline{tl;dr:} Researchers \must report in the \paper the exact LLM model/tool version, configuration, and experiment date. For fine-tuned models, they \must describe the fine-tuning goal, dataset, and procedure. Researchers \should include default parameters, explain model choices, report validation metrics/benchmarks, and share fine-tuning data/weights or justify why not. Reproducibility limitations \must be acknowledged.
-\end{quote}
 
 
 \subsubsection{Example(s)}

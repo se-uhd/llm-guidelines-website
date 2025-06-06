@@ -6,6 +6,10 @@
 
 \subsubsection{Recommendations}
 
+\begin{quote}
+\underline{tl;dr:} Researchers \should include an open LLM as a baseline when using commercial models in empirical studies and report inter-model agreement. By open LLM, we mean a model that everyone with the required hardware can deploy and operate. Such models are usually ``open weight.'' A full replication package with step-by-step instructions \should be provided in the \supplementarymaterial.
+\end{quote}
+
 Empirical studies using LLMs in software engineering, especially the ones targeting commercial tools or model, \should incorporate an open LLM as a baseline and report established metrics for inter-model agreement (see Section \benchmarksmetrics).
 We acknowledge that including an open LLM baseline might not always be possible, for example if the study involves human participants and letting them work on the tasks using two different models might not be feasible.
 However, open models allow other researchers to verify research results and build upon them, even without access to commercial models.
@@ -22,17 +26,10 @@ They also discuss what openness in AI can and cannot provide.
 Moreover, the Open Source Initiative (OSI) \cite{OSIAI2024} provides a definition of open-source AI that serves as a useful framework for evaluating the openness of AI models.
 In simple terms, according to OSI, open-source AI means  you have access to everything you need to use the AI, such as understanding, modifying, sharing, retraining, and recreating.
 
-\begin{quote}
-\underline{tl;dr:} Researchers \should include an open LLM as a baseline when using commercial models in empirical studies. By “open LLM,” we mean a model for which users have access to everything needed to use it—such as understanding, modifying, sharing, retraining, and recreating. A full replication package with step-by-step instructions \should be provided in the \supplementarymaterial.
-\end{quote}
 
 \subsubsection{Example(s)}
 
 Numerous recent studies have adopted open‐source LLMs as baseline models. For instance, Wang et al. \cite{wang2024and} evaluated seven advanced LLMs—six of which were open source—by testing 145 API mappings drawn from eight popular Python libraries across 28,125 completion prompts aimed at detecting deprecated API usage in code completion. Moumoula et al. \cite{moumoula2024large} compared four LLMs on a cross-language code clone detection task, finding that three evaluated models were open source. Similarly, Gonçalves et al. \cite{gonccalves2025evaluating} fine-tuned LLaMA 3.2 on a refined version of the DiverseVul dataset to benchmark vulnerability detection performance. Many papers \cite{DBLP:journals/jss/YangZCZHC23, DBLP:conf/gaiis/XiaSD24, DBLP:conf/kbse/SonnekalbGBM22, DBLP:conf/icse/CaiYMMN24} used CodeBERT as an LLM, which is a bimodal (code + NL) Transformer pre-trained by Microsoft Research and released under the MIT license. Its model weights, source code, and data-processing scripts are all openly published on GitHub\footnote{\url{https://github.com/microsoft/CodeBERT}} (\modelversion).
-
-
-
-
 
 
 \subsubsection{Advantages}
@@ -42,7 +39,7 @@ Regarding the advantages of using an open LLM as a baseline, this enhances the r
 
 \subsubsection{Challenges}
 
-Open-source large language models face several notable challenges (see Section \limitationsmitigations). First, they often lag behind the most advanced proprietary systems regarding accuracy and computational efficiency, making it difficult for researchers to demonstrate clear improvements when benchmarking new methods (see Section \benchmarksmetrics). Additionally, deploying and experimenting with these models typically requires substantial hardware resources—high-performance GPUs, ample memory capacity, and optimised infrastructure, which may be beyond the reach of many academic groups (see Section \toolarchitecture). The notion of “openness” itself remains in flux: although numerous models are described as open, many release only the trained weights without disclosing the underlying training data or methodological details (see Section \modelversion), a practice sometimes referred to as “open weight” openness \cite{Gibney2024}. To address this gap, we reference the Open Source AI Definition proposed by the Open Source Initiative as an initial framework for what constitutes genuinely open-source AI software \cite{OSIAI2024}. Finally, unlike managed cloud APIs provided by proprietary vendors, installing, configuring, and fine-tuning open-source models can be technically demanding—documentation is often sparse or fragmented, placing a high barrier to entry for researchers without specialised engineering support (see Section \limitationsmitigations).
+Open-source large language models face several notable challenges (see Section \limitationsmitigations). First, they often lag behind the most advanced proprietary systems regarding accuracy and computational efficiency, making it difficult for researchers to demonstrate clear improvements when benchmarking new methods (see Section \benchmarksmetrics). Additionally, deploying and experimenting with these models typically requires substantial hardware resources—high-performance GPUs, ample memory capacity, and optimised infrastructure, which may be beyond the reach of many academic groups (see Section \toolarchitecture). The notion of “openness” itself remains in flux: although numerous models are described as open, many release only the trained weights without disclosing the underlying training data or methodological details (see Section \modelversion), a practice sometimes referred to as ``open weight'' openness \cite{Gibney2024}. To address this gap, we reference the Open Source AI Definition proposed by the Open Source Initiative as an initial framework for what constitutes genuinely open-source AI software \cite{OSIAI2024}. Finally, unlike managed cloud APIs provided by proprietary vendors, installing, configuring, and fine-tuning open-source models can be technically demanding—documentation is often sparse or fragmented, placing a high barrier to entry for researchers without specialised engineering support (see Section \limitationsmitigations).
 
 \subsubsection{Study Types}
 

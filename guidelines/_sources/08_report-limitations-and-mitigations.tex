@@ -4,18 +4,23 @@
 
 \subsection{Report Limitations and Mitigations}
 
+When using LLMs for empirical studies in software engineering, researchers face unique challenges and potential limitations that can influence the validity, reliability, and reproducibility of their findings~\cite{sallou2024breaking}.
+It is important to openly discuss these limitations and explain how their impact was mitigated.
+
 \subsubsection{Recommendations}
 
-When using LLMs for empirical studies in software engineering, researchers face unique challenges and potential limitations that can influence the validity, reliability, and reproducibility of their findings~\cite{sallou2024breaking}.
- including:
+\begin{quote}
+\underline{tl;dr:} Researchers \must report study limitations, including non-determinism, lack of generalizability, and potential data leakage. The \paper \must specify whether generalization across LLMs or time was assessed, and discuss model and version drift. Authors \must describe measurement constructs and methods, disclose any data leakage risks, and avoid leaking evaluation data into LLM improvement pipelines. They \must provide model outputs, discuss sensitive data handling, ethics approvals, and justify LLM usage in light of its resource demands.
+\end{quote}
+
 
 A cornerstone of open science is the ability to reproduce research results.
 Even though the inherent non-deterministic nature of LLMs is a strength in many use cases, its impact on \emph{reproducibility} is a challenge. To enable reproducibility, researchers \should disclose a replication package for their study.
 They \should perform multiple evaluation repetitions of their experiments (see \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}) to account for non-deterministic outputs of LLMs or
 In same cases, they \may reduce output variability by setting the temperature to a value close to 0 and configure a seed value for more deterministic results.
 However, configuring a lower temperature can impair task performance, and not all models allow configuring seed values.
-Besides non-determinism, the behavior of an LLM depends on many external factors, such as model version, API updates, or prompt variations.
-To ensure reproducibility, researchers \should follow all suggestions in our guidelines and further address the generalization challenges outlined below.
+Besides this inherent non-determinism, the behavior of an LLM depends on many external factors such as prompt variations and model evolution.
+To ensure reproducibility, researchers \should follow all previous guidelines and further address the generalization challenges outlined below.
 
 Even though the topic of \emph{generalizability} is not new, it has gained new relevance with the increasing interest in LLMs. In LLM-based studies, generalizability boils down to two main concerns:
 First, are the results specific to an LLM, or can they be achieved with other LLMs too? 
@@ -24,14 +29,14 @@ Second, will these results still be valid in the future?
 Multiple studies (e.g., \cite{DBLP:journals/corr/abs-2307-09009, doi:10.1148/radiol.232411}) found that the performance of proprietary LLMs (e.g., GPT) within the same version (e.g. GPT-4o) decreased over time for certain tasks.
 Reporting the model version and configuration is not sufficient in such cases. To date, the only way of mitigating this limitation is the usage of an Open LLM with a transparently communicated versioning schema and archiving (see \openllm). Hence, researchers \should employ open LLMs to set a reproducible baseline and, if employing an open LLM is not possible, researchers \should test and report their results over an extended period of time as a proxy of the results' stability over time.
 
-\emph{Data leakage/contamination/overfitting} occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates.
+\emph{Data leakage, contamination, or overfitting} occurs when information from outside the training dataset influences the model, leading to overly optimistic performance estimates.
 With the growing reliance on big datasets, the risks of inter-dataset duplication increases (see, e.g.,~\cite{DBLP:journals/pacmpl/LopesMMSYZSV17, DBLP:conf/oopsla/Allamanis19}). 
 In the context of LLMs for software engineering, this can, for example, manifest as samples from the pre-train dataset appearing in the fine-tune or evaluation dataset, potentially compromising the validity of evaluation results~\cite{DBLP:journals/tse/LopezCSSV25}.
-For example ChatGPT's functionality to ``improve the model for everyone'' can result in unintentional data leakage.
+For example, ChatGPT's functionality to ``improve the model for everyone'' can result in unintentional data leakage.
 Hence, to ensure the validity of the evaluation results, researchers \should carefully curate the fine-tuning and evaluation datasets to prevent inter-dataset duplication and \mustnot leak their fine-tuned or evaluation datasets into the improvement process of the LLM.
 However, when publishing the results, researchers \should of course still follow open science practices and publish the datasets as part of their \supplementarymaterial.
 If information about the pre-train dataset of the employed LLM is available, researchers \should assess the inter-dataset duplication and \must discuss the potential data leakage in the \paper.
-When training an LLM from scratch, researchers \may consider using open datasets such as Together AI's RedPajama~\cite{together2023redpajama} that already are built with deduplication in mind (with the positive side effect of potentially improving performance~\cite{DBLP:conf/acl/LeeINZECC22}).
+When training an LLM from scratch, researchers \may consider using open datasets such as \emph{RedPajama (Together~AI)}~\cite{together2023redpajama} that already are built with deduplication in mind (with the positive side effect of potentially improving performance~\cite{DBLP:conf/acl/LeeINZECC22}).
 
 Conducting studies with LLMs is a resource-intensive endeavor.
 For self-hosted LLMs, the respective hardware needs to be provided, for managed LLMs, the service \emph{cost} has to be considered.
@@ -45,9 +50,6 @@ To ensure research result validity and reproducibility, researchers \must provid
 Depending on the architecture (see Section~\toolarchitecture), these outputs need to be reported on different architectural levels (e.g., outputs of individual LLMs in multi-agent systems).
 Additionally, researchers \should include a subset of the employed validation dataset, selected using an accepted sampling strategy, to allow partial replication of the results.
 
-While \emph{metrics} such as BLEU or ROUGE are commonly used to evaluate the performance of LLMs (see Section~\benchmarksmetrics), they may not capture other relevant, software engineering-specific aspects such as functional correctness or the runtime performance of automatically generated code~\cite{DBLP:conf/nips/LiuXW023}.
-%Researchers \should clarify and state all relevant requirements, and employ and report the metrics to measure the satisfaction of the requirements (e.g., test-case success rate) and \should follow the best practices described in \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}.
-
 \emph{Sensitive data} can range from personal to proprietary data, each with its own set of \emph{ethical concerns}.
 A big threat of proprietary LLMs and sensitive data is the data's usage for model improvements (see discussion of data leakage above).
 Hence, using sensitive data can lead to privacy and intellectual property (IP) violations.
@@ -56,7 +58,10 @@ To mitigate these concerns, researchers \should minimize the sensitive data used
 
 %\enquote{The field of AI is currently primarily driven by research that seeks to maximize model accuracy — progress is often used synonymously with improved prediction quality. This endless pursuit of higher accuracy over the decade of AI research has significant implications for computational resource requirements and environmental footprint. To develop AI technologies responsibly, we must achieve competitive model accuracy at a fixed or even reduced computational and environmental cost.}~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22}
 
-The performance of an LLM is usually measured in terms of traditional metrics such as accuracy, precision, and recall or more contemporary metrics such as pass@k, or BLEU-N (see Section \benchmarksmetrics).
+While \emph{metrics} such as BLEU or ROUGE are commonly used to evaluate the performance of LLMs (see Section~\benchmarksmetrics), they may not capture other relevant, software engineering-specific aspects such as functional correctness or the runtime performance of automatically generated code~\cite{DBLP:conf/nips/LiuXW023}.
+%Researchers \should clarify and state all relevant requirements, and employ and report the metrics to measure the satisfaction of the requirements (e.g., test-case success rate) and \should follow the best practices described in \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}.
+
+The performance of an LLM is usually measured in terms of traditional metrics such as accuracy, precision, and recall or more contemporary metrics such as pass@k (see Section \benchmarksmetrics).
 However, given the high resource demand of LLMs are, \emph{resource consumption} has to become a key indicator for performance to assess research progress responsibly. 
 While research predominantly focused on the energy consumption during the early phases of LLMs (e.g., data center manufacturing, data acquisition, training), inference - i.e. the use of the LLM - often becomes similarly or even more resource-intensive~\cite{de2023growing, DBLP:conf/mlsys/WuRGAAMCBHBGGOM22, DBLP:journals/corr/abs-2410-02950, JIANG2024202, mitu2024hidden}.
 Hence, researchers  \should aim for lower resource consumption on the model side.
@@ -67,9 +72,6 @@ To report the environmental impact of a study, researchers \should use software 
 They \should detail the LLM version and configuration as described in \modelversion, state the hardware or hosting provider of the model as described in \toolarchitecture and report the total number of requests, accumulated input tokens, and output tokens.
 Researchers \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (see also Section \benchmarksmetrics).
 
-\begin{quote}
-\underline{tl;dr:} Researchers \must report study limitations, including non-determinism, lack of generalizability, and potential data leakage. The \paper \must specify whether generalization across LLMs or time was assessed, and discuss known model/version drift. Authors \must describe measurement constructs and methods, disclose any data leakage risks, and avoid leaking evaluation data into LLM improvement pipelines. They \must provide model outputs, discuss sensitive data handling (incl. GDPR and ethics approvals), and justify LLM usage in light of its resource demands.
-\end{quote}
 
 \subsubsection{Example(s)}
 
