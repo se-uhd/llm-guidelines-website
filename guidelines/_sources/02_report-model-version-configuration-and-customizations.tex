@@ -30,23 +30,21 @@ The same applies to the fine-tuned model weights.
 Suitable benchmarks and metrics \should be used to compare the base model to the fine-tuned model (see Section \benchmarksmetrics).
 
 In summary our recommendation is to report:
-
-\begin{itemize}
-\item Model/tool name and version (including a checksum/fingerprint if available) (\must, \paper).
-\item All relevant configured parameters that affect output generation (e.g., temperature, seed values, consideration of historical context) (\must, \paper).
-\item Default values of all available parameters (\should).
-\item Additional properties (e.g., context window size) (\may).
-\end{itemize}
+\begin{enumerate*}[label=\textbf{(\arabic*)}]
+\item Model/tool name and version, checksum/fingerprint if available; \must in \paper.
+\item All relevant configured parameters that affect output generation; \must in \paper.
+\item Default values of all available parameters; \should.
+\item Additional properties such as context window size; \may.
+\end{enumerate*}
 
 For fine-tuned models, additional recommendations apply:
-
-\begin{itemize}
-\item Fine-tuning goal (e.g., improving the performance for a specific task) (\must, \paper).
-\item Fine-tuning dataset creation and characterization (e.g., data collection, preprocessing, descriptive statistics) (\must, \paper).
-\item Fine-tuning parameters and procedure (e.g., learning rate, epochs, batch size, next token prediction, instruction tuning) (\must, \paper).
-\item Fine-tuning dataset and fine-tuned model weights (\should).
-\item Validation metrics and benchmarks (\should).
-\end{itemize}
+\begin{enumerate*}[label=\textbf{(\arabic*)}]
+\item Fine-tuning goal; \must in \paper.
+\item Fine-tuning dataset creation and characterization; \must in \paper.
+\item Fine-tuning parameters and procedure; \must in \paper.
+\item Fine-tuning dataset and fine-tuned model weights; \should.
+\item Validation metrics and benchmarks; \should.
+\end{enumerate*}
 
 Commercial models (e.g., GPT-4o) or LLM-based tools (e.g., ChatGPT) might not give researchers access to all required information.
 Our suggestion is to report what is available, and openly acknowledge limitations that hinder reproducibility (see also Sections \prompts and \limitationsmitigations).
