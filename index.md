@@ -37,4 +37,3 @@ Team:
 * [Stefano Lambiase](https://stefanolambiase.github.io), University of Salerno (Italy)
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
-* [Bianca Trinkenreich](https://biancatrink.github.io/), Colorado State University (United States)
