@@ -25,7 +25,7 @@ However, many of our recommendations apply to multi-modal models as well.
 The guidelines could be extended in the future to make this more visible.
 
 The main goal of our guidelines is to **enable reproducibility and replicability** of empirical studies involving LLMs in software engineering.
-While we consider LLM-based studies to have characteristics that differ from traditional empirical studies (e.g., their inherent non-determinism and the fact that truly open models are rare), previous guidelines regarding open science and  mpirical studies still apply.
+While we consider LLM-based studies to have characteristics that differ from traditional empirical studies (e.g., their inherent non-determinism and the fact that truly open models are rare), previous guidelines regarding open science and  empirical studies still apply.
 While full reproducibility of LLM study results is very challenging given LLM's non-determinism, transparency on LLM usage, methods, data, and architecture, as suggested by our guidelines, is an essential prerequisite for future replication studies.
 
 ## Overview
