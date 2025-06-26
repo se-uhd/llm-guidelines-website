@@ -10,14 +10,14 @@ Therefore, understanding the classification of studies involving LLMs is essenti
 Note that we currently focus on large language models, that is, on natural language processing.
 In the future, we might extend and generalize our focus to include multimodal foundation models.
 
-Our \href{/guidelines/}{guidelines} use the following study types to contextualize the recommendations we provide.
+Our \guidelines use the following study types to contextualize the recommendations we provide.
 We present the study types independent of specific guidelines, that is, the guidelines refer to the study types but not the other way around.
 
 \subsection{Introduction: LLMs as Tools for Software Engineering Researchers}
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies.
 They can automate various tasks such as data collection, preprocessing, and analysis.
-For example, LLMs can apply pre-defined coding guides to large qualitative datasets (see \href{/study-types/#llms-as-annotators}{LLMs as Annotators}), assess the quality of software artifacts (see \href{/study-types/#llms-as-judges}{LLMs as Judges}), generate summaries of research papers (see \href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}), and even simulate human behavior in empirical studies (see \href{/study-types/#llms-as-subjects}{LLMs as Subjects}).
+For example, LLMs can apply pre-defined coding guides to large qualitative datasets (\annotators), assess the quality of software artifacts (\judges), generate summaries of research papers (\synthesis), and even simulate human behavior in empirical studies (\subjects).
 This can significantly reduce the time and effort required by researchers, allowing them to focus on other aspects of their studies.
 However, besides the many \textbf{advantages} that all these applications bring, they also come with \textbf{challenges} such as potential threats to validity and implications for the reproducibility of study results.
 
@@ -29,15 +29,14 @@ However, besides the many \textbf{advantages} that all these applications bring,
 Just like human annotators, LLMs can label artifacts based on a pre-defined coding guide.
 However, they can label data much faster than any human could. 
 In qualitative data analysis, manually annotating (``coding'') natural language text, e.g. in software artifacts, open-ended survey responses, or interview transcripts, is a time-consuming manual process~\cite{DBLP:journals/ase/BanoHZT24}.
-LLMs can be used to augment or even replace human annotations, provide suggestions for new codes (see Section \href{/study-types/#llms-for-synthesis}{LLMs for Synthesis}), or even automate the entire process.
+LLMs can be used to augment or even replace human annotations, provide suggestions for new codes (see Section \synthesis), or even automate the entire process.
 
 \subsubsection{Example(s)}
 
 Recent work in software engineering has begun exploring the use of LLMs for annotation tasks.
 Huang et al.~\cite{Huang2023Enhancing} proposed an approach leveraging multiple LLMs for joint annotation of mobile application reviews. 
-They used three models of comparable size with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models). % (Llama3, Gemma, and Mistral)
+They used three models of comparable size with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models).
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
-%Training on the resulting multi-model annotated dataset yielded improved classifier performance compared to single-model annotations. Both BERT and RoBERTa models showed meaningful improvements in F1 score and accuracy when trained on the multi-model annotated dataset versus individual model annotations, highlighting the benefits of their approach.
 
 The study by Ahmed et al.~\cite{Ahmed2025} examined LLMs-as-annotators in software engineering research across five datasets and ten annotation tasks. Using six state-of-the-art LLMs to perform tasks previously done by humans, they found that model-model agreement strongly correlates with human-model agreement, suggesting situations in which LLMs could effectively replace human annotators. Their research showed that for tasks where humans themselves disagree significantly (such as evaluating code conciseness), models also perform poorly. Conversely, if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task. They proposed using model confidence scores to identify specific samples that could be safely delegated to LLMs, potentially reducing human annotation effort without compromising inter-rater agreement.
 
@@ -52,27 +51,24 @@ Moreover, LLMs consistently demonstrate strong performance, with ChatGPT's accur
 \subsubsection{Challenges}
 
 Challenges of using LLMs as annotators include reliability issues, human-LLM interaction challenges, biases, errors, and resource considerations.
-Studies suggest that while LLMs show promise as annotation tools in SE research, their optimal use may be in augmenting rather than replacing human annotators~\cite{DBLP:conf/emnlp/WangLXZZ21, DBLP:conf/chi/HeHDRH24}. %with careful consideration given to verification mechanisms and confidence thresholds
+Studies suggest that while LLMs show promise as annotation tools in SE research, their optimal use may be in augmenting rather than replacing human annotators~\cite{DBLP:conf/emnlp/WangLXZZ21, DBLP:conf/chi/HeHDRH24}.
 LLMs can negatively impact human judgment when their labels are incorrect~\cite{DBLP:conf/www/HuangKA23a}, and their overconfidence requires careful verification~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}.
 Moreover, in previous studies, LLMs have shown significant variability in annotation quality across different tasks~\cite{DBLP:conf/www/HuangKA23a,DBLP:conf/chi/Wang0RMM24, DBLP:journals/corr/abs-2306-00176}, with particular challenges in complex tasks and post-training events \todo{I assume this is referring to events that happened after the models were trained? I can't find that term in any of the referenced papers. Please check.}. Studies have shown LLMs to be especially unreliable for high-stakes labeling tasks~\cite{DBLP:conf/chi/Wang0RMM24} and have demonstrated that LLMs can have notable performance disparities across label categories~\cite{DBLP:journals/corr/abs-2304-10145}. Recent empirical evidence indicates that LLM consistency in text annotation often falls below scientific reliability thresholds, with outputs being sensitive to minor prompt variations~\cite{DBLP:journals/corr/abs-2304-11085}.
 Context-dependent annotations pose a specific challenge, as LLMs show difficulty in correctly interpreting text segments that require broader contextual understanding~\cite{DBLP:conf/chi/HeHDRH24}.
 While pooling multiple outputs can improve reliability, this approach necessitates additional computational resources and still requires validation against human-annotated data.
 While generally cost-effective, LLM annotation requires careful management of per-token charges, particularly for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. Furthermore, achieving reliable annotations may require multiple runs of the same input to enable majority voting~\cite{DBLP:journals/corr/abs-2304-11085}, although exact cost comparisons between LLM-based and human annotation is controversial~\cite{DBLP:conf/chi/HeHDRH24}.
-Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}. %These biases are especially pronounced when dealing with newer topics, such as the Russo-Ukrainian conflict sentiment analysis.
+Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}.
 
 
 \subsection{LLMs as Judges}
 
 \subsubsection{Description}
 
-LLMs can act as judges or raters to evaluate properties of software artifacts. % such as code, documentation, and design patterns.
+LLMs can act as judges or raters to evaluate properties of software artifacts.
 For instance, LLMs can be used to assess code readability, adherence to coding standards, or the quality of code comments.
-%LLM judgments could be used to assess research artifact quality, such as generated documentation from a research tool.
-Judgment is distinct from the more qualitative task of assigning a code or label to, typically unstructured, text (see Section \href{/study-types/#llms-as-annotators}{LLMs as Annotators}).
-It is also distinct from using LLMs for general software engineering tasks, as we discuss in Section \href{/study-types/#introduction-llms-as-tools-for-software-engineers}{LLMs as Tools for SE}.
-%, to e.g. understand if LLMs can find ambiguity in requirements~\cite{DBLP:conf/icse/EzziniA0S22}, which is then compared to a human-created gold standard.
+Judgment is distinct from the more qualitative task of assigning a code or label to, typically unstructured, text (see Section \annotators).
+It is also distinct from using LLMs for general software engineering tasks, as we discuss in Section \llmsforresearcher.
 
-% Neil's note: There are plenty of papers looking at using LLMs to generate code, evaluate bugginess, compare binaries, etc. But these would fall into the LLMs for SE category. Many fewer studies using them as raters; most studies still compare outputs to a manual gold set and report accuracy etc.
 \subsubsection{Example(s)}
 
 Lubos et al.~\cite{DBLP:conf/re/LubosFTGMEL24} leveraged \href{https://www.llama.com/llama2/}{Llama-2} to evaluate the quality of software requirements statements. 
@@ -90,8 +86,6 @@ Explain your decision and suggest an improved version.\\
 \end{quote}
 
 The authors then evaluated the LLM's output against human raters, to assess how well the LLM matched experts. 
-% They did this in 2 phases: in one, the humans were unaware of the LLM's decision, and in the other, with foreknowledge. This second aspect measured the extent to which the LLM might \emph{convince} the human to change their mind. 
-% \comment{I wonder if the second aspect is a bit distracting here and could be misunderstood as suggesting that studies should do such a thing. Interesting study though!}
 Agreement can be measured in many ways; this study used Cohen's kappa measure~\cite{cohen60} and found moderate agreement for simple requirements, and poor agreement for more complex requirements.
 However, evaluating machine judgment may not be the same as human-human judgments, and is an open area of research~\cite{DBLP:journals/corr/abs-2410-03775}. 
 
@@ -99,22 +93,10 @@ One crucial decision in such studies is the number of examples provided to the L
 This might involve no tuning (zero-shot), several examples (few-shot), or providing many examples (closer to traditional training data).
 In the example above, Lubos et al. chose zero-shot tuning, providing no specific guidance besides the project's context, i.e., they did not show the LLM what a yes or no answer might look like. 
 
-%The study by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} looked at LLMs-as-judges across five datasets and ten annotation tasks. They used a variety of different LLMs to compare model to model performance. For tasks where humans do not agree with one another (in this case, evaluating conciseness of code summaries) models also do poorly; but ``if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task~\cite[p.6]{DBLP:journals/corr/abs-2408-05534}.
-
-% % Other examples, for future:
-% - ClarifyGPT rates AI code wrt requirements 10.1145/3660810
-% - Security assessment using LLMs - https://ieeexplore.ieee.org/abstract/document/10647161
-% - Toufique/Christoph paper on raters on several SE tasks (Ahmed et al above) 
-
-% Other risks or issues
-% - Correlation scores like K-Alpha may assume human raters, not machines https://arxiv.org/abs/2410.03775
-% - how much context to provide, how to use RAG
-
 \subsubsection{Advantages}
 
 By providing, depending on the model configuration, relatively consistent and evaluations, LLMs can help mitigate human biases and the variability that human judges might introduce.
-This may lead to more reliable and reproducible results in empirical studies, to the extent these models can be reproduced or checkpointed. % (see \href{/guidelines/#report-model-version-and-configuration}{"Report Model Version and Configuration"} and \href{/guidelines/#report-prompts-and-their-development}{"Report Prompts and their Development"} for more).
-
+This may lead to more reliable and reproducible results in empirical studies, to the extent these models can be reproduced or checkpointed.
 LLMs can be much more efficient, and scale far more easily, than the equivalent human approach. With LLM automation, entire datasets could be assessed, as opposed to subsets. The main constraint, which varies by model and budget, is the input context size, i.e., the number of tokens one can pass into a model. For example, the upper bound on context that can be passed into OpenAi's \textsf{o1-mini} model is \href{https://help.openai.com/en/articles/9855712-openai-o1-models-faq-chatgpt-enterprise-and-edu}{32k tokens}. 
 
 \subsubsection{Challenges}
@@ -123,27 +105,25 @@ When relying on the judgment of LLMs, researchers must build a \textit{reliable}
 In addition to reliability, other quality attributes include \textit{accuracy} of the labels, and the speed and \textit{scalability} of the LLM tool. 
 A reliable LLM might be reliably inaccurate and wrong. 
 Evaluating and judging large numbers of items---for example, to perform fault localization on the thousands of bugs big open-source projects deal with---comes with costs in clock time, compute time, and environmental sustainability.
-% \comment{I wonder if it would make sense to explicitly call out that reliability is not the only important thing -- if the LLM or even multiple LLMs produce reliable output, i.e., always the same answer for the same input, this does not tell us anything about accuracy yet. LLM might just be reliably wrong.}
 
-%Avoid the temptation to assign objectivity to an LLM; 
 Evidence shows LLMs can behave differently, for instance, when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}. In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well documented biases and issues with fairness~\cite{Gallegos2024BiasAF}. 
 For tasks where human judges themselves disagree significantly, it is not clear if an LLM judge should reflect the majority opinion or act as an independent judge. The underlying statistical framework of an LLM usually pushes outputs towards the most likely (majority) answer. 
 
 Research is ongoing as to how suitable LLMs are as standalone judges. Questions around bias, accuracy, and trust remain~\cite{DBLP:journals/corr/abs-2406-18403}. There is reason for concern about LLMs judging student assignments or doing peer review of scientific papers~\cite{DBLP:conf/coling/ZhouC024}. Even beyond questions of technical capacity, ethical questions remain, particularly if there is some implicit expectation that a human is judging the output, such as in a quiz. Involving a human in the judgment loop---for example, to contextualize the scoring---is one approach~\cite{panHumanCenteredDesignRecommendations2024}. 
 A lack of large-scale ground truth datasets for benchmarking LLM performance on judgment studies is hindering progress on evaluating research in this area.
 
+
 \subsection{LLMs for Synthesis}
 
 \subsubsection{Description}
 
 LLMs can support synthesis tasks in software engineering research by processing and distilling information from qualitative data sources.
-In this context, synthesis refers to the process of integrating and interpreting information from multiple sources to generate higher-level insights, identify patterns across datasets, and develop conceptual frameworks or theories. Unlike annotation (see \href{/study-types/#llms-as-annotators}{LLMs as Annotators}), which focuses on categorizing or labeling individual data points, synthesis involves connecting and interpreting these annotations to develop a cohesive understanding of the phenomenon being studied.
+In this context, synthesis refers to the process of integrating and interpreting information from multiple sources to generate higher-level insights, identify patterns across datasets, and develop conceptual frameworks or theories. Unlike annotation (see Section \annotators), which focuses on categorizing or labeling individual data points, synthesis involves connecting and interpreting these annotations to develop a cohesive understanding of the phenomenon being studied.
 
 \subsubsection{Example(s)} 
 
 While published examples of applying LLMs for synthesis in the software engineering domain are still scarce, recent work has explored the use of LLMs for qualitative synthesis in other domains, enabling a reflection on how LLMs can be applied for this purpose in software engineering~\cite{DBLP:journals/ase/BanoHZT24}. Barros \textit{et al.}~\cite{barros2024largelanguagemodelqualitative} conducted a systematic mapping study on the use of LLMs for qualitative research. They identified examples in domains such as healthcare and social sciences (see, e.g., \cite{de2024performing,mathis2024inductive}) in which LLMs were used to support different methodologies for qualitative analysis, including grounded theory and thematic analysis. Overall, the findings highlight the successful generation of preliminary coding schemes from interview transcripts, later refined by human researchers, along with support for pattern identification. This approach was reported not only to expedite the initial coding process but also to allow researchers to focus more on higher-level analysis and interpretation. However, they emphasize that effective use of LLMs requires structured prompts and careful human oversight. This particular paper suggests using LLMs to support tasks such as initial coding and theme identification while conservatively reserving interpretative or creative processes for human analysts.
 Similarly, Lecça \textit{et al.}~\cite{leça2024applicationsimplicationslargelanguage} conducted a systematic mapping study to investigate how LLMs are used in qualitative analysis and how they can be applied in software engineering research. Consistent with the study by Barros \textit{et al.}~\cite{barros2024largelanguagemodelqualitative}, they identified that LLMs are applied primarily in tasks like coding, thematic analysis, and data categorization, providing efficiency by reducing the time, cognitive demands, and resources often required for these processes.
-%Their findings also recognize the need for human oversight to ensure reliability and suggest that, while LLMs can assist in qualitative analysis in software engineering, human expertise remains essential for in-depth interpretation.
 
 \subsubsection{Advantages}
 
@@ -152,8 +132,6 @@ Qualitative research in software engineering traditionally faces several challen
 The use of LLMs for synthesis can offer advantages in addressing these classical challenges~\cite{DBLP:journals/ase/BanoHZT24, barros2024largelanguagemodelqualitative, leça2024applicationsimplicationslargelanguage}.
 LLMs can reduce manual effort and subjectivity, improve consistency and generalizability, and assist researchers in deriving codes and developing coding guides during the early stages of qualitative data analysis~\cite{DBLP:conf/chi/ByunVS23,DBLP:journals/ase/BanoHZT24}. The codes generated by LLMs can then be used to annotate additional data, with the models identifying emerging themes and generating candidate insights, potentially automating the entire synthesis process across large qualitative datasets.
 LLMs can enable researchers to analyze larger datasets, identifying patterns across broader contexts than traditional qualitative methods typically allow. Additionally, they can help mitigate the effects of human subjectivity. Nevertheless, while LLMs streamline many aspects of qualitative synthesis, careful oversight remains essential to ensure nuanced interpretation and contextual accuracy.
-
-%By enhancing efficiency and scalability, LLMs can significantly reduce the time required for synthesis, alleviating the burden of time-intensive manual work. They can also improve consistency in coding and summarization, minimizing variability in human interpretations by generating structured summaries and coding suggestions with uniform phrasing. In terms of generalizability, LLMs can enable researchers to analyze larger datasets, identifying patterns across broader contexts than traditional qualitative methods typically allow. Additionally, they can help mitigate the effects of human subjectivity. Nevertheless, while LLMs streamline many aspects of qualitative synthesis, careful oversight remains essential to ensure nuanced interpretation and contextual accuracy.
 
 \subsubsection{Challenges}
 
@@ -164,12 +142,6 @@ Peters and Chin-Yee have shown that popular LLMs and LLM-based tools tend to ove
 Moreover, LLMs may produce biased results, reinforcing existing prejudices or omitting key perspectives, making human oversight essential to ensure accurate interpretation, mitigate biases, and maintain quality control.
 The proprietary nature of many LLMs limits transparency. In particular, it is unknown how the inclusion of certain training data might affect the synthesis process.
 Furthermore, reproducibility issues persist due to inconsistencies across inferences, model versions, and prompt variations.
-
-%Based on current research, SE researchers interested in leveraging LLMs for synthesis should consider the following practices:
-%(1) Use LLMs primarily for initial coding and theme identification (see the section on LLMs as Annotators), reserving interpretative synthesis for human analysis;
-%(2) Employ structured prompts that align with the chosen synthesis methodology (e.g., grounded theory, thematic analysis);
-%(3) Implement systematic human verification of all LLM-generated synthesis outputs; and  
-%(4) Document both prompting strategies and verification procedures to promote transparency and reproducibility.
 
 
 \subsection{LLMs as Participants}
@@ -183,17 +155,12 @@ Furthermore, recent sociological studies have emphasized that, to be effectively
 
 \subsubsection{Example(s)}
 
-LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants.
+LLMs can be used as ``participants'' in various types of empirical studies, enabling researchers to simulate human participants.
 The broader applicability of LLM-based studies beyond software engineering has been compiled by Xu et al.~\cite{DBLP:journals/ipm/XuSRGPLSH24}, who examined various uses in social science research.
 Given the socio-technical nature of software development, some of these approaches should be transferable to empirical software engineering research.
 
 For example, LLMs can be applied in survey and interview studies to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts. For instance, Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored persona-based interviews and multi-persona focus groups, demonstrating how LLMs can emulate human responses and behaviors while addressing ethical concerns, biases, and methodological challenges.
-%Their study highlighted the potential of LLMs in enhancing research scalability while advocating for a hybrid approach that integrates AI-generated and human-generated data to preserve the validity of findings.
 Another example are usability studies, in which LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. This aligns with the work of Bano et al.~\cite{bano2025doessoftwareengineerlook}, who investigated biases in LLM-generated candidate profiles in software engineering recruitment processes. Their study, which analyzed both textual and visual inputs, revealed biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly for senior roles.
-%This demonstrates how LLMs can be used to assess usability concerns, such as fairness and inclusivity, in AI-driven decision-making tools within software engineering.
-
-%In \textit{experimental studies}, LLMs can participate in experiments testing collaborative coding practices, such as pair programming or code review scenarios, by simulating developers with distinct coding styles, expertise levels, or attitudes. 
-%Similarly, in \textit{simulated decision-making studies}, LLMs can emulate team members in exercises such as sprint planning or software requirement prioritization, enabling researchers to analyze team dynamics under different configurations.
 
 \subsubsection{Advantages}
 
@@ -205,8 +172,7 @@ In data mining studies, LLMs can generate synthetic data to fill gaps where real
 \subsubsection{Challenges}
 
 However, it is important that researchers are aware of LLMs' inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using them as study participants. 
-One critical concern is construct validity. LLMs have been shown to misrepresent demographic group perspectives, %often reflecting more the opinions of out-group members than those of in-group members. Additionally, they tend to oversimplify demographic identities
-failing to capture the diversity of opinions and experiences within a group.
+One critical concern is construct validity. LLMs have been shown to misrepresent demographic group perspectives, failing to capture the diversity of opinions and experiences within a group.
 The use of identity-based prompts can reduce identities to fixed and innate characteristics, amplifying perceived differences between groups.
 These biases introduce a risk that studies relying on LLM-generated responses may inadvertently reinforce stereotypes or misrepresent real-world social dynamics.
 To mitigate these issues, encoded identity names---statistically representative person names associated with specific demographic groups---can be used instead of explicit labels (e.g., using ``Mario Rossi'' instead of the label ``Italian white man''), the temperature setting can be increased to enhance response diversity, and alternatives to demographic prompts can be employed when the goal is to broaden response coverage~\cite{DBLP:journals/corr/abs-2402-01908}.
@@ -214,10 +180,11 @@ All three strategies aim to reduce the risk of stereotyped, flattened, or overly
 Beyond construct validity, internal validity must also be considered, particularly regarding causal conclusions based on studies relying on LLM-simulated responses.
 External validity also remains a challenge, as findings based on LLMs may not generalize to humans.
 
+
 \subsection{Introduction: LLMs as Tools for Software Engineers}
 
 LLM-based assistants have become an essential tool for software engineers, supporting them in various tasks such as code generation, summarization, and repair.
-Researchers have studied how software engineers use LLMs (see \href{/study-types/#studying-llm-usage-in-software-engineering}{Studying LLM Usage in Software Engineering}), developed new tools that integrate LLMs (\href{/study-types/#llms-for-new-software-engineering-tools}{LLMs for New Software Engineering Tools}), and benchmarked LLMs for software engineering tasks  (see \href{/study-types/#benchmarking-llms-for-software-engineering-tasks}{Benchmarking LLMs for Software Engineering Tasks}).
+Researchers have studied how software engineers use LLMs (\llmusage), developed new tools that integrate LLMs (\newtools), and benchmarked LLMs for software engineering tasks  (\benchmarkingtasks).
 Like in the previous section, we outline the \textbf{advantages} that studying LLMs in these contexts brings, but also point to specific \textbf{challenges}.
 \subsection{Studying LLM Usage in Software Engineering}
 
@@ -271,6 +238,7 @@ Limited access to telemetry data or other usage metrics restricts the ability of
 When it comes to studying LLM usage in controlled laboratory studies, researchers may struggle with the inherent variability of LLM outputs.
 Since reproducibility and precision are essential for hypothesis testing, the stochastic nature of LLM responses---where identical prompts may yield different outputs across participants---can complicate the interpretation of experimental results and affect the reliability of study findings.
 
+
 \subsection{LLMs for New Software Engineering Tools}
 
 \subsubsection{Description}
@@ -300,6 +268,7 @@ In this context, the non-determinism of generative AI models—although potentia
 Additionally, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
 Another relevant challenge was the existence of non-LLM-based baselines—namely, traditional deterministic tools—that, although potentially less performant, did not exhibit many of the issues associated with LLMs, such as unpredictability, dependence on external infrastructure, or complex data governance requirements.
 
+
 \subsection{Benchmarking LLMs for Software Engineering Tasks}
 
 \subsubsection{Description}
@@ -312,7 +281,6 @@ LLM output is compared against a ground truth in the benchmark dataset using gen
 \subsubsection{Example(s)}
 
 In software engineering, benchmarking may include the evaluation of an LLM's ability to produce accurate and reliable outputs for a given input, usually a task description which may be accompanied by data obtained from curated real-world projects or from synthetic SE-specific datasets (e.g., for few-shot prompting).
-%\comment{What are "robust" outputs? Outputs following a specific structure? In that case, "accurate" also describes that feature}
 Typical tasks include code generation, code summarization, code completion, and code repair, but also natural-language processing tasks, such as anaphora resolution (i.e., the task of identifying the referring expression of a word or phrase occurring earlier in the text), interesting for subfields such a Requirements Engineering. 
 
 RepairBench~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
