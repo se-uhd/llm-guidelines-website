@@ -36,4 +36,5 @@ Team:
 * [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
 * [Stefano Lambiase](https://stefanolambiase.github.io), University of Salerno (Italy)
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
+* [Lutz Prechelt](https://www.mi.fu-berlin.de/w/Main/LutzPrechelt), Free University of Berlin (Germany)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
