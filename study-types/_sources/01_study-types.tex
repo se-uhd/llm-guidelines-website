@@ -245,8 +245,6 @@ Since reproducibility and precision are essential for hypothesis testing, the st
 
 \subsection{LLMs for New Software Engineering Tools}
 
-\todo{Feedback Lutz: ``I have not analyzed this in detail, but it seems to me as if the mission here is unclear: Are we talking about research quality issues or about engineering usefulness or both? And what is the point of reference? For example, under Advantages it might be worth stating that LLM-based tools are easier to build than conventional static analysis tools (from an engineering usefulness perspective).''}
-
 \subsubsection{Description}
 
 LLMs are being integrated into new tools supporting software engineers in their daily tasks, e.g., code comprehension~\cite{DBLP:conf/chi/YanHWH24} and test cases generation~\cite{DBLP:journals/tse/SchaferNET24}.
@@ -268,10 +266,16 @@ By developing tools that leverage LLMs, researchers can explore the potential of
 Moreover, these tools can be then transferred to practitioners, enabling them to benefit from the latest advancements in LLM technology.
 Furthermore, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. 
 
+From an engineering standpoint, developing LLM-based tools can be more straightforward, as researchers can leverage LLMs as black boxes to perform a wide range of tasks without building ad hoc solutions. At the same time, they can fine-tune open-source LLMs for specific tasks—provided that suitable datasets are available—either to adhere to open science principles or to develop more tailored tools.
+
 \subsubsection{Challenges}
 
-In this context, the non-determinism of generative AI models—although potentially mitigated through prompt engineering—poses a significant challenge in both the development and evaluation of tools integrating GenAI. 
-Additionally, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
+The non-determinism of generative AI models—although potentially mitigated through prompt engineering—poses a significant challenge in both the development and evaluation of tools integrating GenAI. 
+
+In terms of research, evaluating the effectiveness of LLM-based tools can be challenging since their non-determinism can lead to different outputs for the same input, making it difficult to assess their performance consistently.
+Moreover, when using non-open-source LLMs, researchers may face challenges related to the availability of the model, its versioning, and the reproducibility of results, as well as convincing practitioners to adopt the tool for ethical and legal reasons.
+
+From a development perspective, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
 Another relevant challenge was the existence of non-LLM-based baselines—namely, traditional deterministic tools—that, although potentially less performant, did not exhibit many of the issues associated with LLMs, such as unpredictability, dependence on external infrastructure, or complex data governance requirements.
 
 
