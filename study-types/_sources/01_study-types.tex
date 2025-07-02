@@ -262,21 +262,19 @@ More on the agentic side, Richards and Wessel introduced a preliminary GenAI age
 
 \subsubsection{Advantages}
 
-By developing tools that leverage LLMs, researchers can explore the potential of LLMs in software engineering and provide valuable insights into their capabilities and limitations.
-Moreover, these tools can be then transferred to practitioners, enabling them to benefit from the latest advancements in LLM technology.
-Furthermore, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. 
-
-From an engineering standpoint, developing LLM-based tools can be more straightforward, as researchers can leverage LLMs as black boxes to perform a wide range of tasks without building ad hoc solutions. At the same time, they can fine-tune open-source LLMs for specific tasks—provided that suitable datasets are available—either to adhere to open science principles or to develop more tailored tools.
+From an engineering perspective, developing LLM-based tools is easier than implementing many traditional SE approaches such as static analysis or symbolic execution.
+Depending on the capabilities of the underlying model, it is also easier to build tools that are independent of a specific programming language.
+This enables researchers to build tools for a more diverse set of tasks.
+It furthermore allows them to test their tools in a wider range of contexts.
 
 \subsubsection{Challenges}
 
-The non-determinism of generative AI models—although potentially mitigated through prompt engineering—poses a significant challenge in both the development and evaluation of tools integrating GenAI. 
-
-In terms of research, evaluating the effectiveness of LLM-based tools can be challenging since their non-determinism can lead to different outputs for the same input, making it difficult to assess their performance consistently.
-Moreover, when using non-open-source LLMs, researchers may face challenges related to the availability of the model, its versioning, and the reproducibility of results, as well as convincing practitioners to adopt the tool for ethical and legal reasons.
-
-From a development perspective, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
-Another relevant challenge was the existence of non-LLM-based baselines—namely, traditional deterministic tools—that, although potentially less performant, did not exhibit many of the issues associated with LLMs, such as unpredictability, dependence on external infrastructure, or complex data governance requirements.
+Traditional approaches such as static analysis are deterministic. LLMs are not.
+Although the non-determinism of LLMs can be mitigated using parameters and prompting strategies, this poses a major challenge.
+It can be challenging for researchers to evaluate the effectiveness of their tool, as minor changes in the input can lead to major differences in the performance.
+When using commercial LLMs, researchers face challenges because the training data is unknown, hindering a reliable assessment of tool performance for unknown data.
+From an engineering perspective, while open models are available, the most performant ones require substantial hardware resources.
+Resorting to cloud-based APIs or relying on third-party providers for hosting, while seemingly a potential solution, introduces new concerns related to data privacy and security.
 
 
 \subsection{Benchmarking LLMs for Software Engineering Tasks}
