@@ -53,7 +53,7 @@ Moreover, LLMs consistently demonstrate strong performance, with ChatGPT's accur
 Challenges of using LLMs as annotators include reliability issues, human-LLM interaction challenges, biases, errors, and resource considerations.
 Studies suggest that while LLMs show promise as annotation tools in SE research, their optimal use may be in augmenting rather than replacing human annotators~\cite{DBLP:conf/emnlp/WangLXZZ21, DBLP:conf/chi/HeHDRH24}.
 LLMs can negatively impact human judgment when their labels are incorrect~\cite{DBLP:conf/www/HuangKA23a}, and their overconfidence requires careful verification~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}.
-Moreover, in previous studies, LLMs have shown significant variability in annotation quality across different tasks~\cite{DBLP:conf/www/HuangKA23a,DBLP:conf/chi/Wang0RMM24, DBLP:journals/corr/abs-2306-00176}, with particular challenges in complex tasks and post-training events \todo{I assume this is referring to events that happened after the models were trained? I can't find that term in any of the referenced papers. Please check.}. Studies have shown LLMs to be especially unreliable for high-stakes labeling tasks~\cite{DBLP:conf/chi/Wang0RMM24} and have demonstrated that LLMs can have notable performance disparities across label categories~\cite{DBLP:journals/corr/abs-2304-10145}. Recent empirical evidence indicates that LLM consistency in text annotation often falls below scientific reliability thresholds, with outputs being sensitive to minor prompt variations~\cite{DBLP:journals/corr/abs-2304-11085}.
+Moreover, in previous studies, LLMs have shown significant variability in annotation quality based on the dataset and the annotation task~\cite{DBLP:journals/corr/abs-2306-00176}. Studies have shown LLMs to be especially unreliable for high-stakes labeling tasks~\cite{DBLP:conf/chi/Wang0RMM24} and have demonstrated that LLMs can have notable performance disparities across label categories~\cite{DBLP:journals/corr/abs-2304-10145}. Recent empirical evidence indicates that LLM consistency in text annotation often falls below scientific reliability thresholds, with outputs being sensitive to minor prompt variations~\cite{DBLP:journals/corr/abs-2304-11085}.
 Context-dependent annotations pose a specific challenge, as LLMs show difficulty in correctly interpreting text segments that require broader contextual understanding~\cite{DBLP:conf/chi/HeHDRH24}.
 While pooling multiple outputs can improve reliability, this approach necessitates additional computational resources and still requires validation against human-annotated data.
 While generally cost-effective, LLM annotation requires careful management of per-token charges, particularly for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. Furthermore, achieving reliable annotations may require multiple runs of the same input to enable majority voting~\cite{DBLP:journals/corr/abs-2304-11085}, although exact cost comparisons between LLM-based and human annotation is controversial~\cite{DBLP:conf/chi/HeHDRH24}.
@@ -248,8 +248,6 @@ Since reproducibility and precision are essential for hypothesis testing, the st
 
 \subsection{LLMs for New Software Engineering Tools}
 
-\todo{Feedback Lutz: ``I have not analyzed this in detail, but it seems to me as if the mission here is unclear: Are we talking about research quality issues or about engineering usefulness or both? And what is the point of reference? For example, under Advantages it might be worth stating that LLM-based tools are easier to build than conventional static analysis tools (from an engineering usefulness perspective).''}
-
 \subsubsection{Description}
 
 LLMs are being integrated into new tools supporting software engineers in their daily tasks, e.g., code comprehension~\cite{DBLP:conf/chi/YanHWH24} and test cases generation~\cite{DBLP:journals/tse/SchaferNET24}.
@@ -267,15 +265,19 @@ More on the agentic side, Richards and Wessel introduced a preliminary GenAI age
 
 \subsubsection{Advantages}
 
-By developing tools that leverage LLMs, researchers can explore the potential of LLMs in software engineering and provide valuable insights into their capabilities and limitations.
-Moreover, these tools can be then transferred to practitioners, enabling them to benefit from the latest advancements in LLM technology.
-Furthermore, by developing tools based on well-defined agent architectures, researchers can facilitate technology transfer, bridging the gap between industry and academia more effectively. 
+From an engineering perspective, developing LLM-based tools is easier than implementing many traditional SE approaches such as static analysis or symbolic execution.
+Depending on the capabilities of the underlying model, it is also easier to build tools that are independent of a specific programming language.
+This enables researchers to build tools for a more diverse set of tasks.
+It furthermore allows them to test their tools in a wider range of contexts.
 
 \subsubsection{Challenges}
 
-In this context, the non-determinism of generative AI models—although potentially mitigated through prompt engineering—poses a significant challenge in both the development and evaluation of tools integrating GenAI. 
-Additionally, while open models are accessible, the most performant ones require substantial hardware resources that are not yet widely available. Resorting to cloud-based APIs using non-open models or relying on third-party providers for hosting, while seemingly a solution, introduces new concerns related to data privacy and security.
-Another relevant challenge was the existence of non-LLM-based baselines—namely, traditional deterministic tools—that, although potentially less performant, did not exhibit many of the issues associated with LLMs, such as unpredictability, dependence on external infrastructure, or complex data governance requirements.
+Traditional approaches such as static analysis are deterministic. LLMs are not.
+Although the non-determinism of LLMs can be mitigated using parameters and prompting strategies, this poses a major challenge.
+It can be challenging for researchers to evaluate the effectiveness of their tool, as minor changes in the input can lead to major differences in the performance.
+When using commercial LLMs, researchers face challenges because the training data is unknown, hindering a reliable assessment of tool performance for unknown data.
+From an engineering perspective, while open models are available, the most performant ones require substantial hardware resources.
+Resorting to cloud-based APIs or relying on third-party providers for hosting, while seemingly a potential solution, introduces new concerns related to data privacy and security.
 
 
 \subsection{Benchmarking LLMs for Software Engineering Tasks}
