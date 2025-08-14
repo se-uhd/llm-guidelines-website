@@ -25,6 +25,7 @@ Project Coordinators:
 Team:
 
 * [Florian Angermeir](https://angermeir.me/), fortiss (Germany) and Blekinge Institute of Technology (Sweden)
+* [Chetan Arora](https://www.drchetanarora.com/), Monash University (Australia)
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), Technical University of Munich (Germany)
 * [Lukas Böhme](https://www.hpi.uni-potsdam.de/hirschfeld/people/boehme/index.html), HPI, University of Potsdam (Germany)
 * [Fabio Calefato](https://collab.di.uniba.it/fabio/), University of Bari (Italy)
