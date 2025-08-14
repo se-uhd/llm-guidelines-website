@@ -7,7 +7,7 @@
 \subsubsection{Recommendations}
 
 \begin{quote}
-\underline{tl;dr:} Researchers \must justify benchmark and metric choices in the \paper and \should summarize benchmark structure, task types, and limitations. Where possible, traditional (non-LLM) baselines \should be used for comparison. Researchers \should use established metrics and \must explain why they are suitable for the specific study. Due the inherent non-determinism of LLMs, experiments \should be repeated; the result distribution \should then be reported using descriptive statistics.
+\underline{tl;dr:} Researchers \must justify all benchmark and metric choices in the \paper and \should summarize benchmark structure, task types, and limitations. Where possible, traditional (non-LLM) baselines \should be used for comparison. Researchers \must explain why the selected metrics are suitable for the specific study. They \should report established metrics to make study results comparable, but can report additional metrics that they consider appropriate. Due the inherent non-determinism of LLMs, experiments \should be repeated; the result distribution \should then be reported using descriptive statistics.
 \end{quote}
 
 Benchmarks, baselines, and metrics play a significant role in assessing the effectiveness of an LLM or LLM-based tool.
@@ -33,7 +33,7 @@ For many tasks LLMs are being evaluated for, there exist traditional non-LLM-bas
 Even if LLM-based tools perform better, the question is whether the resources consumed justify the potentially marginal improvements.
 Researchers \should always check whether such traditional baselines exist and if they do, compare them with the LLM or LLM-based tool using suitable metrics.
 
-For comparing traditional and LLM-based approaches or different LLM-based tools, researchers \should use established metrics whenever possible as this enables secondary research.
+For comparing traditional and LLM-based approaches or different LLM-based tools, researchers \should report established metrics whenever possible as this enables secondary research, but they can report additional metrics that they consider appropriate.
 Researchers \must argue why the selected metrics are suitable for the given task or study. 
 If a study evaluates an LLM-based tool that is supposed to support humans, a relevant metric is the acceptance rate, meaning the ratio of all accepted artifacts (e.g., test cases, code snippets) in relation to all artifacts that were generated and presented to the user.
 Another way of evaluating LLM-based tools is calculating inter-model agreement (see also Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
@@ -42,6 +42,9 @@ Metrics used to measure inter-model agreements are percent agreement, Cohen's ka
 
 LLM-based generation is non-deterministic by-design.
 Due to this non-determinism, researchers \should repeat experiments to statistically assess the performance of a model or tool, for example using the arithmetic mean, confidence intervals, and standard deviations.
+
+From a measurement perspective, researchers \should reflect on the theories, values, and measurement models on which the benchmarks and metrics they have selected for their study depend.
+For example, a large open dataset of software bugs is a collection of bugs according to a certain theory of bugs, and the values and perspective of the people who labelled the dataset. Reflecting on the context in which these labels were assigned and discussing if and how the labels generalize to a new study context is crucial.
 
 
 \subsubsection{Example(s)}
