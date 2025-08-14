@@ -7,36 +7,35 @@
 \subsubsection{Recommendations}
 
 \begin{quote}
-\underline{tl;dr:} Researchers \must use human validation for LLM outputs when no reference dataset exists or when automated metrics are insufficient. They \must define the measured construct and motivate and describe the validation method in the \paper. Researchers \should plan the human validation from the outset, use validated instruments, build on established reference models for human-LLM comparison, and share their instruments as \supplementarymaterial. When aggregating judgments, methods and rationale \should be reported and inter-rater agreement \should be assessed. Confounding factors \should be controlled for, and power analysis \should be conducted to ensure statistical robustness.
+\underline{tl;dr:} If assessing the quality of generated artifacts is important and no reference datasets or suitable comparison metrics exist, researchers \should use human validation for LLM outputs. If they do, they \must define the measured construct (e.g., performance, readability) and motivate and describe the validation method in the \paper. Researchers \should consider human validation from the outset (not as an afterthought), build on established reference models for human-LLM comparison, and share their instruments as \supplementarymaterial. When aggregating LLM judgments, methods and rationale \should be reported and inter-rater agreement \should be assessed. Confounding factors \should be controlled for, and power analysis \should be conducted to ensure statistical robustness.
 \end{quote}
 
-While LLMs can automate many tasks in research and software development that have traditionally been performed by humans, it is important to validate LLM outputs with human judgment.
+While LLMs in principle can automate many tasks in research and software development that have traditionally been performed by humans, for many of them the outcome quality needs to be assessed to determine whether the automation was successful.
+If for a certain task no reference datasets or suitable comparison metrics exist, researchers \should rely on human judgment to validate LLM outputs.
+Human judgement is particularly important when metrics and existing datasets alone cannot fully capture the target qualities relevant for a study.
+In any way, researchers \must clearly define the constructs that human and LLM annotators are assessing~\cite{DBLP:conf/ease/RalphT18}.
+When designing custom instruments for human to assess LLM outputs (e.g., questionnaires), researchers \should share their instruments in the \supplementarymaterial.
+Researchers \should consider human validation from the outset and integrate it into their study design.
+Integrating human participants in the study design will require additional considerations including a recruitment strategy, annotation guidelines, training sessions, or ethical approvals.
+
+For empirical studies involving LLMs, human validation helps ensure the reliability of study results, as LLMs may produce incorrect or biased outputs.
 For example, in natural language processing tasks, a large-scale study has shown that LLMs have a significant variation in their results, which limits their reliability as a direct substitute for human judges~\cite{DBLP:journals/corr/abs-2406-18403}. 
 Moreover, LLMs fail to match human annotators in labeling tasks for natural language inference, stance detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
-Human validation helps ensure the accuracy and reliability of the results, as LLMs may sometimes produce incorrect or biased outputs.
-
-Researchers \must employ human validation of LLM outputs whenever there is no established reference dataset or when automated metrics alone cannot fully capture the target qualities they are concerned with.
-However, researchers \should use systematic approaches to decide how human annotations can be replaced with LLM-generated ones, such as the methods proposed by Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534}.
-Their suggested method involves using a jury of three LLMs with 3-4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using Krippendorff's Alpha.
-If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with a with an LLM-generated one.
-In cases of low model-to-model agreement (alpha $\le$ 0.5), they then evaluate the prediction confidence of the model, selectively replacing annotations where the model confidence is high ($\ge$ 0.8).
-
-Researchers \should plan human validation from the outset and integrate it into their study design.
-Integrating human participants in the study design will require additional considerations including a recruitment strategy, annotation guidelines, training sessions, or ethical approvals.
-Researchers \should use established reference models for comparing humans with LLMs.
-For example, the reference model by Schneider et al.~\cite{Schneider2025ReferenceModel} provides researchers with an overview of the design considerations studies comparing LLMs with humans.
-They outline the relevant groups (researchers, experimenters, subjects), activities (study planning, task assignment, results analysis, interpretation), and artifacts (study design, tasks, results, conclusion).
-Further, they illustrate the relationship between these entities, the order of steps, and which design decisions need to be considered.
-
-When conducting empirical measurements through human validation, researchers \must clearly define the construct that they are measuring and \must specify the methods used for measurement in their \paper.
-Further, they \should use established measurement methods and instruments that are empirically validated~\cite{DBLP:journals/fcomp/HoffmanMKL23, DBLP:conf/chi/PerrigSB23}.
-When creating prepared instruments to instruct human participants in validating LLM outputs (e.g., questionnaires, study tasks), researchers \should share the instruments in their \supplementarymaterial.
 
 Validating the output of an LLM \may involve the aggregation of inputs from multiple human judges.
 In these cases, researchers \should clearly describe their method of aggregation and document their reasoning for doing so.
 When multiple humans are annotating the same artifact, researchers \should validate the agreement between multiple validators with inter-rater reliability measures such as Cohen's Kappa or Krippendorff's Alpha.
 When employing human validation, additional confounding factors \should be controlled for through methods such as stratified sampling or by categorizing participants based on experience levels.
 Where applicable, researchers \should conduct a power analysis to estimate the required sample size and ensure sufficient statistical power in their experiment design.
+
+Researchers \should use established reference models for comparing humans with LLMs.
+For example, the reference model by Schneider et al.~\cite{Schneider2025ReferenceModel} provides researchers with an overview of the design considerations studies comparing LLMs with humans.
+%They outline the relevant groups (researchers, experimenters, subjects), activities (study planning, task assignment, results analysis, interpretation), and artifacts (study design, tasks, results, conclusion).
+%Further, they illustrate the relationship between these entities, the order of steps, and which design decisions need to be considered.
+If studies involve the annotation of software artifacts, and the goal is to automate the annotation process using LLMs, researchers \should follow systematic approaches to decide if and how human annotators can be replaced.
+For example, Ahmed et al.~\cite{DBLP:journals/corr/abs-2408-05534} suggest a method that involves using a jury of three LLMs with 3 to 4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using Krippendorff's Alpha.
+If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with a with an LLM-generated one.
+In cases of low model-to-model agreement (alpha $\le$ 0.5), they then evaluate the prediction confidence of the model, selectively replacing annotations where the model confidence is high ($\ge$ 0.8).
 
 
 \subsubsection{Example(s)}
@@ -51,11 +50,11 @@ Xue et al.~\cite{DBLP:conf/icse/XueCBTH24} conducted a controlled experiment in 
 They employed multiple measures to judge the impact of the LLM from the perspective of humans.
 In their study, they recorded the students' screens, evaluated the answers they provided in tasks, and distributed a post-study survey to get direct opinions from the students.
 
-Hymel et al.~\cite{hymel2025analysisllmsvshuman} evaluated the capability of ChatGPT-4.0 to generate requirements documents. 
-Specifically, they evaluated two requirements documents based on the same business use case, one document generated with the LLM and one document created by a human expert.
-The documents were then reviewed by experts and judged in terms of alignment with the original business use case (scale of 1-10), requirements completion (Not Complete, Fairly Complete, Fully Complete), and whether they believed it was created by a human or an LLM.
-Finally, they analyzed the influence of the participants' familiarity with AI tools on the study results.
-Participants self-reported their AI tool proficiency (Novice, Intermediate, Advanced, Expert) and usage frequency (Daily, Weekly, Monthly, Never), which were then correlated with their ratings of the requirements documents.
+%Hymel et al.~\cite{hymel2025analysisllmsvshuman} evaluated the capability of ChatGPT-4.0 to generate requirements documents. 
+%Specifically, they evaluated two requirements documents based on the same business use case, one document generated with the LLM and one document created by a human expert.
+%The documents were then reviewed by experts and judged in terms of alignment with the original business use case (scale of 1-10), requirements completion (Not Complete, Fairly Complete, Fully Complete), and whether they believed it was created by a human or an LLM.
+%Finally, they analyzed the influence of the participants' familiarity with AI tools on the study results.
+%Participants self-reported their AI tool proficiency (Novice, Intermediate, Advanced, Expert) and usage frequency (Daily, Weekly, Monthly, Never), which were then correlated with their ratings of the requirements documents.
 
 
 \subsubsection{Advantages}
@@ -65,17 +64,19 @@ Incorporating human judgment in the evaluation process adds a layer of quality c
 Incorporating feedback from individuals from the target population strengthens external validity by grounding study findings in real-world usage scenarios and may positively impact the transfer of study results to practice.
 Researchers may uncover additional opportunities to further improve the LLM or LLM-based tool based on the reported experiences.
 
+
 \subsubsection{Challenges}
 
 Measurement through human validation can be challenging.
 Ensuring that the operationalization of a desired construct and the method of measuring it are appropriate requires a good understanding of the studied concept and construct validity in general, and a systematic design approach for the measurement instruments~\cite{DBLP:journals/tse/SjobergB23}.
 
-Human judgment is subjective, which may lead to variability between different subjects due to differences in expertise, interpretation, and biases among evaluators~\cite{DBLP:journals/pacmhci/McDonaldSF19}.
-Controlling for this subjectivity will require additional rigor when analyzing the study results.
-Different individuals might have different expectations and experiences that might impact the results of human evaluation. For example, \enquote{the struggle with adapting to AI-assisted work is more common for racially minoritized developers. That group also rated the quality of the output of AI-assisted coding tools significantly lower than other groups}~\cite{hicks_lee_foster-marks_2025}.
+Human judgment is subjective, which may lead to variability between different subjects due to differences in experience, expertise, interpretations, and biases among evaluators~\cite{DBLP:journals/pacmhci/McDonaldSF19}.
+For example, \enquote{the struggle with adapting to AI-assisted work is more common for racially minoritized developers. That group also rated the quality of the output of AI-assisted coding tools significantly lower than other groups}~\cite{hicks_lee_foster-marks_2025}.
+Such biases can be mitigated with a careful selection and combination of multiple judges, but it cannot completely be controlled for.
 
 Recruiting participants as human validators will always incur additional resources compared to machine-generated measures.
 Researchers must weigh the cost and time investment incurred by the recruitment process against the potential benefits for the validity of their study results.
+
 
 \subsubsection{Study Types}
 
