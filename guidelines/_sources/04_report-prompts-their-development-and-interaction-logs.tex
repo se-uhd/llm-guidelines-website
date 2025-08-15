@@ -8,7 +8,7 @@
 \subsubsection{Recommendations}
 
 \begin{quote}
-\underline{tl;dr:} Researchers \must report all prompts in the \paper or \supplementarymaterial, including their structure, content, formatting, and dynamic components. Prompt development strategies (e.g., zero-shot, few-shot), rationale, and selection process \must be described. When prompts are long or complex, input handling and token optimization strategies \must be documented. For dynamically generated or user-authored prompts, generation and collection processes \must be reported. Prompt reuse across models and configurations \must be specified. If full prompt disclosure is not feasible, summaries or examples \should be provided. Researchers \should report prompt revisions and pilot testing insights. To address model non-determinism and ensure reproducibility, especially when targeting SaaS-based commercial tools, full interaction logs (prompts + responses) \should be included.
+\underline{tl;dr:} Researchers \must report all prompts in the \paper or \supplementarymaterial, including their structure, content, formatting, and dynamic components. Prompt development strategies (e.g., zero-shot, few-shot), rationale, and selection process \must be described. When prompts are long or complex, input handling and token optimization strategies \must be documented. For dynamically generated or user-authored prompts, generation and collection processes \must be reported. Prompt reuse across models and configurations \must be specified. If full prompt disclosure is not feasible, for example due to privacy or confidentiality concerns, summaries or examples \should be provided. Researchers \should report prompt revisions and pilot testing insights. To address model non-determinism and ensure reproducibility, especially when targeting SaaS-based commercial tools, full interaction logs (prompts + responses) \should be included.
 \end{quote}
 
 Prompts are critical for any study involving LLMs.
@@ -17,12 +17,16 @@ For software engineering tasks, the context can include source code, execution t
 Prompts significantly influence a model’s output, and understanding how exactly they were formatted and integrated in an LLM-based study is essential for transparency, verifiability, and reproducibility.
 
 Researchers \must report the complete prompts that were used, including all instructions, context, and input data.
+The only exception to this is if transcripts might identify anonymous participants or reveal personal or confidential information, for example when working with industry partners.
 This can be done with a structured template that contains placeholders for dynamically added content (see below).
 Specifying the exact format is crucial.
 For example, when using code snippets, researchers should specify whether they were enclosed in markdown-style code blocks (indented by four space characters, enclosed in triple backticks, etc.), if line breaks and whitespace were preserved, and whether additional annotations (e.g., comments) were included.
 Similarly, for other artifacts such as error messages, stack traces, researchers should explain how these were presented.
 
 Researchers \must also explain in the \paper how they developed the prompts and why they decided to follow certain prompting strategies.
+If prompts from early phases of the research are unavailable, researchers \must at least summarize the prompt evolution.
+However, given that prompts can be stored as plain text, there are established SE techniques such as version control systems that can used to collected the required provenance information.
+
 They \must specify whether zero-shot, one-shot, or few-shot prompting was used. For few-shot prompts, the examples provided to the model should be clearly outlined, along with the rationale for selecting them.
 If multiple versions of a prompt were tested, researchers should describe how these variations were evaluated and how the final design was chosen.
 
@@ -89,7 +93,7 @@ For prompts containing sensitive information, researchers \must: (i) anonymize p
 
 Not all systems allow the reporting of full (system) prompts and interaction logs with the same ease.
 This hinders transparency and verifiability.
-Besides our recommendation to \openllm, researchers \should report whatever they can about commercial tools, acknowledging limitations due to unavailable data.
+Besides our recommendation to \openllm, researchers \must report whatever they can about commercial tools, acknowledging limitations due to unavailable data.
 They might also consider using open-source tools such as Continue\footnote{https://blog.continue.dev/its-time-to-collect-data-on-how-you-build-software/}, which enable researchers to collect interaction logs and system prompts locally.
 Understanding suggestions of commercial tools such as GitHub Copilot might require recreating the exact state of the codebase at the time the suggestion was made, a challenging context to report.
 One solution could be to use version control to capture the exact state of the codebase when a recommendation occurred, and keep track of the files that were automatically added as context.
@@ -100,8 +104,8 @@ One solution could be to use version control to capture the exact state of the c
 Reporting requirements may vary depending on the study type.
 For the study type \newtools, researchers \must explain how prompts were generated and structured within the tool.
 When \llmusage, especially for controlled experiments exact prompts \must be reported for all conditions.
-For observational studies, especially the ones targeting commercial tools, researchers \must report the full interactions logs/conversations.
-If the full interaction logs cannot be shared, e.g., because they contain confidential information, the prompts and responses \should at least be summarized and described in the \paper.
+For observational studies, especially the ones targeting commercial tools, researchers \must report the full interactions logs/conversations except for when transcripts might identify anonymous participants or reveal personal or confidential information.
+If the full interaction logs cannot be shared, e.g., because they contain confidential information, the prompts and responses \must at least be summarized and described in the \paper.
 
 Researchers \must report the complete prompts that were used, including all instructions, context, and input data. This applies across all study types, but specific focus areas vary:
 
