@@ -7,10 +7,13 @@ compile_tex() {
         [ -e "$tex_file" ] || continue
         pdflatex -pdf -halt-on-error "$tex_file"
         if [ $? = 0 ] ; then
-            bibtex "${tex_file%.tex}"
-            if [ $? != 0 ] ; then
-                echo "Processing of Bibtex file for Latex file $tex_file failed."
-                exit 1
+            aux_file="${tex_file%.tex}.aux"
+            if grep -q '\\bibdata' "$aux_file" 2>/dev/null; then
+                bibtex "${tex_file%.tex}"
+                if [ $? != 0 ] ; then
+                    echo "Processing of Bibtex file for Latex file $tex_file failed."
+                    exit 1
+                fi
             fi
             pdflatex -pdf -halt-on-error "$tex_file"
             pdflatex -pdf -halt-on-error "$tex_file"

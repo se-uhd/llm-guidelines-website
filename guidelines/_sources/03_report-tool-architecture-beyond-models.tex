@@ -11,7 +11,7 @@ This section provides guidelines for documenting these broader architectures.
 \subsubsection{Recommendations}
 
 \begin{quote}
-\underline{tl;dr:} Researchers \must describe the full architecture of LLM-based tools in the \paper. This includes the role of the LLM, interactions with other components, and the overall system behavior. If autonomous agents are used, researchers \must specify agent roles, reasoning frameworks, and communication flows. Hosting, hardware setup, and latency implications \must be reported. For tools using retrieval or augmentation methods, data sources, integration mechanisms, and update and versioning strategies \must be described. For ensemble architectures, the coordination logic between models \must be explained. Researchers \should include architectural diagrams and justify design decisions. Confidential or proprietary components \must be acknowledged as reproducibility limitations.
+\underline{tl;dr:} \input{_tldr/03_report-tool-architecture-beyond-models-tldr.tex}
 \end{quote}
 
 Oftentimes, LLM-based tool have \emph{complex software layers} around the model (or models) that pre-processes data, prepares prompts, filters user requests, or post-processes responses.
