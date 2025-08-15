@@ -18,6 +18,7 @@ We are aware that different venues have different page limits and that not every
 It is of course better to report essential information that we expect to be reported in the paper in the supplementary material than not at all.
 Unless explicitly mentioned otherwise, we expect information to be reported either in the PAPER and/or the SUPPLEMENTARY MATERIAL.
 If information **MUST** be reported in the PAPER, we explicitly mention this in the specific guidelines.
+The supplementary material **SHOULD** be published according to the [ACM SIGSOFT Open Science Policies](https://zenodo.org/records/10796477).
 
 Our guidelines focus on LLMs that use text for input and output.
 We do not focus on multi-modal foundation models that support other media such as images.
