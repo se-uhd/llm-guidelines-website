@@ -3,16 +3,17 @@
 \begin{document}
 
 \subsection{Report Tool Architecture Beyond Models}
+\label{sec:report-tool-architecture-beyond-models}
+
+\begin{quote}
+\underline{tl;dr:} \input{_tldr/03_report-tool-architecture-beyond-models-tldr.tex}
+\end{quote}
 
 This section addresses the \emph{system-level} aspects of LLM-based tools that researchers develop, complementing Section~\modelversion, which focuses on model-specific details.
 While standalone LLMs require limited architectural documentation, a more detailed description is required for study setups and tool architectures that integrate LLMs with other components to create more complex systems.
 This section provides guidelines for documenting these broader architectures.
 
 \subsubsection{Recommendations}
-
-\begin{quote}
-\underline{tl;dr:} \input{_tldr/03_report-tool-architecture-beyond-models-tldr.tex}
-\end{quote}
 
 Oftentimes, LLM-based tool have \emph{complex software layers} around the model (or models) that pre-processes data, prepares prompts, filters user requests, or post-processes responses.
 One example is ChatGPT, which allows users to select from different GPT models, including GPT-4o.

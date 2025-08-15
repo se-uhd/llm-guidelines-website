@@ -6,10 +6,10 @@
 
 \subsection{Motivation}
 
-In the short period since the release of ChatGPT in November 2022, large language models (LLMs) have changed the software engineering research landscape.
+In the short period since the release of ChatGPT in November 2022, large language models (LLMs) have changed the software engineering (SE) research landscape.
 While there are numerous opportunities to use LLMs for supporting research or software engineering tasks, solid science needs rigorous empirical evaluations.
 Such evaluations might explore the effectiveness, performance, and robustness of LLMs in different contexts, such as improving code quality, reducing development time, or supporting software documentation.
-However, it is often unclear how valid and reproducible results can be achieved with empirical studies involving LLMs - or what effect their usage has on the validity of empirical results.
+However, it is often unclear how valid and reproducible results can be achieved with empirical studies involving LLMs---or what effect their usage has on the validity of empirical results.
 This uncertainty poses significant challenges for researchers aiming to draw reliable conclusions from empirical studies.
 
 One of the primary risks in creating unreproducible results stems from the variability in LLM performance due to differences in training data, model architecture, evaluation metrics, and the inherent non-determinism that those models possess.
@@ -20,18 +20,22 @@ Another aspect is that, without detailed information on the exact study setup, b
 The importance of open science practices and documenting the study setup is not to be underestimated~\cite{DBLP:journals/corr/abs-2412-17859}.
 
 There has been extensive work developing guidelines for conducting and reporting specific types of empirical studies such as controlled experiments (e.g., \emph{Experimentation in Software Engineering}~\cite{DBLP:books/sp/WohlinRHORW24} or \emph{Guide to Advanced Empirical Software Engineering}~\cite{DBLP:books/sp/08/SSS2008}) or their replications (e.g., [A Procedure and \emph{Guidelines for Analyzing Groups of Software Engineering Replications}~\cite{DBLP:journals/tse/SantosVOJ21}).
-We believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducibility.
-However, so far, there are no specific guidelines for conducting and assessing studies involving LLMs in software engineering research.
 
+As motivated in our previous position paper~\cite{DBLP:conf/wsese/0001BFB25}, we believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducibility.
 For example, even if we know the specific version of an LLM used for an empirical study, the reported performance for the studied tasks can change over time, especially for commercial models that evolve beyond version identifiers~\cite{DBLP:journals/corr/abs-2307-09009}.
 Moreover, commercial providers do not guarantee the availability of old versions indefinitely.
 Besides versions, LLMs' performance widely varies depending on configured parameters such as temperature.
 Therefore, not reporting the parameter settings impacts the reproducibility of the research.
-Even for ``open'' models such as Llama, we do not know how they were fine-tuned for specific tasks and what the exact training data was~\cite{Gibney2024}.
-For example, when evaluating LLMs' performance for certain programming tasks, it would be relevant to know whether the solution to a certain problem was part of the training data or not.
+Even for ``open'' models such as \emph{Llama}, we do not know how they were fine-tuned for specific tasks and what the exact training data was~\cite{Gibney2024}.
+Further, when evaluating LLMs' performance for certain programming tasks, it would be relevant to know whether the solution to a certain problem was part of the training data or not.
 
+So far, there are no hollistic guidelines for conducting and reporting studies involving LLMs in software engineering research.
+With this community effort, we try to fill this gap.
+After outlining the scope of this article, we continue by introducing a taxonomy of \studytypes before presenting eight \guidelines that the authors of this article co-developed as a team.
+The most recent version is always available on this website; other researchers can suggest changes via our public GitHub repository.
 
 \subsection{Scope}
+\label{sec:scope}
 
 First, we want to clarify that our focus is on LLMs, that is natural language use cases.
 Multi-modal foundational models are beyond the scope of our guidelines.

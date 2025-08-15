@@ -3,6 +3,11 @@
 \begin{document}
 
 \subsection{Report Model Version, Configuration, and Customizations}
+\label{sec:report-model-version-configuration-and-customizations}
+
+\begin{quote}
+\underline{tl;dr:} \input{_tldr/02_report-model-version-configuration-and-customizations-tldr.tex}
+\end{quote}
 
 This section focuses on documenting the \emph{model-specific} aspects of empirical studies involving LLMs.
 While Section~\toolarchitecture addresses how LLMs are integrated into larger systems and tools, here we concentrate on the models themselves, their version, configuration parameters, and any direct customizations applied to the model (e.g., fine-tuning).
@@ -10,10 +15,6 @@ Whether only this guideline or also the one linked above apply for a particular 
 In any way, as soon as an LLM is involved, the information outlined in this guideline is essential to enable reproducibility and replicability.
 
 \subsubsection{Recommendations}
-
-\begin{quote}
-\underline{tl;dr:} \input{_tldr/02_report-model-version-configuration-and-customizations-tldr.tex}
-\end{quote}
 
 LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce different results for the same input.
 Moreover, configuration parameters such as the temperature affect content generation.
@@ -29,9 +30,9 @@ Researchers \should either share the fine-tuning dataset as part of the \supplem
 The same applies to the fine-tuned model weights.
 Suitable benchmarks and metrics \should be used to compare the base model to the fine-tuned model (see Section \benchmarksmetrics).
 
-In summary our recommendation is to report:
+In summary, our recommendation is to report:
 % not supported by pandoc...
-%\begin{enumerate*}[label=\textbf{(\arabic*)}]
+%\begin{enumerate*}[label=(\arabic*)]
 %\item Model/tool name and version, checksum/fingerprint if available; \must in \paper;
 %\item All relevant configured parameters that affect output generation; \must in \paper;
 %\item Default values of all available parameters; \should;
@@ -44,7 +45,7 @@ In summary our recommendation is to report:
 
 For fine-tuned models, additional recommendations apply:
 % not supported by pandoc...
-%\begin{enumerate*}[label=\textbf{(\arabic*)}]
+%\begin{enumerate*}[label=(\arabic*)]
 %\item Fine-tuning goal; \must in \paper;
 %\item Fine-tuning dataset creation and characterization; \must in \paper;
 %\item Fine-tuning parameters and procedure; \must in \paper;

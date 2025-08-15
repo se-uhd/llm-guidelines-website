@@ -3,12 +3,13 @@
 \begin{document}
 
 \subsection{Use an Open LLM as a Baseline}
-
-\subsubsection{Recommendations}
+\label{sec:use-an-open-llm-as-a-baseline}
 
 \begin{quote}
 \underline{tl;dr:} \input{_tldr/06_use-an-open-llm-as-a-baseline-tldr.tex}
 \end{quote}
+
+\subsubsection{Recommendations}
 
 Empirical studies using LLMs in software engineering, especially the ones targeting commercial tools or model, \should incorporate an open LLM as a baseline and report established metrics for inter-model agreement (see Section \benchmarksmetrics).
 We acknowledge that including an open LLM baseline might not always be possible, for example if the study involves human participants and letting them work on the tasks using two different models might not be feasible. Another case where this may not be necessary is if the use of the LLM is tangential to the study, or strict reproducibility of the LLM portion of the results is not necessary.
@@ -30,7 +31,7 @@ In simple terms, according to OSI, open-source AI means  you have access to ever
 
 \subsubsection{Example(s)}
 
-Numerous recent studies have adopted open‐source LLMs as baseline models. For instance, Wang et al. \cite{wang2024and} evaluated seven advanced LLMs---six of which were open source---by testing 145 API mappings drawn from eight popular Python libraries across 28,125 completion prompts aimed at detecting deprecated API usage in code completion. Moumoula et al. \cite{moumoula2024large} compared four LLMs on a cross-language code clone detection task, finding that three evaluated models were open source. Similarly, Gonçalves et al. \cite{gonccalves2025evaluating} fine-tuned LLaMA 3.2 on a refined version of the DiverseVul dataset to benchmark vulnerability detection performance. Many papers \cite{DBLP:journals/jss/YangZCZHC23, DBLP:conf/gaiis/XiaSD24, DBLP:conf/kbse/SonnekalbGBM22, DBLP:conf/icse/CaiYMMN24} used CodeBERT as an LLM, which is a bimodal (code + NL) Transformer pre-trained by Microsoft Research and released under the MIT license. Its model weights, source code, and data-processing scripts are all openly published on GitHub\footnote{\url{https://github.com/microsoft/CodeBERT}} (\modelversion).
+Numerous recent studies have adopted open‐source LLMs as baseline models. For instance, Wang et al. \cite{wang2024and} evaluated seven advanced LLMs---six of which were open source---by testing 145 API mappings drawn from eight popular Python libraries across 28,125 completion prompts aimed at detecting deprecated API usage in code completion. Moumoula et al. \cite{moumoula2024large} compared four LLMs on a cross-language code clone detection task, finding that three evaluated models were open source. Similarly, Gonçalves et al. \cite{gonccalves2025evaluating} fine-tuned LLaMA 3.2 on a refined version of the DiverseVul dataset to benchmark vulnerability detection performance. Many papers \cite{DBLP:journals/jss/YangZCZHC23, DBLP:conf/gaiis/XiaSD24, DBLP:conf/kbse/SonnekalbGBM22, DBLP:conf/icse/CaiYMMN24} used CodeBERT as an LLM, which is a bimodal (code + NL) Transformer pre-trained by Microsoft Research and released under the MIT license. Its model weights, source code, and data-processing scripts are all openly published on GitHub~\cite{codebert} (\modelversion).
 
 
 \subsubsection{Advantages}

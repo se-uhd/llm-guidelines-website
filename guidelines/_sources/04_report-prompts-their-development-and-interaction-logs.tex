@@ -3,6 +3,11 @@
 \begin{document}
 
 \subsection{Report Prompts, their Development, and Interaction Logs}
+\label{sec:report-prompts-their-development-and-interaction-logs}
+
+\begin{quote}
+\underline{tl;dr:} \input{_tldr/04_report-prompts-their-development-and-interaction-logs-tldr.tex}
+\end{quote}
 
 Prompts are critical for any study involving LLMs.
 Depending on the task, prompts may include various \href{https://www.promptingguide.ai/introduction/elements}{types of content}, including instructions, context, and input data.
@@ -10,10 +15,6 @@ For software engineering tasks, the context can include source code, execution t
 Prompts significantly influence a model's output, and understanding how exactly they were formatted and integrated in an LLM-based study is essential for transparency, verifiability, and reproducibility.
 
 \subsubsection{Recommendations}
-
-\begin{quote}
-\underline{tl;dr:} \input{_tldr/04_report-prompts-their-development-and-interaction-logs-tldr.tex}
-\end{quote}
 
 Researchers \must report the complete prompts that were used, including all instructions, context, and input data.
 The only exception to this is if transcripts might identify anonymous participants or reveal personal or confidential information, for example when working with industry partners.
@@ -93,7 +94,7 @@ For prompts containing sensitive information, researchers \must: (i) anonymize p
 Not all systems allow the reporting of full (system) prompts and interaction logs with the same ease.
 This hinders transparency and verifiability.
 Besides our recommendation to \openllm, researchers \must report whatever they can about commercial tools, acknowledging limitations due to unavailable data.
-They might also consider using open-source tools such as Continue\footnote{https://blog.continue.dev/its-time-to-collect-data-on-how-you-build-software/}, which enable researchers to collect interaction logs and system prompts locally.
+They might also consider using open-source tools such as Continue~\cite{continue.dev}, which enable researchers to collect interaction logs and system prompts locally.
 Understanding suggestions of commercial tools such as GitHub Copilot might require recreating the exact state of the codebase at the time the suggestion was made, a challenging context to report.
 One solution could be to use version control to capture the exact state of the codebase when a recommendation occurred, and keep track of the files that were automatically added as context.
 
@@ -112,7 +113,7 @@ Researchers \must report the complete prompts that were used, including all inst
   \item For LLMs as \annotators, researchers \must document any predefined coding guides or instructions included in prompts, as these influence how the model labels artifacts.
   \item For LLMs as \judges, researchers \must include the evaluation criteria, scales, and examples embedded in the prompt to ensure consistent interpretation.
   \item For LLMs used in \synthesis tasks (e.g., summarization, aggregation), researchers \must document the sequence of prompts used to generate and refine outputs, including follow-ups and clarifying queries.
-  \item For LLMs as \participants (e.g., simulating human participants), researchers \must report any role-playing instructions, constraints, or personas used to guide LLM behavior.
+  \item For LLMs as \subjects (e.g., simulating human participants), researchers \must report any role-playing instructions, constraints, or personas used to guide LLM behavior.
   \item For \benchmarkingtasks studies using pre-defined prompts (e.g., HumanEval, CruxEval), researchers \must specify the benchmark version and any modifications made to the prompts or evaluation setup. If prompt tuning, retrieval-augmented generation (RAG), or other methods were used to adapt prompts, researchers \must disclose and justify those changes and \should make the relevant code publicly available.
 \end{itemize}
 

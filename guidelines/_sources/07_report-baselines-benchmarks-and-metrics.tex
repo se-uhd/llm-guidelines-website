@@ -3,12 +3,13 @@
 \begin{document}
 
 \subsection{Report Suitable Baselines, Benchmarks, and Metrics}
-
-\subsubsection{Recommendations}
+\label{sec:report-suitable-baselines-benchmarks-and-metrics}
 
 \begin{quote}
 \underline{tl;dr:} \input{_tldr/07_report-baselines-benchmarks-and-metrics-tldr.tex}
 \end{quote}
+
+\subsubsection{Recommendations}
 
 Benchmarks, baselines, and metrics play a significant role in assessing the effectiveness of an LLM or LLM-based tool.
 Benchmarks are model- and tool-independent standardized tests used to assess the performance of LLMs on specific tasks such as code summarization or code generation.
@@ -49,7 +50,7 @@ For example, a large open dataset of software bugs is a collection of bugs accor
 
 \subsubsection{Example(s)}
 
-Hu et al.~\citet{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
+Hu et al.~\cite{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
 They analyzed 191 benchmarks and categorized them based on the specific task they address, making the paper a valuable resource for identifying relevant existing benchmarks.
 
 Two benchmarks used for code generation are \emph{HumanEval} (\href{https://github.com/openai/human-eval}{GitHub}) \cite{DBLP:conf/acl/PapineniRWZ02} and \emph{MBPP} (\href{https://huggingface.co/datasets/google-research-datasets/mbpp}{GitHub}) \cite{DBLP:journals/corr/abs-2108-07732}.
