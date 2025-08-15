@@ -7,10 +7,6 @@ has_children: false
 
 # Guidelines
 
-This set of guidelines is currently a DRAFT and based on a discussion session with researchers at the 2024 International Software Engineering Research Network ([ISERN](https://isern.fraunhofer.de})) meeting and at the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
-This draft is meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving large language models (LLMs).
-See also the pages on [study types](/study-types) and [scope](/scope).
-
 The wording of the recommendations (**MUST**, **SHOULD**, **MAY**) follows [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [8174](https://www.rfc-editor.org/rfc/rfc8174).
 
 Throughout the guidelines, we mention what information we expect to be reported in the PAPER or in the SUPPLEMENTARY MATERIAL.
