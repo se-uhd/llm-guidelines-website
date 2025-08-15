@@ -7,9 +7,9 @@
 
 LLMs can be leveraged as powerful tools to assist researchers conducting empirical studies.
 They can automate various tasks such as data collection, preprocessing, and analysis.
-For example, LLMs can apply pre-defined coding guides to large qualitative datasets (\annotators), assess the quality of software artifacts (\judges), generate summaries of research papers (\synthesis), and even simulate human behavior in empirical studies (\subjects).
-This can significantly reduce the time and effort required by researchers, allowing them to focus on other aspects of their studies.
-However, besides the many \textbf{advantages} that all these applications bring, they also come with \textbf{challenges} such as potential threats to validity and implications for the reproducibility of study results.
+For example, LLMs can apply pre-defined coding guides to qualitative datasets (\annotators), assess the quality of software artifacts (\judges), generate summaries of research papers (\synthesis), or simulate human behavior in empirical studies (\subjects).
+This can significantly reduce the time and effort required to perform a study, allowing researchers to focus on other aspects.
+However, besides the many \emph{advantages} that all these applications bring, they also come with \emph{challenges} such as potential threats to validity and implications for the reproducibility of study results.
 
 \subsection{LLMs as Annotators}
 \label{sec:llms-as-annotators}
@@ -47,7 +47,7 @@ Moreover, in previous studies, LLMs have shown significant variability in annota
 Context-dependent annotations pose a specific challenge, as LLMs show difficulty in correctly interpreting text segments that require broader contextual understanding~\cite{DBLP:conf/chi/HeHDRH24}.
 While pooling multiple outputs can improve reliability, this approach necessitates additional computational resources and still requires validation against human-annotated data.
 While generally cost-effective, LLM annotation requires careful management of per-token charges, particularly for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. Furthermore, achieving reliable annotations may require multiple runs of the same input to enable majority voting~\cite{DBLP:journals/corr/abs-2304-11085}, although exact cost comparisons between LLM-based and human annotation is controversial~\cite{DBLP:conf/chi/HeHDRH24}.
-Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content, particularly in stance detection tasks~\cite{DBLP:journals/corr/abs-2304-10145}.
+Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content~\cite{DBLP:journals/corr/abs-2304-10145}.
 
 
 \subsection{LLMs as Judges}
@@ -82,7 +82,7 @@ However, evaluating machine judgment may not be the same as human-human judgment
 
 One crucial decision in such studies is the number of examples provided to the LLM.
 This might involve no tuning (zero-shot), several examples (few-shot), or providing many examples (closer to traditional training data).
-In the example above, Lubos et al. chose zero-shot tuning, providing no specific guidance besides the project's context, i.e., they did not show the LLM what a yes or no answer might look like. 
+In the example above, Lubos et al. chose zero-shot tuning, providing no specific guidance besides the provided context; they did not show the LLM what a yes or no answer might look like. 
 
 \subsubsection{Advantages}
 
@@ -160,7 +160,7 @@ The broader applicability of LLM-based studies beyond software engineering has b
 Given the socio-technical nature of software development, some of these approaches should be transferable to empirical software engineering research.
 
 For example, LLMs can be applied in survey and interview studies to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different expertise levels or cultural contexts. For instance, Gerosa et al.~\cite{DBLP:journals/ase/GerosaTSS24} explored persona-based interviews and multi-persona focus groups, demonstrating how LLMs can emulate human responses and behaviors while addressing ethical concerns, biases, and methodological challenges.
-Another example are usability studies, in which LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. This aligns with the work of Bano et al.~\cite{bano2025doessoftwareengineerlook}, who investigated biases in LLM-generated candidate profiles in software engineering recruitment processes. Their study, which analyzed both textual and visual inputs, revealed biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly for senior roles.
+Another example are usability studies, in which LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. This aligns with the work of Bano et al.~\cite{bano2025doessoftwareengineerlook}, who investigated biases in LLM-generated candidate profiles in SE recruitment processes. Their study, which analyzed both textual and visual inputs, revealed biases favoring male, Caucasian candidates, lighter skin tones, and slim physiques, particularly for senior roles.
 
 \subsubsection{Advantages}
 
@@ -215,7 +215,7 @@ They found that the majority of study participants had already adopted AI for so
 Multiple participants cited copyright and privacy issues, as well as the inconsistent or low quality outputs as barriers for adoption.
 Retrospective studies analyzing the data generated during the use of LLMs by software engineers can provide additional insights into human LLM interactions.
 For example, researchers can employ data mining methods to build large-scale conversation datasets, such as the DevGPT dataset introduced by Xiao et al~\cite{DBLP:conf/msr/XiaoTHM24} (data collection started in August 2023).
-Conversations can then be analyzed using quantitative~\cite{DBLP:conf/msr/RabbiCZI24} and qualitative~\cite{DBLP:conf/msr/MohamedPP24} analysis methods (both studies use the DevGPT dataset).
+Conversations can then be analyzed using quantitative~\cite{DBLP:conf/msr/RabbiCZI24} and qualitative~\cite{DBLP:conf/msr/MohamedPP24} analysis methods.
 
 \subsubsection{Advantages}
 
@@ -311,13 +311,13 @@ Finally, benchmarks can foster open science practices by providing a common grou
 
 \subsubsection{Challenges}
 
-Benchmark contamination, the inclusion of the benchmark in the training dataset of the LLM,~\cite{DBLP:journals/corr/abs-2410-16186} has recently been identified as an issue.
-The careful selection of samples and building of corresponding input prompts is particularly important, as correlations between prompts may bias benchmark results~\cite{DBLP:conf/acl/SiskaMAB24}.
-While LLMs might perform well on a specific benchmark, such as HumanEval, it does not necessarily perform well on another benchmark.
-Benchmark metrics such as perplexity or BLEU-N do not always reflect human judgment.
+Benchmark contamination, that is, the inclusion of the benchmark in the training dataset of the LLM~\cite{DBLP:journals/corr/abs-2410-16186} has recently been identified as an issue.
+The careful selection of samples and the creation of the corresponding input prompts is particularly important, as correlations between prompts may bias benchmark results~\cite{DBLP:conf/acl/SiskaMAB24}.
+Although LLMs might perform well on a specific benchmark such as HumanEval, they do not necessarily perform well on other benchmarks.
+Moreover, Benchmark metrics such as perplexity or BLEU-N do not always reflect human judgment.
 Recently, Cao et al.~\cite{cao2025should} has proposed guidelines for building benchmarks for LLMs related to coding tasks, grounded in a systematic survey of existing benchmarks. 
 In this process, they highlight current shortcomings related to reliability, transparency irreproducibility, low data quality, and inadequate validation measures.
-\comment{Previous comment not addressed yet: I like the last reference to guildelines for building a benchmark. Should we include some challenges from the paper, too?}
+For more details on benchmarks, see our guideline \benchmarksmetrics. 
 
 \subsection{References}
 
