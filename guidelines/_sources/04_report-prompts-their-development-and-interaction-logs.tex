@@ -4,17 +4,16 @@
 
 \subsection{Report Prompts, their Development, and Interaction Logs}
 
+Prompts are critical for any study involving LLMs.
+Depending on the task, prompts may include various \href{https://www.promptingguide.ai/introduction/elements}{types of content}, including instructions, context, and input data.
+For software engineering tasks, the context can include source code, execution traces, error messages, and other forms of natural language content.
+Prompts significantly influence a model's output, and understanding how exactly they were formatted and integrated in an LLM-based study is essential for transparency, verifiability, and reproducibility.
 
 \subsubsection{Recommendations}
 
 \begin{quote}
-\underline{tl;dr:} Researchers \must report all prompts in the \paper or \supplementarymaterial, including their structure, content, formatting, and dynamic components. Prompt development strategies (e.g., zero-shot, few-shot), rationale, and selection process \must be described. When prompts are long or complex, input handling and token optimization strategies \must be documented. For dynamically generated or user-authored prompts, generation and collection processes \must be reported. Prompt reuse across models and configurations \must be specified. If full prompt disclosure is not feasible, for example due to privacy or confidentiality concerns, summaries or examples \should be provided. Researchers \should report prompt revisions and pilot testing insights. To address model non-determinism and ensure reproducibility, especially when targeting SaaS-based commercial tools, full interaction logs (prompts + responses) \should be included.
+\underline{tl;dr:} Researchers \must report all prompts in the \paper or \supplementarymaterial, including their structure, content, formatting, and dynamic components. If full prompt disclosure is not feasible, for example due to privacy or confidentiality concerns, summaries or examples \should be provided. Prompt development strategies (e.g., zero-shot, few-shot), rationale, and selection process \must be described. When prompts are long or complex, input handling and token optimization strategies \must be documented. For dynamically generated or user-authored prompts, generation and collection processes \must be reported. Prompt reuse across models and configurations \must be specified. Researchers \should report prompt revisions and pilot testing insights. To address model non-determinism and ensure reproducibility, especially when targeting SaaS-based commercial tools, full interaction logs (prompts and responses) \should be included if privacy and confidentiality can be ensured.
 \end{quote}
-
-Prompts are critical for any study involving LLMs.
-Depending on the task, prompts may include various \href{https://www.promptingguide.ai/introduction/elements}{types of content}, including instructions, context, and input data.
-For software engineering tasks, the context can include source code, execution traces, error messages, and other forms of natural language content.
-Prompts significantly influence a model’s output, and understanding how exactly they were formatted and integrated in an LLM-based study is essential for transparency, verifiability, and reproducibility.
 
 Researchers \must report the complete prompts that were used, including all instructions, context, and input data.
 The only exception to this is if transcripts might identify anonymous participants or reveal personal or confidential information, for example when working with industry partners.
