@@ -7,7 +7,7 @@ has_children: false
 
 # Guidelines
 
-The wording of the recommendations (**MUST**, **SHOULD**, **MAY**) follows [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174).
+The wording of our recommendations (**MUST**, **SHOULD**, **MAY**) follows [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174).
 
 Throughout the guidelines, we mention what information we expect to be reported in the PAPER or in the SUPPLEMENTARY MATERIAL.
 We are aware that different venues have different page limits and that not everything can be reported in the paper.
