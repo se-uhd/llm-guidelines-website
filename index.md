@@ -36,7 +36,7 @@ Team:
 * [Brian Fitzgerald](https://www.brian-fitzgerald.com), Lero and University of Limerick (Ireland)
 * [Davide Fucci](https://dfucci.github.io), Blekinge Institute of Technology (Sweden)
 * [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
-* [Stefano Lambiase](https://stefanolambiase.github.io), University of Salerno (Italy)
+* [Stefano Lambiase](https://stefanolambiase.github.io), Aalborg University in Copenhagen (Denmark)
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
 * [Lutz Prechelt](https://www.mi.fu-berlin.de/w/Main/LutzPrechelt), Free University of Berlin (Germany)
 * [Paul Ralph](https://paulralph.name), Dalhousie University (Canada)
