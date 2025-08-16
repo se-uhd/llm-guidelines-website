@@ -32,7 +32,7 @@ Researchers \should provide a high-level architectural diagram to improve transp
 To enhance clarity, researchers \should explain design decisions, particularly regarding how the models were hosted and accessed (e.g., API-based, self-hosted, etc.) and which retrieval mechanisms were implemented (e.g., keyword search, semantic similarity matching, rule-based extraction, etc.).
 Researchers \mustnot omit critical architectural details that could impact reproducibility, such as dependencies to proprietary tools that influence the tool behavior. 
 Especially for \emph{time-sensitive measurements}, the before-mentioned description of the hosting environment is central, as it can significantly impact results.
-Researchers \must clarify whether local infrastructure or cloud services were used, including detailed (virtual) hardware specifications and latency considerations.
+Researchers \must clarify whether local infrastructure or cloud services were used, including detailed infrastructure specifications and latency considerations.
 
 If \emph{retrieval or augmentation methods} were used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses.
 This includes specifying the type of storage or database used (e.g., vector databases, relational databases, knowledge graphs) and how the retrieved information is selected and used.
@@ -43,14 +43,13 @@ For \emph{ensemble models}, besides following the \modelversion guideline for ea
 The \paper \must at least contain a high-level description, and details can be reported in the \supplementarymaterial.
 Aspects to consider are documenting the logic that determines which model handles which input, the interaction between models, and the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing).
 
-
 \subsubsection{Example(s)}
 
 Some empirical studies in software engineering involving LLMs have documented the architecture and supplemental data aligning with the recommended guidelines. Hereafter, we provide two examples.
 
-Sch{\"{a}}fer \textit{et al.} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}. The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce corresponding unit tests. The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites. The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation. It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
+\citeauthor{DBLP:journals/tse/SchaferNET24} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}. The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce corresponding unit tests. The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites. The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation. It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
 
-A second example is Yan et al.'s IVIE tool~\cite{DBLP:conf/chi/YanHWH24}, which integrates LLMs into the VS Code interface. The authors document the tool architecture, detailing the IDE integration, context extraction from code editors, and the formatting pipeline for LLM-generated explanations. This documentation illustrates how architectural components beyond the core LLM affect the overall tool functionality and user experience.
+A second example is \citeauthor{DBLP:conf/chi/YanHWH24}'s IVIE tool~\cite{DBLP:conf/chi/YanHWH24}, which integrates LLMs into the VS Code interface. The authors document the tool architecture, detailing the IDE integration, context extraction from code editors, and the formatting pipeline for LLM-generated explanations. This documentation illustrates how architectural components beyond the core LLM affect the overall tool functionality and user experience.
 
 \subsubsection{Advantages}
 

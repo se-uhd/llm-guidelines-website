@@ -60,14 +60,13 @@ In both cases, it is important to document the entire interaction between the in
 Just as a human participant might give different answers to the same question asked two months apart, the responses from ChatGPT can also vary over time.
 Therefore, keeping a record of the actual conversation is crucial for accuracy and context and shows depth of engagement for transparency.
 
-
 \subsubsection{Example(s)}
 
-A recent paper by Anandayuvaraj et al.~\cite{anandayuvaraj2024fail} is a good example of making prompts available online. In the paper, the authors analyze software failures reported in news articles and use prompting to automate tasks such as filtering relevant articles, merging reports, and extracting detailed failure information. Their online appendix contains all the prompts used in the study, providing valuable transparency and supporting reproducibility.
+A recent paper by \citeauthor{anandayuvaraj2024fail}~\cite{anandayuvaraj2024fail} is a good example of making prompts available online. In the paper, the authors analyze software failures reported in news articles and use prompting to automate tasks such as filtering relevant articles, merging reports, and extracting detailed failure information. Their online appendix contains all the prompts used in the study, providing valuable transparency and supporting reproducibility.
 
-A good example of comprehensive prompt reporting is provided by Liang et al.~\cite{Liang2024}. The authors make the exact prompts available in their online appendix on Figshare, including details such as code blocks being enclosed in triple backticks. While this level of detail would not fit within the paper itself, the paper thoroughly explains the rationale behind the prompt design and data output format. It also includes one overview figure and two concrete examples, ensuring transparency and reproducibility while keeping the main text concise.
+A good example of comprehensive prompt reporting is provided by \citeauthor{Liang2024}~\cite{Liang2024}. The authors make the exact prompts available in their online appendix on Figshare, including details such as code blocks being enclosed in triple backticks. While this level of detail would not fit within the paper itself, the paper thoroughly explains the rationale behind the prompt design and data output format. It also includes one overview figure and two concrete examples, ensuring transparency and reproducibility while keeping the main text concise.
 
-An example for reporting full interaction logs is the study Ronanki et al.~\cite{ronanki2023investigating}, for which they reported the full answers of ChatGPT and uploaded them to \href{https://zenodo.org/records/8124936}{Zenodo}. 
+An example for reporting full interaction logs is the study \citeauthor{ronanki2023investigating}~\cite{ronanki2023investigating}, for which they reported the full answers of ChatGPT and uploaded them to \href{https://zenodo.org/records/8124936}{Zenodo}. 
 
 
 \subsubsection{Advantages}
@@ -90,14 +89,12 @@ Additionally, prompt length constraints may require careful management, particul
 Privacy and confidentiality concerns can also hinder prompt sharing, especially when sensitive data is involved. In these cases, researchers \should provide anonymized examples and summaries wherever possible.
 For prompts containing sensitive information, researchers \must: (i) anonymize personal identifiers. (ii) replace proprietary code with functionally equivalent examples or placeholders, and (iii) clearly mark modified sections.
 
-
 Not all systems allow the reporting of full (system) prompts and interaction logs with the same ease.
 This hinders transparency and verifiability.
 Besides our recommendation to \openllm, researchers \must report whatever they can about commercial tools, acknowledging limitations due to unavailable data.
 They might also consider using open-source tools such as Continue~\cite{continue.dev}, which enable researchers to collect interaction logs and system prompts locally.
 Understanding suggestions of commercial tools such as GitHub Copilot might require recreating the exact state of the codebase at the time the suggestion was made, a challenging context to report.
 One solution could be to use version control to capture the exact state of the codebase when a recommendation occurred, and keep track of the files that were automatically added as context.
-
 
 \subsubsection{Study Types}
 
@@ -113,7 +110,6 @@ For LLMs as \judges, researchers \must include the evaluation criteria, scales, 
 For LLMs used in \synthesis tasks (e.g., summarization, aggregation), researchers \must document the sequence of prompts used to generate and refine outputs, including follow-ups and clarifying queries.
 For LLMs as \subjects (e.g., simulating human participants), researchers \must report any role-playing instructions, constraints, or personas used to guide LLM behavior.
 For \benchmarkingtasks studies using pre-defined prompts (e.g., HumanEval, CruxEval), researchers \must specify the benchmark version and any modifications made to the prompts or evaluation setup. If prompt tuning, retrieval-augmented generation (RAG), or other methods were used to adapt prompts, researchers \must disclose and justify those changes and \should make the relevant code publicly available.
-
 
 \subsubsection{References}
 

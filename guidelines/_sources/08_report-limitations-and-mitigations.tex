@@ -61,7 +61,7 @@ To mitigate these concerns, researchers \should minimize the sensitive data used
 
 %\enquote{The field of AI is currently primarily driven by research that seeks to maximize model accuracy — progress is often used synonymously with improved prediction quality. This endless pursuit of higher accuracy over the decade of AI research has significant implications for computational resource requirements and environmental footprint. To develop AI technologies responsibly, we must achieve competitive model accuracy at a fixed or even reduced computational and environmental cost.}~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22}
 
-While \emph{metrics} such as BLEU or ROUGE are commonly used to evaluate the performance of LLMs (see Section~\benchmarksmetrics), they may not capture other relevant, software engineering-specific aspects such as functional correctness or the runtime performance of automatically generated code~\cite{DBLP:conf/nips/LiuXW023}.
+While \emph{metrics} such as BLEU or ROUGE are commonly used to evaluate the performance of LLMs (see Section~\benchmarksmetrics), they may not capture other relevant, software engineering-specific aspects such as functional correctness or the runtime performance of automatically generated source code~\cite{DBLP:conf/nips/LiuXW023}.
 %Researchers \should clarify and state all relevant requirements, and employ and report the metrics to measure the satisfaction of the requirements (e.g., test-case success rate) and \should follow the best practices described in \href{/guidelines/report-baselines-benchmarks-and-metrics}{Report Suitable Baselines, Benchmarks, and Metrics}.
 
 The performance of an LLM is usually measured in terms of traditional metrics such as accuracy, precision, and recall or more contemporary metrics such as pass@k (see Section \benchmarksmetrics).
@@ -75,30 +75,28 @@ To report the environmental impact of a study, researchers \should use software 
 They \should detail the LLM version and configuration as described in \modelversion, state the hardware or hosting provider of the model as described in \toolarchitecture and report the total number of requests, accumulated input tokens, and output tokens.
 Researchers \must justify why an LLM was chosen over existing approaches and set the achieved results in relation to the higher resource consumption of LLMs (see also Section \benchmarksmetrics).
 
-
 \subsubsection{Example(s)}
 
-An example highlighting the need for caution around \emph{replicability} is the study of Staudinger et al.~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} who attempted the replication of an LLM study. They aimed to replicate the results of a previous study that did not provide a replication package. However, they were not able to reproduce the exact results, even though they saw similar trends to the original study. They consider their results as not reliable enough for a systematic review.
-To analyze whether the results of proprietary LLMs transfer to open LLMs, Staudinger et al.~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} benchmarked previous results using GPT3.5 and GPT4 against Mistral and Zephyr. They found that the employed open-source models could not deliver the same performance as the proprietary models, restricting the effect to certain proprietary models.
+An example highlighting the need for caution around \emph{replicability} is the study of \citeauthor{DBLP:conf/sigir-ap/StaudingerKPLH24}~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} who attempted the replication of an LLM study. They aimed to replicate the results of a previous study that did not provide a replication package. However, they were not able to reproduce the exact results, even though they saw similar trends to the original study. They consider their results as not reliable enough for a systematic review.
+To analyze whether the results of proprietary LLMs transfer to open LLMs, \citeauthor{DBLP:conf/sigir-ap/StaudingerKPLH24}~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} benchmarked previous results using GPT3.5 and GPT4 against Mistral and Zephyr. They found that the employed open-source models could not deliver the same performance as the proprietary models, restricting the effect to certain proprietary models.
 This paper is also an example of a study reporting the \emph{costs}: \enquote{120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM cost of our reproducibility study was 150 USD}.
 
-Individual studies already started to highlight the uncertainty about the \emph{generalizability} of their results in the future. In~\cite{DBLP:conf/msr/JesseADM23} Jesse et al. acknowledge the issue that LLMs evolve over time and that this evolution might impact the study's results.
+Individual studies already started to highlight the uncertainty about the \emph{generalizability} of their results in the future. \citeauthor{DBLP:conf/msr/JesseADM23} acknowledge the issue that LLMs evolve over time and that this evolution might impact the study's results~\cite{DBLP:conf/msr/JesseADM23}.
 Since a lot of research in software engineering evolves around code, inter-dataset code duplication has been extensively researched and addressed over the years to curate deduplicated datasets (see, e.g., \cite{DBLP:journals/pacmpl/LopesMMSYZSV17, DBLP:conf/oopsla/Allamanis19, DBLP:journals/ese/KarmakarAR23, DBLP:journals/tse/LopezCSSV25}).
 The issue of inter-dataset duplication has also attracted interest in other disciplines, with growing demands for data mining.
-For example, in the biology field, Lakiotaki et al.~\cite{DBLP:journals/biodb/LakiotakiVTGT18} acknowledge and address the overlap between multiple common disease datasets. 
-In the domain of code generation, Coignion et al.~\cite{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce leet code.
+For example, in the biology field, \citeauthor{DBLP:journals/biodb/LakiotakiVTGT18}~\cite{DBLP:journals/biodb/LakiotakiVTGT18} acknowledge and address the overlap between multiple common disease datasets. 
+In the domain of code generation, \citeauthor{DBLP:conf/ease/CoignionQR24}~\cite{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce leet code.
 To mitigate the issue of inter-dataset duplication, they only used leet code problems published after 2023-01-01, reducing the likelihood of LLMs having seen those problems before. Further, they discuss the performance differences of LLMs on different datasets in light of potential inter-dataset duplication.
-Zhou et al. performed an empirical evaluation of data leakage in 83 software engineering benchmarks~\cite{zhou2025lessleakbenchinvestigationdataleakage}.
+\citeauthor{zhou2025lessleakbenchinvestigationdataleakage} performed an empirical evaluation of data leakage in 83 software engineering benchmarks~\cite{zhou2025lessleakbenchinvestigationdataleakage}.
 While most benchmarks suffer from minimal leakage, very few suffered from leakage of up to 100\%. They found a high impact of data leakage on the performance evaluation.
 A starting point for studies that aim to assess and mitigate inter-dataset duplication are the \href{https://huggingface.co/datasets/tiiuae/falcon-refinedweb}{Falcon LLMs}.
 The technology innovation institute publicly provides access to parts of its training data for the Falcon LLMs via Hugging Face~\cite{technology_innovation_institute_2023}.
 Through this dataset, it is possible to reduce the overlap between the pre-train and evaluation data, improving the validity of the evaluation results.
 A starting point to prevent actively leaking data into a LLM improvement process is to ensure that the data is not used to train the model (e.g., via OpenAI's data control functionality, or the OpenAI API instead of the web interface)~\cite{DBLP:conf/eacl/BalloccuSLD24}.
 
-Bias can occur in datasets as well as in LLMs that have been trained on them and may result in various types of discrimination.
-Gallegos et al. propose metrics to quantify biases in various tasks (e.g., text generation, classification, question answering)~\cite{DBLP:journals/corr/abs-2309-00770}.
-Tinnes et al.~\cite{tinnessoftware} balanced the dataset size between the need for manual semantic analysis and computational resource consumption.
-
+Bias can occur in datasets and in LLMs that have been trained on them and may result in various types of discrimination.
+\citeauthor{DBLP:journals/corr/abs-2309-00770} propose metrics to quantify biases in various tasks (e.g., text generation, classification, question answering)~\cite{DBLP:journals/corr/abs-2309-00770}.
+\citeauthor{tinnessoftware}~\cite{tinnessoftware} balanced the dataset size between the need for manual semantic analysis and computational resource consumption.
 
 \subsubsection{Advantages}
 
@@ -111,7 +109,6 @@ Reporting the \emph{costs} associated with executing a study not only increases 
 Providing \emph{replication packages} entailing direct LLM output evidence as well as samples for partial replicability are paramount steps towards open and inclusive research in the light of resource inequality among researchers.
 Mindfully deciding and justifying the usage of LLMs over other approaches can lead to more efficient and sustainable approaches. 
 Reporting the \emph{environmental impact} of the usage of LLMs also sets the stage for more sustainable research practices in the field of AI.
-
 
 \subsubsection{Challenges}
 
@@ -128,11 +125,9 @@ Selecting datasets and models with fewer \emph{biases} is challenging, as the bi
 Measuring or estimating the \emph{environmental impact} of a study is challenging and might not always be feasible.
 Especially in exploratory research, the impact is hard to estimate beforehand, making it difficult to justify the usage of LLMs over other approaches.
 
-
 \subsubsection{Study Types}
 
 The limitations and mitigations \should be followed for all study types in a sensible manner, i.e. depending on the applicability to the individual study.
-
 
 \subsubsection{References}
 

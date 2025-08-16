@@ -61,20 +61,21 @@ For fine-tuned models, additional recommendations apply:
 Commercial models (e.g., GPT-4o) or LLM-based tools (e.g., ChatGPT) might not give researchers access to all required information.
 Our suggestion is to report what is available, and openly acknowledge limitations that hinder reproducibility (see also Sections \prompts and \limitationsmitigations).
 
-
 \subsubsection{Example(s)}
 
 Based on the documentation that OpenAI and Azure provide~\cite{OpenAI25, Azure25}, researchers might, for example, report:
 
 \begin{quote}
+\small
 \it
  ``We integrated a  \texttt{gpt-4} model in version \texttt{0125-Preview} via the Azure OpenAI Service, and configured it with a temperature of 0.7, top\_p set to 0.8, a maximum token length of 512, and the  seed value \texttt{23487}.
  We ran our experiment on 10th January 2025' (system fingerprint \texttt{fp\_6b68a8204b}).
 \end{quote}
 
-Kang et al.~provide a similar statement in their paper on exploring LLM-based general bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
+\citeauthor{DBLP:conf/icse/KangYY23} provide a similar statement in their paper on exploring LLM-based general bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
 
 \begin{quote}
+\small
 \it
 ``We access OpenAI Codex via its closed beta API, using the code-davinci-002 model. For Codex, we set the temperature to 0.7, and the maximum number of tokens to 256.''
 \end{quote}
@@ -85,14 +86,10 @@ Similar statements can be made for self-hosted models.
 However, when self-hosting models, the \supplementarymaterial can become a true replication package, providing specific instructions for reproducing study results.
 For example, for models provisioned using \href{https://ollama.com/library/}{ollama}, one can report the specific tag and checksum of the model being used, e.g., \emph{``llama3.3, tag 70b-instruct-q8\_0, checksum d5b5e1b84868.''}
 Given suitable hardware, running the corresponding model in its default configuration is then as easy as executing one command in the command line (see also Section \openllm):
+\texttt{ollama run llama3.3:70b-instruct-q8\_0}
 
-\begin{verbatim}
-ollama run llama3.3:70b-instruct-q8_0
-\end{verbatim}
-
-An example of a study involving fine-tuning is Dhar et al.'s work~\cite{DBLP:conf/icsa/DharVV24}.
+An example of a study involving fine-tuning is \citeauthor{DBLP:conf/icsa/DharVV24}'s work~\cite{DBLP:conf/icsa/DharVV24}.
 They conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions. The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system. The study provides information on the fine-tuning approach and datasets used for evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
-
 
 \subsubsection{Advantages}
 
@@ -122,11 +119,9 @@ They \must always report the configuration that is visible to them, acknowledgin
 
 Depending on the specific study type, researchers \should provide additional information regarding the architecture of a tool they built (see Section \toolarchitecture), prompts and interactions logs (see Section \prompts), and specific limitations an mitigations (see Section \limitationsmitigations).
 
-
 For example, when \llmusage by focusing on commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their study setup.
 The configured model name, version, and the date when the experiment was conducated \must always be reported.
 In those cases, reporting other aspects such as prompts and interaction logs is essential.
-
 
 \subsubsection{References}
 

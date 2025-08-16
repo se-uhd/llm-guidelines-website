@@ -17,6 +17,8 @@ We consider LLMs supporting writing or LLMs supporting study design to be out-of
 
 Our [Guidelines](/guidelines) use the following study types to contextualize the recommendations we provide.
 We present the study types independent of specific guidelines, that is, the guidelines refer to the study types but not the other way around.
+The study type sections start with a **description**, followed by **examples** from the SE research community and beyond as well as the **advantages** and **challenges** of using LLMs for the respective study types.
+This section is structured as follows:
 
 1. [LLMs as Tools for Software Engineeering Researchers](#introduction-llms-as-tools-for-software-engineering-researchers)
     1. [LLMs as Annotators](#llms-as-annotators)

@@ -47,10 +47,9 @@ Due to this non-determinism, researchers \should repeat experiments to statistic
 From a measurement perspective, researchers \should reflect on the theories, values, and measurement models on which the benchmarks and metrics they have selected for their study depend.
 For example, a large open dataset of software bugs is a collection of bugs according to a certain theory of bugs, and the values and perspective of the people who labelled the dataset. Reflecting on the context in which these labels were assigned and discussing if and how the labels generalize to a new study context is crucial.
 
-
 \subsubsection{Example(s)}
 
-Hu et al.~\cite{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
+\citeauthor{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
 They analyzed 191 benchmarks and categorized them based on the specific task they address, making the paper a valuable resource for identifying relevant existing benchmarks.
 
 Two benchmarks used for code generation are \emph{HumanEval} (available on \href{https://github.com/openai/human-eval}{GitHub}) \cite{DBLP:conf/acl/PapineniRWZ02} and \emph{MBPP} (available on \href{https://huggingface.co/datasets/google-research-datasets/mbpp}{Hugging Face}) \cite{DBLP:journals/corr/abs-2108-07732}.
@@ -61,7 +60,7 @@ The output of the LLM is evaluated either against the canonical solution using m
 Other benchmarks for code generation include \emph{ClassEval} (available on \href{https://github.com/FudanSELab/ClassEval}{GitHub}) \cite{DBLP:journals/corr/abs-2308-01861}, \emph{LiveCodeBench} (available on \href{https://github.com/LiveCodeBench/LiveCodeBench}{GitHub}) \cite{DBLP:journals/corr/abs-2403-07974}, and \emph{SWE-bench} (available on \href{https://github.com/swe-bench/SWE-bench}{GitHub}) \cite{DBLP:conf/iclr/JimenezYWYPPN24}.
 An example of a code translation benchmark is \emph{TransCoder}~\cite{DBLP:journals/corr/abs-2006-03511} (available on \href{https://github.com/facebookresearch/CodeGen}{GitHub}). 
 
-According to \citet{10.1145/3695988}, main problems types for LLMs are classification, recommendation and generation problems.
+According to \citeauthor{10.1145/3695988}, main problems types for LLMs are classification, recommendation and generation problems.
 Each of these problem types requires a different set of metrics.
 They provide a comprehensive overview of benchmarks categorized by software engineering tasks.
 Common metrics for assessing generation tasks are \emph{BLEU}, \emph{pass@k}, \emph{Accuracy/ Accuracy@k}, and \emph{Exact Match}~\cite{10.1145/3695988}.
@@ -105,7 +104,7 @@ For downstream tasks that permit multiple solutions or user interaction, strong 
 For instance, a user selecting the correct test case from multiple suggestions allows for some model errors.
 %In code search, finding the most appropriate good snippet for a given context, a reranking algorithm mitigate low pass rates at low k-values.
 Common examples for papers using pass@k are papers introducing new models for code generation such as \cite{DBLP:journals/corr/abs-2308-12950, DBLP:journals/corr/abs-2401-14196, DBLP:journals/corr/abs-2409-12186, DBLP:journals/corr/abs-2305-06161}.
-%\subsubsection{Exact Match}
+%\subsubsection{\bfseries Exact Match}
 
 \emph{Exact match} is another metric that calculates the percentage of replicas a model can produce.
 If the model is able to produce the exact target sequence a score of 1 is awarded; otherwise 0.
@@ -114,15 +113,14 @@ Compared to BLEU-N, \emph{exact match} is a stricter measurement.
 
 The choice of metrics strongly depends on the specific task.
 Consequently, papers addressing different research questions employ different metrics.
-For example, Liu et al. assesses LLM models for their correctness on code generation using pass@k~\cite{DBLP:conf/nips/LiuXW023}.
+For example, \citeauthor{DBLP:conf/nips/LiuXW023} assesses LLM models for their correctness on code generation using pass@k~\cite{DBLP:conf/nips/LiuXW023}.
 However, pass@k is not an universal metric suitable for every problem at hand.
 For instance, for creative or open-ended tasks such as comment generation, pass@k is not a suitable metric since not only one single correct result exists.
-Thus, Geng et al. evaluates LLMs for code comment generation using BLEU, ROUGE-L and METEOR as evaluation metrics~\cite{DBLP:conf/icse/GengWD00JML24}.
-Liu et al. investigates the performance of LLMs on automated refactorings tasks and proposes a novel metric tailored to the unique characteristics of this problem \cite{DBLP:journals/ase/LiuJZNLL25}.
+Thus, \citeauthor{DBLP:conf/icse/GengWD00JML24} evaluates LLMs for code comment generation using BLEU, ROUGE-L and METEOR as evaluation metrics~\cite{DBLP:conf/icse/GengWD00JML24}.
+\citeauthor{DBLP:journals/ase/LiuJZNLL25} investigates the performance of LLMs on automated refactorings tasks and proposes a novel metric tailored to the unique characteristics of this problem \cite{DBLP:journals/ase/LiuJZNLL25}.
 
 %Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
 %To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
-
 
 \subsubsection{Advantages}
 
@@ -171,12 +169,11 @@ For unforeseen scenarios, however, the model might perform much worse.
 %When optimizing for a metric, the underlying model might adjust its parameters to improve the metric, thereby failing to generalize.
 %This can result in a model performing exceptionally well on a benchmark but struggling to hold up the performance in unforeseen settings, such as real-world scenarios.
 
-
 \subsubsection{Study Types}
 
 This guideline \must be followed for all study types that automatically evaluate the performance of LLMs or LLM-based tools.
 The design of a benchmark and the selection of appropriate metrics are highly dependent on the specific study type and research goal.
-Recommending specific metrics for specific study types is beyond the scope of these guidelines, but Cao et al. provide a good starting point and overview of existing metrics for evaluating LLMs~\cite{10.1145/3695988}.
+Recommending specific metrics for specific study types is beyond the scope of these guidelines, but \citeauthor{10.1145/3695988} provide a good starting point and overview of existing metrics for evaluating LLMs~\cite{10.1145/3695988}.
 Section \humanvalidation provides an overview of integrating human evaluation in LLM-based studies. 
 
 For example, for \annotators, the research goal might be to assess which model comes close to a ground truth dataset created by human annotators.
@@ -189,7 +186,6 @@ If non-standard metrics are used they \must state the reasoning.
 % What are characteristics of a specific study type?
 % - 
 
-% Benchmark
 \subsubsection{References}
 
 \bibliographystyle{plainnat}

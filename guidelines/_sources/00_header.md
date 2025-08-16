@@ -25,6 +25,10 @@ The main goal of our guidelines is to **enable reproducibility and replicability
 While we consider LLM-based studies to have characteristics that differ from traditional empirical studies (e.g., their inherent non-determinism and the fact that truly open models are rare), previous guidelines regarding open science and  empirical studies still apply.
 While full reproducibility of LLM study results is very challenging given LLM's non-determinism, transparency on LLM usage, methods, data, and architecture, as suggested by our guidelines, is an essential prerequisite for future replication studies.
 
+At the beginning of each section, we provide a brief <u><em>tl;dr</em></u> summary that lists the most important aspects of the corresponding guideline.
+In addition to our **recommendations**, we provide **examples** from the SE research community and beyond as well as the **advantages** and potential **challenges** of following the respective guidelines.
+We start with an aggregation of all <u><em>tl;dr</em></u> summaries, followed by the individual guidelines:
+
 ## Overview
 
 1. [Declare LLM Usage and Role](#declare-llm-usage-and-role)
