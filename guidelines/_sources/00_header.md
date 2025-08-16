@@ -27,6 +27,7 @@ While full reproducibility of LLM study results is very challenging given LLM's 
 
 At the beginning of each section, we provide a brief <u><em>tl;dr</em></u> summary that lists the most important aspects of the corresponding guideline.
 In addition to our **recommendations**, we provide **examples** from the SE research community and beyond as well as the **advantages** and potential **challenges** of following the respective guidelines.
+We conclude each guideline by linking it to the **study types**.
 We start with an aggregation of all <u><em>tl;dr</em></u> summaries, followed by the individual guidelines:
 
 ## Overview
