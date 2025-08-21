@@ -9,57 +9,62 @@
 \underline{tl;dr:} \input{_tldr/02_report-model-version-configuration-and-customizations-tldr.tex}
 \end{quote}
 
-This section focuses on documenting the \emph{model-specific} aspects of empirical studies involving LLMs.
+This guideline focuses on documenting the \emph{model-specific} aspects of empirical studies involving LLMs.
 While Section~\toolarchitecture addresses how LLMs are integrated into larger systems and tools, here we concentrate on the models themselves, their version, configuration parameters, and any direct customizations applied to the model (e.g., fine-tuning).
-Whether only this guideline or also the one linked above apply for a particular study depends on the exact study setup and tool architecture.
+Whether only this guideline or also the following one applies for a particular study depends on the exact study setup and tool architecture.
 In any way, as soon as an LLM is involved, the information outlined in this guideline is essential to enable reproducibility and replicability.
 
 \subsubsection{Recommendations}
 
 LLMs or LLM-based tools, especially those offered as-a-service, are frequently updated; different versions may produce different results for the same input.
-Moreover, configuration parameters such as the temperature affect content generation.
-Therefore, researchers \must document the specific model or tool version used in a study, along with the date when the experiments were conducted, and the exact configuration that was used, in the \paper.
+Moreover, configuration parameters such as temperature or seed values affect content generation.
+Therefore, researchers \must document in the \paper which model or tool version they used in their study, along with the date when the experiments were carried out and the configured parameters that affect output generation.
 Since default values might change over time, researchers \should always report all configuration values, even if they used the defaults.
+Checksums and fingerprints \may be reported since they identify specific versions and configurations.
 Depending on the study context, other properties such as the context window size (number of tokens) \may be reported.
 Researchers \should motivate in the \paper why they selected certain models, versions, and configurations.
 Potential reasons can be monetary (e.g., no funding to integrate large commercial models), technical (e.g., existing hardware only supports smaller models), or methodological (e.g., planned comparison to previous work).
-Depending on the specific study context, additional information regarding tool architecture or the experiment setup \should be reported (see Section \toolarchitecture).
+Depending on the specific study context, additional information regarding the experiment or tool architecture \should be reported (see Section \toolarchitecture).
 
-A common customization approach for existing LLMs is fine-tuning. If a model was fine-tuned, researchers \must describe the fine-tuning goal (e.g., improving the performance for a specific task), the fine-tuning procedure (e.g., full fine-tuning vs. Low-Rank Adaptation (LoRA), selected hyperparameters, loss function, learning rate, batch size, etc.), and the fine-tuning dataset (e.g., data sources, the preprocessing pipeline, dataset size) in the \paper.
+A common customization approach for existing LLMs is fine-tuning.
+If a model was fine-tuned, researchers \must describe the fine-tuning goal (e.g., improving the performance for a specific task), the fine-tuning procedure (e.g., full fine-tuning vs. Low-Rank Adaptation (LoRA), selected hyperparameters, loss function, learning rate, batch size, etc.), and the fine-tuning dataset (e.g., data sources, the preprocessing pipeline, dataset size) in the \paper.
 Researchers \should either share the fine-tuning dataset as part of the \supplementarymaterial or explain in the \paper why the data cannot be shared (e.g., because it contains confidential or personal data that could not be anonymized).
 The same applies to the fine-tuned model weights.
-Suitable benchmarks and metrics \should be used to compare the base model to the fine-tuned model (see Section \benchmarksmetrics).
+Suitable benchmarks and metrics \should be used to compare the base model with the fine-tuned model (see Section \benchmarksmetrics).
 
 In summary, our recommendation is to report:
+
 % not supported by pandoc...
 %\begin{enumerate*}[label=(\arabic*)]
-%\item Model/tool name and version, checksum/fingerprint if available; \must in \paper;
-%\item All relevant configured parameters that affect output generation; \must in \paper;
-%\item Default values of all available parameters; \should;
-%\item Additional properties such as context window size; \may.
+%\item Model/tool name and version (\must in \paper);
+%\item All relevant configured parameters that affect output generation (\must in \paper);
+%\item Default values of all available parameters (\should);
+%\item Checksum/fingerprint of used model version and configuration (\may);
+%\item Additional properties such as context window size (\may).
 %\end{enumerate*}
-\textbf{(1)} Model/tool name and version, checksum/fingerprint if available; \must in \paper;
-\textbf{(2)} All relevant configured parameters that affect output generation; \must in \paper;
-\textbf{(3)} Default values of all available parameters; \should;
-\textbf{(4)} Additional properties such as context window size; \may.
+\textbf{(1)} Model/tool name and version (\must in \paper);
+\textbf{(2)} All relevant configured parameters that affect output generation (\must in \paper);
+\textbf{(3)} Default values of all available parameters (\should);
+\textbf{(4)} Checksum/fingerprint of used model version and configuration (\may);
+\textbf{(5)} Additional properties such as context window size (\may).
 
 For fine-tuned models, additional recommendations apply:
-% not supported by pandoc...
+
 %\begin{enumerate*}[label=(\arabic*)]
-%\item Fine-tuning goal; \must in \paper;
-%\item Fine-tuning dataset creation and characterization; \must in \paper;
-%\item Fine-tuning parameters and procedure; \must in \paper;
-%\item Fine-tuning dataset and fine-tuned model weights; \should;
-%\item Validation metrics and benchmarks; \should.
+%\item Fine-tuning goal (\must in \paper);
+%\item Fine-tuning dataset creation and characterization (\must in \paper);
+%\item Fine-tuning parameters and procedure (\must in \paper);
+%\item Fine-tuning dataset and fine-tuned model weights (\should);
+%\item Validation metrics and benchmarks (\should).
 %\end{enumerate*}
-\textbf{(1)} Fine-tuning goal; \must in \paper;
-\textbf{(2)} Fine-tuning dataset creation and characterization; \must in \paper;
-\textbf{(3)} Fine-tuning parameters and procedure; \must in \paper;
-\textbf{(4)} Fine-tuning dataset and fine-tuned model weights; \should;
-\textbf{(5)} Validation metrics and benchmarks; \should.
+\textbf{(1)} Fine-tuning goal (\must in \paper);
+\textbf{(2)} Fine-tuning dataset creation and characterization (\must in \paper);
+\textbf{(3)} Fine-tuning parameters and procedure (\must in \paper);
+\textbf{(4)} Fine-tuning dataset and fine-tuned model weights (\should);
+\textbf{(5)} Validation metrics and benchmarks (\should).
 
 Commercial models (e.g., GPT-4o) or LLM-based tools (e.g., ChatGPT) might not give researchers access to all required information.
-Our suggestion is to report what is available, and openly acknowledge limitations that hinder reproducibility (see also Sections \prompts and \limitationsmitigations).
+Our suggestion is to report what is available and openly acknowledge limitations that hinder reproducibility (see also Sections \prompts and \limitationsmitigations).
 
 \subsubsection{Example(s)}
 
@@ -72,7 +77,7 @@ Based on the documentation that OpenAI and Azure provide~\cite{OpenAI25, Azure25
  We ran our experiment on 10th January 2025' (system fingerprint \texttt{fp\_6b68a8204b}).
 \end{quote}
 
-\citeauthor{DBLP:conf/icse/KangYY23} provide a similar statement in their paper on exploring LLM-based general bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
+\citeauthor{DBLP:conf/icse/KangYY23} provide a similar statement in their paper on exploring LLM-based bug reproduction~\cite{DBLP:conf/icse/KangYY23}:
 
 \begin{quote}
 \small
@@ -83,45 +88,44 @@ Based on the documentation that OpenAI and Azure provide~\cite{OpenAI25, Azure25
 Our guidelines additionally suggest to report a checksum/fingerprint and exact dates, but otherwise this example is close to our recommendations. 
 
 Similar statements can be made for self-hosted models.
-However, when self-hosting models, the \supplementarymaterial can become a true replication package, providing specific instructions for reproducing study results.
+However, when self-hosting models, the \supplementarymaterial can become a true replication package, providing specific instructions to reproduce study results.
 For example, for models provisioned using \href{https://ollama.com/library/}{ollama}, one can report the specific tag and checksum of the model being used, e.g., \emph{``llama3.3, tag 70b-instruct-q8\_0, checksum d5b5e1b84868.''}
 Given suitable hardware, running the corresponding model in its default configuration is then as easy as executing one command in the command line (see also Section \openllm):
 \texttt{ollama run llama3.3:70b-instruct-q8\_0}
 
 An example of a study involving fine-tuning is \citeauthor{DBLP:conf/icsa/DharVV24}'s work~\cite{DBLP:conf/icsa/DharVV24}.
-They conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions. The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system. The study provides information on the fine-tuning approach and datasets used for evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
+They conducted an exploratory empirical study to assess whether LLMs can generate architectural design decisions.
+The authors detail the system architecture, including the decision-making framework, the role of the LLM in generating design decisions, and the interaction between the LLM and other components of the system (see Section \toolarchitecture).
+The authors provide information on the fine-tuning approach and datasets used for the evaluation, including the source of the architectural decision records, preprocessing methods, and the criteria for data selection. 
 
 \subsubsection{Advantages}
 
-Reporting the information that we have outlined in our recommendations is a prerequisite for the verification, reproduction, and replication of LLM-based studies under the same or similar conditions.
-LLMs are inherently non-deterministic. 
-However, this should not be an excuse to dismiss the verifiability and reproducibility of empirical studies involving LLMs.
-While exactly reproducibility is hard to achieve, researchers can do their best to come as close as possible to that gold standard.
-And part of that effort is reporting the information outlined in this guideline. 
-However, that information alone is generally not sufficient.
+Reporting of the information described above is a prerequisite for the verification, reproduction, and replication of LLM-based studies under the same or similar conditions.
+As mentioned before, LLMs are inherently non-deterministic. 
+However, this cannot be an excuse to dismiss the verifiability and reproducibility of empirical studies involving LLMs.
+Although exact reproducibility is hard to achieve, researchers can do their best to come as close as possible to that gold standard.
+Part of that effort is reporting the information outlined in this guideline. 
+%However, that information alone is generally not sufficient.
 
 \subsubsection{Challenges}
 
 Different model providers and modes of operating the models allow for varying degrees of information.
-For example, OpenAI provides a model version and a system fingerprint describing the backend configuration that can also influence the output.
-However, the fingerprint is indeed just intended to detect changes to the model or its configuration.
-As a user, one cannot go back to a certain fingerprint.
+For example, OpenAI provides a model version and a system fingerprint describing the backend configuration, which can also influence the output.
+However, in fact, the fingerprint is intended only to detect changes in the model or its configuration; one cannot go back to a certain fingerprint.
 As a beta feature, OpenAI lets users set a seed parameter to receive ``(mostly) consistent output''~\cite{OpenAI23}.
 However, the seed value does not allow for full reproducibility and the fingerprint changes frequently. 
-While, as motived above, open models significantly simplify re-running experiments, they also come with challenges in terms of reproducibility, as generated outputs can be inconsistent despite setting the temperature to 0 and using a seed value (see \href{https://github.com/ollama/ollama/issues/5321}{GitHub issue for Llama3}).
-
+While, as motivated above, open models significantly simplify re-running experiments, they also come with challenges in terms of reproducibility, as generated outputs can be inconsistent despite setting the temperature to 0 and using a seed value (see \href{https://github.com/ollama/ollama/issues/5321}{GitHub issue for Llama3}).
 %\comment{Should we also address how API rate limits and usage constraints can affect experiments?}
 
 \subsubsection{Study Types}
 
 This guideline \must be followed for all study types for which the researcher has access to (parts of) the model's configuration.
-They \must always report the configuration that is visible to them, acknowledging the reproducibility challenges of commercial tools and models offered as-a-service. 
-
-Depending on the specific study type, researchers \should provide additional information regarding the architecture of a tool they built (see Section \toolarchitecture), prompts and interactions logs (see Section \prompts), and specific limitations an mitigations (see Section \limitationsmitigations).
+They \must always report the configuration that is visible to them, acknowledging the reproducibility challenges of commercial tools and models that are offered as-a-service. 
+Depending on the specific study type, researchers \should provide additional information on the architecture of a tool they built (see Section \toolarchitecture), prompts and interactions logs (see Section \prompts), and specific limitations and mitigations (see Section \limitationsmitigations).
 
 For example, when \llmusage by focusing on commercial tools such as ChatGPT or GitHub Copilot, researchers \must be as specific as possible in describing their study setup.
-The configured model name, version, and the date when the experiment was conducated \must always be reported.
-In those cases, reporting other aspects such as prompts and interaction logs is essential.
+The configured model name, version, and the date when the experiment was conducted \must always be reported.
+In those cases, reporting other aspects, such as prompts and interaction logs, is essential.
 
 \subsubsection{References}
 

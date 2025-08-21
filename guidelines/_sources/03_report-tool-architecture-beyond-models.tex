@@ -16,22 +16,22 @@ This section provides guidelines for documenting these broader architectures.
 \subsubsection{Recommendations}
 
 Oftentimes, LLM-based tool have \emph{complex software layers} around the model (or models) that pre-processes data, prepares prompts, filters user requests, or post-processes responses.
-One example is ChatGPT, which allows users to select from different GPT models, including GPT-4o.
-GitHub Copilot allows users to select the same model, but answers may significantly differ between the two tools as GitHub Copilot automatically adds context from the software project it is used in.
-Finally, researchers can build their own tools utilizing GPT-4o directly (\textit{e.g.}, via the OpenAI API).
+An example is ChatGPT, which allows users to select from different GPT models.
+GitHub Copilot allows users to select the same models, but its answers may significantly differ from ChatGPT, as GitHub Copilot automatically adds context from the software project in which it is used.
+Researchers can build their own tools using GPT models directly (\textit{e.g.}, via the OpenAI API).
 The infrastructure and business logic around the bare model can significantly contribute to the performance of a tool for a given task.
-Therefore, researchers \must clearly describe the tool architecture and what exactly the LLM (or LLMs) contribute to the tool or method presented in a research paper.
+Therefore, researchers \must clearly describe the tool architecture and what exactly the LLM (or ensemble of LLMs) contributes to the tool or method presented in a research paper.
 
-If the LLM is used as a \emph{standalone system}, for example, by sending prompts directly to a GPT-4o model via the OpenAI API without pre-processing the prompts or post-processing the responses, a brief explanation about this is usually sufficient.
-However, if LLMs are integrated into a more \emph{complex system} with pre-processing, retrieval mechanisms, or autonomous agents, researchers \must provide a more detailed description of the system architecture in the \paper.
+If an LLM is used as a \emph{standalone system}, for example, by sending prompts directly to a GPT-4o model via the OpenAI API without pre-processing the prompts or post-processing the responses, a brief explanation of this approach is usually sufficient.
+However, if LLMs are integrated into more \emph{complex systems} with pre-processing, retrieval mechanisms, or autonomous agents, researchers \must provide a detailed description of the system architecture in the \paper.
 Aspects to consider are how the LLM interacts with other components such as databases, external APIs, and frameworks.
 If the LLM is part of an \emph{agent-based system} that autonomously plans, reasons, or executes tasks, researchers \must describe its exact architecture, including the agents' roles (e.g., planner, executor, coordinator), whether it is a single-agent or multi-agent system, how it interacts with external tools and users, and the reasoning framework used (e.g., chain-of-thought, self-reflection, multi-turn dialogue, tool usage).
 %Researchers \mustnot present an agent-based system without detailing how it makes decisions and executes tasks.
 
 Researchers \should provide a high-level architectural diagram to improve transparency.
-To enhance clarity, researchers \should explain design decisions, particularly regarding how the models were hosted and accessed (e.g., API-based, self-hosted, etc.) and which retrieval mechanisms were implemented (e.g., keyword search, semantic similarity matching, rule-based extraction, etc.).
-Researchers \mustnot omit critical architectural details that could impact reproducibility, such as dependencies to proprietary tools that influence the tool behavior. 
-Especially for \emph{time-sensitive measurements}, the before-mentioned description of the hosting environment is central, as it can significantly impact results.
+To improve clarity, researchers \should explain design decisions, particularly regarding how the models were hosted and accessed (API-based, self-hosted, etc.) and which retrieval mechanisms were implemented (keyword search, semantic similarity matching, rule-based extraction, etc.).
+Researchers \mustnot omit critical architectural details that could affect reproducibility, such as dependencies on proprietary tools that influence tool behavior. 
+Especially for \emph{time-sensitive measurements}, the previously mentioned description of the hosting environment is central, as it can significantly impact the results.
 Researchers \must clarify whether local infrastructure or cloud services were used, including detailed infrastructure specifications and latency considerations.
 
 If \emph{retrieval or augmentation methods} were used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses.
@@ -39,28 +39,36 @@ This includes specifying the type of storage or database used (e.g., vector data
 Stored data used for context augmentation \must be reported, including details on data preprocessing, versioning, and update frequency.
 If this data is not confidential, an anonymized snapshot of the data used for context augmentation \should be made available.
 
-For \emph{ensemble models}, besides following the \modelversion guideline for each model, researchers \must describe the architecture that connects the models.
+For \emph{ensemble models}, in addition to following the \modelversion guideline for each model, the researchers \must describe the architecture that connects the models.
 The \paper \must at least contain a high-level description, and details can be reported in the \supplementarymaterial.
-Aspects to consider are documenting the logic that determines which model handles which input, the interaction between models, and the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing).
+Aspects to consider include documenting the logic that determines which model handles which input, the interaction between models, and the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing).
 
 \subsubsection{Example(s)}
 
-Some empirical studies in software engineering involving LLMs have documented the architecture and supplemental data aligning with the recommended guidelines. Hereafter, we provide two examples.
+Some empirical studies involving LLMs in SE have documented the architecture and supplemental data according to our guidelines. In the following, we provide two examples.
 
-\citeauthor{DBLP:journals/tse/SchaferNET24} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}. The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce corresponding unit tests. The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites. The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation. It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
+\citeauthor{DBLP:journals/tse/SchaferNET24} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}.
+The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce the corresponding unit tests.
+The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites.
+The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation.
+It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
 
-A second example is \citeauthor{DBLP:conf/chi/YanHWH24}'s IVIE tool~\cite{DBLP:conf/chi/YanHWH24}, which integrates LLMs into the VS Code interface. The authors document the tool architecture, detailing the IDE integration, context extraction from code editors, and the formatting pipeline for LLM-generated explanations. This documentation illustrates how architectural components beyond the core LLM affect the overall tool functionality and user experience.
+A second example is \citeauthor{DBLP:conf/chi/YanHWH24}'s IVIE tool~\cite{DBLP:conf/chi/YanHWH24}, which integrates LLMs into the VS Code interface.
+The authors document the tool architecture, detailing the IDE integration, context extraction from code editors, and the formatting pipeline for LLM-generated explanations.
+This documentation illustrates how architectural components beyond the core LLM affect the overall tool performance and user experience.
 
 \subsubsection{Advantages}
 
 Usually, researchers implement software layers around the bare LLMs, using different architectural patterns.
 These implementations significantly impact the performance of LLM-based tools and hence need to be documented in detail.
-Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility, transparency, and trust~\cite{DBLP:journals/software/LuZXXW24}.
-In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking. A clear documentation of the architecture and supplemental data being used enables comparison and upholds scientific rigor and accountability, fostering reliable and reusable research.
+Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility and transparency~\cite{DBLP:journals/software/LuZXXW24}.
+In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking.
+A clear documentation of the architecture and the supplemental data that was used enables comparison and upholds scientific rigor and accountability, fostering reliable and reusable research.
 
 \subsubsection{Challenges}
 
-Researchers face challenges in documenting LLM-based architectures, including proprietary APIs and dependencies that restrict disclosure, managing large-scale retrieval databases, and ensuring efficient query execution. They must also balance transparency with data privacy concerns, adapt to the evolving nature of LLM integrations, and, depending on the context, handle the complexity of multi-agent interactions and decision-making logic, all of which can impact reproducibility and system clarity.
+Researchers face challenges in documenting LLM-based architectures, including proprietary APIs and dependencies that restrict disclosure, managing large-scale retrieval databases, and ensuring efficient query execution.
+They must also balance transparency with data privacy concerns, adapt to the evolving nature of LLM integrations, and, depending on the context, handle the complexity of multi-agent interactions and decision-making logic, all of which can impact reproducibility and system clarity.
 
 \subsubsection{Study Types}
 

@@ -7,51 +7,49 @@
 \subsection{Motivation}
 
 In the short period since the release of ChatGPT in November 2022, large language models (LLMs) have changed the software engineering (SE) research landscape.
-While there are numerous opportunities to use LLMs for supporting research or software engineering tasks, solid science needs rigorous empirical evaluations.
-Such evaluations might explore the effectiveness, performance, and robustness of LLMs in different contexts, such as improving code quality, reducing development time, or supporting software documentation.
-However, it is often unclear how valid and reproducible results can be achieved with empirical studies involving LLMs---or what effect their usage has on the validity of empirical results.
-This uncertainty poses significant challenges for researchers aiming to draw reliable conclusions from empirical studies.
+Although there are numerous opportunities to use LLMs to support SE research and development tasks, solid science needs rigorous empirical evaluations to explore the effectiveness, performance, and robustness of using LLMs to automate different research and development tasks.
+LLMs can, for example, be used to support literature reviews, reduce development time, and generate software documentation.
+However, it is often unclear how valid, reproducible, and replicable empirical studies involving LLM are.
+This uncertainty poses significant challenges for researchers and practitioners who seek to draw reliable conclusions from empirical studies.
 
-One of the primary risks in creating unreproducible results stems from the variability in LLM performance due to differences in training data, model architecture, evaluation metrics, and the inherent non-determinism that those models possess.
-For example, slight changes in the training dataset or the hyperparameters can lead to significantly different outcomes, making it difficult to replicate studies.
-Additionally, the lack of standardized benchmarks and evaluation protocols further complicates the reproducibility of results.
-These issues highlight the need for clear guidelines and best practices to ensure that empirical studies with LLMs yield valid and reproducible results.
-Another aspect is that, without detailed information on the exact study setup, benchmarks, and metrics used, it is challenging for other researchers to replicate results using different models and tools.
 The importance of open science practices and documenting the study setup is not to be underestimated~\cite{DBLP:journals/corr/abs-2412-17859}.
-
-There has been extensive work developing guidelines for conducting and reporting specific types of empirical studies such as controlled experiments (e.g., \emph{Experimentation in Software Engineering}~\cite{DBLP:books/sp/WohlinRHORW24} or \emph{Guide to Advanced Empirical Software Engineering}~\cite{DBLP:books/sp/08/SSS2008}) or their replications (e.g., [A Procedure and \emph{Guidelines for Analyzing Groups of Software Engineering Replications}~\cite{DBLP:journals/tse/SantosVOJ21}).
-
-As motivated in our previous position paper~\cite{DBLP:conf/wsese/0001BFB25}, we believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducibility.
-For example, even if we know the specific version of an LLM used for an empirical study, the reported performance for the studied tasks can change over time, especially for commercial models that evolve beyond version identifiers~\cite{DBLP:journals/corr/abs-2307-09009}.
-Moreover, commercial providers do not guarantee the availability of old versions indefinitely.
-Besides versions, LLMs' performance widely varies depending on configured parameters such as temperature.
-Therefore, not reporting the parameter settings impacts the reproducibility of the research.
+One of the primary risks in creating irreproducible and irreplicable results based on studies involving LLMs stems from the variability in model performance due to their inherent non-determinism, but also due to differences in configuration, training data, model architecture, or evaluation metrics.
+Slight changes can lead to significantly different results.
+The lack of standardized benchmarks and evaluation protocols further hinders the reproducibility and replicability of study results.
+Without detailed information on the exact study setup, benchmarks, and metrics used, it is challenging for other researchers to replicate results using different models and tools.
+These issues highlight the need for clear guidelines and best practices for designing and reporting studies involving LLMs.
+While the SE research community has developed guidelines for conducting and reporting specific types of empirical studies such as controlled experiments (e.g., \emph{Experimentation in Software Engineering}~\cite{DBLP:books/sp/WohlinRHORW24}, \emph{Guide to Advanced Empirical Software Engineering}~\cite{DBLP:books/sp/08/SSS2008}) or their replications (e.g., \emph{A Procedure and Guidelines for Analyzing Groups of Software Engineering Replications}~\cite{DBLP:journals/tse/SantosVOJ21}),  we believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducibility and replicability (see also our previous position paper~\cite{DBLP:conf/wsese/0001BFB25}).
+For example, even if we knew the specific version of a commercial LLM used for an empirical study, the reported task performance could still change over time, since commercial models are known to evolve beyond version identifiers~\cite{DBLP:journals/corr/abs-2307-09009}.
+Moreover, commercial providers do not guarantee the availability of old model or tool versions indefinitely.
+In addition to version differences, LLM performance varies widely depending on configured parameters such as temperature.
+Therefore, not reporting the parameter settings severely impacts reproducibility.
 Even for ``open'' models such as \emph{Llama}, we do not know how they were fine-tuned for specific tasks and what the exact training data was~\cite{Gibney2024}.
-Further, when evaluating LLMs' performance for certain programming tasks, it would be relevant to know whether the solution to a certain problem was part of the training data or not.
+A general problem when evaluating LLMs' performance is that we do not know whether the solution to a certain problem was part of the training data or not.
 
-So far, there are no hollistic guidelines for conducting and reporting studies involving LLMs in software engineering research.
+So far, there are no holistic guidelines for conducting and reporting studies involving LLMs in SE research.
 With this community effort, we try to fill this gap.
-After outlining the scope of this article, we continue by introducing a taxonomy of \studytypes before presenting eight \guidelines that the authors of this article co-developed as a team.
-The most recent version is always available on this website; other researchers can suggest changes via our public GitHub repository.
+After outlining our \scope, we continue by introducing a taxonomy of \studytypes before presenting eight \guidelines that the authors of this article co-developed.
+The most recent version is always available online (\href{https://llm-guidelines.org/}{llm-guidelines.org}); other researchers can suggest changes via a public GitHub repository.
 
 \subsection{Scope}
 \label{sec:scope}
 
-First, we want to clarify that our focus is on LLMs, that is natural language use cases.
-Multi-modal foundational models are beyond the scope of our guidelines.
-We are aware that these foundational models have a huge potential for supporting software engineering research and practice.
-However, due to the diversity of  the artifacts that can be generated or used as input (e.g., images, audio, and video) and the more demanding hardware requirements, we deliberately focus on LLMs alone.
-However, our guidelines could be extended in the future to include foundational models beyond text.
+First, we want to clarify that our focus is on LLMs, that is, natural language use cases.
+Multi-modal foundational models are beyond the scope of our study types and guidelines.
+We are aware that these foundational models have great potential to support software engineering research and practice.
+However, due to the diversity of artifacts that can be generated or used as input (e.g., images, audio, and video) and the more demanding hardware requirements, we deliberately focus on LLMs only.
+However, our guidelines could be extended in the future to include foundational models beyond natural language text.
 
-Second, given the exponential growth in LLM usage across all research domains, we also want to define the study types to which our guidelines apply.
-LLMs are already widely used to support several aspects of the overall research process---from fairly simple tasks such as proof-reading, spell-checking, and text translation, to more complex activities such as data coding and synthesis of literature reviews.
-The \studytypes and \guidelines we describe are tailored to software engineering research, but we expect many of those study types to generalize beyond that domain.
-We focus on AI for software engineering (AI4SE), that is, studying the support and automation of software engineering tasks with the help of artificial intelligence (AI), more specifically LLMs (see Section~\llmsforengineers), as well as empirical software engineering research supported by LLMs (see Section~\llmsforresearcher).
-By research support, we mean active involvement of LLMs in data collection, processing, or analysis.
-We consider LLMs supporting writing or LLMs supporting study design to be out-of-scope for our guidelines.
+Second, given the exponential growth in LLM usage across all research domains, we also want to define the research contexts in which our guidelines apply.
+LLMs are already widely used to support several aspects of the overall research process, from fairly simple tasks such as proof-reading, spell-checking, and text translation, to more complex activities such as data coding and synthesis of literature reviews.
+The \studytypes and \guidelines we describe are tailored to software engineering (SE) research, but we expect many of our study types to generalize beyond that domain.
+On the practical side, we focus on AI for software engineering (AI4SE), that is, studying the support and automation of SE tasks with the help of artificial intelligence (AI), more specifically LLMs (see Section~\llmsforengineers).
+In terms of research support, we focus on empirical SE research supported by LLMs (see Section~\llmsforresearcher).
+By research support, we mean the active involvement of LLMs in data collection, processing, or analysis.
+We consider LLMs supporting the study design or the writing process to be out of scope.
 
-Third, with our guidelines, we mainly target researchers planning, designing, or conducting empirical studies involving LLMs.
-While the researchers reviewing scientific articles written by others can also use our guidelines, e.g., to check whether authors adhere to the \must requirements, reviewers are not our main target audience.
+Third, our guidelines mainly target researchers planning, designing, or conducting empirical studies involving LLMs.
+Although researchers who review scientific articles written by others can also use our guidelines, for example, to check whether the authors adhere to the essential \must requirements, reviewers are not our main target audience.
 
 \subsection{References}
 

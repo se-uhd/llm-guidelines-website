@@ -10,106 +10,115 @@
 \end{quote}
 
 Prompts are critical for any study involving LLMs.
-Depending on the task, prompts may include various \href{https://www.promptingguide.ai/introduction/elements}{types of content}, including instructions, context, and input data.
-For software engineering tasks, the context can include source code, execution traces, error messages, and other forms of natural language content.
-Prompts significantly influence a model's output, and understanding how exactly they were formatted and integrated in an LLM-based study is essential for transparency, verifiability, and reproducibility.
+Depending on the task, prompts may include various \href{https://www.promptingguide.ai/introduction/elements}{types of content}, including instructions, context, and input data, and output indicators.
+For SE tasks, the context can include source code, execution traces, error messages, and other forms of natural language content.
+The output can be unstructured text or a structured format such as JSON.
+Prompts significantly influence the quality of the output of a model, and understanding how exactly they were formatted and integrated into an LLM-based study is essential to ensure transparency, verifiability, and reproducibility.
 
 \subsubsection{Recommendations}
 
-Researchers \must report the complete prompts that were used, including all instructions, context, and input data.
-The only exception to this is if transcripts might identify anonymous participants or reveal personal or confidential information, for example when working with industry partners.
-This can be done with a structured template that contains placeholders for dynamically added content (see below).
-Specifying the exact format is crucial.
-For example, when using code snippets, researchers should specify whether they were enclosed in markdown-style code blocks (indented by four space characters, enclosed in triple backticks, etc.), if line breaks and whitespace were preserved, and whether additional annotations (e.g., comments) were included.
+Researchers \must report the all prompts that were used for an empirical study, including all instructions, context, input data, and output indicators.
+The only exception to this is if transcripts might identify anonymous participants or reveal personal or confidential information, for example, when working with industry partners.
+Prompts can be reported using a structured template that contains placeholders for dynamically added content (see Section \judges for an example).
+
+Moreover, specifying the exact output format of the prompts is crucial.
+For example, when using code snippets, researchers should specify whether they were enclosed in markdown-style code blocks (indented by four space characters, enclosed in triple backticks, etc.), if line breaks and whitespace were preserved, and whether additional annotations such as comments were included.
 Similarly, for other artifacts such as error messages, stack traces, researchers should explain how these were presented.
 
 Researchers \must also explain in the \paper how they developed the prompts and why they decided to follow certain prompting strategies.
-If prompts from early phases of the research are unavailable, researchers \must at least summarize the prompt evolution.
-However, given that prompts can be stored as plain text, there are established SE techniques such as version control systems that can used to collected the required provenance information.
+If prompts from the early phases of a research project are unavailable, they \must at least summarize the prompt evolution.
+However, given that prompts can be stored as plain text, there are established SE techniques such as version control systems that can be used to collect the required provenance information.
 
-They \must specify whether zero-shot, one-shot, or few-shot prompting was used. For few-shot prompts, the examples provided to the model should be clearly outlined, along with the rationale for selecting them.
-If multiple versions of a prompt were tested, researchers should describe how these variations were evaluated and how the final design was chosen.
+Prompt development is often iterative, involving collaboration between human researchers and AI tools.
+Researchers \should report any instances in which LLMs were used to suggest prompt refinements, as well as how these suggestions were incorporated.
+Furthermore, prompts may need to be revised in response to failure cases where the model produced incorrect or incomplete outputs.
+Pilot testing and prompt evaluation are vital to ensure that prompts yield reliable results.
+If such testing was conducted, researchers \should summarize key insights, including how different prompt variations affected output quality and which criteria were used to finalize the prompt design.
+%Iterative changes based on human feedback and pilot testing results \should be included in the documentation.
+A prompt changelog can help track and report the evolution of prompts throughout a research project, including key revisions, reasons for changes, and versioning (e.g., v1.0: initial prompt; v1.2: added output formatting; v2.0: incorporated examples of ideal responses).
+Since prompt effectiveness varies between models and model versions, researchers \must make clear which prompts were used for which models in which versions and with which configuration (see Section~\modelversion).
 
-When dealing with extensive or complex prompts, such as those involving large codebases or multiple error logs, researchers \must describe the strategies they used for handling input length constraints.
+Researchers \must specify whether zero-shot, one-shot, or few-shot prompting was used.
+For few-shot prompts, the examples provided to the model \should be clearly outlined, along with the rationale for selecting them.
+If multiple versions of a prompt were tested, researchers \should describe how these variations were evaluated and how the final design was chosen.
+
+When dealing with extensive or complex prompt context, researchers \must describe the strategies they used to handle input length constraints.
 Approaches might include truncating, summarizing, or splitting prompts into multiple parts.
 Token optimization measures, such as simplifying code formatting or removing unnecessary comments, \must also be documented if applied.
 
-In cases where prompts are generated dynamically—such as through preprocessing, template structures, or retrieval-augmented generation (RAG)—the process \must be thoroughly documented.
+In cases where prompts are generated dynamically, such as through preprocessing, template structures, or retrieval-augmented generation (RAG), the process \must be thoroughly documented.
 This includes explaining any automated algorithms or rules that influenced prompt generation.
-For studies involving human participants, where users might create or modify prompts themselves, researchers \must describe how these prompts were collected and analyzed.
-If full disclosure is not feasible due to privacy or confidentiality concerns, summaries and representative examples \should be provided.
+For studies involving human participants who create or modify prompts, researchers \must describe how these prompts were collected and analyzed.
 
 To ensure full reproducibility, researchers \must make all prompts and prompt variations publicly available as part of their \supplementarymaterial.
-If the full set of prompts is too extensive to include in the paper itself, researchers \should still provide representative examples and describe variations in the main body of the paper.
-Since prompt effectiveness varies across models and model versions, researchers \must make clear which prompts were used for which models in which versions and with which configuration (see Section~\modelversion).
-%For example: \textit{This prompt performed differently with GPT-4 (effective) versus Llama 2 (less effective) despite identical parameters.}
-
-Prompt development is often iterative, involving collaboration between human researchers and AI tools.
-Researchers \should report any instances where LLMs were used to suggest prompt refinements, as well as how those suggestions were incorporated.
-Furthermore, prompts may need to be revised in response to failure cases where the model produced incorrect or incomplete outputs.
-Iterative changes based on human feedback and pilot testing results \should also be included in the documentation.
-A prompt changelog can help track and report the evolution of prompts throughout a research project, including key revisions, reasons for changes, and versioning (e.g., v1.0: initial prompt; v1.2: added output formatting; v2.0: incorporated examples of ideal responses).
-Pilot testing and prompt evaluation are vital for ensuring that prompts yield reliable results. If such testing was conducted, researchers \should summarize key insights, including how different prompt variations affected output quality and which criteria were used to finalize the prompt design.
+If the complete set of prompts cannot be included in the \paper, researchers \should provide summaries and representative examples.
+This also applies if complete disclosure is not possible due to privacy or confidentiality concerns.
+For prompts containing sensitive information, researchers \must: (1) anonymize personal identifiers, (ii) replace proprietary code with placeholders, and (iii) clearly highlight modified sections.
 
 When trying to verify results, even with the exact same prompts, decoding strategies, and parameters, LLMs can still behave non-deterministically.
 Non-determinism can arise from batching, input preprocessing, and floating point arithmetic on GPUs~\cite{Chann2023}.
-Thus, in order to enable other researchers to verify the conclusions that researchers have drawn from LLM interactions, researchers \should report the full interaction logs with an LLM if possible, that is not only the prompts but also the LLM's responses.
-Reporting this is especially important when reporting a study targeting commercial SaaS solutions based on LLMs (e.g., ChatGPT) or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to verify, reproduce, or replicate it. 
+Thus, in order to enable other researchers to verify the conclusions that researchers have drawn from LLM interactions, researchers \should report the full interaction logs (prompts and responses) as part of their \supplementarymaterial.
+Reporting this is especially important for studies targeting commercial software-as-a-service (SaaS) solutions such as ChatGPT.
+%or novel tools that integrate LLMs via cloud APIs where there is even less guarantee of reproducing the state of the LLM-powered system at a later point by a reader of the study who wants to verify, reproduce, or replicate it. 
 The rationale for this is similar to the rationale for reporting interview transcripts in qualitative research.
 In both cases, it is important to document the entire interaction between the interviewer and the participant.
-Just as a human participant might give different answers to the same question asked two months apart, the responses from ChatGPT can also vary over time.
+Just as a human participant might give different answers to the same question asked two months apart, the responses from ChatGPT can also vary over time (see also Section \subjects).
 Therefore, keeping a record of the actual conversation is crucial for accuracy and context and shows depth of engagement for transparency.
 
 \subsubsection{Example(s)}
 
-A recent paper by \citeauthor{anandayuvaraj2024fail}~\cite{anandayuvaraj2024fail} is a good example of making prompts available online. In the paper, the authors analyze software failures reported in news articles and use prompting to automate tasks such as filtering relevant articles, merging reports, and extracting detailed failure information. Their online appendix contains all the prompts used in the study, providing valuable transparency and supporting reproducibility.
+A paper by \citeauthor{anandayuvaraj2024fail}~\cite{anandayuvaraj2024fail} is a good example of making prompts available online.
+In that paper, the authors analyze software failures reported in news articles and use prompting to automate tasks such as filtering relevant articles, merging reports, and extracting detailed failure information.
+Their online appendix contains all the prompts used in the study, providing transparency and supporting reproducibility.
 
-A good example of comprehensive prompt reporting is provided by \citeauthor{Liang2024}~\cite{Liang2024}. The authors make the exact prompts available in their online appendix on Figshare, including details such as code blocks being enclosed in triple backticks. While this level of detail would not fit within the paper itself, the paper thoroughly explains the rationale behind the prompt design and data output format. It also includes one overview figure and two concrete examples, ensuring transparency and reproducibility while keeping the main text concise.
-
-An example for reporting full interaction logs is the study \citeauthor{ronanki2023investigating}~\cite{ronanki2023investigating}, for which they reported the full answers of ChatGPT and uploaded them to \href{https://zenodo.org/records/8124936}{Zenodo}. 
-
+\citeauthor{Liang2024}'s paper is a good example of comprehensive prompt reporting.
+The authors make the exact prompts available in their \supplementarymaterial on Figshare, including details such as code blocks being enclosed in triple backticks.
+The \paper thoroughly explains the rationale behind the prompt design and the data output format.
+It also includes an overview figure and two concrete examples, enabling transparency and reproducibility while keeping the main text concise.
+An example of reporting full interaction logs is the study by \citeauthor{ronanki2023investigating}~\cite{ronanki2023investigating}, for which they reported the full answers of ChatGPT and uploaded them to \href{https://zenodo.org/records/8124936}{Zenodo}. 
 
 \subsubsection{Advantages}
 
-As motivated above, providing detailed documentation of prompts enhances verifiability, reproducibility, and comparability of LLM-based studies.
+As motivated above, providing detailed documentation of the prompts improves the verifiability, reproducibility, and comparability of LLM-based studies.
 It allows other researchers to replicate the study under similar conditions, refine prompts based on documented improvements, and evaluate how different types of content (e.g., source code vs. execution traces) influence LLM behavior.
 This transparency also enables a better understanding of how formatting, prompt length, and structure impact results across various studies.
 
-An advantage of reporting full interaction logs is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can (e.g. as of beginning of 2025, OpenAI \href{https://openai.com/policies/sharing-publication-policy/}{allows sharing of chat transcripts}).
-Detailed logs enable future reproduction or replication studies to compare results using the same prompts.
+An advantage of reporting full interaction logs is that, while for human participants conversations often cannot be reported due to confidentiality, LLM conversations can.
+%For example, OpenAI \href{https://openai.com/policies/sharing-publication-policy/}{allows sharing of chat transcripts}).
+Detailed logs enable future reproduction/replication studies to compare results using the same prompts.
 This could be valuable for tracking changes in LLM responses over time or across different versions of the model.
-It would also enable secondary research to study how consistent an LLM's responses are over model versions and identify any variations or improvements in its performance for specific software engineering tasks.
-
+It would also enable secondary research to study how consistent LLM responses are over model versions and identify any variations in its performance for specific SE tasks.
 
 \subsubsection{Challenges}
 
 One challenge is the complexity of prompts that combine multiple components, such as code, error messages, and explanatory text.
-Formatting differences—such as whether markdown or plain text was used—can affect how LLMs interpret inputs.
-Additionally, prompt length constraints may require careful management, particularly for tasks involving extensive artifacts such as large codebases.
-Privacy and confidentiality concerns can also hinder prompt sharing, especially when sensitive data is involved. In these cases, researchers \should provide anonymized examples and summaries wherever possible.
-For prompts containing sensitive information, researchers \must: (i) anonymize personal identifiers. (ii) replace proprietary code with functionally equivalent examples or placeholders, and (iii) clearly mark modified sections.
+Formatting differences (e.g., Markdown vs. plain text) can affect how LLMs interpret input.
+Additionally, prompt length constraints may require careful context management, particularly for tasks involving extensive artifacts such as large codebases.
+Privacy and confidentiality concerns can hinder prompt sharing, especially when sensitive data is involved.
 
-Not all systems allow the reporting of full (system) prompts and interaction logs with the same ease.
+Not all systems allow the reporting of complete (system) prompts and interaction logs with ease.
 This hinders transparency and verifiability.
-Besides our recommendation to \openllm, researchers \must report whatever they can about commercial tools, acknowledging limitations due to unavailable data.
-They might also consider using open-source tools such as Continue~\cite{continue.dev}, which enable researchers to collect interaction logs and system prompts locally.
+In addition to our recommendation to \openllm, we recommend exploring open-source tools such as Continue~\cite{continue.dev}.
+For commercial tools, researchers \must report all available information and acknowledge unknown aspects as limitations (see Section \limitationsmitigations).
+%They might also consider using open-source tools such as Continue~\cite{continue.dev}, which enable researchers to collect interaction logs and system prompts locally.
 Understanding suggestions of commercial tools such as GitHub Copilot might require recreating the exact state of the codebase at the time the suggestion was made, a challenging context to report.
-One solution could be to use version control to capture the exact state of the codebase when a recommendation occurred, and keep track of the files that were automatically added as context.
+One solution could be to use version control to capture the exact state of the codebase when a recommendation was made, keeping track of the files that were automatically added as context.
 
 \subsubsection{Study Types}
 
-Reporting requirements may vary depending on the study type.
+Reporting requirements vary depending on the study type.
 For the study type \newtools, researchers \must explain how prompts were generated and structured within the tool.
-When \llmusage, especially for controlled experiments exact prompts \must be reported for all conditions.
-For observational studies, especially the ones targeting commercial tools, researchers \must report the full interactions logs/conversations except for when transcripts might identify anonymous participants or reveal personal or confidential information.
-If the full interaction logs cannot be shared, e.g., because they contain confidential information, the prompts and responses \must at least be summarized and described in the \paper.
+When \llmusage, especially for controlled experiments, exact prompts \must be reported for all conditions.
+For observational studies, especially the ones targeting commercial tools, researchers \must report the full interactions logs except for when transcripts might identify anonymous participants or reveal personal or confidential information.
+As mentioned before, if the complete interaction logs cannot be shared, e.g., because they contain confidential information, the prompts and responses \must at least be summarized and described in the \paper.
 
 Researchers \must report the complete prompts that were used, including all instructions, context, and input data. This applies across all study types, but specific focus areas vary.
 For LLMs as \annotators, researchers \must document any predefined coding guides or instructions included in prompts, as these influence how the model labels artifacts.
-For LLMs as \judges, researchers \must include the evaluation criteria, scales, and examples embedded in the prompt to ensure consistent interpretation.
-For LLMs used in \synthesis tasks (e.g., summarization, aggregation), researchers \must document the sequence of prompts used to generate and refine outputs, including follow-ups and clarifying queries.
+For LLMs as \judges, researchers \must include the evaluation criteria, scales, and examples embedded in the prompt to ensure a consistent interpretation.
+For LLMs used in \synthesis tasks (e.g., summarization, aggregation), researchers \must document the sequence of prompts used to generate and refine outputs, including follow-ups and clarification queries.
 For LLMs as \subjects (e.g., simulating human participants), researchers \must report any role-playing instructions, constraints, or personas used to guide LLM behavior.
-For \benchmarkingtasks studies using pre-defined prompts (e.g., HumanEval, CruxEval), researchers \must specify the benchmark version and any modifications made to the prompts or evaluation setup. If prompt tuning, retrieval-augmented generation (RAG), or other methods were used to adapt prompts, researchers \must disclose and justify those changes and \should make the relevant code publicly available.
+For \benchmarkingtasks studies using pre-defined prompts (e.g., \emph{HumanEval}, \emph{CruxEval}), researchers \must specify the benchmark version and any modifications made to the prompts or evaluation setup.
+If prompt tuning, retrieval-augmented generation (RAG), or other methods were used to adapt prompts, researchers \must disclose and justify those changes, and \should make the relevant code publicly available.
 
 \subsubsection{References}
 
