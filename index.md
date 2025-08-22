@@ -40,4 +40,5 @@ Team:
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
 * [Lutz Prechelt](https://www.mi.fu-berlin.de/w/Main/LutzPrechelt), Free University of Berlin (Germany)
 * [Paul Ralph](https://paulralph.name), Dalhousie University (Canada)
+* [Daniel Russo](https://www.danielrusso.org/), Aalborg University in Copenhagen (Denmark)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
