@@ -35,6 +35,6 @@ We start with an aggregation of all <u><em>tl;dr</em></u> summaries, followed by
 4. [Report Prompts, their Development, and Interaction Logs](#report-prompts-their-development-and-interaction-logs)
 5. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
 6. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
-7. [Report Suitable Baselines, Benchmarks, and Metrics](#report-suitable-baselines-benchmarks-and-metrics)
+7. [Use Suitable Baselines, Benchmarks, and Metrics](#use-suitable-baselines-benchmarks-and-metrics)
 8. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
 
