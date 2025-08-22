@@ -30,13 +30,13 @@ For example, the reference model of \citeauthor{Schneider2025ReferenceModel}~\ci
 %They outline the relevant groups (researchers, experimenters, subjects), activities (study planning, task assignment, results analysis, interpretation), and artifacts (study design, tasks, results, conclusion).
 %Further, they illustrate the relationship between these entities, the order of steps, and which design decisions need to be considered.
 If studies involve the annotation of software artifacts, and the goal is to automate the annotation process using LLM, researchers \should follow systematic approaches to decide whether and how human annotators can be replaced.
-For example, \citeauthor{DBLP:journals/corr/abs-2408-05534}~\cite{DBLP:journals/corr/abs-2408-05534} suggest a method that involves using a jury of three LLMs with 3 to 4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using \emph{Krippendorff's Alpha}.
+For example, \citeauthor{DBLP:conf/msr/AhmedDTP25}~\cite{DBLP:conf/msr/AhmedDTP25} suggest a method that involves using a jury of three LLMs with 3 to 4 few-shot examples rated by humans, where the model-to-model agreement on all samples is determined using \emph{Krippendorff's Alpha}.
 If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with an LLM-generated one.
 In cases of low model-to-model agreement (alpha $\le$ 0.5), they then evaluate the prediction confidence of the model, selectively replacing annotations where the model confidence is high ($\ge$ 0.8).
 
 \subsubsection{Example(s)}
 
-\citeauthor{DBLP:journals/corr/abs-2408-05534}~\cite{DBLP:journals/corr/abs-2408-05534} evaluated how human annotations can be replaced by LLM generated labels.
+\citeauthor{DBLP:conf/msr/AhmedDTP25}~\cite{DBLP:conf/msr/AhmedDTP25} evaluated how human annotations can be replaced by LLM generated labels.
 In their study, they explicitly report the calculated agreement metrics between the models and between humans.
 For example, the wrote that ``model-model agreement is high, for all criteria, especially for the three large models (GPT-4, Gemini, and Claude). Table I indicates that the mean Krippendorff's $\alpha$ is 0.68-0.76.  Second, we see that human-model and human-human agreements are in similar ranges, 0.24-0.40 and 0.21-0.48 for the first three categories.''
 

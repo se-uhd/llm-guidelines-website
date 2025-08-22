@@ -27,7 +27,7 @@ Recent work in software engineering has begun to explore the use of LLMs for ann
 \citeauthor{Huang2023Enhancing}~\cite{Huang2023Enhancing} proposed an approach that utilizes multiple LLMs for joint annotation of mobile application reviews. 
 They used three models of comparable size with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models).
 Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
-The study by \citeauthor{Ahmed2025}~\cite{Ahmed2025} examined LLMs as annotators in software engineering research across five datasets, six LLMs, and ten annotation tasks.
+The study by \citeauthor{DBLP:conf/msr/AhmedDTP25}~\cite{DBLP:conf/msr/AhmedDTP25} examined LLMs as annotators in software engineering research across five datasets, six LLMs, and ten annotation tasks.
 They found that model-model agreement strongly correlates with human-model agreement, suggesting situations in which LLMs could effectively replace human annotators. Their research showed that for tasks where humans themselves disagreed significantly , models also performed poorly.
 Conversely, if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task.
 They proposed to use model confidence scores to identify specific samples that could be safely delegated to LLMs, potentially reducing human annotation effort without compromising inter-rater agreement.
@@ -88,7 +88,7 @@ A crucial decision in studies focusing on LLMs as judges is the number of exampl
 This might involve no tuning (zero-shot), several examples (few-shot), or providing many examples (closer to traditional training data).
 In the example above, \citeauthor{DBLP:conf/re/LubosFTGMEL24} chose zero-shot tuning, providing no specific guidance besides the provided context; they did not show the LLM what a `yes' or `no' answer might look like. 
 In contrast, \citeauthor{wang2025multimodalrequirementsdatabasedacceptance}~\cite{wang2025multimodalrequirementsdatabasedacceptance} provided a rubric to an LLM when treating LLMs as a judge to produce interpretable scales (0 to 4) for the overall quality of acceptance criteria generated from user stories.
-They also composed this with a lower-level reward stage to refine acceptance criteria, which significantly improved the correctness, clarity, and alignment with the user stories.
+They combined this with a lower-level reward stage to refine acceptance criteria, which significantly improved correctness, clarity, and alignment with the user stories.
 
 \subsubsection{Advantages}
 
@@ -129,7 +129,7 @@ LLMs can support synthesis tasks in software engineering research by processing 
 In this context, synthesis refers to the process of integrating and interpreting information from multiple sources to generate higher-level insights, identify patterns across datasets, and develop conceptual frameworks or theories.
 Unlike annotation (see Section \annotators), which focuses on categorizing or labeling individual data points, synthesis involves connecting and interpreting these annotations to develop a cohesive understanding of the phenomenon being studied.
 Synthesis tasks can also mean generating synthetic datasets (e.g., source code, bug-fix pairs, requirements, etc.) that are then used in downstream tasks to train, fine-tune, or evaluate existing models or tools.
-In this case, the synthesis is done primarily based on the training data of the model; the input that researchers provide is limited to prompts and examples.
+In this case, the synthesis is done primarily using the LLM and its training data; the input is limited to basic instructions and examples.
 
 \subsubsection{Example(s)} 
 
