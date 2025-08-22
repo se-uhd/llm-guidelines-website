@@ -9,7 +9,7 @@ favicon_ico: "/assets/images/favicon.ico"
 aux_links_new_tab: false
 aux_links:
   <i class="fab fa-fw fa-github" aria-hidden="true"></i>&NonBreakingSpace;GitHub:
-    - https://github.com/se-ubt/llm-guidelines
+    - https://github.com/se-uhd/llm-guidelines-website
 
 search_enabled: true
 
