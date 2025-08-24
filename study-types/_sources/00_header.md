@@ -20,10 +20,9 @@ The remainder of this section is structured as follows:
     2. [LLMs as Judges](#llms-as-judges)
     3. [LLMs for Synthesis](#llms-for-synthesis)
     4. [LLMs as Subjects](#llms-as-subjects)
-    5. [References](#references)
 2. [LLMs as Tools for Software Engineers](#introduction-llms-as-tools-for-software-engineers)
     1. [Studying LLM Usage in Software Engineering](#studying-llm-usage-in-software-engineering)
     2. [LLMs for new Software Engineering Tools](#llms-for-new-software-engineering-tools)
     3. [Benchmarking LLMs for Software Engineering Tasks](#benchmarking-llms-for-software-engineering-tasks)
-    4. [References](#references)
+3. [References](#references)
 

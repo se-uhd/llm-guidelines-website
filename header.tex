@@ -75,3 +75,12 @@
 \newcommand{\openllm}{\href{/guidelines\#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}\xspace}
 \newcommand{\benchmarksmetrics}{\href{/guidelines\#use-suitable-baselines-benchmarks-and-metrics}{Use Suitable Baselines, Benchmarks, and Metrics}\xspace}
 \newcommand{\limitationsmitigations}{\href{/guidelines\#report-limitations-and-mitigations}{Report Limitations and Mitigations}\xspace}
+
+% custom format for subsubsections and paragraphs
+\newcommand{\guidelinesubsubsection}[1]{\subsubsection{#1}}
+\newcommand{\studytypesubsection}[1]{\subsection{#1}}
+\newcommand{\studytypeparagraph}[1]{\subsubsection{#1}}
+
+% adjust layout depending on document type
+\newcommand{\modelversionsummary}{\input{_guidelines/02_report-model-version-configuration-and-customizations-summary_markdown.tex}}
+\newcommand{\judgesexample}{\input{_studytypes/01-02-llms-as-judges-example_markdown.tex}}

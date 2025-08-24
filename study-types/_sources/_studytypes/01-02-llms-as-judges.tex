@@ -1,0 +1,53 @@
+\studytypesubsection{LLMs as Judges}
+\label{sec:llms-as-judges}
+
+\studytypeparagraph{Description}
+
+LLMs can act as judges or raters to evaluate properties of software artifacts.
+For example, LLMs can be used to assess code readability, adherence to coding standards, or the quality of code comments.
+Judgment is distinct from the more qualitative task of assigning a code or label to typically unstructured text (see Section \annotators).
+It is also different from using LLMs for general software engineering tasks, as discussed in Section \llmsforresearcher.
+
+\studytypeparagraph{Example(s)}
+
+\citeauthor{DBLP:conf/re/LubosFTGMEL24}~\cite{DBLP:conf/re/LubosFTGMEL24} leveraged \href{https://www.llama.com/llama2/}{Llama-2} to evaluate the quality of software requirements statements. 
+They prompted the LLM with the text below, where the words in curly brackets reflect the study parameters:
+
+\judgesexample
+
+\citeauthor{DBLP:conf/re/LubosFTGMEL24} evaluated the LLM's output against human judges, to assess how well the LLM matched experts. 
+Agreement can be measured in many ways; this study used Cohen's kappa~\cite{cohen60} and found moderate agreement for simple requirements and poor agreement for more complex requirements.
+However, human evaluation of machine judgments may not be the same as evaluation of human judgments and is an open area of research~\cite{DBLP:journals/corr/abs-2410-03775}. 
+A crucial decision in studies focusing on LLMs as judges is the number of examples provided to the LLM.
+This might involve no tuning (zero-shot), several examples (few-shot), or providing many examples (closer to traditional training data).
+In the example above, \citeauthor{DBLP:conf/re/LubosFTGMEL24} chose zero-shot tuning, providing no specific guidance besides the provided context; they did not show the LLM what a `yes' or `no' answer might look like. 
+In contrast, \citeauthor{wang2025multimodalrequirementsdatabasedacceptance}~\cite{wang2025multimodalrequirementsdatabasedacceptance} provided a rubric to an LLM when treating LLMs as a judge to produce interpretable scales (0 to 4) for the overall quality of acceptance criteria generated from user stories.
+They combined this with a lower-level reward stage to refine acceptance criteria, which significantly improved correctness, clarity, and alignment with the user stories.
+
+\studytypeparagraph{Advantages}
+
+Depending on the model configuration, LLMs can provide relatively consistent evaluations.
+They can further help mitigate human biases and the general variability that human judges might introduce.
+This may lead to more reliable and reproducible results in empirical studies, to the extent that these models can be reproduced or checkpointed.
+LLMs can be much more efficient and scale more easily than the equivalent human approach.
+With LLM automation, entire datasets can be assessed, as opposed to subsets, and the assessment produced can be at the selected level of granularity, e.g., binary outputs (`yes' or `no') or defined levels (e.g., 0 to 4).
+However, the main constraint that varies by model and budget is the input context size, i.e., the number of tokens one can pass into a model.
+For example, the upper bound of the context that can be passed to OpenAi's \textsf{o1-mini} model is \href{https://help.openai.com/en/articles/9855712-openai-o1-models-faq-chatgpt-enterprise-and-edu}{32k tokens}.
+
+\studytypeparagraph{Challenges}
+
+When relying on the judgment of LLMs, researchers must build a \textit{reliable} process for generating judgment labels that considers the non-deterministic nature of LLMs and report the intricacies of that process transparently~\cite{DBLP:journals/corr/abs-2412-12509}.
+For example, the order of options has been shown to affect LLM outputs in multiple-choice settings~\cite{DBLP:conf/naacl/PezeshkpourH24}. 
+In addition to reliability, other quality attributes to consider include the \textit{accuracy} of the labels. % and the speed and \textit{scalability} of the process. 
+For example, a reliable LLM might be reliably inaccurate and wrong. 
+Evaluating and judging large numbers of items, for example, to perform fault localization on the thousands of bugs that large open-source projects have to deal with, comes with costs in clock time, compute time, and environmental sustainability.
+Evidence shows that LLMs can behave differently when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}.
+In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well-documented biases and issues with fairness~\cite{Gallegos2024BiasAF}. 
+For tasks in which human judges disagree significantly, it is not clear if an LLM judge should reflect the majority opinion or act as an independent judge.
+The underlying statistical framework of an LLM usually pushes outputs towards the most likely (majority) answer. 
+There is ongoing research on how suitable LLMs are as independent judges.
+Questions about bias, accuracy, and trust remain~\cite{DBLP:journals/corr/abs-2406-18403}.
+There is reason for concern about LLMs judging student assignments or doing peer review of scientific papers~\cite{DBLP:conf/coling/ZhouC024}.
+Even beyond questions of technical capacity, ethical questions remain, particularly if there is some implicit expectation that a human is judging the output.
+Involving a human in the judgment loop, for example, to contextualize the scoring, is one approach~\cite{panHumanCenteredDesignRecommendations2024}. 
+However, the lack of large-scale ground truth datasets for benchmarking LLM performance in judgment studies hinders progress in this area.

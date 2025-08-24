@@ -1,0 +1,25 @@
+In the short period since the release of ChatGPT in November 2022, large language models (LLMs) have changed the software engineering (SE) research landscape.
+Although there are numerous opportunities to use LLMs to support SE research and development tasks, solid science needs rigorous empirical evaluations to explore the effectiveness, performance, and robustness of using LLMs to automate different research and development tasks.
+LLMs can, for example, be used to support literature reviews, reduce development time, and generate software documentation.
+However, it is often unclear how valid, reproducible, and replicable empirical studies involving LLM are.
+This uncertainty poses significant challenges for researchers and practitioners who seek to draw reliable conclusions from empirical studies.
+
+The importance of open science practices and documenting the study setup is not to be underestimated~\cite{DBLP:journals/corr/abs-2412-17859}.
+One of the primary risks in creating irreproducible and irreplicable results based on studies involving LLMs stems from the variability in model performance due to their inherent non-determinism, but also due to differences in configuration, training data, model architecture, or evaluation metrics.
+Slight changes can lead to significantly different results.
+The lack of standardized benchmarks and evaluation protocols further hinders the reproducibility and replicability of study results.
+Without detailed information on the exact study setup, benchmarks, and metrics used, it is challenging for other researchers to replicate results using different models and tools.
+These issues highlight the need for clear guidelines and best practices for designing and reporting studies involving LLMs.
+While the SE research community has developed guidelines for conducting and reporting specific types of empirical studies such as controlled experiments (e.g., \emph{Experimentation in Software Engineering}~\cite{DBLP:books/sp/WohlinRHORW24}, \emph{Guide to Advanced Empirical Software Engineering}~\cite{DBLP:books/sp/08/SSS2008}) or their replications (e.g., \emph{A Procedure and Guidelines for Analyzing Groups of Software Engineering Replications}~\cite{DBLP:journals/tse/SantosVOJ21}),  we believe that LLMs have specific intrinsic characteristics that require specific guidelines for researchers to achieve an acceptable level of reproducibility and replicability (see also our previous position paper~\cite{DBLP:conf/wsese/0001BFB25}).
+For example, even if we knew the specific version of a commercial LLM used for an empirical study, the reported task performance could still change over time, since commercial models are known to evolve beyond version identifiers~\cite{DBLP:journals/corr/abs-2307-09009}.
+Moreover, commercial providers do not guarantee the availability of old model or tool versions indefinitely.
+In addition to version differences, LLM performance varies widely depending on configured parameters such as temperature.
+Therefore, not reporting the parameter settings severely impacts reproducibility.
+Even for ``open'' models such as \emph{Llama}, we do not know how they were fine-tuned for specific tasks and what the exact training data was~\cite{Gibney2024}.
+A general problem when evaluating LLMs' performance is that we do not know whether the solution to a certain problem was part of the training data or not.
+
+So far, there are no holistic guidelines for conducting and reporting studies involving LLMs in SE research.
+With this community effort, we try to fill this gap.
+After outlining our \scope, we continue by introducing a taxonomy of \studytypes before presenting eight \guidelines that the authors of this article co-developed.
+The most recent version is always available online.\footnote{\url{https://llm-guidelines.org}}
+Other researchers can suggest changes via a public GitHub repository.\footnote{\url{https://github.com/se-uhd/llm-guidelines-website}}

@@ -1,0 +1,36 @@
+\studytypesubsection{Benchmarking LLMs for Software Engineering Tasks}
+\label{sec:benchmarking-llms-for-software-engineering-tasks}
+
+\studytypeparagraph{Description}
+
+Benchmarking is the process of evaluating an LLM's performance using standardized tasks and metrics, which requires high-quality reference datasets.
+LLM output is compared to a ground truth from the benchmark dataset using general metrics for text generation, such as \emph{ROUGE}, \emph{BLEU}, or \emph{METEOR}~\cite{10.1145/3695988}, or task-specific metrics, such as \emph{CodeBLEU} for code generation.
+For example, \emph{HumanEval}~\cite{DBLP:journals/corr/abs-2107-03374} is often used to assess code generation, establishing it as a de facto standard.
+
+\studytypeparagraph{Example(s)}
+
+In SE, benchmarking may include the evaluation of an LLM's ability to produce accurate and reliable outputs for a given input, usually a task description, which may be accompanied by data obtained from curated real-world projects or from synthetic SE-specific datasets.
+Typical tasks include code generation, code summarization, code completion, and code repair, but also natural language processing tasks, such as anaphora resolution (i.e., the task of identifying the referring expression of a word or phrase occurring earlier in the text). %, interesting for subfields such a Requirements Engineering. 
+\emph{RepairBench}~\cite{silva2024repairbench}, for example, contains 574 buggy Java methods and their corresponding fixed versions, which can be used to evaluate the performance of LLMs in code repair tasks.
+This benchmark uses the \emph{Plausible@1} metric (i.e., the probability that the first generated patch passes all test cases) and the \emph{AST Match@1} metric (i.e., the probability that the abstract syntax tree of the first generated patch matches the ground truth patch).
+\emph{SWE-Bench}~\cite{DBLP:conf/iclr/JimenezYWYPPN24} is a more generic benchmark that contains 2,294 SE Python tasks extracted from GitHub pull requests.
+To score the LLM's performance on the tasks, the benchmark validates whether the generated patch is applicable (i.e., successfully compiles) and calculates the percentage of passed test cases.
+
+\studytypeparagraph{Advantages}
+
+Properly built benchmarks provide objective, reproducible evaluation across different tasks, enabling a comparison between different models (and versions).
+In addition, benchmarks built for specific SE tasks can help identify LLM weaknesses and support their optimization and fine-tuning for such tasks.
+They can foster open science practices by providing a common ground for sharing data (e.g., as part of the benchmark itself) and results (e.g., of models run against a benchmark).
+Benchmarks built using real-world data can help legitimize research results for practitioners, supporting industry-academia collaboration.
+However, benchmarks are subject to several challenges.
+
+\studytypeparagraph{Challenges}
+
+Benchmark contamination, that is, the inclusion of the benchmark in the LLM training data~\cite{DBLP:journals/corr/abs-2410-16186}, has recently been identified as a problem.
+The careful selection of samples and the creation of the corresponding input prompts is particularly important, as correlations between prompts may bias the benchmark results~\cite{DBLP:conf/acl/SiskaMAB24}.
+Although LLMs might perform well on a specific benchmark such as \emph{HumanEval} or \emph{SWE-bench}, they do not necessarily perform well on other benchmarks.
+Moreover, benchmarks usually do not capture the full complexity and diversity of software engineering work~\cite{Chandra2025benchmarks}.
+Another issue is that metrics used for benchmarks, such as \emph{perplexity} or \emph{BLEU-N}, do not necessarily reflect human judgment.
+Recently, \citeauthor{cao2025should}~\cite{cao2025should} have proposed guidelines for the creation of LLM benchmarks related to coding tasks, grounded in a systematic survey of existing benchmarks. 
+In this process, they highlight current shortcomings related to reliability, transparency, irreproducibility, low data quality, and inadequate validation measures.
+For more details on benchmarks, see Section \benchmarksmetrics. 

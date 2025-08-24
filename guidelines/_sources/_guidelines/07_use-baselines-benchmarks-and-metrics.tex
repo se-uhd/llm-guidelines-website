@@ -1,0 +1,174 @@
+\guidelinesubsubsection{Recommendations}
+
+Benchmarks, baselines, and metrics play an important role in assessing the effectiveness of LLMs or LLM-based tools.
+Benchmarks are model- and tool-independent standardized tests used to assess the performance of LLMs on specific tasks such as code summarization or code generation.
+A benchmark consists of multiple standardized test cases, each with at least one task and a corresponding expected result.
+Metrics are used to quantify performance on benchmark tasks, enabling a comparison.
+A baseline represents a reference point for the measured LLM.
+Since LLMs require substantial hardware resources, baselines serve as a comparison to assess their performance against traditional algorithms with lower computational costs.
+
+When selecting benchmarks, it is important to fully understand the benchmark tasks and the expected results because they determine what the benchmark actually assesses.
+Researchers \must briefly summarize why they selected certain benchmarks in the \paper, 
+They \should also summarize the structure and tasks of the selected benchmark(s), including the programming language(s) and descriptive statistics such as the number of contained tasks and test cases.
+Researchers \should also discuss the limitations of the selected benchmark(s).
+For example, many benchmarks focus heavily on isolated Python functions.
+This assesses a very specific part of software development, which is certainly not representative of the full breadth of software engineering work~\cite{Chandra2025benchmarks}.
+
+Researchers \may include an example of a task and the corresponding test case(s) to illustrate the structure of the benchmark.
+If multiple benchmarks exist for the same task, researchers \should compare performance between benchmarks.
+When selecting only a subset of all available benchmarks, researchers \should use the most specific benchmarks given the context.
+
+The use of LLMs might not always be reasonable if traditional approaches achieve similar performance. 
+For many tasks for which LLMs are being evaluated, there exist traditional non-LLM-based approaches (e.g., for program repair) that can serve as a baseline.
+Even if LLM-based tools perform better, the question is whether the resources consumed justify the potentially marginal improvements.
+Researchers \should always check whether such traditional baselines exist and, if they do, compare them with the LLM or LLM-based tool using suitable metrics.
+
+To compare traditional and LLM-based approaches or different LLM-based tools, researchers \should report established metrics whenever possible, as this allows secondary research.
+They can, of course, report additional metrics that they consider appropriate.
+In any way, researchers \must argue why the selected metrics are suitable for the given task or study. 
+
+If a study evaluates an LLM-based tool that is supposed to support humans, a relevant metric is the acceptance rate, meaning the ratio of all accepted artifacts (e.g., test cases, code snippets) in relation to all artifacts that were generated and presented to the user.
+Another way of evaluating LLM-based tools is calculating inter-model agreement (see also Section \href{/guidelines/#use-an-open-llm-as-a-baseline}{Use an Open LLM as a Baseline}).
+This allows researchers to assess how dependent a tool's performance is on specific models and versions.
+Metrics used to measure inter-model agreements include general agreement (percentage), \emph{Cohen's kappa}, and \emph{Scott's Pi coefficient}.
+
+LLM-based generation is non-deterministic by design.
+Due to this non-determinism, researchers \should repeat experiments to statistically assess the performance of a model or tool, e.g., using the arithmetic mean, confidence intervals, and standard deviations.
+
+From a measurement perspective, researchers \should reflect on the theories, values, and measurement models on which the benchmarks and metrics they have selected for their study are based.
+For example, a large open dataset of software bugs is a collection of bugs according to a certain theory of what constitutes a bug and the values and perspective of the people who labeled the dataset.
+Reflecting on the context in which these labels were assigned and discussing whether and how the labels generalize to a new study context is crucial.
+
+\guidelinesubsubsection{Example(s)}
+
+According to \citeauthor{10.1145/3695988}, main problems types for LLMs are classification, recommendation and generation problems.
+Each of these problem types requires a different set of metrics.
+\citeauthor{hu2025assessingadvancingbenchmarksevaluating} conducted a comprehensive structured literature review on LLM benchmarks related to software engineering tasks.
+They analyzed 191 benchmarks and categorized them according to the specific task they address, making the paper a valuable resource for identifying existing metrics. 
+Metrics used to assess generation tasks include \emph{BLEU}, \emph{pass@k}, \emph{Accuracy}, \emph{Accuracy@k}, and \emph{Exact Match}.
+The most common metric for recommendation tasks is \emph{Mean Reciprocal Rank}.
+For classification tasks, classical machine learning metrics such as \emph{Precision}, \emph{Recall}, \emph{F1-score}, and \emph{Accuracy} are often reported.
+
+In the following, we briefly discuss two common metrics used for generation tasks: \emph{BLEU-N} and \emph{pass@k}.
+\emph{BLEU-N} \cite{DBLP:conf/acl/PapineniRWZ02} is a similarity score based on n-gram precision between two strings, ranging from $0$ to $1$.
+Values close to $0$ represent dissimilar content, values closer to $1$ represent similar content, indicating that a model is more capable of generating the expected output. % for code generation.
+%The score measures how many n-grams from the generated output of a model appear in the target string.
+%In isolation, this approach favors shorter over longer generated sequences because it is more likely to have fewer n-grams in an extensive target sequence than more.
+%To mitigate this, the so-called brevity penalty is introduced to disincentivize short sequences when having longer target sequences.
+\emph{BLEU-N} has multiple variations.
+\emph{CodeBLEU} \cite{DBLP:journals/corr/abs-2009-10297} and \emph{CrystalBLEU} \cite{DBLP:conf/kbse/EghbaliP22} are the most notable ones tailored to code.
+They introduce additional heuristics such as AST matching.
+As mentioned, researchers \must motivate why they chose a certain metric or variant thereof for their particular study.
+
+The metric \emph{pass@k} reports the likelihood that a model correctly completes a code snippet at least once within \emph{k} attempts.
+To our knowledge, the basic concept of \emph{pass@k} was first reported by \citeauthor{DBLP:journals/corr/abs-1906-04908} to evaluate code synthesis~\cite{DBLP:journals/corr/abs-1906-04908}.
+They named the concept \emph{success rate at B}, where B denotes the trial ``budget.''
+The term \emph{pass@k} was later popularized by \citeauthor{DBLP:journals/corr/abs-2107-03374} as a metric for code generation correctness~\cite{DBLP:journals/corr/abs-2107-03374}.
+The exact definition of correctness varies depending on the task.
+For code generation, correctness is often defined based on test cases: A passing test implies that the solution is correct.
+The resulting pass rates range from $0$ to $1$.
+A pass rate of $0$ indicates that the model was unable to generate a single correct solution within $k$ tries; a rate of $1$ indicates that the model successfully generated at least one correct solution in $k$ tries.
+
+The \emph{pass@k} metric is defined as:
+$1 - \frac{\binom{n-c}{k}}{\binom{n}{k}}$, where $n$ is the total number of generated samples per prompt, $c$ is the number of correct samples among  $n$, and $k$ is the number of samples.
+
+Choosing an appropriate value for \emph{k} depends on the downstream task of the model and how end-users interact with it.
+% k= 1 -- pass@1
+A high pass rate for \emph{pass@1} is highly desirable in tasks where the system presents only one solution or if a single solution requires high computational effort.
+For example, code completion depends on a single prediction, since end users typically see only a single suggestion.
+%In automated code refactoring, a large context might lead to high computational costs, making the calculation of a single solution expensive.
+%Thus, having a high pass rate at pass@1 is crucial for such tasks.
+% k = >=2 -- pass@{>=2}
+Pass rates for higher $k$ values (e.g., $2$, $5$, $10$) indicate how well a model can solve a given task in multiple attempts.
+%For downstream tasks that allow multiple solutions, e.g. via user interaction, strong performance at $k > 1$ can be justified. 
+%For instance, a user selecting the correct test case from multiple suggestions allows for some model errors.
+%In code search, finding the most appropriate good snippet for a given context, a reranking algorithm mitigate low pass rates at low k-values.
+The \emph{pass@k} metric is frequently referenced in papers on code generation \cite{DBLP:journals/corr/abs-2308-12950, DBLP:journals/corr/abs-2401-14196, DBLP:journals/corr/abs-2409-12186, DBLP:journals/corr/abs-2305-06161}.
+However, \emph{pass@k} is not a universal metric suitable for all tasks.
+For instance, for creative or open-ended tasks, such as comment generation, it is not a suitable metric since more than one correct result exists.
+
+%\guidelinesubsubsection{Exact Match}
+%\emph{Exact match} is another metric that calculates the percentage of replicas a model can produce.
+%If the model is able to produce the exact target sequence, a score of 1 is awarded; otherwise 0.
+%Compared to BLEU-N, \emph{exact match} is a stricter measurement.
+%Due to its strictness, reported scores are usually low.
+
+%he choice of metrics strongly depends on the specific task.
+%Consequently, papers that address different research questions employ different metrics.
+%For example, \citeauthor{DBLP:conf/nips/LiuXW023} assesses LLM models for their correctness in code generation using \emph{pass@k}~\cite{DBLP:conf/nips/LiuXW023}.
+%However, \emph{pass@k} is not an universal metric suitable for every problem at hand.
+%For instance, for creative or open-ended tasks such as comment generation, pass@k is not a suitable metric since not only one single correct result exists.
+%Thus, \citeauthor{DBLP:conf/icse/GengWD00JML24} evaluates LLMs for code comment generation using BLEU, ROUGE-L and METEOR as evaluation %metrics~\cite{DBLP:conf/icse/GengWD00JML24}.
+%\citeauthor{DBLP:journals/ase/LiuJZNLL25} investigates the performance of LLMs on automated refactorings tasks and proposes a novel metric tailored to the unique characteristics of this problem \cite{DBLP:journals/ase/LiuJZNLL25}.
+
+%Code snippets provided by benchmarks contain untrusted code, making sandboxing recommendable.
+%To avoid potential security risks, execute untrusted code in an isolated environment, such as a virtual machine or containerization, instead of your own environment.
+
+Two benchmarks used for code generation are \emph{HumanEval} (available on \href{https://github.com/openai/human-eval}{GitHub}) \cite{DBLP:conf/acl/PapineniRWZ02} and \emph{MBPP} (available on \href{https://huggingface.co/datasets/google-research-datasets/mbpp}{Hugging Face}) \cite{DBLP:journals/corr/abs-2108-07732}.
+Both benchmarks consist of code snippets written in Python sourced from publicly available repositories.
+Each snippet consists of four parts: a prompt containing a function definition and a corresponding description of what the function should accomplish, a canonical solution, an entry point for execution, and test cases.
+The input of the LLM is the entire prompt.
+The output of the LLM is then evaluated against the canonical solution using metrics or against a test suite.
+Other benchmarks for code generation include \emph{ClassEval} (available on \href{https://github.com/FudanSELab/ClassEval}{GitHub}) \cite{DBLP:journals/corr/abs-2308-01861}, \emph{LiveCodeBench} (available on \href{https://github.com/LiveCodeBench/LiveCodeBench}{GitHub}) \cite{DBLP:journals/corr/abs-2403-07974}, and \emph{SWE-bench} (available on \href{https://github.com/swe-bench/SWE-bench}{GitHub}) \cite{DBLP:conf/iclr/JimenezYWYPPN24}.
+An example of a code translation benchmark is \emph{TransCoder}~\cite{DBLP:journals/corr/abs-2006-03511} (available on \href{https://github.com/facebookresearch/CodeGen}{GitHub}). 
+
+\guidelinesubsubsection{Advantages}
+
+Benchmarks are an essential tool for assessing model performance for SE tasks.
+%Due to inherent variations of LLMs, both the choice of models and prompt can lead to substantial differences in performance.
+Reproducible benchmarks measure and assess the performance of models for a specific SE tasks, enabling comparison.
+That comparison enables progress tracking, for example, when researchers iteratively improve a new LLM-based tool and test it against benchmarks after significant changes.
+For practitioners, leaderboards, i.e., published benchmark results of models, support the selection of models for downstream tasks.
+
+\guidelinesubsubsection{Challenges}
+
+A general challenge with benchmarks for LLMs is that the most prominent ones, such as \emph{HumanEval} and \emph{MBPP}, use Python, introducing a bias toward this specific programming language and its idiosyncrasies.
+Since model performance is measured against these benchmarks, researchers often optimize for them.
+As a result, performance may degrade if programming languages other than Python are used.
+
+Many closed-source models, such as those released by \emph{OpenAI}, achieve exceptional performance on certain tasks but lack transparency and reproducibility~\cite{DBLP:conf/nips/00110ZZDJLHL24, DBLP:journals/corr/abs-2308-01861, DBLP:journals/corr/abs-2406-15877}.
+Benchmark leaderboards, particularly for code generation, are led by close-sourced models~\cite{DBLP:journals/corr/abs-2308-01861, DBLP:journals/corr/abs-2406-15877}.
+While researchers \should compare performance against these models, they must consider that providers might discontinue them or apply undisclosed pre- or post-processing beyond the researchers' control (see \openllm).
+%The lack of transparency introduces challenges in analyzing mistakes, limiting the understanding of model failures.
+%Open-source models offer greater transparency since the entire process is under the researcher's control; however, they require appropriate hardware.
+
+The challenges of individual metrics include that, for example, \emph{BLEU-N} is a syntactic metric and therefore does not measure semantic or structural correctness.
+Thus, a high \emph{BLEU-N} score does not directly indicate that the generated code is executable.
+While alternatives exist, they often come with their own limitations.
+For example, \emph{Exact Match} is a strict measurement that does not account for functional equivalence of syntactically different code.
+Execution-based metrics such as \emph{pass@k} directly evaluate correctness by running test cases, but they require a setup with an execution environment.
+When researchers observe unexpected values for certain metrics, the specific results should be investigated in more detail to uncover potential problems.
+These problems can be related to formatting, since code formatting is known to influence metrics such as \emph{BLEU-N} or \emph{Exact Match}.
+
+Another challenge to consider is that metrics usually capture one specific aspect of a task or solution.
+For example, metrics such as \emph{pass@k} do not reflect qualitative aspects of the generated source code, including its maintainability or readability.
+However, these aspects are critical for many downstream tasks.
+Moreover, benchmarks are isolated test sets and may not fully represent real-world applications.
+For example, benchmarks such as \emph{HumanEval} synthesize code based on written specifications.
+However, such explicit descriptions are rare in real-world applications.
+Thus, evaluating model performance with benchmarks might not reflect real-world tasks and end-user performance.
+
+Finally, benchmark data contamination~\cite{DBLP:journals/corr/abs-2406-04244} continues to be a major challenge.
+In many cases, the LLM training data is not released.
+However, the benchmark itself could be part of the training data.
+Such benchmark contamination may lead to the model remembering the solution from the training data rather than solving the new task based on the input data.
+This leads to artificially high performance on benchmarks.
+However, for unforeseen scenarios, the model might perform much worse.
+
+%Models may become overfitted to the training data, leading to poor performance on unseen data.
+%When optimizing for a metric, the underlying model might adjust its parameters to improve the metric, thereby failing to generalize.
+%This can result in a model performing exceptionally well on a benchmark but struggling to hold up the performance in unforeseen settings, such as real-world scenarios.
+
+\guidelinesubsubsection{Study Types}
+
+This guideline \must be followed for all study types that automatically evaluate the performance of LLMs or LLM-based tools.
+The design of a benchmark and the selection of appropriate metrics are highly dependent on the specific study type and research goal.
+Recommending specific metrics for specific study types is beyond the scope of these guidelines, but \citeauthor{hu2025assessingadvancingbenchmarksevaluating} provide a good overview of existing metrics for evaluating LLMs~\cite{hu2025assessingadvancingbenchmarksevaluating}.
+In addition, our Section \humanvalidation provides an overview of the integration of human evaluation in LLM-based studies. 
+For \annotators, the research goal might be to assess which model comes close to a ground truth dataset created by human annotators.
+Especially for open annotation tasks, selecting suitable metrics to compare LLM-generated and human-generated labels is important.
+In general, annotation tasks can vary significantly.
+Are multiple labels allowed for the same sequence? Are the available labels predefined, or should the LLM generate a set of labels independently?
+Due to this task dependence, researchers \must justify their metric choice, explaining what aspects of the task it captures together with known limitations.
+If researchers assess a well-established task such as code generation, they \should report standard metrics such as \emph{pass@k} and compare the performance between models.
+If non-standard metrics are used, researchers \must state their reasoning.

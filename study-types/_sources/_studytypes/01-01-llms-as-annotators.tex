@@ -1,0 +1,38 @@
+\studytypesubsection{LLMs as Annotators}
+\label{sec:llms-as-annotators}
+
+\studytypeparagraph{Description}
+Just like human annotators, LLMs can label artifacts based on a pre-defined coding guide.
+However, they can label data much faster than any human could. 
+In qualitative data analysis, manually annotating (``coding'') natural language text, e.g., in software artifacts, open-ended survey responses, or interview transcripts, is a time-consuming manual process~\cite{DBLP:journals/ase/BanoHZT24}.
+LLMs can be used to augment or replace human annotations, provide suggestions for new codes (see Section \synthesis), or even automate the entire qualitative data analysis process.
+
+\studytypeparagraph{Example(s)}
+Recent work in software engineering has begun to explore the use of LLMs for annotation tasks.
+\citeauthor{Huang2023Enhancing}~\cite{Huang2023Enhancing} proposed an approach that utilizes multiple LLMs for joint annotation of mobile application reviews. 
+They used three models of comparable size with an absolute majority voting rule (i.e., a label is only accepted if it receives more than half of the total votes from the models).
+Accordingly, the annotations fell into three categories: exact matches (where all models agreed), partial matches (where a majority agreed), and non-matches (where no majority was reached).
+The study by \citeauthor{DBLP:conf/msr/AhmedDTP25}~\cite{DBLP:conf/msr/AhmedDTP25} examined LLMs as annotators in software engineering research across five datasets, six LLMs, and ten annotation tasks.
+They found that model-model agreement strongly correlates with human-model agreement, suggesting situations in which LLMs could effectively replace human annotators. Their research showed that for tasks where humans themselves disagreed significantly , models also performed poorly.
+Conversely, if multiple LLMs reach similar solutions independently, then LLMs are likely suitable for the annotation task.
+They proposed to use model confidence scores to identify specific samples that could be safely delegated to LLMs, potentially reducing human annotation effort without compromising inter-rater agreement.
+
+\studytypeparagraph{Advantages}
+Recent research demonstrates several advantages of using LLMs as annotators, including their cost effectiveness and accuracy.
+LLM-based annotation can dramatically reduce costs compared to human labeling, with studies showing cost reductions of 50-96\% on various natural language tasks~\cite{DBLP:conf/emnlp/WangLXZZ21}.
+For example, \citeauthor{DBLP:conf/chi/HeHDRH24} found in their study that GPT-4 annotation costs only \$122.08 compared to \$4,508 for a comparable MTurk pipeline~\cite{DBLP:conf/chi/HeHDRH24}.
+Moreover, the LLM-based approach resulted in a completion time of just 2 days versus several weeks for the crowd-sourced approach.
+LLMs consistently demonstrate strong performance, with ChatGPT's accuracy exceeding crowd workers by approximately 25\% on average~\cite{DBLP:journals/corr/abs-2303-15056}, achieving impressive results in specific tasks such as sentiment analysis (65\% accuracy)~\cite{DBLP:journals/corr/abs-2304-10145}.
+LLMs also show remarkably high inter-rater agreement, higher than crowd workers and trained annotators~\cite{DBLP:journals/corr/abs-2303-15056}.
+
+\studytypeparagraph{Challenges}
+Challenges of using LLMs as annotators include reliability issues, human-LLM interaction challenges, biases, errors, and resource considerations.
+Studies suggest that while LLMs show promise as annotation tools in SE research, their optimal use may be in augmenting rather than replacing human annotators~\cite{DBLP:conf/emnlp/WangLXZZ21, DBLP:conf/chi/HeHDRH24}.
+LLMs can negatively affect human judgment when labels are incorrect~\cite{DBLP:conf/www/HuangKA23a}, and their overconfidence requires careful verification~\cite{DBLP:conf/kdd/WanSJKCNSSWYABJ24}.
+Moreover, in previous studies, LLMs have shown significant variability in annotation quality depending on the dataset and the annotation task~\cite{DBLP:journals/corr/abs-2306-00176}.
+Studies have shown that LLMs are especially unreliable for high-stakes labeling tasks~\cite{DBLP:conf/chi/Wang0RMM24} and that LLMs can have notable performance disparities between label categories~\cite{DBLP:journals/corr/abs-2304-10145}.
+Recent empirical evidence indicates that LLM consistency in text annotation often falls below scientific reliability thresholds, with outputs being sensitive to minor prompt variations~\cite{DBLP:journals/corr/abs-2304-11085}.
+Context-dependent annotations pose a specific challenge, as LLMs show difficulty in correctly interpreting text segments that require broader contextual understanding~\cite{DBLP:conf/chi/HeHDRH24}.
+Although pooling of multiple outputs can improve reliability, this approach requires additional computational resources and still requires validation against human-annotated data.
+While generally cost-effective, LLM annotation requires careful management of per token charges, particularly for longer texts~\cite{DBLP:conf/emnlp/WangLXZZ21}. Furthermore, achieving reliable annotations may require multiple runs of the same input to enable majority voting~\cite{DBLP:journals/corr/abs-2304-11085}, although the exact cost comparison between LLM-based and human annotation is controversial~\cite{DBLP:conf/chi/HeHDRH24}.
+Finally, research has identified consistent biases in label assignment, including tendencies to overestimate certain labels and misclassify neutral content~\cite{DBLP:journals/corr/abs-2304-10145}.
