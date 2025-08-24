@@ -350,9 +350,10 @@ However, benchmarks are subject to several challenges.
 
 Benchmark contamination, that is, the inclusion of the benchmark in the LLM training data~\cite{DBLP:journals/corr/abs-2410-16186}, has recently been identified as a problem.
 The careful selection of samples and the creation of the corresponding input prompts is particularly important, as correlations between prompts may bias the benchmark results~\cite{DBLP:conf/acl/SiskaMAB24}.
-Although LLMs might perform well on a specific benchmark such as \emph{HumanEval}, they do not necessarily perform well on other benchmarks.
-Moreover, benchmark metrics such as \emph{perplexity} or \emph{BLEU-N do} not neccessarily reflect human judgment.
-Recently, \citeauthor{cao2025should}~\cite{cao2025should} has proposed guidelines for the creation of LLM benchmarks related to coding tasks, grounded in a systematic survey of existing benchmarks. 
+Although LLMs might perform well on a specific benchmark such as \emph{HumanEval} or \emph{SWE-bench}, they do not necessarily perform well on other benchmarks.
+Moreover, benchmarks usually do not capture the full complexity and diversity of software engineering work~\cite{Chandra2025benchmarks}.
+Another issue is that metrics used for benchmarks, such as \emph{perplexity} or \emph{BLEU-N}, do not necessarily reflect human judgment.
+Recently, \citeauthor{cao2025should}~\cite{cao2025should} have proposed guidelines for the creation of LLM benchmarks related to coding tasks, grounded in a systematic survey of existing benchmarks. 
 In this process, they highlight current shortcomings related to reliability, transparency, irreproducibility, low data quality, and inadequate validation measures.
 For more details on benchmarks, see Section \benchmarksmetrics. 
 
