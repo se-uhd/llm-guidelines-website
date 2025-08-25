@@ -8,7 +8,7 @@ They should not happen as an afterthought.
 \guidelinesubsubsection{Recommendations}
 
 A cornerstone of open science is the ability to reproduce research results.
-Although the inherent non-deterministic nature of LLM is a strength in many use cases, its impact on \emph{reproducibility} is a challenge.
+Although the inherent non-deterministic nature of LLM is a strength in many use cases, its impact on \emph{reproducibility} is problematic.
 To enable reproducibility, researchers \should disclose a replication package for their study.
 They \should perform multiple repetitions of their experiments (see \benchmarksmetrics) to account for non-deterministic outputs.
 In some cases, researchers \may reduce the output variability by setting the temperature to a value close to 0 and setting a fixed seed value.
@@ -23,7 +23,7 @@ In LLM-based studies, generalizability boils down to two main concerns:
 If generalizability to other LLMs is not in the scope of the research, this \must be clearly explained in the \paper or, if generalizability is in scope, researchers \must compare their results or subsets of the results (e.g., due to computational cost) with other LLMs that are, e.g., similar in size, to assess the generalizability of their findings (see also Section \openllm).
 Multiple studies (e.g., \cite{DBLP:journals/corr/abs-2307-09009, doi:10.1148/radiol.232411}) found that the performance of proprietary LLMs (e.g., GPT) decreased over time for certain tasks using the same model version (e.g. GPT-4o).
 Reporting the model version and configuration is not sufficient in such cases.
-To date, the only way to mitigate this limitation is the usage of an open LLM having a versioning schema and being archiving (see \openllm).
+To date, the only way to mitigate this limitation is the usage of an open LLM having a versioning schema and  archiving (see \openllm).
 Hence, researchers \should employ open LLMs to establish a reproducible baseline and, if the use of an open LLM is not possible, researchers \should test and report their results over an extended period of time as a proxy of the stability of the results over time.
 
 \emph{Data leakage, contamination, or overfitting} occurs when information outside the training data influences model performance. %, leading to overly optimistic performance estimates.
@@ -82,8 +82,8 @@ Individual studies have already begun to highlight the uncertainty about the \em
 Since a lot of research in SE evolves around code, inter-dataset code duplication has been extensively researched over the years to curate de-duplicated datasets (see, e.g., \cite{DBLP:journals/pacmpl/LopesMMSYZSV17, DBLP:conf/oopsla/Allamanis19, DBLP:journals/ese/KarmakarAR23, DBLP:journals/tse/LopezCSSV25}).
 The issue of inter-dataset duplication has also attracted interest in other disciplines. %, with growing demands for data mining.
 For example, in biology, \citeauthor{DBLP:journals/biodb/LakiotakiVTGT18} acknowledge and address the overlap between multiple common disease datasets~\cite{DBLP:journals/biodb/LakiotakiVTGT18}. 
-In the domain of code generation, \citeauthor{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce leet code~\cite{DBLP:conf/ease/CoignionQR24}.
-To mitigate the issue of inter-dataset duplication, they only used leet code problems published after 2023-01-01, reducing the likelihood of LLMs having seen those problems before.
+In the domain of code generation, \citeauthor{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce LeetCode~\cite{DBLP:conf/ease/CoignionQR24}.
+To mitigate the issue of inter-dataset duplication, they only used LeetCode problems published after 2023-01-01, reducing the likelihood of LLMs having seen those problems before.
 Further, they discuss the performance differences of LLMs on different datasets in light of potential inter-dataset duplication.
 \citeauthor{zhou2025lessleakbenchinvestigationdataleakage} performed an empirical evaluation of data leakage in 83 software engineering benchmarks~\cite{zhou2025lessleakbenchinvestigationdataleakage}.
 Although most benchmarks suffer from minimal leakage, very few showed a leakage of up to 100\%.
@@ -92,7 +92,7 @@ A starting point for studies that aim to assess and mitigate inter-dataset dupli
 Through this dataset, it is possible to reduce the overlap between the traning and evaluation data, improving the validity of the evaluation results.
 A starting point to prevent active data leakage into a LLM improvement process is to ensure that the data is not used to train the model (e.g., via OpenAI's data control functionality)~\cite{DBLP:conf/eacl/BalloccuSLD24}.
 
-Bias can occur in LLM training datasets, resulting in various types of discrimination.
+Finally, bias can occur in LLM training datasets, resulting in various types of discrimination.
 \citeauthor{DBLP:journals/corr/abs-2309-00770} propose metrics to quantify biases in various tasks (e.g., text generation, classification, question answering)~\cite{DBLP:journals/corr/abs-2309-00770}.
 
 \guidelinesubsubsection{Advantages}
@@ -115,10 +115,10 @@ Most LLM providers do not publicly offer information about their training data, 
 Consistently keeping track of and reporting the \emph{costs} involved in a research endeavor is challenging.
 Building a coherent \emph{replication package} that includes LLM outputs and samples for partial replicability requires additional effort and resources.
 Finding the right \emph{metrics} to evaluate the performance of LLMs in SE for specific tasks is challenging.
-Defining all requirements beforehand to ensure the use of suitable metrics can be challenging, especially in exploratory research.
+Defining all requirements beforehand to ensure the use of suitable metrics can be a challenge, especially in exploratory research.
 Our Section \benchmarksmetrics and its references can serve as a starting point.
 Ensuring \emph{compliance} across jurisdictions is difficult with different regions having different regulations and requirements (e.g., GDPR and the AI Act in the EU, CCPA in California).
-Selecting datasets and models with fewer \emph{biases} is challenging, as bias are often unknown.
+Selecting datasets and models with fewer \emph{biases} is challenging, as biases are often unknown.
 Measuring or estimating the \emph{environmental impact} of a study is challenging and might not always be feasible.
 Especially in exploratory research, the impact is hard to estimate in advance, making it difficult to justify the usage of LLMs over other approaches.
 
