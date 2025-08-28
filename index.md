@@ -19,7 +19,7 @@ To contribute to the guidelines, you can open an issue or create a pull request 
 To cite our guidelines, you can refer to the [arXiv version](https://arxiv.org/abs/2508.15503):
 
 ```
-@misc{baltes2025evaluationguidelinesempiricalstudies,
+@misc{baltes2025guidelinesempiricalstudiessoftware,
       title={Guidelines for Empirical Studies in Software Engineering involving Large Language Models}, 
       author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Lutz Prechelt and Paul Ralph and Christoph Treude and Stefan Wagner},
       year={2025},
