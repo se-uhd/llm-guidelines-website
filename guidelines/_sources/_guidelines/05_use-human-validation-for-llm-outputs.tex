@@ -23,6 +23,11 @@ For example, \citeauthor{DBLP:conf/msr/AhmedDTP25}~\cite{DBLP:conf/msr/AhmedDTP2
 If the agreement is high (alpha $gt$ 0.5), a human rating can be replaced with an LLM-generated one.
 In cases of low model-to-model agreement (alpha $\le$ 0.5), they then evaluate the prediction confidence of the model, selectively replacing annotations where the model confidence is high ($\ge$ 0.8).
 
+Besides generating and modifying content, agentic software development tools such as Claude Code can autonomously call command-line tools or pull in additional information from MCP (model context protocol) servers.
+For such tools, it makes sense to separate textual output (e.g., file changes) from output related to tool execution.
+When evaluating agentic tools, researchers \should assess the feedback that users provided for proposed changes, report statistics on how frequently they accepted the content, and how they modified it.
+This agentic human-in-the-loop interaction approach is essentially a built-in human validation, even though the degrees of freedom are larger than for more traditional experiments that use LLMs directly.
+
 \guidelinesubsubsection{Example(s)}
 
 \citeauthor{DBLP:conf/msr/AhmedDTP25}~\cite{DBLP:conf/msr/AhmedDTP25} evaluated how human annotations can be replaced by LLM generated labels.
