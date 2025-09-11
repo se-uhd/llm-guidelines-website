@@ -3,7 +3,7 @@
 
 \studytypeparagraph{Description}
 
-Studying how software engineers use LLMs is crucial to understand the current state of practice in SE.
+Studying how software engineers use LLMs and LLM-based tools is crucial to understand the current state of practice in SE.
 Researchers can observe software engineers' usage of LLM-based tools in the field, or study if and how they adopt such tools, their usage patterns, as well as perceived benefits and challenges.
 Surveys, interviews, observational studies, or analysis of usage logs can provide insights into how LLMs are integrated into development processes, how they influence decision making, and what factors affect their acceptance and effectiveness. 
 Such studies can inform improvements for existing LLM-based tools, motivate the design of novel tools, or derive best practices for LLM-assisted software engineering.
@@ -40,7 +40,7 @@ The results can then be used to validate general hypotheses about human-LLM inte
 
 When conducting field studies in real-world environments, researchers have to ensure that their study results are \enq{dependable}~\cite{Sullivan2011-ub} beyond the traditional validity criteria such as internal or construct validity.
 The usage environment in a real-world context can often be extremely diverse.
-The integration of LLMs can range from specific LLMs based on company policy to the unregulated use of any available LLM. 
+The integration of LLMs can range from specific LLMs based on company policies to the unregulated use of any available LLM. 
 Both extremes may influence the adoption of LLM by software engineers, and hence need to be addressed in the study methodology.
 In addition, in longitudinal case studies, the timing of the study may have a significant impact on its result, as LLMs and LLM-based tools are rapidly evolving.
 Moreover, developers are still learning how to best make use of the new technology, and best practices are still being developed and established.
@@ -49,3 +49,5 @@ Limited access to telemetry data or other usage metrics restricts the ability of
 To make study results reliable, researchers must establish that their results are rigorous, for example, by using triangulation to understand and minimize potential biases~\cite{Sullivan2011-ub}.
 When it comes to studying LLM usage in controlled laboratory studies, researchers may struggle with the inherent variability of LLM outputs.
 Since reproducibility and precision are essential for hypothesis testing, the stochastic nature of LLM responses---where identical prompts may yield different outputs across participants---can complicate the interpretation of experimental results and affect the reliability of study findings.
+Finally, agentic software development tools such as Claude Code have configurable degrees of human involvement, and can run almost any terminal command.
+This autonomy together with the before-mentioned non-determinism make it hard to reproducibly study agentic tools in the field or in laboratory environments.
