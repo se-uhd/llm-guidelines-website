@@ -54,4 +54,5 @@ Team:
 * [Lutz Prechelt](https://www.mi.fu-berlin.de/w/Main/LutzPrechelt), Free University of Berlin (Germany)
 * [Paul Ralph](https://paulralph.name), Dalhousie University (Canada)
 * [Daniel Russo](https://www.danielrusso.org/), Aalborg University in Copenhagen (Denmark)
+* [Rijnard van Tonder](https://rijnard.com), Independent Researcher (Antigua and Barbuda)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
