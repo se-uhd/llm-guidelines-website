@@ -36,7 +36,7 @@ Project Coordinators:
 * [Sebastian Baltes](https://empirical-software.engineering/), University of Bayreuth (Germany)
 * [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), Technical University of Munich (Germany)
 
-Team:
+Contributors:
 
 * [Florian Angermeir](https://angermeir.me/), fortiss (Germany) and Blekinge Institute of Technology (Sweden)
 * [Chetan Arora](https://www.drchetanarora.com/), Monash University (Australia)
