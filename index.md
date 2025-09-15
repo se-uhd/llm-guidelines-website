@@ -22,7 +22,7 @@ Although that version is regularly updated, the most up-to-date version of the g
 ```
 @misc{baltes2025guidelinesempiricalstudiessoftware,
       title={Guidelines for Empirical Studies in Software Engineering involving Large Language Models}, 
-      author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Lutz Prechelt and Paul Ralph and Christoph Treude and Stefan Wagner},
+      author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Lutz Prechelt and Paul Ralph and Rijnard van Tonder and Christoph Treude and Stefan Wagner},
       year={2025},
       eprint={2508.15503},
       archivePrefix={arXiv},
