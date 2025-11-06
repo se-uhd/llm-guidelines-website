@@ -33,7 +33,7 @@ Although that version is regularly updated, the most up-to-date version of the g
 
 Project Coordinators:
 
-* [Sebastian Baltes](https://empirical-software.engineering/), University of Bayreuth (Germany)
+* [Sebastian Baltes](https://empirical-software.engineering/), Heidelberg University (Germany)
 * [Stefan Wagner](https://www.professoren.tum.de/en/wagner-stefan), Technical University of Munich (Germany)
 
 Contributors:
