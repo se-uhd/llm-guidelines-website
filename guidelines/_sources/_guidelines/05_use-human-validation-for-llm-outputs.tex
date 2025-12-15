@@ -48,7 +48,9 @@ In their study, they recorded students' screens, evaluated their answers for the
 
 For empirical studies involving LLMs, human validation helps ensure the reliability of study results, as LLMs can produce incorrect or biased outputs.
 For example, in natural language processing tasks, a large-scale study has shown that LLMs have a significant variation in their results, which limits their reliability as a direct substitute for human judges~\cite{DBLP:journals/corr/abs-2406-18403}. 
+\comment{In the LLM-as-a-Judge section, it said Depending on the model configuration, LLMs can provide relatively consistent evaluations.}
 Moreover, LLMs do not match human annotation in labeling tasks for natural language inference, position detection, semantic change, and hate speech detection~\cite{DBLP:conf/chi/Wang0RMM24}.
+\comment{I think we better use some software engineering examples here. This paragraph is more general, as it talks about natural language processing tasks more.}
 
 Incorporating human judgment into the evaluation process adds a layer of quality control and increases the trustworthiness of the study findings, especially when explicitly reporting inter-rater reliability metrics~\cite{khraisha2024canlargelanguagemodelshumans}.
 Incorporating feedback from individuals in the target population strengthens external validity by grounding study findings in real-world usage scenarios, which may positively impact the transfer of study results to practice.
@@ -71,4 +73,5 @@ For \llmusage, researchers \should carefully reflect on the validity of their ev
 In studies where there are arguably objective evaluation criteria (e.g., in \benchmarkingtasks), there is little need for human validation, since the benchmark has (hopefully) been validated.
 Where criteria are more unclear (e.g., \annotators, \subjects, or \synthesis), human validation is important, and this guideline should be followed.
 When using \judges, it is common to start with humans who co-create intial rating criteria. 
+Crucially, for tasks involving subjectivity or uncertainty, researchers should explicitly acknowledge the existence of multiple valid ground truths rather than forcing a single ``gold standard''.
 In developing \newtools, human validation of the LLM output is critical when the output is supposed to match human expectations.

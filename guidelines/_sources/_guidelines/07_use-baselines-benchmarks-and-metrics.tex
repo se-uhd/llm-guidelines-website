@@ -143,6 +143,7 @@ These problems can be related to formatting, since code formatting is known to i
 Another challenge to consider is that metrics usually capture one specific aspect of a task or solution.
 For example, metrics such as \emph{pass@k} do not reflect qualitative aspects of the generated source code, including its maintainability or readability.
 However, these aspects are critical for many downstream tasks.
+To assess these qualitative nuances, researchers \should consider employing \textit{LLM-as-a-Judge} approaches, which have shown the potential to provide more human-aligned evaluations on naunced aspects of software artifacts.
 Moreover, benchmarks are isolated test sets and may not fully represent real-world applications.
 For example, benchmarks such as \emph{HumanEval} synthesize code based on written specifications.
 However, such explicit descriptions are rare in real-world applications.
@@ -153,6 +154,7 @@ In many cases, the LLM training data is not released.
 However, the benchmark itself could be part of the training data.
 Such benchmark contamination may lead to the model remembering the solution from the training data rather than solving the new task based on the input data.
 This leads to artificially high performance on benchmarks.
+Researchers \should consider using benchmarks created after the model's training cutoff date or employing dynamic benchmark generation techniques.
 However, for unforeseen scenarios, the model might perform much worse.
 
 %Models may become overfitted to the training data, leading to poor performance on unseen data.
