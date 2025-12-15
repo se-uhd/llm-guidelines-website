@@ -30,7 +30,7 @@ They combined this with a lower-level reward stage to refine acceptance criteria
 Depending on the model configuration, LLMs can provide relatively consistent evaluations.
 They can further help mitigate human biases and the general variability that human judges might introduce.
 This may lead to more reliable and reproducible results in empirical studies, to the extent that these models can be reproduced or checkpointed.
-LLMs can be much more efficient and scale more easily than the equivalent human approach. For large-scale datasets, human evaluators often experience fatigue and reduced concentration, which can undermine the quality and consistency of their evaluations. In contrast, LLMs canmaintain consistent performance over extended periods regardless of the workload.
+LLMs can be much more efficient and scale more easily than the equivalent human approach. For large-scale studies, human evaluators often experience fatigue and reduced concentration, which can undermine the quality and consistency of their evaluations. In contrast, LLMs can maintain consistent performance over extended periods regardless of the workload.
 With LLM automation, entire datasets can be assessed, as opposed to subsets, and the assessment produced can be at the selected level of granularity, e.g., binary outputs (`yes' or `no') or defined levels (e.g., 0 to 4).
 However, the main constraint that varies by model and budget is the input context size, i.e., the number of tokens one can pass into a model.
 For example, the upper bound of the context that can be passed to OpenAi's \textsf{o1-mini} model is \href{https://help.openai.com/en/articles/9855712-openai-o1-models-faq-chatgpt-enterprise-and-edu}{32k tokens}.
@@ -44,7 +44,8 @@ For example, a reliable LLM might be reliably inaccurate and wrong.
 Evaluating and judging large numbers of items, for example, to perform fault localization on the thousands of bugs that large open-source projects have to deal with, comes with costs in clock time, compute time, and environmental sustainability.
 Evidence shows that LLMs can behave differently when reviewing their own outputs~\cite{NEURIPS2024_7f1f0218}.
 In more human-oriented datasets (such as discussions of pull requests) LLMs may suffer from well-documented biases and issues with fairness~\cite{Gallegos2024BiasAF}. 
-For tasks in which human judges disagree significantly, researchers face the challenge of \textit{rating indeterminacy}, where tasks lack a single objective truth due to vagueness or ambiguity. In these tasks, it is not clear if an LLM judge should reflect the majority opinion or act as an independent judge. 
+For tasks in which human judges disagree significantly, researchers face the challenge of \textit{rating indeterminacy}, where tasks lack a single objective truth due to vagueness or ambiguity.
+It is not clear if an LLM judge should reflect the majority opinion or act as an independent judge. 
 The underlying statistical framework of an LLM usually pushes outputs towards the most likely (majority) answer. 
 There is ongoing research on how suitable LLMs are as independent judges.
 Questions about bias, accuracy, and trust remain~\cite{DBLP:journals/corr/abs-2406-18403}.
