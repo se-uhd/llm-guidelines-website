@@ -1,0 +1,106 @@
+\subsubsection*{Essential}
+
+\paragraph{Introduction}
+\begin{itemize}
+    \item Disclose any use of LLMs to support empirical studies in their \paper.
+\end{itemize}
+
+\paragraph{Research Design and Methods}
+
+\textbf{Model and Training}
+\begin{itemize}
+    \item Report the exact LLM model or tool version, configuration, and experiment date in the \paper.
+    \item For fine-tuned models, describe the fine-tuning goal, dataset, and procedure.
+\end{itemize}
+
+\textbf{System Architecture}
+\begin{itemize}
+    \item Describe the full architecture of LLM-based tools that they develop in their \paper, including the role of the LLM, interactions with other components, and the overall system behavior.
+    \item If autonomous agents are used, specify agent roles, reasoning frameworks, and communication flows.
+    \item Report hosting, hardware setup, and latency implications.
+    \item For tools using retrieval or augmentation methods, describe data sources, integration mechanisms, and update and versioning strategies.
+    \item For ensemble architectures, explain the coordination logic between models.
+\end{itemize}
+
+\textbf{Prompts}
+\begin{itemize}
+    \item Publish all prompts, including their structure, content, formatting, and dynamic components.
+    \item Describe prompt development strategies (e.g., zero-shot, few-shot), rationale, and selection process.
+    \item Document input handling and token optimization strategies when prompts are long or complex.
+    \item Report generation and collection processes for dynamically generated or user-authored prompts.
+    \item Specify prompt reuse across models and configurations.
+\end{itemize}
+
+\textbf{Evaluation and Metrics}
+\begin{itemize}
+    \item If using human validation, define the measured construct (e.g., usability, maintainability) and describe the measurement instrument in the \paper.
+    \item Justify all benchmark and metric choices in the \paper.
+    \item Explain why the selected metrics are suitable for the specific study.
+\end{itemize}
+
+\textbf{Data and Reproducibility}
+\begin{itemize}
+    \item Provide model outputs, discuss sensitive data handling, ethics approvals, and justify LLM usage in light of its resource demands.
+\end{itemize}
+
+\paragraph{Limitations and Threats to Validity}
+\begin{itemize}
+    \item Acknowledge non-disclosed confidential or proprietary components as reproducibility limitations.
+    \item Transparently report study limitations, including the impact of non-determinism and generalizability constraints.
+\end{itemize}
+
+\subsubsection*{Desirable}
+
+\paragraph{Introduction}
+\begin{itemize}
+    \item Report their purpose, automated tasks, and expected benefits.
+\end{itemize}
+
+\paragraph{Research Design and Methods}
+
+\textbf{Model and Training}
+\begin{itemize}
+    \item Include default parameters, explain model choices, compare base- and fine-tuned model using suitable metrics and benchmarks, and share fine-tuning data and weights (or alternatively justify why they cannot share them).
+\end{itemize}
+
+\textbf{System Architecture}
+\begin{itemize}
+    \item Include architectural diagrams and justify design decisions.
+\end{itemize}
+
+\textbf{Prompts}
+\begin{itemize}
+    \item If full prompt disclosure is not feasible, provide summaries or examples.
+    \item Report prompt revisions and pilot testing insights.
+    \item To address model non-determinism and ensure reproducibility, include full interaction logs (prompts and responses) if privacy and confidentiality can be ensured.
+\end{itemize}
+
+\textbf{Evaluation and Metrics}
+\begin{itemize}
+    \item If assessing the quality of generated artifacts is important and no reference datasets or suitable comparison metrics exist, use human validation for LLM outputs.
+    \item Consider human validation early in the study design, build on established reference models for human-LLM comparison, and share their instruments as \supplementarymaterial.
+    \item When aggregating LLM judgments, report methods and rationale and assess inter-rater agreement.
+    \item Control for confounding factors, and conduct power analysis to ensure statistical robustness.
+    \item Include an open LLM as a baseline when using commercial models and report inter-model agreement.
+    \item Summarize benchmark structure, task types, and limitations.
+\end{itemize}
+
+\textbf{Data and Reproducibility}
+\begin{itemize}
+    \item Provide a full replication package with step-by-step instructions as part of the \supplementarymaterial.
+    \item Report the financial cost of the study and the specific hardware used for self-hosted models.
+    \item Report and aim to minimize resource consumption and environmental impact.
+    \item Include a subset of the validation data for partial replication.
+    \item Create a data management plan for sensitive data.
+\end{itemize}
+
+\paragraph{Findings}
+\begin{itemize}
+    \item Report established metrics to make study results comparable, but can report additional metrics that they consider appropriate.
+    \item Repeat experiments due to the inherent non-determinism of LLMs and report the result distribution using descriptive statistics.
+\end{itemize}
+
+\paragraph{Related Work}
+\begin{itemize}
+    \item Use traditional (non-LLM) baselines for comparison where possible.
+\end{itemize}
