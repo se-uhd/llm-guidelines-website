@@ -19,6 +19,7 @@ To **contribute to the guidelines**, you can open an issue or create a pull requ
 To **cite our guidelines**, please refer to the [arXiv version](https://arxiv.org/abs/2508.15503).
 Although that version is regularly updated, the most up-to-date version of the guidelines can always be found on this website.
 
+{% raw %}
 ```
 @misc{baltes2025guidelinesempiricalstudiessoftware,
       title={{Guidelines for Empirical Studies in Software Engineering involving Large Language Models}}, 
@@ -30,6 +31,7 @@ Although that version is regularly updated, the most up-to-date version of the g
       url={https://arxiv.org/abs/2508.15503}, 
 }
 ```
+{% endraw %}
 
 Project Coordinators:
 
