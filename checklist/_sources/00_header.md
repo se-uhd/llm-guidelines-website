@@ -27,7 +27,7 @@ has_children: false
   opacity: 0.5;
 }
 #checklist-reset {
-  margin-bottom: 1em;
+  margin-bottom: 0;
   cursor: pointer;
 }
 </style>
