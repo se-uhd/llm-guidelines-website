@@ -28,17 +28,31 @@ bundle exec jekyll build      # build static site to _site/
 
 LaTeX source files (`_sources/` directories) → pdflatex + bibtex → pandoc conversion → merged Markdown `index.md` files → Jekyll rendering
 
-**Critical rule:** Content tex files (in `llm-guidelines-paper/_guidelines/`, `_studytypes/`, `_scope/`, `_tldr/`) and `literature.bib` live in the paper submodule and are referenced directly — do not duplicate them. Edit content in the paper repo, not here. Never edit generated Markdown files (`scope/index.md`, `study-types/index.md`, `guidelines/index.md`) — they are overwritten on every conversion and not version-controlled.
+The pipeline has four content sections: **scope**, **study-types**, **guidelines**, and **checklist**. Each has a `_sources/` directory with a `00_header.md` (Jekyll front matter) and `.tex` entry-point files.
+
+**Conversion steps (in `convert-and-merge-sources.sh`):**
+1. For each `.tex` file, pandoc converts to Markdown using `pandoc-filters.lua` (tightens lists, converts `plain`/`enumerate*` environments)
+2. Generated `.md` files are merged with `00_header.md` into section `index.md` files
+3. Guidelines and study types generate individual sub-pages (e.g., `guidelines/declare-llm-usage-and-role/index.md`) with slug-based URLs derived from guideline/study-type names
+4. Post-processing via perl: inline footnotes, unresolved `\ref{}` cleanup, Markdown-inside-HTML fixes, checklist marker styling, `(G1)`–`(G8)` links, CSV export generation, reset button insertion
+
+**Critical rule:** Content tex files (in `llm-guidelines-paper/_guidelines/`, `_studytypes/`, `_scope/`, `_tldr/`) and `literature.bib` live in the paper submodule and are referenced directly — do not duplicate them. Edit content in the paper repo, not here. Never edit generated Markdown files (`scope/index.md`, `study-types/index.md`, `guidelines/index.md`, `checklist/index.md`, and all sub-pages under `guidelines/*/` and `study-types/*/`) — they are overwritten on every conversion and not version-controlled.
 
 ## Repository Structure
 
-- `header-website.tex` — Minimal website wrapper (documentclass, geometry, parskip) that inputs `shared-header.tex` from the paper repo
+- `header-website.tex` — Website wrapper (documentclass, geometry, parskip) that inputs `shared-header.tex` from the paper repo
+- `pandoc-filters.lua` — Pandoc Lua filter: converts `plain` lstnewenvironment to code blocks, `enumerate*` to OrderedList, tightens list items
 - `scope/_sources/` — Motivation and scope LaTeX entry-point (content referenced from submodule)
 - `study-types/_sources/` — Study type taxonomy LaTeX entry-point (content referenced from submodule)
 - `guidelines/_sources/` — Eight guideline LaTeX entry-points, TL;DR summaries (content referenced from submodule)
+- `checklist/_sources/` — Reporting checklist LaTeX entry-point (content referenced from submodule)
 - `llm-guidelines-paper/` — Git submodule containing the paper repo (all content tex files, `literature.bib`, `shared-header.tex`)
 - `_config.yml` — Jekyll configuration (theme, search, callouts, footer)
-- `.github/workflows/` — CI validates LaTeX on PRs; auto-deploys on merge to main
+- `_includes/` — Custom Jekyll includes (`head_custom.html` for CSS/fonts, `title.html`)
+- `assets/` — CSS (`custom.css`, `buttons.css`, `academicons.css`), fonts, images (favicon)
+- `compile-latex.sh` — Compiles all four content sections (scope, study-types, guidelines, checklist) via pdflatex + bibtex
+- `convert-and-merge-sources.sh` — Converts LaTeX → Markdown, generates sub-pages, applies post-processing, merges into `index.md` files
+- `.github/workflows/` — `build.yml` validates LaTeX on PRs; `build-and-deploy.yml` builds and deploys on merge to main
 
 ## LaTeX Header Architecture
 
@@ -54,11 +68,18 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
 
 **Custom commands defined in `shared-header.tex`:**
 - Editorial: `\todo{...}`
+- Inline quotes: `\enq{...}` (typographically correct quotes with italics)
+- TL;DR label: `\tldr`
 - RFC 2119 keywords: `\must`, `\mustnot`, `\should`, `\shouldnot` (paper: small-caps, website: bold)
 - Reporting location: `\paper`, `\supplementarymaterial` (paper: italic, website: ALLCAPS)
-- Cross-references: `\scope`, `\guidelines`, `\annotators`, `\modelversion`, etc. (paper: `\hyperref` to labels, website: `\href` to URLs) — do NOT use standard `\label{}`/`\ref{}` in content files
+- Cross-references — do NOT use standard `\label{}`/`\ref{}` in content files:
+  - Scope: `\scope` → `/scope/`
+  - Study types: `\studytypes`, `\llmsforresearcher`, `\llmsforengineers`
+  - S1–S7: `\annotators`, `\judges`, `\synthesis`, `\subjects`, `\llmusage`, `\newtools`, `\benchmarkingtasks`
+  - Guidelines: `\guidelines`
+  - G1–G8: `\usagerole`, `\modelversion`, `\toolarchitecture`, `\prompts`, `\humanvalidation`, `\openllm`, `\benchmarksmetrics`, `\limitationsmitigations`
 - Section formatting: `\guidelinesubsubsection{}`, `\studytypesubsection{}`, `\studytypeparagraph{}`, `\scopeparagraph{}`
-- Icons: `\iconM`, `\iconS` (paper: TikZ circles, website: Unicode)
+- Icons: `\iconM` (● U+25CF), `\iconS` (○ U+25CB) — paper: TikZ circles, website: Unicode
 - Framed environment: `\begin{framed}...\end{framed}` (paper: mdframed, website: quote)
 
 **Citations:** Use `\cite{}` and `\citeauthor{}` with entries from `literature.bib`.
