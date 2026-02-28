@@ -19,6 +19,8 @@ To **contribute to the guidelines**, you can open an issue or create a pull requ
 To **cite our guidelines**, please refer to the [arXiv version](https://arxiv.org/abs/2508.15503).
 Although that version is regularly updated, the most up-to-date version of the guidelines can always be found on this website.
 
+<a href="https://arxiv.org/abs/2508.15503" class="btn" target="_blank"><i class="ai ai-arxiv"></i> View on arXiv</a>
+
 {% raw %}
 ```
 @misc{baltes2026guidelinesempiricalstudiessoftware,
