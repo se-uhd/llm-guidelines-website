@@ -184,7 +184,7 @@ if [ -e checklist/index.md ]; then
     # Place the reset button after the intro paragraph (replace placeholder)
     perl -CSD -0777 -pi -e '
         s/<!-- RESET_BUTTON -->\n*/\n/;
-        s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n/;
+        s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n<button id="checklist-export" class="btn btn-outline"><i class="fa-solid fa-file-csv"><\/i> Export to CSV<\/button>\n/;
     ' checklist/index.md
     # Link (G1)–(G8) references to the corresponding guideline sub-pages
     perl -CSD -pi -e '
