@@ -5,7 +5,7 @@ compile_tex() {
     cd "$directory"
     for tex_file in *.tex; do
         [ -e "$tex_file" ] || continue
-        pdflatex -pdf -halt-on-error "$tex_file"
+        pdflatex -halt-on-error "$tex_file"
         if [ $? = 0 ] ; then
             aux_file="${tex_file%.tex}.aux"
             if grep -q '\\bibdata' "$aux_file" 2>/dev/null; then
@@ -15,8 +15,8 @@ compile_tex() {
                     exit 1
                 fi
             fi
-            pdflatex -pdf -halt-on-error "$tex_file"
-            pdflatex -pdf -halt-on-error "$tex_file"
+            pdflatex -halt-on-error "$tex_file"
+            pdflatex -halt-on-error "$tex_file"
         else 
             echo "Compilation of Latex file $tex_file failed."
             exit 1
