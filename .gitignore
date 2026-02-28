@@ -68,11 +68,11 @@ _site
 # Generated files #
 ###################
 guidelines/index.md
-guidelines/*/
+guidelines/[!_]*/
 guidelines/_sources/*.md
 guidelines/_sources/*.pdf
 study-types/index.md
-study-types/*/
+study-types/[!_]*/
 study-types/_sources/*.md
 study-types/_sources/*.pdf
 scope/index.md
