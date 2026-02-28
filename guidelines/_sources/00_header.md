@@ -29,12 +29,5 @@ We start with an aggregation of all <u><em>tl;dr</em></u> summaries, followed by
 
 ## Overview
 
-1. [Declare LLM Usage and Role](#declare-llm-usage-and-role)
-2. [Report Model Version, Configuration, and Customizations](#report-model-version-configuration-and-customizations)
-3. [Report Tool Architecture beyond Models](#report-tool-architecture-beyond-models)
-4. [Report Prompts, their Development, and Interaction Logs](#report-prompts-their-development-and-interaction-logs)
-5. [Use Human Validation for LLM Outputs](#use-human-validation-for-llm-outputs)
-6. [Use an Open LLM as a Baseline](#use-an-open-llm-as-a-baseline)
-7. [Use Suitable Baselines, Benchmarks, and Metrics](#use-suitable-baselines-benchmarks-and-metrics)
-8. [Report Limitations and Mitigations](#report-limitations-and-mitigations)
+<!-- TOC -->
 

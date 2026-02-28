@@ -19,6 +19,91 @@ cd "$current_dir"
 convert_tex_to_md "guidelines/_sources"
 cd "$current_dir"
 
+# Generate guidelines TOC from converted markdown headings
+guidelines_toc=$(grep -h "^## " guidelines/_sources/0[1-8]_*.md | perl -ne '
+    chomp;
+    s/^## //;
+    my $heading = $_;
+    my $anchor = lc $heading;
+    $anchor =~ s/[^a-z0-9 -]//g;
+    $anchor =~ s/ /-/g;
+    $anchor =~ s/-{2,}/-/g;
+    print "$.. [$heading](#$anchor)\n";
+')
+
+# Generate study types TOC from converted markdown headings
+study_types_toc=$(grep -h "^## " study-types/_sources/01_study-types.md | perl -e '
+    my $top = 0;
+    my $sub = 0;
+    while (<>) {
+        chomp;
+        s/^## //;
+        my $heading = $_;
+        next if $heading =~ /^Advantages and Challenges/;
+        my $anchor = lc $heading;
+        $anchor =~ s/[^a-z0-9 -]//g;
+        $anchor =~ s/ /-/g;
+        $anchor =~ s/-{2,}/-/g;
+        if ($heading =~ /^Introduction:\s*(.+)/) {
+            $top++;
+            $sub = 0;
+            my $display = $1;
+            print "${top}. [${display}](#${anchor})\n";
+        } elsif ($heading =~ /\(S\d+\)/) {
+            $sub++;
+            print "    ${sub}. [${heading}](#${anchor})\n";
+        } elsif ($heading eq "References") {
+            $top++;
+            print "${top}. [${heading}](#${anchor})\n";
+        }
+    }
+')
+
+# Merge sources into index.md files, replacing <!-- TOC --> markers with generated TOCs
 cat scope/_sources/*.md > scope/index.md
-cat guidelines/_sources/*.md > guidelines/index.md
-cat study-types/_sources/*.md > study-types/index.md
+cat guidelines/_sources/*.md | GUIDELINES_TOC="$guidelines_toc" perl -pe 's/<!-- TOC -->/$ENV{GUIDELINES_TOC}/' > guidelines/index.md
+cat study-types/_sources/*.md | STUDY_TYPES_TOC="$study_types_toc" perl -pe 's/<!-- TOC -->/$ENV{STUDY_TYPES_TOC}/' > study-types/index.md
+
+# Remove unresolved \ref{} anchors that pandoc cannot resolve (labels only exist in the paper).
+# Pattern: <a href="#LABEL" data-reference-type="ref" data-reference="LABEL">[LABEL]</a>
+# Note: LaTeX ~ produces UTF-8 non-breaking spaces (\xC2\xA0) that \s does not match by default.
+for md_file in scope/index.md guidelines/index.md study-types/index.md; do
+    [ -e "$md_file" ] || continue
+    perl -CSD -pi -e '
+        my $sp = qr/[\s\x{a0}]/;
+        # Remove "(Section/Table/Appendix <ref>)" parentheticals entirely
+        s/\((Section|Table|Appendix|Figure)$sp*<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>\)//g;
+        # Remove "Table/Appendix/Figure <ref>" (prefix word + anchor)
+        s/(Table|Appendix|Figure)$sp*<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>$sp*//g;
+        # Remove "(Section <ref>)" where only Section text remains (anchor already stripped)
+        s/\((Section|Table|Appendix|Figure)$sp*\)//g;
+        # Remove any remaining unresolved ref anchors
+        s/<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>//g;
+        # Clean up orphaned sentence fragments left after removing Table/Appendix refs
+        s/,?\s*then consult to determine/. Determine/g;
+        s/the checklist in,/the checklist,/g;
+        s/\.\s*provides a quick reference[^.]*\.//g;
+        s/,?\s*and maps each[^.]*\.//g;
+        s/\.\s*helps reviewers[^.]*\.//g;
+        # Inline footnotes: replace "[N]" marker + "[N] URL" footer with a linked marker
+        # Collect footnote definitions (e.g., "[1] https://...") into a hash, then inline them.
+        # Clean up: "in , which" → ", which"; collapse spaces; trim space before punctuation
+        s/\bin$sp*,/,/g;
+        s/(?<=\S)$sp{2,}/ /g;
+        s/ ([,.])/\1/g;
+    ' "$md_file"
+    # Inline footnotes: convert "[N] URL" at end of file into superscript links at the marker site
+    perl -CSD -0777 -pi -e '
+        my %fn;
+        while (s/^\[(\d+)\]\s*<?(\S+?)>?\s*$//m) {
+            $fn{$1} = $2;
+        }
+        for my $n (keys %fn) {
+            my $url = $fn{$n};
+            if ($url =~ m{^https?://}) {
+                s{\[${n}\]}{<sup>[$n]($url)</sup>}g;
+            }
+        }
+        s/\n{3,}/\n\n/g;
+    ' "$md_file"
+done
