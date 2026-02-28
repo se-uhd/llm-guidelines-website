@@ -36,10 +36,37 @@ generate_subpage() {
     ')
     [ -z "$slug" ] && return 1
 
-    # Derive nav title: move (G1)/(S1) suffix to prefix, strip "Introduction: " prefix
+    # Derive nav title: use short name from lookup table, strip "Introduction: " prefix
     nav_title=$(echo "$heading" | perl -pe '
-        if (s/\s*\(([GS]\d+)\)\s*$//) { $_ = "$1: $_" }
+        my %short = (
+            G1 => "Usage and Role",
+            G2 => "Version and Configuration",
+            G3 => "Architecture",
+            G4 => "Prompts and Logs",
+            G5 => "Human Validation",
+            G6 => "Open LLMs",
+            G7 => "Benchmarks and Metrics",
+            G8 => "Limitations and Mitigations",
+            S1 => "LLMs as Annotators",
+            S2 => "LLMs as Judges",
+            S3 => "LLMs for Synthesis",
+            S4 => "LLMs as Subjects",
+            S5 => "Studying LLM Usage",
+            S6 => "LLMs for Tools",
+            S7 => "Benchmarking LLMs",
+        );
+        if (s/\s*\(([GS]\d+)\)\s*$//) {
+            my $id = $1;
+            $_ = exists $short{$id} ? "$id: $short{$id}" : "$id: $_";
+        }
         s/^Introduction:\s*//;
+        my %cat = (
+            "LLMs as Tools for Software Engineering Researchers" => "LLMs for Research",
+            "LLMs as Tools for Software Engineers" => "LLMs for SE",
+        );
+        for my $long (keys %cat) {
+            if ($_ eq "$long\n") { $_ = "$cat{$long}\n"; last }
+        }
     ')
 
     # Create sub-page directory
