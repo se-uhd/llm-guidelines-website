@@ -108,7 +108,7 @@ for md_file in scope/index.md guidelines/index.md study-types/index.md checklist
         # Clean up: "in , which" → ", which"; collapse spaces; trim space before punctuation
         s/\bin$sp*,/,/g;
         s/(?<=\S)$sp{2,}/ /g;
-        s/ ([,.])/\1/g;
+        s/$sp([,.;:!?)>\]])/\1/g;
     ' "$md_file"
     # Inline footnotes: convert "[N] URL" at end of file into superscript links at the marker site
     perl -CSD -0777 -pi -e '
@@ -142,7 +142,7 @@ if [ -e checklist/index.md ]; then
     # Place the reset button after the intro paragraph (replace placeholder)
     perl -CSD -0777 -pi -e '
         s/<!-- RESET_BUTTON -->\n*/\n/;
-        s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline">Reset checkboxes<\/button>\n/;
+        s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n/;
     ' checklist/index.md
     # Link (G1)–(G8) references to the corresponding guideline anchors
     perl -CSD -pi -e '
