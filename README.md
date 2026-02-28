@@ -23,14 +23,14 @@ Once you push your changes to the `main` branch or once a pull request is merged
 We are free to use any Latex editor you like.
 To double-check the generated Markdown files, you can use any Markdown editor you like, preferably one that supports [kramdown](https://kramdown.gettalong.org/), which is the [default Markdown renderer for Jekyll](https://jekyllrb.com/docs/configuration/markdown/#kramdown).
 
-If you add references to [literature.bib](https://github.com/se-ubt/llm-guidelines-website/blob/main/literature.bib), please use the [DBLP](https://dblp.org/) Bibtex entries, if available.
+If you add references to [literature.bib](https://github.com/se-ubt/llm-guidelines-paper/blob/main/literature.bib), please use the [DBLP](https://dblp.org/) Bibtex entries, if available.
 
 ## Information for authors
 
 * Check our custom commands which are included in all Latex files using [`header.tex`](https://github.com/se-ubt/llm-guidelines-website/blob/main/header.tex). Use `\todo{}` to keep track of to-dos and `\comment{}` for review feedback. For recommendations, use the commands based on RFC 2119, which are defined in the same header file.
-* Before adding new references to [`literature.bib`](https://github.com/se-ubt/llm-guidelines-website/blob/main/literature.bib), check whether a reference already exists (e.g., by searching for parts of the title).
+* Before adding new references to [`literature.bib`](https://github.com/se-ubt/llm-guidelines-paper/blob/main/literature.bib), check whether a reference already exists (e.g., by searching for parts of the title).
 * Always use the [dblp](https://dblp.org/) bibtex entries if available.
 * Before pushing your changes, validate locally whether the modified Latex files compile.
 * We reference study types from the guidelines, not the other way around. If you want to connect study types and guidelines, consider updating the study type subsection of the corresponding guideline.
 * Direct pushes to the main branch are not possible anymore. Please use branches and pull requests.
-* Reference from [`literature.bib`](https://github.com/se-ubt/llm-guidelines-website/blob/main/literature.bib) can be cited using the standard Latex `\cite{}` command. `\citeauthor{}` is also available. To refer to other sections of our study types and guidelines, you cannot use the standard Latex approach (`\label{}` and `\ref{}`) because those references would not be correctly rendered on the website. You need to use the [custom commands that we provide](https://github.com/se-uhd/llm-guidelines-website/blob/6e63dffb404e3d273b2cd6f0781beb783e166ffa/header.tex#L51-L77).
+* Reference from [`literature.bib`](https://github.com/se-ubt/llm-guidelines-paper/blob/main/literature.bib) can be cited using the standard Latex `\cite{}` command. `\citeauthor{}` is also available. To refer to other sections of our study types and guidelines, you cannot use the standard Latex approach (`\label{}` and `\ref{}`) because those references would not be correctly rendered on the website. You need to use the [custom commands that we provide](https://github.com/se-uhd/llm-guidelines-website/blob/6e63dffb404e3d273b2cd6f0781beb783e166ffa/header.tex#L51-L77).

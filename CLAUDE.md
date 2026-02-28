@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Jekyll + Just the Docs website publishing community guidelines for reporting empirical studies in software engineering involving LLMs. Content is authored in LaTeX, converted to Markdown via pandoc, and deployed to GitHub Pages at https://llm-guidelines.org.
 
-The companion paper repo is included as a git submodule at `llm-guidelines-paper/`. **The paper is authoritative** — content tex files, `literature.bib`, and `shared-header.tex` all live in the paper repo. Content files are copied here; `shared-header.tex` is referenced directly from the submodule. After cloning, run `git submodule update --init` to populate it.
+The companion paper repo is included as a git submodule at `llm-guidelines-paper/`. **The paper is authoritative** — content tex files, `literature.bib`, and `shared-header.tex` all live in the paper repo. All content is referenced directly from the submodule (no local copies). After cloning, run `git submodule update --init` to populate it.
 
 ## Build & Development Commands
 
@@ -22,21 +22,21 @@ bundle exec jekyll serve      # local dev server at http://localhost:4000/
 bundle exec jekyll build      # build static site to _site/
 ```
 
-**Typical workflow:** Edit `.tex` files in the paper repo → copy to website → `./compile-latex.sh` → `./convert-and-merge-sources.sh` → `bundle exec jekyll serve`
+**Typical workflow:** Edit `.tex` files in the paper repo → `git submodule update --remote` → `./compile-latex.sh` → `./convert-and-merge-sources.sh` → `bundle exec jekyll serve`
 
 ## Content Pipeline
 
 LaTeX source files (`_sources/` directories) → pdflatex + bibtex → pandoc conversion → merged Markdown `index.md` files → Jekyll rendering
 
-**Critical rule:** Content tex files (in `_sources/_guidelines/`, `_sources/_studytypes/`, `_sources/_scope/`, `_sources/_tldr/`) and `literature.bib` are copied from the paper repo. Edit them there, not here. Never edit generated Markdown files (`scope/index.md`, `study-types/index.md`, `guidelines/index.md`) — they are overwritten on every conversion and not version-controlled.
+**Critical rule:** Content tex files (in `llm-guidelines-paper/_guidelines/`, `_studytypes/`, `_scope/`, `_tldr/`) and `literature.bib` live in the paper submodule and are referenced directly — do not duplicate them. Edit content in the paper repo, not here. Never edit generated Markdown files (`scope/index.md`, `study-types/index.md`, `guidelines/index.md`) — they are overwritten on every conversion and not version-controlled.
 
 ## Repository Structure
 
 - `header-website.tex` — Minimal website wrapper (documentclass, geometry, parskip) that inputs `shared-header.tex` from the paper repo
-- `scope/_sources/` — Motivation and scope LaTeX sources (entry-point + content from paper)
-- `study-types/_sources/` — Study type taxonomy LaTeX sources (entry-point + content from paper)
-- `guidelines/_sources/` — Eight guideline LaTeX sources, TL;DR summaries (entry-point + content from paper)
-- `literature.bib` — Bibliography (copied from paper repo; use DBLP BibTeX entries when available)
+- `scope/_sources/` — Motivation and scope LaTeX entry-point (content referenced from submodule)
+- `study-types/_sources/` — Study type taxonomy LaTeX entry-point (content referenced from submodule)
+- `guidelines/_sources/` — Eight guideline LaTeX entry-points, TL;DR summaries (content referenced from submodule)
+- `llm-guidelines-paper/` — Git submodule containing the paper repo (all content tex files, `literature.bib`, `shared-header.tex`)
 - `_config.yml` — Jekyll configuration (theme, search, callouts, footer)
 - `.github/workflows/` — CI validates LaTeX on PRs; auto-deploys on merge to main
 
@@ -48,7 +48,7 @@ The preamble is split into three files:
 2. **`header-website.tex`** (website root) — Sets `\documentclass{article}`, `\newif\ifpaper` (false), website layout packages (geometry, parskip), then inputs `shared-header.tex` from the paper repo.
 3. **Paper's `emse25-llm-guidelines.tex`** — Sets `\newif\ifpaper\papertrue`, loads paper-only packages (tikz, xcolor, mdframed, etc.) before `\input{shared-header.tex}`.
 
-Entry-point files in `_sources/` directories use `\input{../../header-website.tex}`. LaTeX `\input` resolves relative to pdflatex's working directory (the `_sources/` folder), so `../../` reaches the website root. From there, `header-website.tex` references `shared-header.tex` via `../../llm-guidelines-paper/shared-header.tex` (submodule path).
+Entry-point files in `_sources/` directories use `\input{../../header-website.tex}`. LaTeX `\input` resolves relative to pdflatex's working directory (the `_sources/` folder), so `../../` reaches the website root. From there, `header-website.tex` references `shared-header.tex` via `../../llm-guidelines-paper/shared-header.tex` (submodule path). Content files are also referenced via `../../llm-guidelines-paper/` paths (e.g., `../../llm-guidelines-paper/_guidelines/01_declare-llm-usage-and-role.tex`).
 
 ## LaTeX Conventions
 
