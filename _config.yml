@@ -29,4 +29,13 @@ callouts:
     title: Important Information
     color: blue
 
-exclude: ["merge-sources.sh", "**/_sources/*", "llm-guidelines-paper", "ieee.csl", "header.tex"]
+exclude:
+  - "CLAUDE.md"
+  - "README.md"
+  - "compile-latex.sh"
+  - "convert-and-merge-sources.sh"
+  - "header-website.tex"
+  - "mise.toml"
+  - "pandoc-filters.lua"
+  - "**/_sources/*"
+  - "llm-guidelines-paper"
