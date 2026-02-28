@@ -56,7 +56,7 @@ Contributors:
 * [Stefano Lambiase](https://stefanolambiase.github.io), Aalborg University in Copenhagen (Denmark)
 * [Daniel Russo](https://www.danielrusso.org/), Aalborg University in Copenhagen (Denmark)
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
-* [Cristina Martinez Montes](https://www.chalmers.se/en/persons/montesc/), Chalmers University of Technology and University of Gothenburg (Sweden)
+* [Cristina Martinez Montes](https://www.chalmers.se/en/persons/montesc/), Chalmers University of Technology, University of Gothenburg (Sweden)
 * [Lutz Prechelt](https://www.mi.fu-berlin.de/w/Main/LutzPrechelt), Free University of Berlin (Germany)
 * [Paul Ralph](https://paulralph.name), Dalhousie University (Canada)
 * [Rijnard van Tonder](https://rijnard.com), Independent Researcher (Antigua and Barbuda)

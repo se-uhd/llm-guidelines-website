@@ -9,25 +9,50 @@
 % Shared header (packages, commands, conditionals)
 \input{../../llm-guidelines-paper/shared-header.tex}
 
-% Override \tldr: pandoc does not understand \xspace, causing missing spaces
-\renewcommand{\tldr}{\textbf{\emph{tl;dr}}~}
+% Override macros using \xspace: pandoc does not understand \xspace, causing
+% missing spaces. Use ~ (non-breaking space) instead, which pandoc converts
+% to a regular space in Markdown output.
 
-% Override cross-reference anchors to match generated website headings
-% Study types: headings include (S1)-(S7) suffixes
-\renewcommand{\annotators}{\href{/study-types\#llms-as-annotators-s1}{\emph{LLMs as Annotators}}\xspace}
-\renewcommand{\judges}{\href{/study-types\#llms-as-judges-s2}{\emph{LLMs as Judges}}\xspace}
-\renewcommand{\synthesis}{\href{/study-types\#llms-for-synthesis-s3}{\emph{LLMs for Synthesis}}\xspace}
-\renewcommand{\subjects}{\href{/study-types\#llms-as-subjects-s4}{\emph{LLMs as Subjects}}\xspace}
-\renewcommand{\llmusage}{\href{/study-types\#studying-llm-usage-in-software-engineering-s5}{\emph{Studying LLM Usage}}\xspace}
-\renewcommand{\newtools}{\href{/study-types\#llms-for-new-software-engineering-tools-s6}{\emph{LLMs for Tools}}\xspace}
-\renewcommand{\benchmarkingtasks}{\href{/study-types\#benchmarking-llms-for-software-engineering-tasks-s7}{\emph{Benchmarking LLMs}}\xspace}
-% Guidelines: headings include (G1)-(G8) suffixes
-\renewcommand{\usagerole}{\href{/guidelines\#declare-llm-usage-and-role-g1}{\emph{Usage and Role}}\xspace}
-\renewcommand{\modelversion}{\href{/guidelines\#report-model-version-configuration-and-customizations-g2}{\emph{Version and Configuration}}\xspace}
-\renewcommand{\toolarchitecture}{\href{/guidelines\#report-tool-architecture-beyond-models-g3}{\emph{Architecture}}\xspace}
-\renewcommand{\prompts}{\href{/guidelines\#report-prompts-their-development-and-interaction-logs-g4}{\emph{Prompts and Logs}}\xspace}
-\renewcommand{\humanvalidation}{\href{/guidelines\#use-human-validation-for-llm-outputs-g5}{\emph{Human Validation}}\xspace}
-\renewcommand{\openllm}{\href{/guidelines\#use-an-open-llm-as-a-baseline-g6}{\emph{Open LLMs}}\xspace}
-\renewcommand{\benchmarksmetrics}{\href{/guidelines\#use-suitable-baselines-benchmarks-and-metrics-g7}{\emph{Benchmarks and Metrics}}\xspace}
-\renewcommand{\limitationsmitigations}{\href{/guidelines\#report-limitations-and-mitigations-g8}{\emph{Limitations and Mitigations}}\xspace}
+% tl;dr
+\renewcommand{\tldr}{\underline{\emph{tl;dr}}~}
+
+% RFC 2119 keywords
+\renewcommand{\must}{\textbf{MUST}~}
+\renewcommand{\mustnot}{\textbf{MUST NOT}~}
+\renewcommand{\should}{\textbf{SHOULD}~}
+\renewcommand{\shouldnot}{\textbf{SHOULD NOT}~}
+
+% Reporting location
+\renewcommand{\paper}{PAPER~}
+\renewcommand{\supplementarymaterial}{SUPPLEMENTARY MATERIAL~}
+
+% Icons
+\renewcommand{\iconM}{●~}
+\renewcommand{\iconS}{○~}
+
+% Cross-references: top-level sections
+\renewcommand{\scope}{\href{/scope/}{\emph{Scope}}~}
+\renewcommand{\studytypes}{\href{/study-types}{\emph{Study Types}}~}
+\renewcommand{\guidelines}{\href{/guidelines}{\emph{Guidelines}}~}
+\renewcommand{\llmsforresearcher}{\href{/study-types/\#introduction-llms-as-tools-for-software-engineering-researchers}{\emph{LLMs for Research}}~}
+\renewcommand{\llmsforengineers}{\href{/study-types/\#introduction-llms-as-tools-for-software-engineers}{\emph{LLMs for SE}}~}
+
+% Cross-references: study types (headings include (S1)-(S7) suffixes)
+\renewcommand{\annotators}{\href{/study-types\#llms-as-annotators-s1}{\emph{LLMs as Annotators}}~}
+\renewcommand{\judges}{\href{/study-types\#llms-as-judges-s2}{\emph{LLMs as Judges}}~}
+\renewcommand{\synthesis}{\href{/study-types\#llms-for-synthesis-s3}{\emph{LLMs for Synthesis}}~}
+\renewcommand{\subjects}{\href{/study-types\#llms-as-subjects-s4}{\emph{LLMs as Subjects}}~}
+\renewcommand{\llmusage}{\href{/study-types\#studying-llm-usage-in-software-engineering-s5}{\emph{Studying LLM Usage}}~}
+\renewcommand{\newtools}{\href{/study-types\#llms-for-new-software-engineering-tools-s6}{\emph{LLMs for Tools}}~}
+\renewcommand{\benchmarkingtasks}{\href{/study-types\#benchmarking-llms-for-software-engineering-tasks-s7}{\emph{Benchmarking LLMs}}~}
+
+% Cross-references: guidelines (headings include (G1)-(G8) suffixes)
+\renewcommand{\usagerole}{\href{/guidelines\#declare-llm-usage-and-role-g1}{\emph{Usage and Role}}~}
+\renewcommand{\modelversion}{\href{/guidelines\#report-model-version-configuration-and-customizations-g2}{\emph{Version and Configuration}}~}
+\renewcommand{\toolarchitecture}{\href{/guidelines\#report-tool-architecture-beyond-models-g3}{\emph{Architecture}}~}
+\renewcommand{\prompts}{\href{/guidelines\#report-prompts-their-development-and-interaction-logs-g4}{\emph{Prompts and Logs}}~}
+\renewcommand{\humanvalidation}{\href{/guidelines\#use-human-validation-for-llm-outputs-g5}{\emph{Human Validation}}~}
+\renewcommand{\openllm}{\href{/guidelines\#use-an-open-llm-as-a-baseline-g6}{\emph{Open LLMs}}~}
+\renewcommand{\benchmarksmetrics}{\href{/guidelines\#use-suitable-baselines-benchmarks-and-metrics-g7}{\emph{Benchmarks and Metrics}}~}
+\renewcommand{\limitationsmitigations}{\href{/guidelines\#report-limitations-and-mitigations-g8}{\emph{Limitations and Mitigations}}~}
 

@@ -7,27 +7,28 @@ has_children: false
 
 # Guidelines
 
-Our guidelines focus on LLMs, that is, foundational models that use *text* as in- and output.
-We do not address multi-modal foundation models that support other media such as images.
-However, many of our recommendations apply to multi-modal models as well.
-
-The main goal of our guidelines is to *enable reproducibility and replicability* of empirical studies involving LLMs in software engineering.
-While we consider LLM-based studies to have characteristics that differ from traditional empirical studies (e.g., their inherent non-determinism and the fact that truly open models are rare), previous guidelines regarding open science and empirical studies still apply.
-Although full reproducibility of LLM study results is very challenging given LLM's non-determinism, transparency on LLM usage, methods, data, and architecture, as suggested by our guidelines, is an essential prerequisite for future replication studies.
-
-The wording of our guidelines (**MUST**, **SHOULD**, **MAY**) follows [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174).
-Throughout the following sections, we mention the information we expect researchers to report in the PAPER and/or in the SUPPLEMENTARY MATERIAL.
-We are aware that different publication venues have different page limits and that not all aspects can be reported in the PAPER.
-If information **MUST** be reported in the PAPER, we explicitly mention this in the specific guidelines.
-Of course, it is better to report essential information in the SUPPLEMENTARY MATERIAL than not at all.
-The SUPPLEMENTARY MATERIAL **SHOULD** be published according to the [ACM SIGSOFT Open Science Policies](https://zenodo.org/records/10796477).
-
-At the beginning of each section, we provide a brief <u><em>tl;dr</em></u> summary that lists the most important aspects of the corresponding guideline.
-In addition to our **recommendations**, we provide **examples** from the SE research community and beyond, as well as the **advantages** and potential **challenges** of following the respective guidelines.
-We conclude each guideline by linking it to the **study types**.
-We start with an aggregation of all <u><em>tl;dr</em></u> summaries, followed by the individual guidelines:
+<!-- INTRO -->
 
 ## Overview
 
 <!-- TOC -->
+
+## Applicability of Guidelines to Study Types
+
+**Study types:** [S1](/study-types#llms-as-annotators-s1) = Annotators, [S2](/study-types#llms-as-judges-s2) = Judges, [S3](/study-types#llms-for-synthesis-s3) = Synthesis, [S4](/study-types#llms-as-subjects-s4) = Subjects, [S5](/study-types#studying-llm-usage-in-software-engineering-s5) = LLM Usage, [S6](/study-types#llms-for-new-software-engineering-tools-s6) = Tools, [S7](/study-types#benchmarking-llms-for-software-engineering-tasks-s7) = Benchmarking.
+<br>**Note:** Each guideline's study-type-specific guidance is detailed in the corresponding subsections.
+{: .fs-3 }
+
+● = **MUST**, ○ = **SHOULD**, -- = not applicable
+
+| | S1 | S2 | S3 | S4 | S5 | S6 | S7 |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| [G1: Declare Usage](#declare-llm-usage-and-role-g1) | ● | ● | ● | ● | ● | ● | ● |
+| [G2: Model Version](#report-model-version-configuration-and-customizations-g2) | ● | ● | ● | ● | ● | ● | ● |
+| [G3: Architecture](#report-tool-architecture-beyond-models-g3) | ○ | ○ | ○ | ○ | ○ | ● | ○ |
+| [G4: Prompts](#report-prompts-their-development-and-interaction-logs-g4) | ● | ● | ● | ● | ● | ● | ● |
+| [G5: Human Validation](#use-human-validation-for-llm-outputs-g5) | ○ | ○ | ○ | ○ | ○ | ○ | ○ |
+| [G6: Open LLM](#use-an-open-llm-as-a-baseline-g6) | ○ | ○ | ○ | -- | -- | ○ | ● |
+| [G7: Benchmarks](#use-suitable-baselines-benchmarks-and-metrics-g7) | ○ | ○ | ○ | ○ | ○ | ○ | ● |
+| [G8: Limitations](#report-limitations-and-mitigations-g8) | ● | ● | ● | ● | ● | ● | ● |
 

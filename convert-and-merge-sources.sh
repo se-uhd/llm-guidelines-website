@@ -59,10 +59,22 @@ study_types_toc=$(grep -h "^## " study-types/_sources/01_study-types.md | perl -
     }
 ')
 
-# Merge sources into index.md files, replacing <!-- TOC --> markers with generated TOCs
+# Read converted intro content (strip pandoc-generated References heading and everything after it)
+guidelines_intro=$(perl -ne 'print unless /^#{2,3}\s+References\s*$/ .. eof' guidelines/_sources/00_intro.md)
+study_types_intro=$(cat study-types/_sources/00_intro.md)
+
+# Merge sources into index.md files, replacing <!-- INTRO --> and <!-- TOC --> markers
 cat scope/_sources/*.md > scope/index.md
-cat guidelines/_sources/*.md | GUIDELINES_TOC="$guidelines_toc" perl -pe 's/<!-- TOC -->/$ENV{GUIDELINES_TOC}/' > guidelines/index.md
-cat study-types/_sources/*.md | STUDY_TYPES_TOC="$study_types_toc" perl -pe 's/<!-- TOC -->/$ENV{STUDY_TYPES_TOC}/' > study-types/index.md
+
+cat guidelines/_sources/00_header.md guidelines/_sources/0[1-8]_*.md \
+    | GUIDELINES_INTRO="$guidelines_intro" GUIDELINES_TOC="$guidelines_toc" \
+      perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/; s/<!-- TOC -->/$ENV{GUIDELINES_TOC}/' \
+    > guidelines/index.md
+
+cat study-types/_sources/00_header.md study-types/_sources/01_study-types.md \
+    | STUDY_TYPES_INTRO="$study_types_intro" STUDY_TYPES_TOC="$study_types_toc" \
+      perl -pe 's/<!-- INTRO -->/$ENV{STUDY_TYPES_INTRO}/; s/<!-- TOC -->/$ENV{STUDY_TYPES_TOC}/' \
+    > study-types/index.md
 
 # Remove unresolved \ref{} anchors that pandoc cannot resolve (labels only exist in the paper).
 # Pattern: <a href="#LABEL" data-reference-type="ref" data-reference="LABEL">[LABEL]</a>
@@ -87,6 +99,8 @@ for md_file in scope/index.md guidelines/index.md study-types/index.md; do
         s/\.\s*helps reviewers[^.]*\.//g;
         # Inline footnotes: replace "[N]" marker + "[N] URL" footer with a linked marker
         # Collect footnote definitions (e.g., "[1] https://...") into a hash, then inline them.
+        # Fix Markdown inside HTML tags: <u>*...*</u> → <u><em>...</em></u>
+        s/<u>\*([^*]+)\*<\/u>/<u><em>$1<\/em><\/u>/g;
         # Clean up: "in , which" → ", which"; collapse spaces; trim space before punctuation
         s/\bin$sp*,/,/g;
         s/(?<=\S)$sp{2,}/ /g;
