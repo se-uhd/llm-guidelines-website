@@ -1,129 +1,128 @@
+\guidelinesubsubsection{Rationale}
+
 When using LLMs for empirical studies in SE, researchers face unique challenges and potential limitations that can influence the validity, reliability, and reproducibility of their findings~\cite{sallou2024breaking}.
 It is important to openly discuss these limitations and explain how their impact was mitigated.
-All this is relative to the current capabilities of LLMs and the current state of the art in terms of tool architectures.
-If and how the performance of LLMs in a particular study context will improve with future model generations or new architectural patterns is beyond what researchers can and should discuss as part of a paper's limitation section.
-Nevertheless, risk management and threat mitigation are important tasks during the design of an empirical study.
-They should not happen as an afterthought.
+These limitations are relative to current LLM capabilities and tool architectures; speculating about future improvements is beyond the scope of a paper's limitation section.
+Nevertheless, risk management and threat mitigation should be planned during study design, not as an afterthought.
 
 \guidelinesubsubsection{Recommendations}
+Researchers \must make every effort to present the limitations of their work clearly without defensiveness or obfuscation. These limitations may concern diverse topics including generalizability, internal validity (e.g. data leakage), reliability (i.e. non-determinism), and reproducibility (e.g. resource requirements). 
+When deterministic reproducibility is structurally unattainable (e.g., SaaS-based models with opaque versioning), researchers \should adopt trustworthiness criteria from qualitative research to substantiate dependability and confirmability of findings.
+LLM-based studies may involve many kinds of generalization including the following:
+\begin{enumerate}
+    \item From tested LLMs to others; that is, do the performance characteristics of the LLM(s) studied generalize to LLM(s) not included in the study.
+    \item From tested configurations to others; that is, how sensitive are the results to the specific configuration(s) of the LLM under test. 
+    \item From research to practice; for instance, just because researchers can get a certain level of code generation performance under ideal conditions does not mean software developers, given the same tools, will get similar results without having the researchers present to show them exactly what to do. 
+    \item From a sample of people (e.g. human validators; human participants) to a larger population of people.
+    \item From one time period to another; i.e., does the same LLM, or other versions of the same LLM, produce similar results at a different point in time?
+\end{enumerate}
 
-A cornerstone of open science is the ability to reproduce research results.
-Although the inherent non-deterministic nature of LLM is a strength in many use cases, its impact on \emph{reproducibility} is problematic.
-To enable reproducibility, researchers \should disclose a replication package for their study.
-They \should perform multiple repetitions of their experiments (see \benchmarksmetrics) to account for non-deterministic outputs.
-In some cases, researchers \may reduce the output variability by setting the temperature to a value close to 0 and setting a fixed seed value.
-However, configuring a lower temperature can negatively impact task performance, and not all models allow the configuration of seed values.
-Besides the inherent non-determinism, the behavior of an LLM depends on many external factors such as prompt variations and model evolution.
-To ensure reproducibility, researchers \should follow all previous guidelines and further discuss the generalization challenges outlined below.
+The following concerns present an overview that has to be tailored to the individual study context. This section does not repeat requirements from other recommendations.
 
-Although the topic of \emph{generalizability} is not new, it has gained new relevance with increasing interest in LLMs.
-In LLM-based studies, generalizability boils down to two main concerns:
-(1) First, are the results specific to an LLM, or can they be achieved with other LLMs as well? 
-(2) Second, will these results still be valid in the future?
-If generalizability to other LLMs is not in the scope of the research, this \must be clearly explained in the \paper or, if generalizability is in scope, researchers \must compare their results or subsets of the results (e.g., due to computational cost) with other LLMs that are, e.g., similar in size, to assess the generalizability of their findings (see also Section \openllm).
-Multiple studies (e.g., \cite{DBLP:journals/corr/abs-2307-09009, doi:10.1148/radiol.232411}) found that the performance of proprietary LLMs (e.g., GPT) decreased over time for certain tasks using the same model version (e.g. GPT-4o).
-Reporting the model version and configuration is not sufficient in such cases.
-To date, the only way to mitigate this limitation is the usage of an open LLM having a versioning schema and  archiving (see \openllm).
-Hence, researchers \should employ open LLMs to establish a reproducible baseline and, if the use of an open LLM is not possible, researchers \should test and report their results over an extended period of time as a proxy of the stability of the results over time.
+\paragraph{Internal Validity:}
+The primary threats to internal validity are:
+\begin{itemize}
+	\item Data leakage and contamination, including inter-dataset duplication, potentially resulting in a training–evaluation overlaps, leading to overly optimistic evaluation results.
+	\item Unintended inclusion of evaluation data in model-improvement pipelines, contributing to data leakage. This is especially relevant for longitudinal studies including LLMs.
+	\item Incomplete architecture, prompt, or pipeline reporting, posing hidden confounding factors.
+\end{itemize}
 
-\emph{Data leakage, contamination, or overfitting} occurs when information outside the training data influences model performance. %, leading to overly optimistic performance estimates.
-With the growing reliance on big datasets, the risks of inter-dataset duplication increases (see, e.g.,~\cite{DBLP:journals/pacmpl/LopesMMSYZSV17, DBLP:conf/oopsla/Allamanis19}). 
-In the context of LLMs for SE, this can manifest itself, for example, as training data samples that appear in the fine-tuning or evaluation datasets, potentially compromising the validity of the evaluation results~\cite{DBLP:journals/tse/LopezCSSV25}.
-Moreover, ChatGPT's functionality to ``improve the model for everyone'' can result in unintentional data leakage.
-Hence, to ensure the validity of the evaluation results, researchers \should carefully curate the fine-tuning and evaluation datasets to prevent inter-dataset duplication and \mustnot leak their fine-tuned or evaluation datasets into LLM improvement processes.
-When publishing the results, researchers \should of course still follow open science practices and publish the datasets as part of their \supplementarymaterial.
-If information about the training data of the employed LLM is available, researchers \should evaluate the inter-dataset duplication and \must discuss potential data leakage in the \paper.
-When training an LLM from scratch, researchers \may consider using open datasets such as \emph{RedPajama (Together~AI)}~\cite{together2023redpajama}, which are already built with deduplication in mind (with the positive side effect of potentially improving performance~\cite{DBLP:conf/acl/LeeINZECC22}).
+Inter-dataset duplication is prevalent in SE, particularly for code-related benchmarks. As transparency on training data is limited for LLMs, researchers \must discuss potential data leakage effects and their impact on results.
 
-Conducting studies with LLMs is a resource-intensive process.
-For self-hosted LLMs, the respective hardware must be provided, and for managed LLMs, the service \emph{costs} must be considered.
-The challenge becomes more pronounced as LLMs grow larger, research architectures become more complex, and experiments become more computationally expensive.
-For example, multiple repetitions to assess model or tool performance (see \benchmarksmetrics) multiply the cost and impact \emph{scalability}.
-Consequently, resource-intensive research remains predominantly the domain of private companies or well-funded research institutions, hindering researchers with limited resources in reproducing, replicating, or extending study results.
-Hence, for transparency reasons, researchers \should report the cost associated with executing an LLM-based study. 
-If the study used self-hosted LLMs, researchers \should report the specific hardware used. 
-If the study used managed LLMs, the service cost \should be reported.
-To ensure the validity and reproducibility of the research results, researchers \must provide the LLM outputs as evidence (see Section \prompts).
-Depending on the architecture (see Section \toolarchitecture), these outputs \should be reported on different architectural levels (e.g., outputs of individual LLMs in multi-agent systems).
-Additionally, researchers \should include a subset of the employed validation dataset, selected using an accepted sampling strategy, to allow partial replication of the results.
+\paragraph{Construct Validity:}
+The primary threats to construct validity are:
+\begin{itemize}
+	\item Metric–construct mismatch (e.g., BLEU/ROUGE vs. functional correctness). More traditional metrics might not capture all relevant SE-specific aspects.
+	\item Over-reliance on benchmark-specific metrics. Optimizing for a single benchmark might result in dataset-specific heuristics rather than the intended construct, overstating real-world utility.
+	\item Benchmark scope limitations. Benchmarks commonly ignore runtime behaviors, security implications, readability, testability, and maintainability, yielding results that may not transfer to realistic development settings.
+\end{itemize}
 
-\emph{Sensitive data} can range from personal to proprietary data, each with its own set of \emph{ethical concerns}.
-As mentioned above, a big threat to proprietary LLMs and sensitive data is its use for model improvement.
-Hence, using sensitive data can lead to privacy and intellectual property (IP) violations.
-Another threat is the implicit bias of LLMs that could lead to discrimination or unfair treatment of individuals or groups.
-There is also the fear that using LLMs for qualitative research might \enq{reinforce dominant paradigms and biases} and \enq{identify, replicate and reinforce dominant language and patterns}~\cite{jowsey2025reject}.
-To mitigate these concerns, researchers \should minimize the sensitive data used in their studies, \must follow applicable regulations (e.g., GDPR) and individual processing agreements, \should create a data management plan outlining how the data is handled and protected against leakage and discrimination, and \must apply for approval from the ethics committee of their organization (if required).
+If constructs are based on subjective interpretations, purely automated metrics are insufficient. Researchers \must discuss how they ensured quality of subjective results, similarly to qualitative research.
 
-%\enquote{The field of AI is currently primarily driven by research that seeks to maximize model accuracy — progress is often used synonymously with improved prediction quality. This endless pursuit of higher accuracy over the decade of AI research has significant implications for computational resource requirements and environmental footprint. To develop AI technologies responsibly, we must achieve competitive model accuracy at a fixed or even reduced computational and environmental cost.}~\cite{DBLP:conf/mlsys/WuRGAAMCBHBGGOM22}
+\paragraph{External Validity:}
+The primary threats to external validity are:
+\begin{itemize}
+    \item Cross-model transfer limitations. Results obtained with one LLM (or family of LLMs) may not generalize to others due to differences in training data, architecture, and capabilities.
+    \item Tool-architecture specificity. Tools built around a specific LLM's API or capabilities may not transfer to other models without significant re-engineering.
+    \item Limited domain coverage. Studies often focus on a narrow set of programming languages, task types, or application domains, limiting generalizability to other SE contexts.
+    \item Limited participant diversity. Study participants (e.g., human validators, developers) may not represent the broader population in terms of expertise, geographic location, or cultural background.
+    \item Cross-time instability (model evolution). Performance of proprietary models can change over time, leading to non-generalizable study outcomes~\cite{DBLP:journals/corr/abs-2307-09009, doi:10.1148/radiol.232411}.
+\end{itemize}
 
-Although \emph{metrics} such as \emph{BLEU} or \emph{ROUGE} are commonly used to evaluate the performance of LLMs (see Section \benchmarksmetrics), they may not capture other relevant SE-specific aspects such as functional correctness or runtime performance of automatically generated source code~\cite{DBLP:conf/nips/LiuXW023}.
-%Researchers \should clarify and state all relevant requirements, and employ and report the metrics to measure the satisfaction of the requirements (e.g., test-case success rate) and \should follow the best practices described in \href{/guidelines/use-baselines-benchmarks-and-metrics}{Use Suitable Baselines, Benchmarks, and Metrics}.
-Given the high resource demand of LLMs, in addition to traditional metrics such as accuracy, precision, and recall or more contemporary metrics such as \emph{pass@k}, \emph{resource consumption} has to become a key indicator of performance. % to assess research progress responsibly. 
-While research has predominantly focused on energy consumption during the early phases of building LLMs (e.g., data center manufacturing, data acquisition, training), inference, that is LLM usage, often becomes similarly or even more resource-intensive~\cite{de2023growing, DBLP:conf/mlsys/WuRGAAMCBHBGGOM22, DBLP:journals/corr/abs-2410-02950, JIANG2024202, mitu2024hidden}.
-Hence, researchers \should aim for lower resource consumption on the model side.
-This can be achieved by selecting smaller (e.g., GPT-4o-mini instead of GPT-4o) or newer models or by employing techniques such as model pruning, quantization, or knowledge distillation~\cite{mitu2024hidden}.
-Researchers \may further reduce resource consumption by restricting the number of queries, input tokens, or output tokens~\cite{mitu2024hidden}, by using different prompt engineering techniques (e.g., zero-shot prompts seem to emit less CO2 than chain-of-thought prompts), or by carefully sampling smaller datasets for fine-tuning and evaluation instead of using large datasets.
-Reducing resource consumption involves a trade-off with our recommendation to perform multiple experimental runs to account for non-determinism, as suggested in \benchmarksmetrics.
-To report the environmental impact of a study, researchers \should use software such as \href{https://github.com/mlco2/codecarbon}{CodeCarbon} or \href{experiment-impact-tracker}{Experiment Impact Tracker} to track and quantify the carbon footprint of the study or report an estimate of the carbon footprint through tools such as \href{https://mlco2.github.io/impact/#about}{MLCO2 Impact}.
-They \should detail the LLM version and configuration as described in \modelversion, state the hardware or hosting provider of the model as described in \toolarchitecture and report the total number of requests, accumulated input and output tokens.
-Researchers \must justify why LLMs were chosen over existing approaches and discuss the achieved performance in relation to their potentially higher resource consumption.
+Generalizability is particularly critical for proprietary and non-deterministic systems whose behavior is subject to drift (i.e., silent changes in model output over time)~\cite{DBLP:journals/corr/abs-2307-09009}. The limitations and mitigations used for external validity \must be discussed by the researchers.
 
-\guidelinesubsubsection{Example(s)}
+\paragraph{Reliability \& Reproducibility:}
+The primary threats to reliability and reproducibility are:
+\begin{itemize}
+    \item Non-deterministic outputs. Identical prompts and configurations can yield different outputs across runs due to factors such as floating-point arithmetic, batching, and stochastic decoding strategies.
+    \item Infrastructure dependence. Results may vary depending on the hardware, software stack, and hosting environment used, making exact replication challenging across different infrastructure setups.
+    \item Resource inequality preventing replication. LLM research is resource-intensive and hence remains predominantly in the domain of private companies or well-funded research institutions~\cite{schwartz2020green, ahmed2023industry}, excluding researchers from under-resourced institutions.
+\end{itemize}
 
-An example highlighting the need for caution around \emph{replicability} is the study of \citeauthor{DBLP:conf/sigir-ap/StaudingerKPLH24}~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24} who attempted to replicate an LLM study.
-The authors were unable to reproduce the exact results, even though they saw similar trends as in the original study.
-%They consider their results as not reliable enough for a systematic review.
+Researchers \must discuss the measures taken to increase reliability and reproducibility.
+However, non-deterministic reproducibility is not inherently disqualifying. Qualitative traditions such as ethnography, grounded theory, and action research ensure trustworthiness through \emph{credibility}, \emph{transferability}, \emph{dependability}, and \emph{confirmability}~\cite{guba1981criteria}.
+SaaS-based LLM research faces analogous conditions, as providers frequently deprecate model versions without guaranteeing stable behavior.
 
-To analyze whether the results of proprietary LLMs transfer to open LLMs, \citeauthor{DBLP:conf/sigir-ap/StaudingerKPLH24} benchmarked previous results using GPT-3.5 and GPT4 against Mistral and Zephyr~\cite{DBLP:conf/sigir-ap/StaudingerKPLH24}.
-They found that open-source models could not deliver the same performance as proprietary models. %, restricting the effect to certain proprietary models.
-This paper is also an example of a study reporting \emph{costs}: \enquote{120 USD in API calls for GPT 3.5 and GPT 4, and 30 USD in API calls for Mistral AI. Thus, the total LLM cost of our reproducibility study was 150 USD}.
-\citeauthor{tinnessoftware} is an example of balancing dataset size between the need for manual semantic analysis and computational resource consumption~\cite{tinnessoftware}.
+\paragraph{Ethical \& Regulatory Boundaries:}
+The primary concerns for ethical and regulatory matters are:
+\begin{itemize}
+    \item Use of sensitive or proprietary data. Studies involving proprietary code, confidential business data, or personally identifiable information may face restrictions on data sharing that limit reproducibility.
+    \item Jurisdictional obligations. Data protection regulations (e.g., GDPR, CCPA) and institutional policies may impose constraints on data collection, processing, and sharing in LLM-based studies.
+    \item Implicit model bias. Especially for qualitative research LLM might \enq{reinforce dominant paradigms and biases} and \enq{identify, replicate and reinforce dominant language and patterns}~\cite{jowsey2025reject}.
+\end{itemize}
 
-Individual studies have already begun to highlight the uncertainty about the \emph{generalizability} of their results in the future. \citeauthor{DBLP:conf/msr/JesseADM23} acknowledge the issue that LLMs evolve over time and that this evolution could impact the study results~\cite{DBLP:conf/msr/JesseADM23}.
-Since a lot of research in SE evolves around code, inter-dataset code duplication has been extensively researched over the years to curate de-duplicated datasets (see, e.g., \cite{DBLP:journals/pacmpl/LopesMMSYZSV17, DBLP:conf/oopsla/Allamanis19, DBLP:journals/ese/KarmakarAR23, DBLP:journals/tse/LopezCSSV25}).
-The issue of inter-dataset duplication has also attracted interest in other disciplines. %, with growing demands for data mining.
-For example, in biology, \citeauthor{DBLP:journals/biodb/LakiotakiVTGT18} acknowledge and address the overlap between multiple common disease datasets~\cite{DBLP:journals/biodb/LakiotakiVTGT18}. 
-In the domain of code generation, \citeauthor{DBLP:conf/ease/CoignionQR24} evaluated the performance of LLMs to produce LeetCode~\cite{DBLP:conf/ease/CoignionQR24}.
-To mitigate the issue of inter-dataset duplication, they only used LeetCode problems published after 2023-01-01, reducing the likelihood of LLMs having seen those problems before.
-Further, they discuss the performance differences of LLMs on different datasets in light of potential inter-dataset duplication.
-\citeauthor{zhou2025lessleakbenchinvestigationdataleakage} performed an empirical evaluation of data leakage in 83 software engineering benchmarks~\cite{zhou2025lessleakbenchinvestigationdataleakage}.
-Although most benchmarks suffer from minimal leakage, very few showed a leakage of up to 100\%.
-The authors found a high impact of data leakage on the performance evaluation.
-A starting point for studies that aim to assess and mitigate inter-dataset duplication are the \href{https://huggingface.co/datasets/tiiuae/falcon-refinedweb}{Falcon LLMs}, for which parts of its training data are available on Hugging Face~\cite{technology_innovation_institute_2023}.
-Through this dataset, it is possible to reduce the overlap between the traning and evaluation data, improving the validity of the evaluation results.
-A starting point to prevent active data leakage into a LLM improvement process is to ensure that the data is not used to train the model (e.g., via OpenAI's data control functionality)~\cite{DBLP:conf/eacl/BalloccuSLD24}.
+Studies involving sensitive data \must discuss data governance mechanisms tailored towards LLM environments, compliant with applicable juristical obligations. If applicable, researchers \should discuss how model biases potentially impact the study outcomes and how those biases were evaluated.
 
-Finally, bias can occur in LLM training datasets, resulting in various types of discrimination.
-\citeauthor{DBLP:journals/corr/abs-2309-00770} propose metrics to quantify biases in various tasks (e.g., text generation, classification, question answering)~\cite{DBLP:journals/corr/abs-2309-00770}.
+\paragraph{Environmental \& Sustainability Constraints:}
+\begin{itemize}
+    \item Energy consumption. With growing model size, the environmental impact of experiments with LLMs increases. Considering the environmental impact in the study design is important given the substantial energy costs of LLM experiments~\cite{strubell2019energy}.
+    \item Trade-off between repetition and sustainability. Increased reliability through repetition and the aim of cautious energy consumption pose an inherent tension field to navigate during the study design.
+\end{itemize}
 
-\guidelinesubsubsection{Advantages}
+The study findings \should be discussed in the context of the resource-intensiveness of LLMs to justify the increased resource consumption over traditional approaches.
 
-%Ensuring \emph{reproducibility} allows for the independent replication and verification of study results.
-The \emph{reproduction} or \emph{replication} of study results under similar conditions by different parties greatly increases the validity of the results. % and promotes research transparency.
-Independent verification is of particular importance for studies involving LLMs, due to the non-determinism of their outputs and the potential for biases in their training, fine-tuning, and evaluation datasets.
-Mitigating threats to \emph{generalizability} of a study through the integration of an open LLM as a baseline or the reporting of results over an extended period of time can increase the validity, reliability, and replicability of a study's results.
-Assessing and mitigating the effects of \emph{inter-dataset duplication} strengthens a study's validity and reliability, as it prevents overly optimistic performance estimates that do not apply to previously unknown samples.
-Reporting the \emph{costs} of performing a study not only increases transparency but also provides context for secondary literature. % in setting primary research into perspective.
-Providing \emph{replication packages} with LLM output and data samples for partial replicability are paramount steps toward open and inclusive research in light of resource inequality between researchers.
-Considering and justifying the usage of LLMs over other approaches can lead to more efficient and sustainable solutions for SE problems. 
-Reporting the \emph{environmental impact} of LLM usage also sets the stage for more sustainable research practices in SE.
+\paragraph{Mitigation Strategies}
+The following mitigation strategies can help address the threats described above, depending on the study scope and feasibility.
 
-\guidelinesubsubsection{Challenges}
-
-With commercial LLMs evolving over time, the \emph{generalizability} of results to future model versions is uncertain.
-Employing open LLMs as a baseline can mitigate this limitation, but may not always be feasible due to computational cost.
-Most LLM providers do not publicly offer information about their training data, impeding the assessment of \emph{inter-dataset duplication} effects.
-Consistently keeping track of and reporting the \emph{costs} involved in a research endeavor is challenging.
-Building a coherent \emph{replication package} that includes LLM outputs and samples for partial replicability requires additional effort and resources.
-Finding the right \emph{metrics} to evaluate the performance of LLMs in SE for specific tasks is challenging.
-Defining all requirements beforehand to ensure the use of suitable metrics can be a challenge, especially in exploratory research.
-Our Section \benchmarksmetrics and its references can serve as a starting point.
-Ensuring \emph{compliance} across jurisdictions is difficult with different regions having different regulations and requirements (e.g., GDPR and the AI Act in the EU, CCPA in California).
-Selecting datasets and models with fewer \emph{biases} is challenging, as biases are often unknown.
-Measuring or estimating the \emph{environmental impact} of a study is challenging and might not always be feasible.
-Especially in exploratory research, the impact is hard to estimate in advance, making it difficult to justify the usage of LLMs over other approaches.
+\begin{itemize}
+    \item \emph{Replication Packages} covering prompt and architecture specifications, model outputs, and representative examples for partial replicability, accompanied by an implementation using an open model for long-term stability.
+    \item \emph{Human Validation} of subjective constructs, following quality criteria known from qualitative research.
+    \item \emph{Longitudinal Re-Runs} to repeat experiments with LLMs over time, complemented by statistical analyses.
+    \item \emph{Methodological Trustworthiness Measures.} Researchers \should consider triangulation, reflexivity, audit trails, and peer debriefing as complementary measures when deterministic reproduction is structurally impossible.
+    \item \emph{Triangulation} via multiple models (e.g., proprietary and open models), multiple independent datasets, and multiple complementary metrics.
+    \item \emph{Cost Accounting} through reporting of input/output tokens, token and service costs, or hardware specifications.
+    \item \emph{Energy Preservation} by selecting smaller or newer less resource-intensive models and employing techniques such as input/output token reduction, model pruning, quantization, or knowledge distillation~\cite{mitu2024hidden} where feasible. Carbon footprint estimation is desirable, but still difficult.
+    \item \emph{Ethical and Regulatory Considerations} through data governance mechanisms, ethical reviews, and bias assessment procedures.
+    \item \emph{Sensitivity Analysis} through variation of LLM configurations, prompts, architecture decisions, datasets, and if applicable human participant backgrounds.
+\end{itemize}
 
 \guidelinesubsubsection{Study Types}
 
-Limitations and mitigations \should be discussed for all study types in relation to the context of the individual study.
-This section provides a starting point and lists aspects along which researchers can reflect on the limitations of their study design and potential mitigations that exist.
+Researchers \must follow this guideline for all study types. Transparently reporting limitations and mitigations is a universal requirement, but specific concerns vary by study type.
+For \annotators, researchers \must discuss potential biases in label assignment, label reliability limitations, and sensitivity of annotations to prompt wording and model choice.
+For \judges, researchers \must address measurement validity concerns, known biases such as position bias or verbosity bias, and the extent to which LLM judgments align with human expert assessments.
+For \synthesis, researchers \must discuss the risk of contextual misinterpretation, potential loss of nuance in summarized or aggregated outputs, and reflexivity limitations inherent in using an LLM for qualitative interpretation.
+For \subjects, researchers \must discuss the fundamental inability of LLMs to truly simulate human behavior, the risk of stereotype amplification, and the limited ecological validity of simulated responses.
+For \llmusage, researchers \must discuss generalizability constraints across different tools and user populations, and acknowledge how observed usage patterns may not transfer to other contexts.
+For \newtools, researchers \must discuss replicability constraints arising from dependencies on commercial models, the impact of model updates on tool behavior, and limitations of the evaluation setup.
+For \benchmarkingtasks, researchers \must discuss potential data contamination, benchmark scope limitations, and the extent to which benchmark performance generalizes to real-world tasks.
+
+%% Suggestion: Consider softening "perfunctory or defensive" → "formulaic or insufficiently engaged with the study's specific threats".
+%% Suggestion: Consider adding a bridging sentence connecting back to the "request additions first" principle used in other guidelines.
+\guidelinesubsubsection{Advice for Reviewers}
+
+Reviewers should verify that the limitation section is comprehensive and appropriate for the specific study type, checking that:
+(1) limitations address the specific threats relevant to the study type (e.g., label reliability for annotation studies, simulation fidelity for studies using LLMs as subjects);
+(2) mitigations are concrete and correspond to identified limitations rather than being generic statements;
+(3) the impact of LLM non-determinism on findings is discussed;
+(4) generalizability constraints---across models, configurations, time periods, and populations---are acknowledged.
+When important limitations are missing, reviewers should request they be added. The absence of a limitation section, or one that is formulaic or insufficiently specific, is a more serious concern than any individual missing limitation and may warrant a major revision.
+
+\guidelinesubsubsection{See Also}
+\begin{itemize}[label=$\rightarrow$]
+    \item Section~\modelversion: model configuration, cost accounting, and sensitivity analysis.
+    \item Section~\toolarchitecture: architecture-level triangulation and sensitivity analysis.
+    \item Section~\prompts: prompt reporting, audit trails, and longitudinal re-runs.
+    \item Section~\benchmarksmetrics: metric selection and benchmark limitations.
+    \item Section~\humanvalidation: human validation of subjective constructs.
+\end{itemize}

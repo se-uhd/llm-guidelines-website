@@ -1,0 +1,3 @@
+[submodule "llm-guidelines-paper"]
+	path = llm-guidelines-paper
+	url = https://github.com/se-uhd/llm-guidelines-paper.git

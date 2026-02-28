@@ -1,10 +1,10 @@
-\studytypesubsection{LLMs for New Software Engineering Tools}
+\studytypesubsection{LLMs for New Software Engineering Tools (S6)}
 \label{sec:llms-for-new-software-engineering-tools}
 
 \studytypeparagraph{Description}
 
-LLMs are being integrated into new tools that support software engineers in their daily tasks, e.g., to assist in code comprehension~\cite{DBLP:conf/chi/YanHWH24} and test case generation~\cite{DBLP:journals/tse/SchaferNET24}.
-One way of integrating LLM-based tools into software engineers' workflows are GenAI agents.
+LLMs are being integrated into new tools that support software engineers in their daily tasks (e.g., to assist in code comprehension~\cite{DBLP:conf/chi/YanHWH24} and test case generation~\cite{DBLP:journals/tse/SchaferNET24}).
+One way of integrating LLM-based tools into software engineers' workflows is using GenAI agents.
 Unlike traditional LLM-based tools, these agents are capable of acting autonomously and proactively, are often tailored to meet specific user needs, and can interact with external environments~\cite{takerngsaksiri2024human,wiesinger2025agents}.
 From an architectural perspective, GenAI agents can be implemented in various ways~\cite{wiesinger2025agents}.
 However, they generally share three key components: (1) a reasoning mechanism that guides the LLM (often enabled by advanced prompt engineering), (2) a set of tools to interact with external systems (e.g., APIs or databases), and (3) a user communication interface that extends beyond traditional chat-based interactions~\cite{DBLP:conf/icsm/RichardsW24, DBLP:journals/tmlr/SumersYN024, DBLP:journals/corr/abs-2309-07870}.
@@ -12,24 +12,8 @@ Researchers can also test and compare different tool architectures to increase a
 
 \studytypeparagraph{Example(s)}
 
-\citeauthor{DBLP:conf/chi/YanHWH24} proposed IVIE, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}.
+\citeauthor{DBLP:conf/chi/YanHWH24} proposed \emph{IVIE}, a tool integrated into the VS Code graphical interface that generates and explains code using LLMs~\cite{DBLP:conf/chi/YanHWH24}.
 The authors focused more on the presentation, providing a user-friendly interface to interact with the LLM. 
 \citeauthor{DBLP:journals/tse/SchaferNET24}~\cite{DBLP:journals/tse/SchaferNET24} presented a large-scale empirical evaluation on the effectiveness of LLMs for automated unit test generation.
-They presented TestPilot, a tool that implements an approach in which the LLM is provided with prompts that include the signature and implementation of a function under test, along with usage examples extracted from the documentation.
+They presented \emph{TestPilot}, a tool that implements an approach in which the LLM is provided with prompts that include the signature and implementation of a function under test, along with usage examples extracted from the documentation.
 \citeauthor{DBLP:conf/icsm/RichardsW24} introduced a preliminary GenAI agent designed to assist developers in understanding source code by incorporating a reasoning component grounded in the theory of mind~\cite{DBLP:conf/icsm/RichardsW24}.
-
-\studytypeparagraph{Advantages}
-
-From an engineering perspective, developing LLM-based tools is easier than implementing many traditional SE approaches such as static analysis or symbolic execution.
-Depending on the capabilities of the underlying model, it is also easier to build tools that are independent of a specific programming language.
-This enables researchers to build tools for a more diverse set of tasks.
-In addition, it allows them to test their tools in a wider range of contexts.
-
-\studytypeparagraph{Challenges}
-
-Traditional approaches, such as static analysis, are deterministic. LLMs are not.
-Although the non-determinism of LLMs can be mitigated using configuration parameters and prompting strategies, this poses a major challenge.
-It can be challenging for researchers to evaluate the effectiveness of a tool, as minor changes in the input can lead to major differences in the performance.
-Since the exact training data is often not published by model vendors, a reliable assessment of tool performance for unknown data is difficult.
-From an engineering perspective, while open models are available, the most capable ones require substantial hardware resources.
-Using cloud-based APIs or relying on third-party providers for hosting, while seemingly a potential solution, introduces new concerns related to data privacy and security.

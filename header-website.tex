@@ -1,0 +1,11 @@
+\documentclass[pdftex,11pt,a4paper]{article}
+
+\newif\ifpaper  % defaults to false (website mode)
+
+% Website-only layout
+\usepackage[paper=a4paper, inner=30mm, outer=25mm, top=30mm, bottom=25mm]{geometry}
+\usepackage[parfill]{parskip}
+
+% Shared header (packages, commands, conditionals)
+\input{../../llm-guidelines-paper/shared-header.tex}
+

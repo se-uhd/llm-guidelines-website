@@ -1,63 +1,58 @@
+\guidelinesubsubsection{Rationale}
+
+LLM-based tools often have \emph{complex software layers} around the model(s) that pre-process data, prepare prompts, filter user requests, or post-process responses.
+For example, ChatGPT and GitHub Copilot use the same underlying models, but their outputs differ significantly because Copilot automatically adds project context; researchers can also build tools using models directly via APIs.
+The infrastructure and business logic around the bare model can significantly contribute to the performance of a tool for a given task, for instance, RAG pipelines, output parsers, and retry logic all shape the final output independently of the model itself.
+
 This section addresses the \emph{system-level} aspects of LLM-based tools that researchers develop, complementing Section~\modelversion, which focuses on model-specific details.
 While standalone LLMs require limited architectural documentation, a more detailed description is required for study setups and tool architectures that integrate LLMs with other components to create more complex systems.
 This section provides guidelines for documenting these broader architectures.
 
 \guidelinesubsubsection{Recommendations}
 
-Oftentimes, LLM-based tool have \emph{complex software layers} around the model (or models) that pre-processes data, prepares prompts, filters user requests, or post-processes responses.
-An example is ChatGPT, which allows users to select from different GPT models.
-GitHub Copilot allows users to select the same models, but its answers may significantly differ from ChatGPT, as GitHub Copilot automatically adds context from the software project in which it is used.
-Researchers can build their own tools using GPT models directly (\textit{e.g.}, via the OpenAI API).
-The infrastructure and business logic around the bare model can significantly contribute to the performance of a tool for a given task.
-Therefore, researchers \must clearly describe the tool architecture and what exactly the LLM (or ensemble of LLMs) contributes to the tool or method presented in a research paper.
+%\paragraph{General Requirements:}
 
+Researchers \must clearly describe the tool architecture and what exactly the LLM (or ensemble of LLMs) contributes to the tool or method presented in a research paper.
+Researchers \should provide a high-level architectural diagram to improve transparency.
+To improve clarity, researchers \should explain design decisions, particularly regarding how the models were hosted and accessed (API-based, self-hosted, etc.) and which retrieval mechanisms were implemented (keyword search, semantic similarity matching, rule-based extraction, etc.).
+Researchers \mustnot omit critical architectural details that could affect reproducibility, such as dependencies on proprietary tools that influence tool behavior.
+Especially for \emph{time-sensitive measurements}, the description of the hosting environment is central, as it can significantly impact the results.
+Researchers \must clarify whether local infrastructure or cloud services were used, including detailed infrastructure specifications and latency considerations.
+
+\paragraph{Agent-Based and Complex Systems:}
 If an LLM is used as a \emph{standalone system}, for example, by sending prompts directly to a GPT-4o model via the OpenAI API without pre-processing the prompts or post-processing the responses, a brief explanation of this approach is usually sufficient.
 However, if LLMs are integrated into more \emph{complex systems} with pre-processing, retrieval mechanisms, or autonomous agents, researchers \must provide a detailed description of the system architecture in the \paper.
 Aspects to consider are how the LLM interacts with other components such as databases, external APIs, and frameworks.
 If the LLM is part of an \emph{agent-based system} that autonomously plans or executes tasks, researchers \must describe its exact architecture, including the agents' roles (e.g., planner, executor, coordinator), whether it is a single-agent or multi-agent system, how it interacts with external tools and users, and the reasoning framework used (e.g., chain-of-thought, self-reflection, multi-turn dialogue).
-
-For agent-based systems that use external tools (e.g., Claude Code and its \href{https://docs.anthropic.com/en/docs/claude-code/sub-agents}{subagents}), researchers \must discuss \emph{agent behavior traceability} by clearly delineating three distinct components: (1) \emph{LLM Input/Output}: Internal deliberation, planning, and interpretation performed by the model. (2) \emph{External tool calls}: Specific invocations of APIs, databases, file systems, or other external services that the agent explicitly triggers (e.g., via the \href{https://modelcontextprotocol.io/}{Model Context Protocol}). (3) \emph{User or system interactions}: Human-in-the-loop feedback, environment responses, or multi-agent communication.
+Any agent configuration via context files (e.g., \texttt{AGENTS.md}) \should also be documented as part of the system architecture (see Section~\prompts for detailed reporting requirements).
+For agent-based systems that use external tools (e.g., Claude Code and its \href{https://docs.anthropic.com/en/docs/claude-code/sub-agents}{subagents}), researchers \must discuss \emph{agent behavior traceability} by clearly delineating three distinct components: (1) \emph{LLM Input/Output}: Internal deliberation, planning, and interpretation performed by the model. (2) \emph{External tool calls}: Specific invocations of APIs, databases, file systems, or other external services that the agent explicitly triggers (e.g., via the \href{https://modelcontextprotocol.io/}{Model Context Protocol (MCP)}). (3) \emph{User or system interactions}: Human-in-the-loop feedback, environment responses, or multi-agent communication.
 Researchers \should report complete execution traces that show the sequence and causality between these components, including inputs and outputs of all external tool calls.
 This traceability is essential for determining whether task success is attributable to the LLM's output and tool-calling capabilities, the external tools' functionality, or their interaction patterns.
 When full tool call logging is not feasible due to privacy or proprietary constraints, researchers \should provide representative examples or anonymized traces that demonstrate the agent's decision-making process.
 %Researchers \mustnot present an agent-based system without detailing how it makes decisions and executes tasks.
 
-Researchers \should provide a high-level architectural diagram to improve transparency.
-To improve clarity, researchers \should explain design decisions, particularly regarding how the models were hosted and accessed (API-based, self-hosted, etc.) and which retrieval mechanisms were implemented (keyword search, semantic similarity matching, rule-based extraction, etc.).
-Researchers \mustnot omit critical architectural details that could affect reproducibility, such as dependencies on proprietary tools that influence tool behavior. 
-Especially for \emph{time-sensitive measurements}, the previously mentioned description of the hosting environment is central, as it can significantly impact the results.
-Researchers \must clarify whether local infrastructure or cloud services were used, including detailed infrastructure specifications and latency considerations.
-
+\paragraph{Retrieval, Augmentation, and Ensembles:}
 If \emph{retrieval or augmentation methods} were used (e.g., retrieval-augmented generation (RAG), rule-based retrieval, structured query generation, or hybrid approaches), researchers \must describe how external data is retrieved, stored, and integrated into the LLM's responses.
 This includes specifying the type of storage or database used (e.g., vector databases, relational databases, knowledge graphs) and how the retrieved information is selected and used.
 Stored data used for context augmentation \must be reported, including details on data preprocessing, versioning, and update frequency.
 If this data is not confidential, an anonymized snapshot of the data used for context augmentation \should be made available.
-
 For \emph{ensemble models}, in addition to following the \modelversion guideline for each model, the researchers \must describe the architecture that connects the models.
 The \paper \must at least contain a high-level description, and details can be reported in the \supplementarymaterial.
 Aspects to consider include documenting the logic that determines which model handles which input, the interaction between models, and the architecture for combining outputs (e.g., majority voting, weighted averaging, sequential processing).
 
 \guidelinesubsubsection{Example(s)}
 
-Some empirical studies involving LLMs in SE have documented the architecture and supplemental data according to our guidelines. In the following, we provide two examples.
+\citeauthor{DBLP:journals/tse/SchaferNET24}~\cite{DBLP:journals/tse/SchaferNET24} evaluated LLMs for automated unit test generation, providing a comprehensive description of the system architecture including code parsing, prompt formulation, LLM interaction, and test suite integration.
+They also detail the datasets used, including sources, selection criteria, and preprocessing steps.
 
-\citeauthor{DBLP:journals/tse/SchaferNET24} conducted an empirical evaluation of using LLMs for automated unit test generation~\cite{DBLP:journals/tse/SchaferNET24}.
-The authors provide a comprehensive description of the system architecture, detailing how the LLM is integrated into the software development workflow to analyze codebases and produce the corresponding unit tests.
-The architecture includes components for code parsing, prompt formulation, interaction with the LLM, and integration of the generated tests into existing test suites.
-The paper also elaborates on the datasets utilized for training and evaluating the LLM's performance in unit test generation.
-It specifies the sources of code samples, the selection criteria, and the preprocessing steps undertaken to prepare the data.
-
-A second example is \citeauthor{DBLP:conf/chi/YanHWH24}'s IVIE tool~\cite{DBLP:conf/chi/YanHWH24}, which integrates LLMs into the VS Code interface.
+A second example is \citeauthor{DBLP:conf/chi/YanHWH24}'s \emph{IVIE} tool~\cite{DBLP:conf/chi/YanHWH24}, which integrates LLMs into the VS Code interface.
 The authors document the tool architecture, detailing the IDE integration, context extraction from code editors, and the formatting pipeline for LLM-generated explanations.
 This documentation illustrates how architectural components beyond the core LLM affect the overall tool performance and user experience.
 
-\guidelinesubsubsection{Advantages}
+\guidelinesubsubsection{Benefits}
 
-Usually, researchers implement software layers around the bare LLMs, using different architectural patterns.
-These implementations significantly impact the performance of LLM-based tools and hence need to be documented in detail.
-Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility and transparency~\cite{DBLP:journals/software/LuZXXW24}.
-In empirical software engineering studies, this is essential for experiment replication, result validation, and benchmarking.
-A clear documentation of the architecture and the supplemental data that was used enables comparison and upholds scientific rigor and accountability, fostering reliable and reusable research.
+The software layers around bare LLMs significantly impact tool performance and hence need detailed documentation.
+Documenting the architecture and supplemental data of LLM-based systems enhances reproducibility and transparency~\cite{DBLP:journals/software/LuZXXW24}, enabling experiment replication, result validation, and cross-study comparison.
 
 \guidelinesubsubsection{Challenges}
 
@@ -67,3 +62,16 @@ They must also balance transparency with data privacy concerns, adapt to the evo
 \guidelinesubsubsection{Study Types}
 
 This guideline \must be followed for all studies that involve tools with system-level components beyond bare LLMs, from lightweight wrappers that pre-process user input or post-process model outputs, to systems employing retrieval-augmented methods or complex agent-based architectures.
+
+For \newtools, this guideline is of primary importance: researchers \must describe the tool's full architecture, including the role of each LLM, interactions with other components, and the overall system behavior.
+For \benchmarkingtasks, researchers \should describe the evaluation harness and infrastructure if it goes beyond bare model API calls (e.g., custom sandboxing, orchestration layers, or post-processing pipelines).
+For \llmusage, researchers \should describe the tool architecture of the studied tool to the extent that it is accessible, as architectural details may influence observed usage patterns.
+For \annotators, \judges, \synthesis, and \subjects, if the research setup involves a custom pipeline (e.g., retrieval-augmented generation for annotation or chained prompts for synthesis), the architecture \should also be reported.
+
+%% Changed: Fixed "not the only supplement" → "not only the supplement".
+%% Suggestion: Consider restructuring the proprietary-components paragraph into clearer tiers: (1) evaluating opaque artifacts is a valid scientific contribution, (2) inscrutability weakens the contribution, (3) scientific instruments must be fully disclosed.
+\guidelinesubsubsection{Advice for Reviewers}
+
+As with other guidelines, missing architectural information is typically a minor revision request unless so much is missing that methodological rigor cannot be assessed. Reviewers may ask authors to move key details from supplements into the paper body to ensure the main text is self-contained.
+
+Regarding proprietary or confidential components, three principles apply: (1) empirically evaluating an opaque artifact is a valid scientific contribution; (2) the less available and inspectable the artifact, the weaker the contribution; (3) \textit{scientific instruments} including tools, metrics, scales, and experimental materials,  must be fully disclosed, even when the object under study cannot be.

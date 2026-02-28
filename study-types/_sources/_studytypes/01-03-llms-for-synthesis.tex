@@ -1,97 +1,19 @@
-\studytypesubsection{LLMs for Synthesis}
+\studytypesubsection{LLMs for Synthesis (S3)}
 \label{sec:llms-for-synthesis}
 
 \studytypeparagraph{Description}
 
-LLMs can support synthesis tasks in software engineering research by processing and distilling information from qualitative data sources.
-In this context, synthesis refers to the process of integrating and interpreting information from multiple sources to generate higher-level insights, identify patterns across datasets, and develop conceptual frameworks or theories.
-Unlike annotation (see Section \annotators), which focuses on categorizing or labeling individual data points, synthesis involves connecting and interpreting these annotations to develop a cohesive understanding of the phenomenon being studied.
-Synthesis tasks can also mean generating synthetic datasets (e.g., source code, bug-fix pairs, requirements, etc.) that are then used in downstream tasks to train, fine-tune, or evaluate existing models or tools.
+Unlike annotation (see Section \annotators), which focuses on categorizing or labeling individual data points, synthesis refers to the process of integrating and interpreting information from multiple sources to generate higher-level insights, identify patterns across datasets, and develop conceptual frameworks or theories. LLMs may be able to support synthesis tasks in SE research by processing and distilling information from qualitative data sources. 
+Although synthesis in the preceding notion refers to abstraction and interpretation across multiple data sources, the term is sometimes also used to refer to generating synthetic content (e.g., source code, bug-fix pairs, requirements, etc.) that are then used in downstream tasks to train, fine-tune, or evaluate existing models or tools.
 In this case, the synthesis is done primarily using the LLM and its training data; the input is limited to basic instructions and examples.
 
 \studytypeparagraph{Example(s)} 
 
-Published examples of applying LLMs for synthesis in the software engineering domain are still scarce.
-However, recent work has explored the use of LLMs for qualitative synthesis in other domains, allowing reflection on how LLMs can be applied for this purpose in software engineering~\cite{DBLP:journals/ase/BanoHZT24}.
-\citeauthor{barros2024largelanguagemodelqualitative}~\cite{barros2024largelanguagemodelqualitative} conducted a systematic mapping study on the use of LLMs for qualitative research.
-They identified examples in domains such as healthcare and social sciences (see, e.g., \cite{de2024performing,mathis2024inductive}) in which LLMs were used to support qualitative analysis, including grounded theory and thematic analysis.
-Overall, the findings highlight the successful generation of preliminary coding schemes from interview transcripts, later refined by human researchers, along with support for pattern identification.
-This approach was reported not only to expedite the initial coding process but also to allow researchers to focus more on higher-level analysis and interpretation.
-However, \citeauthor{barros2024largelanguagemodelqualitative} emphasize that effective use of LLMs requires structured prompts and careful human oversight.
+Published examples of applying LLMs for synthesis in SE remain scarce; however, some recent work in other domains is instructive~\cite{DBLP:journals/ase/BanoHZT24}.
+\citeauthor{barros2024largelanguagemodelqualitative}~\cite{barros2024largelanguagemodelqualitative} conducted a systematic mapping study on using LLMs for qualitative research and found that most studies focused on the healthcare and social sciences. In these studies, LLMs supported qualitative methods, such as grounded theory and thematic analysis, by aiding in pattern identification.
+%They identified examples in domains such as healthcare and social sciences (see, e.g., \cite{de2024performing,mathis2024inductive}) in which LLMs were used to support qualitative analysis, including grounded theory and thematic analysis.
+%Overall, the findings highlight the successful generation of preliminary coding schemes from interview transcripts, later refined by human researchers, along with support for pattern identification.This approach was reported not only to expedite the initial coding process but also to allow researchers to focus more on higher-level analysis and interpretation.
 %This particular paper suggests using LLMs to support tasks such as initial coding and theme identification while conservatively reserving interpretative or creative processes for human analysts.
-Similarly, \citeauthor{leça2024applicationsimplicationslargelanguage}~\cite{leça2024applicationsimplicationslargelanguage} conducted a systematic mapping study to investigate how LLMs are used in qualitative analysis and how they can be applied in software engineering research.
-Consistent with the study by \citeauthor{barros2024largelanguagemodelqualitative}~\cite{barros2024largelanguagemodelqualitative}, \citeauthor{leça2024applicationsimplicationslargelanguage} identified that LLMs are applied primarily in tasks such as coding, thematic analysis, and data categorization, reducing the time, cognitive demands, and resources required for these processes.
+In SE, de Morais Leca et al. \cite{leça2024applicationsimplicationslargelanguage} explored how LLMs have been applied for qualitative data analysis (QDA) and proposed general strategies and guidelines for their application. Ornelas et al. \cite{ornelas2025llm} complemented this perspective by studying the opportunities and limitations of introducing LLM-based support into QDA, and by formulating recommendations for embedding human–AI collaboration across the thematic analysis phases. Building on these, subsequent work has proposed hybrid frameworks combining LLM support with human-led QDA. Rashid et al. \cite{DBLP:journals/corr/abs-2402-01386} designed an LLM-driven multi-agent system that integrates AI with human decision-making to automate qualitative data analysis methods. Their system generated initial codes, developed themes, and summarized text. Similarly, Montes et al. \cite{DBLP:journals/corr/abs-2510-18456} compared the performance of humans and LLMs in coding, theme development, definition, and refinement, creating guidelines for a hybrid-LLM framework.
 Finally, \citeauthor{DBLP:journals/corr/abs-2506-21138}'s work is an example of using LLMs to create synthetic datasets.
 They present an approach to generate synthetic requirements, showing that they \enq{can match or surpass human-authored requirements for specific classification tasks}~\cite{DBLP:journals/corr/abs-2506-21138}.
-
-\studytypeparagraph{Advantages}
-
-LLMs offer promising support for synthesis in SE research by helping researchers process artifacts such as interview transcripts and survey responses, or by assisting literature reviews.
-Qualitative research in SE traditionally faces challenges such as limited scalability, inconsistencies in coding, difficulties in generalizing findings from small or context-specific samples, and the influence of the researchers' subjectivity on data interpretation~\cite{DBLP:journals/ase/BanoHZT24}. 
-The use of LLMs for synthesis can offer advantages in addressing these challenges~\cite{DBLP:journals/ase/BanoHZT24, barros2024largelanguagemodelqualitative, leça2024applicationsimplicationslargelanguage}.
-LLMs can reduce manual effort and subjectivity, improve consistency and generalizability, and assist researchers in deriving codes and developing coding guides during the early stages of qualitative data analysis~\cite{DBLP:conf/chi/ByunVS23,DBLP:journals/ase/BanoHZT24}.
-LLMs can enable researchers to analyze larger datasets, identifying patterns across broader contexts than traditional qualitative methods typically allow. In addition, they can help mitigate the effects of human subjectivity.
-However, while LLMs streamline many aspects of qualitative synthesis, careful oversight remains essential.
-% Models can develop coding guides and identify emerging themes, potentially automating the entire synthesis process across large qualitative datasets.
-
-\studytypeparagraph{Challenges}
-
-Although LLMs have the potential to automate synthesis, concerns about overreliance remain, especially due to discrepancies between AI- and human-generated insights, particularly in capturing contextual nuances~\cite{bano2023exploringqualitativeresearchusing}.
-\citeauthor{bano2023exploringqualitativeresearchusing}~\cite{bano2023exploringqualitativeresearchusing} found that while LLMs can provide structured summaries and qualitative coding frameworks, they may misinterpret nuanced qualitative data due to a lack of contextual understanding.
-Other studies have echoed similar concerns~\cite{DBLP:journals/ase/BanoHZT24, barros2024largelanguagemodelqualitative, leça2024applicationsimplicationslargelanguage}.
-In particular, LLMs cannot independently assess the validity of arguments.
-Critical thinking remains a human responsibility in qualitative synthesis.
-\citeauthor{peterschineyee2025generalizationbias} have shown that popular LLMs and LLM-based tools tend to overgeneralize results when summarizing scientific articles, that is, they \enq{produce broader generalizations of scientific results than those in the original.}
-Compared to human-authored summaries, \enq{LLM summaries were nearly five times more likely to contain broad generalizations}~\cite{peterschineyee2025generalizationbias}.
-In addition, LLMs can produce biased results, reinforcing existing prejudices or omitting essential perspectives, making human oversight crucial to ensure accurate interpretation, mitigate biases, and maintain quality control.
-Moreover, the proprietary nature of many LLMs limits transparency.
-In particular, it is unknown how the training data might affect the synthesis process.
-Furthermore, reproducibility issues persist due to the influence of model versions and prompt variations on the synthesis result.
-
-%\par\noindent\hdashrule{\columnwidth}{0.5pt}{2pt 2pt}
-
-% Reverted back to "subject", as participant seems to be primarily used for humans: see  https://dictionary.apa.org/subject and https://dictionary.apa.org/participant
-\guidelinesubsubsection{LLMs as Subjects}
-\label{sec:llms-as-subjects}
-
-\studytypeparagraph{Description}
-
-In empirical studies, data is collected from participants through methods such as surveys, interviews, or controlled experiments.
-LLMs can serve as \emph{subjects} in empirical studies by simulating human behavior and interactions (we use the term ``subject'' since ``participant'' implies being human~\cite{apa-dict-subject}).
-In this capacity, LLMs generate responses that approximate those of human participants, which makes them particularly valuable for research involving user interactions, collaborative coding environments, and software usability assessments.
-This approach enables data collection that closely reflects human reactions while avoiding the need for direct human involvement.
-To achieve this, prompt engineering techniques are widely employed, with a common approach being the use of the \textit{Personas Pattern}~\cite{DBLP:journals/corr/abs-2308-07702}, which involves tailoring LLM responses to align with predefined profiles or roles that emulate specific user archetypes.
-\citeauthor{ZHAO2025101167} outline opportunities and challenges of using LLMs as research subjects in detail~\cite{ZHAO2025101167}.
-Furthermore, recent sociological studies have emphasized that, to be effectively utilized in this capacity, LLMs---including their agentic versions---should meet four criteria of algorithmic fidelity~\cite{DBLP:journals/corr/abs-2209-06899}.
-Generated responses should be: (1) indistinguishable from human-produced texts (e.g., LLM-generated code reviews should be comparable to those from real developers); (2) consistent with the attitudes and sociodemographic information of the conditioning context (e.g., LLMs simulating junior developers should exhibit different confidence levels, vocabulary, and concerns compared to senior engineers); (3) naturally aligned with the form, tone, and content of the provided context (e.g., responses in an agile stand-up meeting simulation should be concise, task-focused, and aligned with sprint objectives rather than long, formal explanations); and (4) reflective of patterns in relationships between ideas, demographics, and behavior observed in comparable human data (e.g., discussions on software architecture decisions should capture trade-offs typically debated by human developers, such as maintainability versus performance, rather than abstract theoretical arguments).
-
-\studytypeparagraph{Example(s)}
-
-LLMs can be used as subjects in various types of empirical studies, enabling researchers to simulate human participants.
-The broader applicability of LLM-based studies beyond software engineering has been compiled by \citeauthor{DBLP:journals/ipm/XuSRGPLSH24}~\cite{DBLP:journals/ipm/XuSRGPLSH24}, who examined various uses in social science research.
-Given the socio-technical nature of software development, some of these approaches are transferable to empirical software engineering research.
-For example, LLMs can be applied in survey and interview studies to impersonate developers responding to survey questionnaires or interviews, allowing researchers to test the clarity and effectiveness of survey items or to simulate responses under varying conditions, such as different levels of expertise or cultural contexts.
-For example, \citeauthor{DBLP:journals/ase/GerosaTSS24}~\cite{DBLP:journals/ase/GerosaTSS24} explored persona-based interviews and multi-persona focus groups, demonstrating how LLMs can emulate human responses and behaviors while addressing ethical concerns, biases, and methodological challenges.
-Another example is usability studies, in which LLMs can simulate end-user feedback, providing insights into potential usability issues and offering suggestions for improvement based on predefined user personas. This aligns with the work of \citeauthor{bano2025doessoftwareengineerlook}~\cite{bano2025doessoftwareengineerlook}, who investigated biases in LLM-generated candidate profiles in SE recruitment processes.
-Their study, which analyzed both textual and visual inputs, revealed biases favoring male Caucasian candidates, lighter skin tones, and slim physiques, particularly for senior roles.
-
-\studytypeparagraph{Advantages}
-
-Using LLMs as subjects can reduce the effort of recruiting human participants, a process that is often time-consuming and costly~\cite{DBLP:conf/vl/Madampe0HO24}, by augmenting existing datasets or, in some cases, completely replacing human participants. 
-In interviews and survey studies, LLMs can simulate diverse respondent profiles, enabling access to underrepresented populations, which can strengthen the generalizability of findings. 
-In data mining studies, LLMs can generate synthetic data (see \synthesis) to fill gaps where real-world data is unavailable or underrepresented.
-
-\studytypeparagraph{Challenges}
-
-It is important that researchers are aware of the inherent biases~\cite{Crowell2023} and limitations~\cite{DBLP:journals/ais/HardingDLL24, DBLP:journals/corr/abs-2402-01908} when using LLMs as study subjects. 
-\citeauthor{schroeder2025llmspsychology}~\cite{schroeder2025llmspsychology}, who have studied discrepancies between LLM and human responses, even conclude that \enq{LLMs do not simulate human psychology and recommend that psychological researchers should treat LLMs as useful but fundamentally unreliable tools that need to be validated against human responses for every new application.}
-One critical concern is construct validity.
-LLMs have been shown to misrepresent demographic group perspectives, failing to capture the diversity of opinions and experiences within a group.
-The use of identity-based prompts can reduce identities to fixed and innate characteristics, amplifying perceived differences between groups.
-These biases introduce the risk that studies which rely on LLM-generated responses may inadvertently reinforce stereotypes or misrepresent real-world social dynamics.
-Alternatives to demographic prompts can be employed when the goal is to broaden response coverage~\cite{DBLP:journals/corr/abs-2402-01908}.
-%To mitigate these issues, encoded identity names, that is, statistically representative person names associated with specific demographic groups, can be used instead of explicit labels (e.g., using ``Mario Rossi'' instead of the label ``Italian white man'').
-%Moreover, the temperature setting can be increased to enhance response diversity.
-%All three strategies aim to reduce the risk of stereotyped, flattened, or overly deterministic outputs by introducing indirectness or variability into the prompt, thereby encouraging the model to generate responses that better reflect the internal diversity and nuance of human perspectives.
-Beyond construct validity, internal validity must also be considered, particularly with regard to causal conclusions based on studies relying on LLM-simulated responses.
-Finally, external validity remains a challenge, as findings based on LLMs may not generalize to humans.

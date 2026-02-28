@@ -1,6 +1,12 @@
+\guidelinesubsubsection{Rationale}
+
+Reproducibility depends on access to the model under study.
+When research relies exclusively on proprietary models, other researchers cannot independently verify or build upon the findings.
+Including an open LLM as a baseline ensures that at least part of the study can be fully replicated.
+
 \guidelinesubsubsection{Recommendations}
 
-Empirical studies using LLMs in SE, especially those that target commercial tools or models, \should incorporate an open LLM as a baseline and report established metrics for inter-model agreement (see Section \benchmarksmetrics).
+Empirical studies using LLMs in SE, especially those that target commercial tools or models, \should incorporate an open LLM as a baseline and report established metrics for inter-model agreement.
 We acknowledge that including an open LLM baseline might not always be possible, for example, if the study involves human participants, and letting them work on the tasks using two different models might not be feasible.
 Using an open model as a baseline is also not necessary if the use of the LLM is tangential to the study goal. %, or strict reproducibility of the LLM portion of the results is not necessary.
 
@@ -8,53 +14,60 @@ Open models allow other researchers to verify research results and build upon th
 A comparison of commercial and open models also allows researchers to contextualize model performance.
 Researchers \should provide a complete replication package as part of their \supplementarymaterial, including clear step-by-step instructions on how to verify and reproduce the results reported in the paper.
 
-Open LLMs are available on platforms such as \href{https://huggingface.co/}{\emph{Hugging Face}}.
-Depending on their size and the available compute power, open LLMs can be hosted on a local computer or server using frameworks such as \href{https://ollama.com/}{\emph{Ollama}} or \href{https://lmstudio.ai/}{\emph{LM Studio}}.
-They can also be run on cloud-based services such as \href{https://together.ai/}{\emph{Together AI}} or on large hyperscalers such as AWS, Azure, Alibaba Cloud, and Google Cloud.
+Open LLMs are available on platforms such as \href{https://huggingface.co/}{\emph{Hugging Face}} and can be hosted locally using frameworks such as \href{https://ollama.com/}{\emph{Ollama}} or \href{https://lmstudio.ai/}{\emph{LM Studio}}, or on cloud services such as \href{https://together.ai/}{\emph{Together AI}}, AWS, Azure, and Google Cloud.
 
 The term ``open'' can have different meanings in the context of LLMs.
-\citeauthor{widder2024open} discuss three types of openness: transparency, reusability, and extensibility~\cite{widder2024open}.
-They also discuss what openness in AI can and cannot provide.
-Moreover, the \emph{Open Source Initiative} (OSI) \cite{OSIAI2024} provides a definition of open-source AI that serves as a useful framework for evaluating the openness of AI models.
-In simple terms, according to OSI, open-source AI means that one has access to everything needed to use the AI, which includes that it is possible to understand, modify, share, retrain, and recreate it.
+\citeauthor{widder2024open} discuss three types of openness (transparency, reusability, and extensibility) and what openness can and cannot provide~\cite{widder2024open}.
+The \emph{Open Source Initiative} (OSI)~\cite{OSIAI2024} defines open-source AI as having access to everything needed to understand, modify, share, retrain, and recreate the model.
 
-Besides open models, researchers \may explore whether their study goal can be achieved with existing open-source tools.
-Tools such as Continue, Cline, and opencode offer open alternatives to commercial tools such as GitHub Copilot and Claude Code.
-Using open tools instead of their closed-source counterparts allows researchers to instrument the tools, understand their architecture (in particular how exactly they leverage LLMs), and collect detailed telemetry data.
+Researchers can also explore open-source tools such as Continue, Cline, and opencode as alternatives to commercial tools like GitHub Copilot and Claude Code, enabling instrumentation, architectural transparency, and detailed telemetry collection.
 
 \guidelinesubsubsection{Example(s)}
 
-Numerous studies have adopted open LLMs as baseline models.
+An increasing number of studies have adopted open LLMs as baseline models.
 For example, \citeauthor{wang2024and} evaluated seven advanced LLMs, six of which were open-source, testing 145 API mappings drawn from eight popular Python libraries across 28,125 completion prompts aimed at detecting deprecated API usage in code completion~\cite{wang2024and}.
 \citeauthor{moumoula2024large} compared four LLMs on a cross-language code clone detection task~\cite{moumoula2024large}.
 Three evaluated models were open-source.
 \citeauthor{gonccalves2025evaluating} fine-tuned the open LLM \emph{LLaMA} 3.2 on a refined version of the \emph{DiverseVul} dataset to benchmark vulnerability detection performance~\cite{gonccalves2025evaluating}.
-Many papers have used CodeBERT as an LLM, which is a bimodal (code + NL) Transformer pre-trained by Microsoft Research and released under the MIT license~\cite{DBLP:journals/jss/YangZCZHC23, DBLP:conf/gaiis/XiaSD24, DBLP:conf/kbse/SonnekalbGBM22, DBLP:conf/icse/CaiYMMN24}.
-Its model weights, source code, and data-processing scripts are all openly published on GitHub~\cite{codebert}.
+\emph{CodeBERT}, a bimodal transformer pre-trained by Microsoft Research, has been widely used as an open baseline~\cite{DBLP:journals/jss/YangZCZHC23, DBLP:conf/gaiis/XiaSD24, DBLP:conf/kbse/SonnekalbGBM22, DBLP:conf/icse/CaiYMMN24}, with model weights, source code, and data-processing scripts published on GitHub~\cite{codebert}.
 
-\guidelinesubsubsection{Advantages}
+\guidelinesubsubsection{Benefits}
 
-Using a true open LLM as a baseline improves the reproducibility of scientific research by providing full access to model architectures, training data, and parameter settings (see Section \modelversion), thereby allowing independent reconstruction and verification of experimental results.
-Moreover, by adopting an open-source baseline, researchers can directly compare novel methods against established performance metrics without the variability introduced by proprietary systems (see also Section \benchmarksmetrics).
-The transparent nature of these models allows for detailed inspection of data processing pipelines and decision-making routines, which is essential for identifying potential sources of bias and delineating model limitations (see Section \limitationsmitigations).
+Using a true open LLM as a baseline improves the reproducibility of scientific research by providing access to model architectures and parameter settings, and ideally training data, thereby allowing independent reconstruction and verification of experimental results.
+Moreover, by adopting an open-source baseline, researchers can directly compare novel methods against established performance metrics without the variability introduced by proprietary systems.
+The transparent nature of these models allows for detailed inspection of data processing pipelines and decision-making routines, which is essential for identifying potential sources of bias and delineating model limitations.
 Furthermore, unlike closed-source alternatives, which can be withdrawn or altered without notice, open LLMs ensure long-term accessibility and stability, preserving critical resources for future studies.
 Finally, the licensing requirements associated with open-source implementations lower financial barriers, making advanced language models attainable for research groups operating under constrained budgets.
 
 \guidelinesubsubsection{Challenges}
 
-Open-source LLMs face several notable challenges (see also Section \limitationsmitigations).
-First, they often lag behind the most advanced proprietary systems in common benchmarks, making it difficult for researchers to demonstrate clear improvements when evaluating new methods using open LLMs alone (see Section \benchmarksmetrics).
-Additionally, deploying and experimenting with these models typically requires substantial hardware resources, in particular high-performance GPUs, which may be beyond reach for many academic groups (see Section \toolarchitecture). 
-
-The notion of ``openness'' itself remains in flux: although numerous models are described as open, many release only the trained weights without disclosing the underlying training data or methodological details (see Section \modelversion), a practice sometimes referred to as ``open weight'' openness \cite{Gibney2024}.
-To address this gap, in our recommendations, we have referenced the open-source AI definition proposed by the OSI as an initial framework for what constitutes genuinely open-source AI software~\cite{OSIAI2024}. 
-
-Finally, unlike managed cloud APIs provided by proprietary vendors, installing, configuring, and fine-tuning open-source models can be technically demanding.
-Documentation is often sparse or fragmented, placing a high barrier to entry for researchers without specialized engineering support (see also Section \limitationsmitigations).
+Open-source LLMs face several notable challenges.
+First, they often lag behind the most advanced proprietary ``frontier'' models in common benchmarks, making it difficult for researchers to demonstrate clear improvements when evaluating new methods using open LLMs alone.
+Additionally, deploying and experimenting with these models typically requires substantial hardware resources, in particular high-performance GPUs, which may be beyond reach for many academic groups.
+The notion of ``openness'' remains in flux: many models release only trained weights without training data or methodological details (``open weight'' openness)~\cite{Gibney2024}, which is why we reference the OSI definition in our recommendations~\cite{OSIAI2024}.
+Finally, unlike APIs provided by proprietary vendors (e.g., the OpenAI API), installing, configuring, and fine-tuning open-source models can be technically demanding.
+Documentation is often sparse or fragmented, placing a high barrier to entry for researchers without specialized engineering support.
 
 \guidelinesubsubsection{Study Types}
 
-When evaluating \newtools, researchers \should use an open LLM as a baseline whenever it is technically feasible; if integration proves too complex, they \should report the initial benchmarking results of open models (see Section \benchmarksmetrics).
-In formal benchmarking studies and controlled experiments (see Section \benchmarkingtasks), an open LLM \must be one of the models under evaluation.
-For observational studies in which using an open LLM is impossible, investigators \should explicitly acknowledge its absence and discuss how this limitation might affect their conclusions (see Section \limitationsmitigations).
-Finally, when using \synthesis,  where an LLM serves to explore qualitative data or contrast alternative interpretations, researchers \may report results of an open LLM.
+This guideline applies primarily to study types in which the researcher controls which LLM is used.
+In formal benchmarking studies and controlled experiments (see \benchmarkingtasks), an open LLM \must be one of the models under evaluation.
+When evaluating \newtools, researchers \should use an open LLM as a baseline whenever it is technically feasible; if integration proves too complex, they \should report the initial benchmarking results of open models.
+For \annotators and \judges, researchers \should compare annotation or judgment quality from open vs.\ commercial models to assess the extent to which results depend on a specific proprietary model.
+For \synthesis, researchers \should compare synthesis results from open and commercial models to evaluate robustness of the findings.
+For \llmusage, using an open LLM as a baseline is often not feasible when the study observes participants using specific commercial tools; in such cases, investigators \should explicitly acknowledge its absence and discuss how this limitation might affect their conclusions.
+For \subjects, using an open LLM as a baseline may similarly be impractical if the study design requires the capabilities of a specific model; researchers \should acknowledge this limitation when applicable.
+
+\guidelinesubsubsection{Advice for Reviewers}
+
+Reviewers should distinguish between LLM use that is central to the research (e.g., building LLM-driven SE tools, using LLMs for synthesis) and use that is tangential (e.g., generating recruiting materials). An open LLM baseline is expected only when LLM use is central; otherwise, its absence need not be justified.
+When an open baseline is expected, reviewers should look for either the use of an open LLM or a convincing argument for why it is impractical. If authors claim openness, some justification for that characterization is appropriate. Where practical, reviewers should examine whether the replication package contains sufficiently detailed instructions.
+Reviewers should \textit{not} penalize studies for performance differences between open and proprietary models, as this is beyond the authors' control.
+
+\guidelinesubsubsection{See Also}
+\begin{itemize}[label=$\rightarrow$]
+    \item Section~\modelversion: model version, configuration, and parameter settings.
+    \item Section~\toolarchitecture: hardware and hosting requirements for open models.
+    \item Section~\benchmarksmetrics: metrics for inter-model agreement and benchmarking.
+    \item Section~\limitationsmitigations: reporting limitations when open baselines are absent.
+\end{itemize}
