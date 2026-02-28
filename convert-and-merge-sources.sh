@@ -7,7 +7,7 @@ convert_tex_to_md() {
         [ -e "$tex_file" ] || continue
         md_file="${tex_file%.tex}.md"
         # debug: --verbose --log="pandoc.log"
-        pandoc --wrap=none --bibliography="../../llm-guidelines-paper/literature.bib" -s "$tex_file" -t markdown_strict --citeproc --webtex | perl -ne 'print if not /^---/.../^---/; END { print "\n" }' > "$md_file"
+        pandoc --wrap=none --lua-filter="../../plain-to-code.lua" --bibliography="../../llm-guidelines-paper/literature.bib" -s "$tex_file" -t markdown_strict --citeproc --webtex | perl -ne 'print if not /^---/.../^---/; END { print "\n" }' > "$md_file"
     done
 }
 
