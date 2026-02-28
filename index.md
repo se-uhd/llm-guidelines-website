@@ -21,10 +21,10 @@ Although that version is regularly updated, the most up-to-date version of the g
 
 {% raw %}
 ```
-@misc{baltes2025guidelinesempiricalstudiessoftware,
+@misc{baltes2026guidelinesempiricalstudiessoftware,
       title={{Guidelines for Empirical Studies in Software Engineering involving Large Language Models}}, 
-      author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Lutz Prechelt and Paul Ralph and Rijnard van Tonder and Christoph Treude and Stefan Wagner},
-      year={2025},
+      author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Junda He and Christoph Treude and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Cristina Martinez Montes and Lutz Prechelt and Paul Ralph and Rijnard van Tonder and Stefan Wagner},
+      year={2026},
       eprint={2508.15503},
       archivePrefix={arXiv},
       primaryClass={cs.SE},
@@ -43,18 +43,20 @@ Contributors:
 * [Florian Angermeir](https://angermeir.me/), fortiss (Germany) and Blekinge Institute of Technology (Sweden)
 * [Chetan Arora](https://www.drchetanarora.com/), Monash University (Australia)
 * [Marvin Muñoz Barón](https://www.cs.cit.tum.de/en/se/people/marvin-munoz-baron/), Technical University of Munich (Germany)
+* [Chunyang Chen](https://chunyang-chen.github.io/), Technical University of Munich (Germany)
 * [Lukas Böhme](https://www.hpi.uni-potsdam.de/hirschfeld/people/boehme/index.html), HPI, University of Potsdam (Germany)
 * [Fabio Calefato](https://collab.di.uniba.it/fabio/), University of Bari (Italy)
-* [Chunyang Chen](https://chunyang-chen.github.io/), Technical University of Munich (Germany)
 * [Neil Ernst](https://www.uvic.ca/ecs/computerscience/people/faculty/profiles/ernst-neil.php), University of Victoria (Canada)
 * [Davide Falessi](https://sere.ing.uniroma2.it/davide-falessi/), University of Rome Tor Vergata (Italy)
 * [Brian Fitzgerald](https://www.brian-fitzgerald.com), Lero and University of Limerick (Ireland)
 * [Davide Fucci](https://dfucci.github.io), Blekinge Institute of Technology (Sweden)
+* [Junda He](https://jundahe.github.io/), Singapore Management University (Singapore)
+* [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
 * [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
 * [Stefano Lambiase](https://stefanolambiase.github.io), Aalborg University in Copenhagen (Denmark)
+* [Daniel Russo](https://www.danielrusso.org/), Aalborg University in Copenhagen (Denmark)
 * [Mircea Lungu](https://mircealungu.com/), IT University of Copenhagen (Denmark)
+* [Cristina Martinez Montes](https://www.chalmers.se/en/persons/montesc/), Chalmers University of Technology and University of Gothenburg (Sweden)
 * [Lutz Prechelt](https://www.mi.fu-berlin.de/w/Main/LutzPrechelt), Free University of Berlin (Germany)
 * [Paul Ralph](https://paulralph.name), Dalhousie University (Canada)
-* [Daniel Russo](https://www.danielrusso.org/), Aalborg University in Copenhagen (Denmark)
 * [Rijnard van Tonder](https://rijnard.com), Independent Researcher (Antigua and Barbuda)
-* [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
