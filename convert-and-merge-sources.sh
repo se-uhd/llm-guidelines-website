@@ -11,6 +11,65 @@ convert_tex_to_md() {
     done
 }
 
+# Generate a sub-page index.md from a converted .md file
+# Usage: generate_subpage <md_file> <parent_dir> <parent_title> <nav_order>
+generate_subpage() {
+    md_file=$1
+    parent_dir=$2
+    parent_title=$3
+    nav_order=$4
+
+    # Extract the first ## heading
+    heading=$(grep -m1 "^## " "$md_file" | sed 's/^## //')
+    [ -z "$heading" ] && return 1
+
+    # Derive slug: lowercase, strip (G1)/(S1) suffixes, strip "Introduction: " prefix,
+    # remove non-alphanumeric chars except hyphens and spaces, collapse spaces to hyphens
+    slug=$(echo "$heading" | perl -pe '
+        $_ = lc $_;
+        s/\s*\([gs]\d+\)\s*$//;
+        s/^introduction:\s*//;
+        s/[^a-z0-9 -]//g;
+        s/\s+/-/g;
+        s/-{2,}/-/g;
+        s/^-|-$//g;
+    ')
+    [ -z "$slug" ] && return 1
+
+    # Derive nav title: move (G1)/(S1) suffix to prefix, strip "Introduction: " prefix
+    nav_title=$(echo "$heading" | perl -pe '
+        if (s/\s*\(([GS]\d+)\)\s*$//) { $_ = "$1: $_" }
+        s/^Introduction:\s*//;
+    ')
+
+    # Create sub-page directory
+    mkdir -p "${parent_dir}/${slug}"
+
+    # Generate the sub-page: front matter + page heading + content with headings promoted
+    {
+        cat <<EOF
+---
+layout: default
+title: "${nav_title}"
+parent: ${parent_title}
+nav_order: ${nav_order}
+---
+
+# ${heading}
+
+EOF
+        # Strip the first ## heading, promote remaining headings one level
+        perl -pe '
+            if (!$done && /^## /) { $done = 1; $_ = ""; next }
+            s/^#### /### /;
+            s/^### /## /;
+            s/^## /# /;
+        ' "$md_file"
+    } > "${parent_dir}/${slug}/index.md"
+
+    echo "$slug"
+}
+
 current_dir="$(pwd)"
 convert_tex_to_md "scope/_sources"
 cd "$current_dir"
@@ -21,69 +80,52 @@ cd "$current_dir"
 convert_tex_to_md "checklist/_sources"
 cd "$current_dir"
 
-# Generate guidelines TOC from converted markdown headings
-guidelines_toc=$(grep -h "^## " guidelines/_sources/0[1-8]_*.md | perl -ne '
-    chomp;
-    s/^## //;
-    my $heading = $_;
-    my $anchor = lc $heading;
-    $anchor =~ s/[^a-z0-9 -]//g;
-    $anchor =~ s/ /-/g;
-    $anchor =~ s/-{2,}/-/g;
-    print "$.. [$heading](#$anchor)\n";
-')
+# --- Guidelines sub-pages ---
 
-# Generate study types TOC from converted markdown headings
-study_types_toc=$(grep -h "^## " study-types/_sources/01_study-types.md | perl -e '
-    my $top = 0;
-    my $sub = 0;
-    while (<>) {
-        chomp;
-        s/^## //;
-        my $heading = $_;
-        next if $heading =~ /^Advantages and Challenges/;
-        my $anchor = lc $heading;
-        $anchor =~ s/[^a-z0-9 -]//g;
-        $anchor =~ s/ /-/g;
-        $anchor =~ s/-{2,}/-/g;
-        if ($heading =~ /^Introduction:\s*(.+)/) {
-            $top++;
-            $sub = 0;
-            my $display = $1;
-            print "${top}. [${display}](#${anchor})\n";
-        } elsif ($heading =~ /\(S\d+\)/) {
-            $sub++;
-            print "    ${sub}. [${heading}](#${anchor})\n";
-        } elsif ($heading eq "References") {
-            $top++;
-            print "${top}. [${heading}](#${anchor})\n";
-        }
-    }
-')
+# Generate sub-pages for each guideline
+guidelines_nav=1
+for md_file in guidelines/_sources/0[1-8]_*.md; do
+    [ -e "$md_file" ] || continue
+    generate_subpage "$md_file" "guidelines" "Guidelines" "$guidelines_nav"
+    guidelines_nav=$((guidelines_nav + 1))
+done
 
 # Read converted intro content (strip pandoc-generated References heading and everything after it)
 guidelines_intro=$(perl -ne 'print unless /^#{2,3}\s+References\s*$/ .. eof' guidelines/_sources/00_intro.md)
+
+# Generate guidelines parent page (header + intro + matrix)
+GUIDELINES_INTRO="$guidelines_intro" \
+    perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/' \
+    guidelines/_sources/00_header.md > guidelines/index.md
+
+# --- Study types sub-pages ---
+
+# Generate sub-pages for each study type
+study_types_nav=1
+for md_file in study-types/_sources/0[2-9]_*.md study-types/_sources/1[0-1]_*.md; do
+    [ -e "$md_file" ] || continue
+    generate_subpage "$md_file" "study-types" "Study Types" "$study_types_nav"
+    study_types_nav=$((study_types_nav + 1))
+done
+
+# Read converted intro content
 study_types_intro=$(cat study-types/_sources/00_intro.md)
 
-# Merge sources into index.md files, replacing <!-- INTRO --> and <!-- TOC --> markers
+# Generate study types parent page (header + intro)
+STUDY_TYPES_INTRO="$study_types_intro" \
+    perl -pe 's/<!-- INTRO -->/$ENV{STUDY_TYPES_INTRO}/' \
+    study-types/_sources/00_header.md > study-types/index.md
+
+# --- Scope and checklist (unchanged) ---
+
 cat scope/_sources/*.md > scope/index.md
-
-cat guidelines/_sources/00_header.md guidelines/_sources/0[1-8]_*.md \
-    | GUIDELINES_INTRO="$guidelines_intro" GUIDELINES_TOC="$guidelines_toc" \
-      perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/; s/<!-- TOC -->/$ENV{GUIDELINES_TOC}/' \
-    > guidelines/index.md
-
-cat study-types/_sources/00_header.md study-types/_sources/01_study-types.md \
-    | STUDY_TYPES_INTRO="$study_types_intro" STUDY_TYPES_TOC="$study_types_toc" \
-      perl -pe 's/<!-- INTRO -->/$ENV{STUDY_TYPES_INTRO}/; s/<!-- TOC -->/$ENV{STUDY_TYPES_TOC}/' \
-    > study-types/index.md
-
 cat checklist/_sources/*.md > checklist/index.md
 
 # Remove unresolved \ref{} anchors that pandoc cannot resolve (labels only exist in the paper).
 # Pattern: <a href="#LABEL" data-reference-type="ref" data-reference="LABEL">[LABEL]</a>
 # Note: LaTeX ~ produces UTF-8 non-breaking spaces (\xC2\xA0) that \s does not match by default.
-for md_file in scope/index.md guidelines/index.md study-types/index.md checklist/index.md; do
+for md_file in scope/index.md guidelines/index.md guidelines/*/index.md \
+               study-types/index.md study-types/*/index.md checklist/index.md; do
     [ -e "$md_file" ] || continue
     perl -CSD -pi -e '
         my $sp = qr/[\s\x{a0}]/;
@@ -144,18 +186,18 @@ if [ -e checklist/index.md ]; then
         s/<!-- RESET_BUTTON -->\n*/\n/;
         s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n/;
     ' checklist/index.md
-    # Link (G1)–(G8) references to the corresponding guideline anchors
+    # Link (G1)–(G8) references to the corresponding guideline sub-pages
     perl -CSD -pi -e '
         my %g = (
-            1 => "declare-llm-usage-and-role-g1",
-            2 => "report-model-version-configuration-and-customizations-g2",
-            3 => "report-tool-architecture-beyond-models-g3",
-            4 => "report-prompts-their-development-and-interaction-logs-g4",
-            5 => "use-human-validation-for-llm-outputs-g5",
-            6 => "use-an-open-llm-as-a-baseline-g6",
-            7 => "use-suitable-baselines-benchmarks-and-metrics-g7",
-            8 => "report-limitations-and-mitigations-g8",
+            1 => "declare-llm-usage-and-role",
+            2 => "report-model-version-configuration-and-customizations",
+            3 => "report-tool-architecture-beyond-models",
+            4 => "report-prompts-their-development-and-interaction-logs",
+            5 => "use-human-validation-for-llm-outputs",
+            6 => "use-an-open-llm-as-a-baseline",
+            7 => "use-suitable-baselines-benchmarks-and-metrics",
+            8 => "report-limitations-and-mitigations",
         );
-        s/\(G([1-8])\)/"([G$1]\(\/guidelines#" . $g{$1} . "\))"/ge;
+        s/\(G([1-8])\)/"([G$1](\/guidelines\/" . $g{$1} . "\/))"/ge;
     ' checklist/index.md
 fi
