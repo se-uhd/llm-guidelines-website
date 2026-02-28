@@ -26,7 +26,10 @@
 \renewcommand{\paper}{PAPER~}
 \renewcommand{\supplementarymaterial}{SUPPLEMENTARY MATERIAL~}
 
-% Icons
+% Icons — DeclareUnicodeCharacter lets pdflatex handle these;
+% pandoc sees the raw Unicode and passes it through to Markdown.
+\DeclareUnicodeCharacter{25CF}{\textbullet}% ●
+\DeclareUnicodeCharacter{25CB}{$\circ$}% ○
 \renewcommand{\iconM}{●~}
 \renewcommand{\iconS}{○~}
 

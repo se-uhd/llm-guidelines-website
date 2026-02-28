@@ -31,5 +31,7 @@ compile_tex "study-types/_sources"
 cd "$current_dir"
 compile_tex "guidelines/_sources"
 cd "$current_dir"
+compile_tex "checklist/_sources"
+cd "$current_dir"
 
 echo "Latex compilation successful."

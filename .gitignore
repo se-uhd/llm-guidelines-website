@@ -76,6 +76,9 @@ study-types/_sources/*.pdf
 scope/index.md
 scope/_sources/*.md
 scope/_sources/*.pdf
+checklist/index.md
+checklist/_sources/*.md
+checklist/_sources/*.pdf
 
 ########
 # Misc #
