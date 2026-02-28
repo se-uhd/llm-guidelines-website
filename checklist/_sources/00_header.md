@@ -32,6 +32,7 @@ has_children: false
 #checklist-export {
   margin-left: 0.5em;
 }
+.marker-should { color: #ddd; }
 </style>
 
 <!-- RESET_BUTTON -->
@@ -112,8 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
       var text = li.textContent.trim();
 
       var level = "";
-      if (text.charAt(0) === "\u25CF") level = "MUST";
-      else if (text.charAt(0) === "\u25CB") level = "SHOULD";
+      if (li.querySelector(".marker-should")) level = "SHOULD";
+      else if (text.charAt(0) === "\u25CF") level = "MUST";
 
       var guideline = "";
       var link = li.querySelector("a");

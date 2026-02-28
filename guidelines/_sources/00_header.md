@@ -5,6 +5,10 @@ nav_order: 4
 has_children: true
 ---
 
+<style>
+.marker-should { color: #ddd; }
+</style>
+
 # Guidelines
 
 <!-- INTRO -->
@@ -15,16 +19,16 @@ has_children: true
 <br>**Note:** Each guideline's study-type-specific guidance is detailed in the corresponding subsections.
 {: .fs-3 }
 
-● = **MUST**, ○ = **SHOULD**, -- = not applicable
+● = **MUST**, <span class="marker-should">●</span> = **SHOULD**, -- = not applicable
 
 | | S1 | S2 | S3 | S4 | S5 | S6 | S7 |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | [G1: Declare Usage](/guidelines/declare-llm-usage-and-role/) | ● | ● | ● | ● | ● | ● | ● |
 | [G2: Model Version](/guidelines/report-model-version-configuration-and-customizations/) | ● | ● | ● | ● | ● | ● | ● |
-| [G3: Architecture](/guidelines/report-tool-architecture-beyond-models/) | ○ | ○ | ○ | ○ | ○ | ● | ○ |
+| [G3: Architecture](/guidelines/report-tool-architecture-beyond-models/) | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● | <span class="marker-should">●</span> |
 | [G4: Prompts](/guidelines/report-prompts-their-development-and-interaction-logs/) | ● | ● | ● | ● | ● | ● | ● |
-| [G5: Human Validation](/guidelines/use-human-validation-for-llm-outputs/) | ○ | ○ | ○ | ○ | ○ | ○ | ○ |
-| [G6: Open LLM](/guidelines/use-an-open-llm-as-a-baseline/) | ○ | ○ | ○ | -- | -- | ○ | ● |
-| [G7: Benchmarks](/guidelines/use-suitable-baselines-benchmarks-and-metrics/) | ○ | ○ | ○ | ○ | ○ | ○ | ● |
+| [G5: Human Validation](/guidelines/use-human-validation-for-llm-outputs/) | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
+| [G6: Open LLM](/guidelines/use-an-open-llm-as-a-baseline/) | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | -- | -- | <span class="marker-should">●</span> | ● |
+| [G7: Benchmarks](/guidelines/use-suitable-baselines-benchmarks-and-metrics/) | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● |
 | [G8: Limitations](/guidelines/report-limitations-and-mitigations/) | ● | ● | ● | ● | ● | ● | ● |
 

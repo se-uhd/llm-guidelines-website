@@ -213,6 +213,8 @@ if [ -e checklist/index.md ]; then
         s/<!-- RESET_BUTTON -->\n*/\n/;
         s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n<button id="checklist-export" class="btn btn-outline"><i class="fa-solid fa-file-csv"><\/i> Export to CSV<\/button>\n/;
     ' checklist/index.md
+    # Replace ○ (SHOULD) with gray-filled ● to match paper styling
+    perl -pi -e 's/○/<span class="marker-should">●<\/span>/g' checklist/index.md
     # Link (G1)–(G8) references to the corresponding guideline sub-pages
     perl -CSD -pi -e '
         my %g = (
