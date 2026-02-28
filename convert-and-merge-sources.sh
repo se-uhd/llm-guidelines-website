@@ -61,9 +61,9 @@ EOF
         # Strip the first ## heading, promote remaining headings one level
         perl -pe '
             if (!$done && /^## /) { $done = 1; $_ = ""; next }
-            s/^#### /### /;
-            s/^### /## /;
             s/^## /# /;
+            s/^### /## /;
+            s/^#### /### /;
         ' "$md_file"
     } > "${parent_dir}/${slug}/index.md"
 
