@@ -84,6 +84,10 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
 
 **Citations:** Use `\cite{}` and `\citeauthor{}` with entries from `literature.bib`.
 
+## HTML Conventions
+
+Always use self-closing `<br/>` (not `<br>` or `<br />`).
+
 ## Git Workflow
 
 Direct pushes to main are disabled. Use branches and pull requests. The CI workflow validates LaTeX compilation and conversion on PRs before merge.
