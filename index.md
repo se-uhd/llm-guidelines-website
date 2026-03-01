@@ -1,19 +1,19 @@
 ---
 layout: home
 title: Home
-description: "Reporting Guidelines for Empirical Studies in Software Engineering involving LLMs"
+description: "Reporting Guidelines for Empirical Studies in Software Engineering involving Large Language Models"
 nav_order: 1
 ---
 
 # LLM Guidelines for SE 
 {: .fs-9 }
 
-Guidelines for Empirical Studies in Software Engineering involving LLMs.
+Guidelines for Empirical Studies in Software Engineering involving Large Language Models.
 {: .fs-6 .fw-300 }
 
-This website hosts **community guidelines** for reporting empirical studies in software engineering involving LLMs.
+This website hosts **community guidelines** for reporting empirical studies in software engineering (SE) involving large language models (LLMs).
 Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM study types](/study-types) and corresponding [guidelines](/guidelines).
-These guidelines are meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving large language models (LLMs).
+These guidelines are meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
 The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussions during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
 To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 To **cite our guidelines**, please refer to the [arXiv version](https://arxiv.org/abs/2508.15503).
