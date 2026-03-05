@@ -15,8 +15,7 @@ has_children: true
 
 ## Guidelines by Study Type
 
-**Study types:** [S1](/study-types/llms-as-annotators/) = Annotators, [S2](/study-types/llms-as-judges/) = Judges, [S3](/study-types/llms-for-synthesis/) = Synthesis, [S4](/study-types/llms-as-subjects/) = Subjects, [S5](/study-types/studying-llm-usage-in-software-engineering/) = LLM Usage, [S6](/study-types/llms-for-new-software-engineering-tools/) = Tools, [S7](/study-types/benchmarking-llms-for-software-engineering-tasks/) = Benchmarking.
-<br/>**Note:** Each guideline's study-type-specific guidance is detailed in the corresponding subsection.
+**Note:** Each guideline's study-type-specific guidance is detailed in the corresponding subsection.
 {: .fs-3 }
 
 The guideline's core recommendations:<br/>
