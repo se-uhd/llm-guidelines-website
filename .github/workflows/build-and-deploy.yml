@@ -51,6 +51,7 @@ jobs:
             texlive-latex-extra \
             texlive-fonts-recommended \
             texlive-bibtex-extra \
+            texlive-plain-generic \
             biber
           wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb && sudo dpkg -i pandoc-3.6.1-1-amd64.deb
       - name: Check Latex and Bibtex files
