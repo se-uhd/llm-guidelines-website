@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//llm-guidelines.org//ICSE 2026 Community Session//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:America/Sao_Paulo
+X-LIC-LOCATION:America/Sao_Paulo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:-0300
+TZOFFSETTO:-0300
+TZNAME:-03
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:icse2026-llm-guidelines-community-session@llm-guidelines.org
+DTSTAMP:20260407T000000Z
+DTSTART;TZID=America/Sao_Paulo:20260416T174500
+DTEND;TZID=America/Sao_Paulo:20260416T183000
+SUMMARY:LLM Guidelines for SE Community Session at ICSE 2026
+LOCATION:Oceania III, ICSE 2026, Rio de Janeiro, Brazil
+DESCRIPTION:Community session to discuss the guidelines for empirical studies in software engineering involving large language models. More information: https://llm-guidelines.org
+URL:https://llm-guidelines.org
+END:VEVENT
+END:VCALENDAR

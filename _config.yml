@@ -22,8 +22,8 @@ callouts:
   important:
     title: Important
     color: red
-  note:
-    title: Note
+  announcement:
+    title: Announcement
     color: blue
 
 exclude:
