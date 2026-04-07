@@ -19,14 +19,11 @@ search_enabled: true
 footer_content: "Content provided under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a>. Just the docs theme provided via an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a>"
 
 callouts:
-  deadlines:
-    title: Deadlines & Dates
-    color: red
-  dates:
-    title: Important Dates
-    color: red
   important:
-    title: Important Information
+    title: Important
+    color: red
+  note:
+    title: Note
     color: blue
 
 exclude:
