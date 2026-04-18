@@ -25,8 +25,7 @@ callouts:
   announcement:
     title: Announcement
     color: blue
-  contribute:
-    title: Get involved
+  highlight:
     color: blue
 
 exclude:

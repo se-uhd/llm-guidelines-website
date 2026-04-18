@@ -11,7 +11,7 @@ nav_order: 1
 Guidelines for Empirical Studies in Software Engineering involving Large Language Models.
 {: .fs-6 .fw-300 }
 
-{: .contribute }
+{: .highlight }
 > <i style="color: #2e6fdd" class="fa-solid fa-code-pull-request"></i> **Contribute to the guidelines:**<br/>
 > We welcome community input. Please [open an issue](https://github.com/se-ubt/llm-guidelines/issues/new) on GitHub to share feedback or, even better, [open a pull request](https://github.com/se-ubt/llm-guidelines/pulls) proposing a concrete change.
 
