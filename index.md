@@ -11,10 +11,9 @@ nav_order: 1
 Guidelines for Empirical Studies in Software Engineering involving Large Language Models.
 {: .fs-6 .fw-300 }
 
-{: .announcement }
-> <i style="color: #2e6fdd" class="fa-solid fa-circle-info"></i> **Community session at [ICSE 2026](https://conf.researchr.org/home/icse-2026):**<br/>
-> Join us in person to discuss the guidelines on **Thursday, 16 April 2026, 17:45–18:30** (Brazil Time) in room **Oceania III**.<br/>
-> <a href="{{ site.baseurl }}/assets/icse2026-community-session.ics" download>Calendar event&nbsp;<i class="fa-solid fa-calendar-days"></i></a>
+{: .contribute }
+> <i style="color: #2e6fdd" class="fa-solid fa-code-pull-request"></i> **Contribute to the guidelines:**<br/>
+> We welcome community input. Please [open an issue](https://github.com/se-ubt/llm-guidelines/issues/new) on GitHub to share feedback or, even better, [open a pull request](https://github.com/se-ubt/llm-guidelines/pulls) proposing a concrete change.
 
 This website hosts **community guidelines** for reporting empirical studies in software engineering (SE) involving large language models (LLMs).
 Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM study types](/study-types) and corresponding [guidelines](/guidelines).
