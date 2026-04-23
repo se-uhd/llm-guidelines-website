@@ -2,16 +2,24 @@
 """Fetch Google Scholar citation counts and update _data/citations.yml.
 
 Uses the `scholarly` library with free proxy rotation to look up each
-paper by title and read its `num_citations`. Any fetch failure exits
-non-zero so the workflow run turns red and the reason is visible in the
-log. On failure the YAML is left untouched so the site keeps rendering
-the last-known number.
+paper by title and read its `num_citations`. Resilient to Scholar's
+intermittent refusals via three layers:
+
+1. Each lookup is retried with exponential backoff before being declared
+   dead.
+2. The YAML carries a `titles` map of last-known per-title counts; if a
+   lookup still fails after retries, the last-known value is reused so
+   group totals don't regress.
+3. The script always exits 0 unless the file write itself fails. Partial
+   failures are surfaced as GitHub Actions `::warning::` lines so CI
+   stays green but the failure is still visible in the run summary.
 """
 
 from __future__ import annotations
 
 import os
 import sys
+import time
 from datetime import date
 from pathlib import Path
 
@@ -30,9 +38,17 @@ SOURCES: dict[str, list[str]] = {
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "_data" / "citations.yml"
 
+RETRY_ATTEMPTS = 3
+RETRY_BASE_DELAY = 5  # seconds; doubles each retry
+
 
 def log(msg: str) -> None:
     print(msg, flush=True)
+
+
+def warn(msg: str) -> None:
+    """Surface a non-fatal problem in the GitHub Actions run summary."""
+    print(f"::warning::{msg}", flush=True)
 
 
 def setup_proxy() -> None:
@@ -51,39 +67,94 @@ def setup_proxy() -> None:
 
 
 def fetch_count(title: str) -> int | None:
-    try:
-        pub = scholarly.search_single_pub(title)
-    except Exception as e:
-        log(f"scholarly lookup failed for '{title}': {e}")
-        return None
-    n = pub.get("num_citations") if pub else None
-    if n is None:
-        log(f"scholarly: no num_citations for '{title}'")
-    return n
+    for attempt in range(1, RETRY_ATTEMPTS + 1):
+        try:
+            pub = scholarly.search_single_pub(title)
+        except Exception as e:
+            log(f"scholarly attempt {attempt}/{RETRY_ATTEMPTS} failed for '{title}': {e}")
+            if attempt < RETRY_ATTEMPTS:
+                delay = RETRY_BASE_DELAY * (2 ** (attempt - 1))
+                log(f"retrying in {delay}s")
+                time.sleep(delay)
+            continue
+        n = pub.get("num_citations") if pub else None
+        if n is None:
+            log(f"scholarly: no num_citations for '{title}'")
+        return n
+    return None
+
+
+def load_existing() -> dict:
+    if not DATA_FILE.exists():
+        return {}
+    with DATA_FILE.open() as f:
+        return yaml.safe_load(f) or {}
 
 
 def main() -> int:
     setup_proxy()
 
-    counts: dict = {}
+    previous = load_existing()
+    previous_titles: dict[str, int] = previous.get("titles") or {}
+
+    title_counts: dict[str, int] = {}
+    group_counts: dict[str, int] = {}
+    fallbacks: list[str] = []
+    skipped: list[str] = []
+    successes = 0
+
     for key, titles in SOURCES.items():
         subtotal = 0
+        complete = True
         for title in titles:
             n = fetch_count(title)
             if n is None:
-                log(f"{key}: fetch failed for '{title}', leaving _data/citations.yml unchanged")
-                return 2
-            log(f"{key} [{title!r}]: {n}")
-            subtotal += n
-        counts[key] = subtotal
+                fallback = previous_titles.get(title)
+                if fallback is None:
+                    warn(f"{key}: '{title}' fetch failed and no previous value available; group total will be incomplete")
+                    skipped.append(title)
+                    complete = False
+                    continue
+                warn(f"{key}: '{title}' fetch failed, reusing previous value {fallback}")
+                title_counts[title] = fallback
+                subtotal += fallback
+                fallbacks.append(title)
+            else:
+                log(f"{key} [{title!r}]: {n}")
+                title_counts[title] = n
+                subtotal += n
+                successes += 1
 
-    counts["total"] = sum(counts.values())
-    counts["updated"] = date.today().isoformat()
+        if complete:
+            group_counts[key] = subtotal
+        elif key in previous and isinstance(previous[key], int):
+            warn(f"{key}: keeping previous group total {previous[key]} due to incomplete fetch")
+            group_counts[key] = previous[key]
+        else:
+            group_counts[key] = subtotal  # best-effort partial
+
+    if successes == 0 and not previous_titles:
+        warn("no titles fetched and no previous data to fall back to; leaving file unchanged")
+        return 0
+
+    out: dict = dict(group_counts)
+    out["titles"] = title_counts
+    out["total"] = sum(group_counts.values())
+    if successes > 0:
+        out["updated"] = date.today().isoformat()
+    elif previous.get("updated"):
+        out["updated"] = previous["updated"]
+        warn("no fresh fetches this run; preserving previous 'updated' date")
 
     with DATA_FILE.open("w") as f:
-        yaml.safe_dump(counts, f, default_flow_style=False, sort_keys=True)
+        yaml.safe_dump(out, f, default_flow_style=False, sort_keys=True)
 
-    log(f"total={counts['total']} updated={counts['updated']}")
+    parts = [f"total={out['total']}", f"updated={out['updated']}"]
+    if fallbacks:
+        parts.append(f"fallbacks={len(fallbacks)}")
+    if skipped:
+        parts.append(f"skipped={len(skipped)}")
+    log(" ".join(parts))
     return 0
 
 
