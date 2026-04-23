@@ -40,7 +40,7 @@ Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com
 ```
 {% endraw %}
 
-<p class="citations-info"><i class="ai ai-google-scholar"></i> Cited by about <strong>{{ site.data.citations.total }}</strong> publications on Google Scholar (<a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=10292768743544802913&as_sdt=5" target="_blank" rel="noopener noreferrer">position paper</a>, <a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=16126919270545554010,11554931200167593565&as_sdt=5" target="_blank" rel="noopener noreferrer">preprint</a>, last updated {{ site.data.citations.updated }}).</p>
+<p class="citations-info"><i class="ai ai-google-scholar"></i> Cited by about <strong>{{ site.data.citations.total }}</strong> publications on Google Scholar (<a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=16126919270545554010,11554931200167593565&as_sdt=5" target="_blank" rel="noopener noreferrer">preprint</a> + <a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=10292768743544802913&as_sdt=5" target="_blank" rel="noopener noreferrer">position paper</a>; updated {{ site.data.citations.updated }}).</p>
 
 Project Coordinators:
 
