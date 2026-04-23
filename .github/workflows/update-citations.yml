@@ -1,0 +1,37 @@
+name: Update citation counts
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Fetch citation counts
+        run: python scripts/update-citations.py
+
+      - name: Commit and push if changed
+        run: |
+          if [[ -n "$(git status --porcelain _data/citations.yml)" ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add _data/citations.yml
+            git commit -m "chore: update Google Scholar citation counts"
+            git push
+          fi
