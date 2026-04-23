@@ -3,3 +3,8 @@ a.disabled {
     pointer-events: none;
     text-decoration: none !important;
 }
+
+.citations-info {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+}

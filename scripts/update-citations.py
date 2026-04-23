@@ -10,6 +10,7 @@ the last-known number.
 
 from __future__ import annotations
 
+import os
 import sys
 from datetime import date
 from pathlib import Path
@@ -17,9 +18,14 @@ from pathlib import Path
 import yaml
 from scholarly import ProxyGenerator, scholarly
 
-SOURCES: dict[str, str] = {
-    "position_paper": "Towards Evaluation Guidelines for Empirical Studies involving LLMs",
-    "arxiv": "Guidelines for Empirical Studies in Software Engineering involving Large Language Models",
+SOURCES: dict[str, list[str]] = {
+    "position_paper": [
+        "Towards evaluation guidelines for empirical studies involving llms",
+    ],
+    "arxiv": [
+        "Guidelines for empirical studies in software engineering involving large language models",
+        "Evaluation guidelines for empirical studies in software engineering involving llms",
+    ],
 }
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "_data" / "citations.yml"
@@ -30,6 +36,9 @@ def log(msg: str) -> None:
 
 
 def setup_proxy() -> None:
+    if os.environ.get("SKIP_PROXY_SETUP") == "1":
+        log("scholarly: SKIP_PROXY_SETUP=1, using direct requests")
+        return
     pg = ProxyGenerator()
     if pg.FreeProxies():
         scholarly.use_proxy(pg)
@@ -54,15 +63,18 @@ def main() -> int:
     setup_proxy()
 
     counts: dict = {}
-    for key, title in SOURCES.items():
-        n = fetch_count(title)
-        if n is None:
-            log(f"{key}: fetch failed, leaving _data/citations.yml unchanged")
-            return 2
-        counts[key] = n
-        log(f"{key}: {n}")
+    for key, titles in SOURCES.items():
+        subtotal = 0
+        for title in titles:
+            n = fetch_count(title)
+            if n is None:
+                log(f"{key}: fetch failed for '{title}', leaving _data/citations.yml unchanged")
+                return 2
+            log(f"{key} [{title!r}]: {n}")
+            subtotal += n
+        counts[key] = subtotal
 
-    counts["total"] = counts["position_paper"] + counts["arxiv"]
+    counts["total"] = sum(counts.values())
     counts["updated"] = date.today().isoformat()
 
     with DATA_FILE.open("w") as f:
