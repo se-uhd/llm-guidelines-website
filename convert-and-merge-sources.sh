@@ -41,8 +41,8 @@ generate_subpage() {
         my %short = (
             G1 => "Usage and Role",
             G2 => "Version and Configuration",
-            G3 => "Architecture",
-            G4 => "Prompts and Logs",
+            G3 => "System and Prompt Design",
+            G4 => "Session Traces",
             G5 => "Human Validation",
             G6 => "Open LLMs",
             G7 => "Benchmarks and Metrics",
@@ -220,8 +220,8 @@ if [ -e checklist/index.md ]; then
         my %g = (
             1 => "declare-llm-usage-and-role",
             2 => "report-model-version-configuration-and-customizations",
-            3 => "report-tool-architecture-beyond-models",
-            4 => "report-prompts-their-development-and-interaction-logs",
+            3 => "report-system-and-prompt-design",
+            4 => "report-session-traces",
             5 => "use-human-validation-for-llm-outputs",
             6 => "use-an-open-llm-as-a-baseline",
             7 => "use-suitable-baselines-benchmarks-and-metrics",
