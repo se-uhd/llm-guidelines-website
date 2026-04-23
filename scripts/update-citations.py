@@ -39,12 +39,15 @@ def setup_proxy() -> None:
     if os.environ.get("SKIP_PROXY_SETUP") == "1":
         log("scholarly: SKIP_PROXY_SETUP=1, using direct requests")
         return
-    pg = ProxyGenerator()
-    if pg.FreeProxies():
-        scholarly.use_proxy(pg)
-        log("scholarly: free proxy rotation enabled")
-    else:
-        log("scholarly: no free proxy available, using direct requests")
+    try:
+        pg = ProxyGenerator()
+        if pg.FreeProxies():
+            scholarly.use_proxy(pg)
+            log("scholarly: free proxy rotation enabled")
+        else:
+            log("scholarly: no free proxy available, using direct requests")
+    except Exception as e:
+        log(f"scholarly: proxy setup raised {type(e).__name__}: {e}, falling back to direct requests")
 
 
 def fetch_count(title: str) -> int | None:
