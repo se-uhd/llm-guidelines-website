@@ -21,7 +21,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml scholarly
 
       - name: Fetch citation counts
         run: python scripts/update-citations.py

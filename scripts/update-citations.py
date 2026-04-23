@@ -1,98 +1,74 @@
 #!/usr/bin/env python3
 """Fetch Google Scholar citation counts and update _data/citations.yml.
 
-Preserves the previous value whenever a fetch fails or Scholar returns a
-CAPTCHA. The `updated` date only advances when every source page was
-scraped successfully, so the displayed date always reflects a fully fresh
-snapshot.
+Uses the `scholarly` library with free proxy rotation to look up each
+paper by title and read its `num_citations`. Any fetch failure exits
+non-zero so the workflow run turns red and the reason is visible in the
+log. On failure the YAML is left untouched so the site keeps rendering
+the last-known number.
 """
 
 from __future__ import annotations
 
-import re
 import sys
-import urllib.error
-import urllib.request
 from datetime import date
 from pathlib import Path
 
 import yaml
+from scholarly import ProxyGenerator, scholarly
 
-URLS = {
-    "position_paper": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=10292768743544802913&as_sdt=5",
-    "arxiv": "https://scholar.google.com/scholar?oi=bibs&hl=en&cites=16126919270545554010,11554931200167593565&as_sdt=5",
+SOURCES: dict[str, str] = {
+    "position_paper": "Towards Evaluation Guidelines for Empirical Studies involving LLMs",
+    "arxiv": "Guidelines for Empirical Studies in Software Engineering involving Large Language Models",
 }
-
-USER_AGENT = (
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-)
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "_data" / "citations.yml"
 
-RESULT_COUNT_RE = re.compile(r"About\s+([\d,]+)\s+results?", re.IGNORECASE)
-FALLBACK_COUNT_RE = re.compile(r"([\d,]+)\s+results?\s*\(", re.IGNORECASE)
+
+def log(msg: str) -> None:
+    print(msg, flush=True)
 
 
-def fetch_count(url: str) -> int | None:
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": USER_AGENT,
-            "Accept-Language": "en-US,en;q=0.9",
-        },
-    )
+def setup_proxy() -> None:
+    pg = ProxyGenerator()
+    if pg.FreeProxies():
+        scholarly.use_proxy(pg)
+        log("scholarly: free proxy rotation enabled")
+    else:
+        log("scholarly: no free proxy available, using direct requests")
+
+
+def fetch_count(title: str) -> int | None:
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            html = resp.read().decode("utf-8", errors="replace")
-    except (urllib.error.URLError, TimeoutError) as e:
-        print(f"fetch failed for {url}: {e}", file=sys.stderr)
+        pub = scholarly.search_single_pub(title)
+    except Exception as e:
+        log(f"scholarly lookup failed for '{title}': {e}")
         return None
-
-    lowered = html.lower()
-    if "not a robot" in lowered or "unusual traffic" in lowered:
-        print(f"captcha returned for {url}", file=sys.stderr)
-        return None
-
-    for pattern in (RESULT_COUNT_RE, FALLBACK_COUNT_RE):
-        m = pattern.search(html)
-        if m:
-            return int(m.group(1).replace(",", ""))
-
-    print(f"no result count found in {url}", file=sys.stderr)
-    return None
+    n = pub.get("num_citations") if pub else None
+    if n is None:
+        log(f"scholarly: no num_citations for '{title}'")
+    return n
 
 
 def main() -> int:
-    existing: dict = {}
-    if DATA_FILE.exists():
-        with DATA_FILE.open() as f:
-            existing = yaml.safe_load(f) or {}
+    setup_proxy()
 
     counts: dict = {}
-    all_fresh = True
-    for key, url in URLS.items():
-        n = fetch_count(url)
+    for key, title in SOURCES.items():
+        n = fetch_count(title)
         if n is None:
-            all_fresh = False
-            if key in existing:
-                counts[key] = existing[key]
-                print(f"keeping last known {key}={existing[key]}", file=sys.stderr)
-            else:
-                print(f"no previous value for {key}, aborting", file=sys.stderr)
-                return 1
-        else:
-            counts[key] = n
+            log(f"{key}: fetch failed, leaving _data/citations.yml unchanged")
+            return 2
+        counts[key] = n
+        log(f"{key}: {n}")
 
     counts["total"] = counts["position_paper"] + counts["arxiv"]
-    counts["updated"] = (
-        date.today().isoformat()
-        if all_fresh
-        else existing.get("updated", date.today().isoformat())
-    )
+    counts["updated"] = date.today().isoformat()
 
     with DATA_FILE.open("w") as f:
         yaml.safe_dump(counts, f, default_flow_style=False, sort_keys=True)
+
+    log(f"total={counts['total']} updated={counts['updated']}")
     return 0
 
 
