@@ -82,6 +82,14 @@ checklist/index.md
 checklist/_sources/*.md
 checklist/_sources/*.pdf
 
+##########
+# Python #
+##########
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
 ########
 # Misc #
 ########
