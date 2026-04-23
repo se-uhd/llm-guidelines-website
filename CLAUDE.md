@@ -93,3 +93,7 @@ Always use self-closing `<br/>` (not `<br>` or `<br />`).
 Direct pushes to main are disabled. Use branches and pull requests. The CI workflow validates LaTeX compilation and conversion on PRs before merge.
 
 Study types reference guidelines, not the other way around. To connect a study type with a guideline, update the study type subsection in the corresponding guideline.
+
+## Versioning
+
+Guidelines use CalVer tags (`YYYY.MM`, no `v` prefix) on the paper repo. The current version is hard-coded in `_config.yml` under `aux_links` (label + tree URL) and displayed left of the GitHub link. To bump: tag the target commit in the paper submodule, push the tag, bump the submodule pointer here, then update both the label and URL in `_config.yml`. First version is `2026.03` (paper commit `d57da062`, dated 2026-03-19, marking the EMSE revision submission).

@@ -25,6 +25,15 @@ To double-check the generated Markdown files, you can use any Markdown editor yo
 
 If you add references to [literature.bib](https://github.com/se-ubt/llm-guidelines-paper/blob/main/literature.bib), please use the [DBLP](https://dblp.org/) Bibtex entries, if available.
 
+## Versioning
+
+Guidelines are versioned with date-based tags (CalVer, `YYYY.MM`) on the [paper repo](https://github.com/se-uhd/llm-guidelines-paper). The current version is shown in the top-right of the website, left of the GitHub link, and links to the tagged sources. To publish a new version:
+
+1. In `llm-guidelines-paper/`, tag the target commit: `git tag YYYY.MM <sha>` and `git push --tags`.
+2. In this repo, bump the submodule pointer to that commit: `git submodule update --remote llm-guidelines-paper` (or check out the tag inside the submodule).
+3. Update `_config.yml` `aux_links`: replace both occurrences of the old `YYYY.MM` (label and URL) with the new tag.
+4. Commit and open a PR.
+
 ## Information for authors
 
 * Check our custom commands which are included in all Latex files using [`header.tex`](https://github.com/se-ubt/llm-guidelines-website/blob/main/header.tex). Use `\todo{}` to keep track of to-dos and `\comment{}` for review feedback. For recommendations, use the commands based on RFC 2119, which are defined in the same header file.
