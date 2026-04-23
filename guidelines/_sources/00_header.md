@@ -27,8 +27,8 @@ The guideline's core recommendations:<br/>
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | <a href="/guidelines/declare-llm-usage-and-role/">G1:<br/>Declare Usage</a> | ● | ● | ● | ● | ● | ● | ● |
 | <a href="/guidelines/report-model-version-configuration-and-customizations/">G2:<br/>Model Version</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/report-tool-architecture-beyond-models/">G3:<br/>Architecture</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● | <span class="marker-should">●</span> |
-| <a href="/guidelines/report-prompts-their-development-and-interaction-logs/">G4:<br/>Prompts</a> | ● | ● | ● | ● | ● | ● | ● |
+| <a href="/guidelines/report-system-and-prompt-design/">G3:<br/>Design</a> | ● | ● | ● | ● | ● | ● | ● |
+| <a href="/guidelines/report-session-traces/">G4:<br/>Traces</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
 | <a href="/guidelines/use-human-validation-for-llm-outputs/">G5:<br/>Human Validation</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
 | <a href="/guidelines/use-an-open-llm-as-a-baseline/">G6:<br/>Open LLM</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | -- | -- | <span class="marker-should">●</span> | ● |
 | <a href="/guidelines/use-suitable-baselines-benchmarks-and-metrics/">G7:<br/>Benchmarks</a> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● |
