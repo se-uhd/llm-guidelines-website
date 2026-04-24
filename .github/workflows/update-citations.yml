@@ -34,11 +34,21 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          if [[ -n "$(git status --porcelain _data/citations.yml)" ]]; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add _data/citations.yml
-            git commit -m "Update Google Scholar citation counts"
-            git pull --rebase origin main
-            git push
+          if [[ -z "$(git status --porcelain _data/citations.yml)" ]]; then
+            exit 0
           fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add _data/citations.yml
+          git commit -m "Update Google Scholar citation counts"
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if git push; then
+              echo "push succeeded on attempt $attempt"
+              exit 0
+            fi
+            echo "push failed on attempt $attempt; retrying"
+            sleep $((RANDOM % 15 + 5))
+          done
+          echo "push failed after 5 attempts"
+          exit 1
