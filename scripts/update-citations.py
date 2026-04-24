@@ -18,6 +18,7 @@ intermittent refusals via three layers:
 from __future__ import annotations
 
 import os
+import random
 import sys
 import time
 from datetime import date
@@ -40,6 +41,8 @@ DATA_FILE = Path(__file__).resolve().parent.parent / "_data" / "citations.yml"
 
 RETRY_ATTEMPTS = 3
 RETRY_BASE_DELAY = 5  # seconds; doubles each retry
+INTER_TITLE_MIN = 10  # seconds; randomized gap between consecutive title lookups
+INTER_TITLE_MAX = 30
 
 
 def log(msg: str) -> None:
@@ -102,11 +105,17 @@ def main() -> int:
     fallbacks: list[str] = []
     skipped: list[str] = []
     successes = 0
+    first_title = True
 
     for key, titles in SOURCES.items():
         subtotal = 0
         complete = True
         for title in titles:
+            if not first_title:
+                delay = random.uniform(INTER_TITLE_MIN, INTER_TITLE_MAX)
+                log(f"sleeping {delay:.1f}s before next title")
+                time.sleep(delay)
+            first_title = False
             n = fetch_count(title)
             if n is None:
                 fallback = previous_titles.get(title)
