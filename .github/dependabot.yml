@@ -2,7 +2,6 @@ version: 2
 updates:
   - package-ecosystem: bundler
     directory: /
-    open-pull-requests-limit: 0  # disable version updates, only allow security updates
     schedule:
       interval: daily
     allow:
@@ -14,3 +13,7 @@ updates:
       bundler-packages:
         patterns:
           - "*"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
