@@ -22,7 +22,7 @@ The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668
 To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
 To **cite our guidelines**, please refer to the [arXiv version](https://arxiv.org/abs/2508.15503).
 Although that version is regularly updated, the most up-to-date version of the guidelines can always be found on this website.
-Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a specific version of the guidelines; the current version is shown in the top-right of this site.
+Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a **specific version** of the guidelines; the current version is shown in the header of this website.
 
 <a href="https://arxiv.org/abs/2508.15503" class="btn" target="_blank" rel="noopener noreferrer"><i class="ai ai-arxiv"></i> View on arXiv</a>
 
