@@ -152,8 +152,6 @@ cat checklist/_sources/*.md > checklist/index.md
 
 if [ -e llm-guidelines-paper/CHANGELOG.md ]; then
     cat changelog/_sources/00_header.md llm-guidelines-paper/CHANGELOG.md > changelog/index.md
-    # Drop the duplicate "# Changelog" heading from the paper file (header already provides it)
-    perl -CSD -i -pe 's/^# Changelog\s*$//' changelog/index.md
 fi
 
 # Remove unresolved \ref{} anchors that pandoc cannot resolve (labels only exist in the paper).
