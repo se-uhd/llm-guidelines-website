@@ -81,6 +81,7 @@ scope/_sources/*.pdf
 checklist/index.md
 checklist/_sources/*.md
 checklist/_sources/*.pdf
+changelog/index.md
 
 ##########
 # Python #

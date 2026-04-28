@@ -148,6 +148,14 @@ STUDY_TYPES_INTRO="$study_types_intro" \
 cat scope/_sources/*.md > scope/index.md
 cat checklist/_sources/*.md > checklist/index.md
 
+# --- Changelog (plain Markdown copy from paper repo) ---
+
+if [ -e llm-guidelines-paper/CHANGELOG.md ]; then
+    cat changelog/_sources/00_header.md llm-guidelines-paper/CHANGELOG.md > changelog/index.md
+    # Drop the duplicate "# Changelog" heading from the paper file (header already provides it)
+    perl -CSD -i -pe 's/^# Changelog\s*$//' changelog/index.md
+fi
+
 # Remove unresolved \ref{} anchors that pandoc cannot resolve (labels only exist in the paper).
 # Pattern: <a href="#LABEL" data-reference-type="ref" data-reference="LABEL">[LABEL]</a>
 # Note: LaTeX ~ produces UTF-8 non-breaking spaces (\xC2\xA0) that \s does not match by default.

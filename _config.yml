@@ -8,8 +8,10 @@ favicon_ico: "/assets/images/favicon.ico"
 
 aux_links_new_tab: false
 aux_links:
-  <i class="fas fa-fw fa-tag" aria-hidden="true"></i>&NonBreakingSpace;2026.03:
-    - https://github.com/se-uhd/llm-guidelines-paper/tree/2026.03
+  <i class="fas fa-fw fa-tag" aria-hidden="true"></i>&NonBreakingSpace;2026.04:
+    - https://github.com/se-uhd/llm-guidelines-paper/tree/2026.04
+  <i class="fas fa-fw fa-clock-rotate-left" aria-hidden="true"></i>&NonBreakingSpace;Changelog:
+    - /changelog/
   <i class="fab fa-fw fa-github" aria-hidden="true"></i>&NonBreakingSpace;GitHub:
     - https://github.com/se-uhd/llm-guidelines-website
 
