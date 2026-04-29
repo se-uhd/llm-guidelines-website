@@ -43,9 +43,9 @@ generate_subpage() {
             G2 => "Version and Configuration",
             G3 => "System and Prompt Design",
             G4 => "Session Traces",
-            G5 => "Human Validation",
+            G5 => "Benchmarks and Metrics",
             G6 => "Open LLMs",
-            G7 => "Benchmarks and Metrics",
+            G7 => "Human Validation",
             G8 => "Limitations and Mitigations",
             S1 => "LLMs as Annotators",
             S2 => "LLMs as Judges",
@@ -228,9 +228,9 @@ if [ -e checklist/index.md ]; then
             2 => "report-model-version-configuration-and-customizations",
             3 => "report-system-and-prompt-design",
             4 => "report-session-traces",
-            5 => "use-human-validation-for-llm-outputs",
+            5 => "use-suitable-baselines-benchmarks-and-metrics",
             6 => "use-an-open-llm-as-a-baseline",
-            7 => "use-suitable-baselines-benchmarks-and-metrics",
+            7 => "use-human-validation-for-llm-outputs",
             8 => "report-limitations-and-mitigations",
         );
         s/\(G([1-8])\)/"([G$1](\/guidelines\/" . $g{$1} . "\/))"/ge;

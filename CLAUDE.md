@@ -77,7 +77,7 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
   - Study types: `\studytypes`, `\llmsforresearcher`, `\llmsforengineers`
   - S1–S7: `\annotators`, `\judges`, `\synthesis`, `\subjects`, `\llmusage`, `\newtools`, `\benchmarkingtasks`
   - Guidelines: `\guidelines`
-  - G1–G8: `\usagerole`, `\modelversion`, `\toolarchitecture`, `\prompts`, `\humanvalidation`, `\openllm`, `\benchmarksmetrics`, `\limitationsmitigations`
+  - G1–G8: `\usagerole`, `\modelversion`, `\design`, `\traces`, `\benchmarksmetrics`, `\openllm`, `\humanvalidation`, `\limitationsmitigations`
 - Section formatting: `\guidelinesubsubsection{}`, `\studytypesubsection{}`, `\studytypeparagraph{}`, `\scopeparagraph{}`
 - Icons: `\iconM` (● U+25CF), `\iconS` (○ U+25CB) — paper: TikZ circles, website: Unicode
 - Framed environment: `\begin{framed}...\end{framed}` (paper: mdframed, website: quote)
