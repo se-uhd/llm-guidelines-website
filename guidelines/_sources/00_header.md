@@ -25,12 +25,12 @@ The guideline's core recommendations:<br/>
 
 | | <a href="/study-types/llms-as-annotators/">Annotator</a> | <a href="/study-types/llms-as-judges/">Judge</a> | <a href="/study-types/llms-for-synthesis/">Synthesis</a> | <a href="/study-types/llms-as-subjects/">Subject</a> | <a href="/study-types/studying-llm-usage-in-software-engineering/">Usage</a> | <a href="/study-types/llms-for-new-software-engineering-tools/">Tools</a> | <a href="/study-types/benchmarking-llms-for-software-engineering-tasks/">Benchmarks</a> |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| <a href="/guidelines/declare-llm-usage-and-role/">G1:<br/>Declare Usage</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/report-model-version-configuration-and-customizations/">G2:<br/>Model Version</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/report-system-and-prompt-design/">G3:<br/>Design</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/report-session-traces/">G4:<br/>Traces</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
-| <a href="/guidelines/use-suitable-baselines-benchmarks-and-metrics/">G5:<br/>Benchmarks</a> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● |
-| <a href="/guidelines/use-an-open-llm-as-a-baseline/">G6:<br/>Open LLM</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | -- | -- | <span class="marker-should">●</span> | ● |
-| <a href="/guidelines/use-human-validation-for-llm-outputs/">G7:<br/>Human Validation</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
-| <a href="/guidelines/report-limitations-and-mitigations/">G8:<br/>Limitations</a> | ● | ● | ● | ● | ● | ● | ● |
+| <a href="/guidelines/declare-llm-usage-and-role/">Declare Usage</a> | ● | ● | ● | ● | ● | ● | ● |
+| <a href="/guidelines/report-model-version-configuration-and-customizations/">Model Version</a> | ● | ● | ● | ● | ● | ● | ● |
+| <a href="/guidelines/report-system-and-prompt-design/">Design</a> | ● | ● | ● | ● | ● | ● | ● |
+| <a href="/guidelines/report-session-traces/">Traces</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
+| <a href="/guidelines/use-suitable-baselines-benchmarks-and-metrics/">Benchmarks</a> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● |
+| <a href="/guidelines/use-an-open-llm-as-a-baseline/">Open LLM</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | -- | -- | <span class="marker-should">●</span> | ● |
+| <a href="/guidelines/use-human-validation-for-llm-outputs/">Human Validation</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
+| <a href="/guidelines/report-limitations-and-mitigations/">Limitations</a> | ● | ● | ● | ● | ● | ● | ● |
 

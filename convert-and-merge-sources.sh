@@ -36,37 +36,30 @@ generate_subpage() {
     ')
     [ -z "$slug" ] && return 1
 
-    # Derive nav title: use short name from lookup table, strip "Introduction: " prefix
+    # Derive nav title: map full heading text to short name, strip "Introduction: " prefix
     nav_title=$(echo "$heading" | perl -pe '
         my %short = (
-            G1 => "Usage and Role",
-            G2 => "Version and Configuration",
-            G3 => "System and Prompt Design",
-            G4 => "Session Traces",
-            G5 => "Benchmarks and Metrics",
-            G6 => "Open LLMs",
-            G7 => "Human Validation",
-            G8 => "Limitations and Mitigations",
-            S1 => "LLMs as Annotators",
-            S2 => "LLMs as Judges",
-            S3 => "LLMs for Synthesis",
-            S4 => "LLMs as Subjects",
-            S5 => "Studying LLM Usage",
-            S6 => "LLMs for Tools",
-            S7 => "Benchmarking LLMs",
+            "Declare LLM Usage and Role"                              => "Declare Usage",
+            "Report Model Version, Configuration, and Customizations" => "Model Version",
+            "Report System and Prompt Design"                         => "Design",
+            "Report Session Traces"                                   => "Traces",
+            "Use Suitable Baselines, Benchmarks, and Metrics"         => "Benchmarks",
+            "Use an Open LLM as a Baseline"                           => "Open LLM",
+            "Use Human Validation for LLM Outputs"                    => "Human Validation",
+            "Report Limitations and Mitigations"                      => "Limitations",
+            "LLMs as Annotators"                                      => "Annotator",
+            "LLMs as Judges"                                          => "Judge",
+            "LLMs for Synthesis"                                      => "Synthesis",
+            "LLMs as Subjects"                                        => "Subject",
+            "Studying LLM Usage in Software Engineering"              => "Usage",
+            "LLMs for New Software Engineering Tools"                 => "Tools",
+            "Benchmarking LLMs for Software Engineering Tasks"        => "Benchmarks",
+            "LLMs as Tools for Software Engineering Researchers"      => "LLMs for Research",
+            "LLMs as Tools for Software Engineers"                    => "LLMs for SE",
         );
-        if (s/\s*\(([GS]\d+)\)\s*$//) {
-            my $id = $1;
-            $_ = exists $short{$id} ? "$id: $short{$id}" : "$id: $_";
-        }
         s/^Introduction:\s*//;
-        my %cat = (
-            "LLMs as Tools for Software Engineering Researchers" => "LLMs for Research",
-            "LLMs as Tools for Software Engineers" => "LLMs for SE",
-        );
-        for my $long (keys %cat) {
-            if ($_ eq "$long\n") { $_ = "$cat{$long}\n"; last }
-        }
+        chomp(my $key = $_);
+        $_ = "$short{$key}\n" if exists $short{$key};
     ')
 
     # Create sub-page directory
@@ -217,22 +210,23 @@ if [ -e checklist/index.md ]; then
     # Place the reset button after the intro paragraph (replace placeholder)
     perl -CSD -0777 -pi -e '
         s/<!-- RESET_BUTTON -->\n*/\n/;
-        s/(Each item references its source guideline \(G1.G8\)\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n<button id="checklist-export" class="btn btn-outline"><i class="fa-solid fa-file-csv"><\/i> Export to CSV<\/button>\n/;
+        s/(unmarked items may be reported in either\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n<button id="checklist-export" class="btn btn-outline"><i class="fa-solid fa-file-csv"><\/i> Export to CSV<\/button>\n/;
     ' checklist/index.md
     # Replace ○ (SHOULD) with gray-filled ● to match paper styling
     perl -pi -e 's/○/<span class="marker-should">●<\/span>/g' checklist/index.md
-    # Link (G1)–(G8) references to the corresponding guideline sub-pages
+    # Link short-name references like (Declare Usage) to the corresponding guideline sub-pages
     perl -CSD -pi -e '
         my %g = (
-            1 => "declare-llm-usage-and-role",
-            2 => "report-model-version-configuration-and-customizations",
-            3 => "report-system-and-prompt-design",
-            4 => "report-session-traces",
-            5 => "use-suitable-baselines-benchmarks-and-metrics",
-            6 => "use-an-open-llm-as-a-baseline",
-            7 => "use-human-validation-for-llm-outputs",
-            8 => "report-limitations-and-mitigations",
+            "Declare Usage"    => "declare-llm-usage-and-role",
+            "Model Version"    => "report-model-version-configuration-and-customizations",
+            "Design"           => "report-system-and-prompt-design",
+            "Traces"           => "report-session-traces",
+            "Benchmarks"       => "use-suitable-baselines-benchmarks-and-metrics",
+            "Open LLM"         => "use-an-open-llm-as-a-baseline",
+            "Human Validation" => "use-human-validation-for-llm-outputs",
+            "Limitations"      => "report-limitations-and-mitigations",
         );
-        s/\(G([1-8])\)/"([G$1](\/guidelines\/" . $g{$1} . "\/))"/ge;
+        my $names = join("|", map { quotemeta } sort { length($b) <=> length($a) } keys %g);
+        s/\(($names)\)/"([$1](\/guidelines\/" . $g{$1} . "\/))"/ge;
     ' checklist/index.md
 fi
