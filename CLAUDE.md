@@ -8,6 +8,8 @@ A Jekyll + Just the Docs website publishing community guidelines for reporting e
 
 The companion paper repo is included as a git submodule at `llm-guidelines-paper/`. **The paper is authoritative** — content tex files, `literature.bib`, and `shared-header.tex` all live in the paper repo. All content is referenced directly from the submodule (no local copies). After cloning, run `git submodule update --init` to populate it.
 
+**Writing rules:** Apply the prose conventions in `llm-guidelines-paper/WRITING.md` to all prose in this repo and the paper submodule, including Markdown pages, changelogs, code comments, and commit messages.
+
 ## Build & Development Commands
 
 **Prerequisites:** Ruby 3.4, pandoc 3.6 (pinned in `mise.toml`), texlive-full (installed via CI)
