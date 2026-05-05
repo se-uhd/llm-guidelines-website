@@ -34,7 +34,7 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 1. For each `.tex` file, pandoc converts to Markdown using `pandoc-filters.lua` (tightens lists, converts `plain`/`enumerate*` environments)
 2. Generated `.md` files are merged with `00_header.md` into section `index.md` files
 3. Guidelines and study types generate individual sub-pages (e.g., `guidelines/declare-llm-usage-and-role/index.md`) with slug-based URLs derived from guideline/study-type names
-4. Post-processing via perl: inline footnotes, unresolved `\ref{}` cleanup, Markdown-inside-HTML fixes, checklist marker styling, `(G1)`–`(G8)` links, CSV export generation, reset button insertion
+4. Post-processing via perl: inline footnotes, unresolved `\ref{}` cleanup, Markdown-inside-HTML fixes, checklist marker styling, guideline short-name links, CSV export generation, reset button insertion
 
 **Critical rule:** Content tex files (in `llm-guidelines-paper/_guidelines/`, `_studytypes/`, `_scope/`, `_tldr/`) and `literature.bib` live in the paper submodule and are referenced directly — do not duplicate them. Edit content in the paper repo, not here. Never edit generated Markdown files (`scope/index.md`, `study-types/index.md`, `guidelines/index.md`, `checklist/index.md`, and all sub-pages under `guidelines/*/` and `study-types/*/`) — they are overwritten on every conversion and not version-controlled.
 
@@ -75,9 +75,9 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
 - Cross-references — do NOT use standard `\label{}`/`\ref{}` in content files:
   - Scope: `\scope` → `/scope/`
   - Study types: `\studytypes`, `\llmsforresearcher`, `\llmsforengineers`
-  - S1–S7: `\annotators`, `\judges`, `\synthesis`, `\subjects`, `\llmusage`, `\newtools`, `\benchmarkingtasks`
+  - Individual study types: `\annotators`, `\judges`, `\synthesis`, `\subjects`, `\llmusage`, `\newtools`, `\benchmarkingtasks`
   - Guidelines: `\guidelines`
-  - G1–G8: `\usagerole`, `\modelversion`, `\design`, `\traces`, `\benchmarksmetrics`, `\openllm`, `\humanvalidation`, `\limitationsmitigations`
+  - Individual guidelines: `\usagerole`, `\modelversion`, `\design`, `\traces`, `\benchmarksmetrics`, `\openllm`, `\humanvalidation`, `\limitationsmitigations`
 - Section formatting: `\guidelinesubsubsection{}`, `\studytypesubsection{}`, `\studytypeparagraph{}`, `\scopeparagraph{}`
 - Icons: `\iconM` (● U+25CF), `\iconS` (○ U+25CB) — paper: TikZ circles, website: Unicode
 - Framed environment: `\begin{framed}...\end{framed}` (paper: mdframed, website: quote)

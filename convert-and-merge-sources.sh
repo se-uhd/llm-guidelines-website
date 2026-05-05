@@ -23,11 +23,10 @@ generate_subpage() {
     heading=$(grep -m1 "^## " "$md_file" | sed 's/^## //')
     [ -z "$heading" ] && return 1
 
-    # Derive slug: lowercase, strip (G1)/(S1) suffixes, strip "Introduction: " prefix,
+    # Derive slug: lowercase, strip "Introduction: " prefix,
     # remove non-alphanumeric chars except hyphens and spaces, collapse spaces to hyphens
     slug=$(echo "$heading" | perl -pe '
         $_ = lc $_;
-        s/\s*\([gs]\d+\)\s*$//;
         s/^introduction:\s*//;
         s/[^a-z0-9 -]//g;
         s/\s+/-/g;
@@ -163,12 +162,6 @@ for md_file in scope/index.md guidelines/index.md guidelines/*/index.md \
         s/\((Section|Table|Appendix|Figure)$sp*\)//g;
         # Remove any remaining unresolved ref anchors
         s/<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>//g;
-        # Clean up orphaned sentence fragments left after removing Table/Appendix refs
-        s/,?\s*then consult to determine/. Determine/g;
-        s/the checklist in,/the checklist,/g;
-        s/\.\s*provides a quick reference[^.]*\.//g;
-        s/,?\s*and maps each[^.]*\.//g;
-        s/\.\s*helps reviewers[^.]*\.//g;
         # Inline footnotes: replace "[N]" marker + "[N] URL" footer with a linked marker
         # Collect footnote definitions (e.g., "[1] https://...") into a hash, then inline them.
         # Fix Markdown inside HTML tags: <u>*...*</u> → <u><em>...</em></u>
