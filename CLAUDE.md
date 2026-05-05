@@ -36,7 +36,7 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 1. For each `.tex` file, pandoc converts to Markdown using `pandoc-filters.lua` (tightens lists, converts `plain`/`enumerate*` environments)
 2. Generated `.md` files are merged with `00_header.md` into section `index.md` files
 3. Guidelines and study types generate individual sub-pages (e.g., `guidelines/declare-llm-usage-and-role/index.md`) with slug-based URLs derived from guideline/study-type names
-4. Post-processing via perl: inline footnotes, unresolved `\ref{}` cleanup, Markdown-inside-HTML fixes, checklist marker styling, guideline short-name links, CSV export generation, reset button insertion
+4. Post-processing via perl: trailing-space-before-punctuation trim (cross-reference macros end with `~`), inline footnotes, checklist marker styling, guideline short-name links, CSV export generation, reset button insertion
 
 **Critical rule:** Content tex files (in `llm-guidelines-paper/_guidelines/`, `_studytypes/`, `_scope/`, `_tldr/`) and `literature.bib` live in the paper submodule and are referenced directly — do not duplicate them. Edit content in the paper repo, not here. Never edit generated Markdown files (`scope/index.md`, `study-types/index.md`, `guidelines/index.md`, `checklist/index.md`, and all sub-pages under `guidelines/*/` and `study-types/*/`) — they are overwritten on every conversion and not version-controlled.
 
@@ -72,8 +72,8 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
 - Editorial: `\todo{...}`
 - Inline quotes: `\enq{...}` (typographically correct quotes with italics)
 - TL;DR label: `\tldr`
-- RFC 2119 keywords: `\must`, `\mustnot`, `\should`, `\shouldnot` (paper: small-caps, website: bold)
-- Reporting location: `\paper`, `\supplementarymaterial` (paper: italic, website: ALLCAPS)
+- RFC 2119 keywords: `\must`, `\mustnot`, `\should`, `\shouldnot` — bold in both paper and website
+- Reporting location: `\paper`, `\supplementarymaterial` — italic in both paper and website
 - Cross-references — do NOT use standard `\label{}`/`\ref{}` in content files:
   - Scope: `\scope` → `/scope/`
   - Study types: `\studytypes`, `\llmsforresearcher`, `\llmsforengineers`
@@ -82,7 +82,7 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
   - Individual guidelines: `\usagerole`, `\modelversion`, `\design`, `\traces`, `\benchmarksmetrics`, `\openllm`, `\humanvalidation`, `\limitationsmitigations`
 - Section formatting: `\guidelinesubsubsection{}`, `\studytypesubsection{}`, `\studytypeparagraph{}`, `\scopeparagraph{}`
 - Icons: `\iconM` (● U+25CF), `\iconS` (○ U+25CB) — paper: TikZ circles, website: Unicode
-- Framed environment: `\begin{framed}...\end{framed}` (paper: mdframed, website: quote)
+- Framed environment: `\begin{framed}...\end{framed}` — paper renders as a gray-background mdframed box with a left border; website renders as a plain blockquote. Body is upright in both.
 
 **Citations:** Use `\cite{}` and `\citeauthor{}` with entries from `literature.bib`.
 
