@@ -146,32 +146,20 @@ if [ -e llm-guidelines-paper/CHANGELOG.md ]; then
     cat changelog/_sources/00_header.md llm-guidelines-paper/CHANGELOG.md > changelog/index.md
 fi
 
-# Remove unresolved \ref{} anchors that pandoc cannot resolve (labels only exist in the paper).
-# Pattern: <a href="#LABEL" data-reference-type="ref" data-reference="LABEL">[LABEL]</a>
-# Note: LaTeX ~ produces UTF-8 non-breaking spaces (\xC2\xA0) that \s does not match by default.
+# Post-process pandoc output:
+# 1. Trim the trailing space pandoc emits after \href cross-reference macros
+#    (their LaTeX expansion ends with `~`, which becomes a regular space and
+#    lands before punctuation like `)` or `,`).
+# 2. Inline footnotes: pandoc emits "[N]" markers and "[N] URL" definitions at
+#    the bottom of the file; rewrite each marker as a superscript link.
 for md_file in scope/index.md guidelines/index.md guidelines/*/index.md \
                study-types/index.md study-types/*/index.md checklist/index.md; do
     [ -e "$md_file" ] || continue
     perl -CSD -pi -e '
         my $sp = qr/[\s\x{a0}]/;
-        # Remove "(Section/Table/Appendix <ref>)" parentheticals entirely
-        s/\((Section|Table|Appendix|Figure)$sp*<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>\)//g;
-        # Remove "Table/Appendix/Figure <ref>" (prefix word + anchor)
-        s/(Table|Appendix|Figure)$sp*<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>$sp*//g;
-        # Remove "(Section <ref>)" where only Section text remains (anchor already stripped)
-        s/\((Section|Table|Appendix|Figure)$sp*\)//g;
-        # Remove any remaining unresolved ref anchors
-        s/<a[^>]*data-reference-type="ref"[^>]*>\[[^\]]*\]<\/a>//g;
-        # Inline footnotes: replace "[N]" marker + "[N] URL" footer with a linked marker
-        # Collect footnote definitions (e.g., "[1] https://...") into a hash, then inline them.
-        # Fix Markdown inside HTML tags: <u>*...*</u> → <u><em>...</em></u>
-        s/<u>\*([^*]+)\*<\/u>/<u><em>$1<\/em><\/u>/g;
-        # Clean up: "in , which" → ", which"; collapse spaces; trim space before punctuation
-        s/\bin$sp*,/,/g;
         s/(?<=\S)$sp{2,}/ /g;
         s/$sp([,.;:!?)>\]])/\1/g;
     ' "$md_file"
-    # Inline footnotes: convert "[N] URL" at end of file into superscript links at the marker site
     perl -CSD -0777 -pi -e '
         my %fn;
         while (s/^\[(\d+)\]\s*<?(\S+?)>?\s*$//m) {
@@ -189,8 +177,6 @@ done
 
 # Checklist-specific post-processing
 if [ -e checklist/index.md ]; then
-    # Remove webtex $\square$ images (interactive checkboxes replace them)
-    perl -CSD -pi -e 's/!\[\\square\]\([^)]*\)\s*//g' checklist/index.md
     # Remove duplicate "# Checklist" heading (already have "# Reporting Checklist" from header)
     perl -CSD -pi -e 's/^# Checklist$//' checklist/index.md
     # Promote paper section headings: #### **Name** → ## Name
