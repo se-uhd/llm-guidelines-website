@@ -100,3 +100,8 @@ codekit-config.json
 node_modules
 npm-debug.log*
 .obsidian*
+
+####################
+# Claude Code      #
+####################
+.claude/

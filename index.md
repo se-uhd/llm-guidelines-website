@@ -17,6 +17,7 @@ Guidelines for Empirical Studies in Software Engineering involving Large Languag
 
 This website hosts **community guidelines** for reporting empirical studies in software engineering (SE) involving large language models (LLMs).
 Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM study types](/study-types) and corresponding [guidelines](/guidelines).
+We also publish the guidelines as a [Claude Code skill](/skill/) that authors can run against their paper draft and supplementary material to flag reporting gaps before submission.
 These guidelines are meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
 The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussions during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
 To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).

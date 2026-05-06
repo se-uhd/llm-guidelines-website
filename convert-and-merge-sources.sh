@@ -209,3 +209,9 @@ if [ -e checklist/index.md ]; then
         s/\(($names)\)/"([$1](\/guidelines\/" . $g{$1} . "\/))"/ge;
     ' checklist/index.md
 fi
+
+# --- Skill bundle (optional; runs only if the skill submodule is initialized) ---
+
+if [ -d llm-guidelines-skill/.claude-plugin ] && [ -x ./generate-skill.sh ]; then
+    ./generate-skill.sh
+fi

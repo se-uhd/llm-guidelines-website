@@ -12,6 +12,8 @@ aux_links:
     - https://github.com/se-uhd/llm-guidelines-paper/tree/2026.05
   <i class="fas fa-fw fa-clock-rotate-left" aria-hidden="true"></i>&NonBreakingSpace;Changelog:
     - /changelog/
+  <i class="fas fa-fw fa-cube" aria-hidden="true"></i>&NonBreakingSpace;Skill:
+    - https://github.com/se-uhd/llm-guidelines-skill
   <i class="fab fa-fw fa-github" aria-hidden="true"></i>&NonBreakingSpace;GitHub:
     - https://github.com/se-uhd/llm-guidelines-website
 
@@ -37,8 +39,10 @@ exclude:
   - "README.md"
   - "compile-latex.sh"
   - "convert-and-merge-sources.sh"
+  - "generate-skill.sh"
   - "header-website.tex"
   - "mise.toml"
   - "pandoc-filters.lua"
   - "**/_sources/*"
   - "llm-guidelines-paper"
+  - "llm-guidelines-skill"

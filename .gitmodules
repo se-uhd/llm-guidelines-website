@@ -1,3 +1,6 @@
 [submodule "llm-guidelines-paper"]
 	path = llm-guidelines-paper
 	url = https://github.com/se-uhd/llm-guidelines-paper.git
+[submodule "llm-guidelines-skill"]
+	path = llm-guidelines-skill
+	url = https://github.com/se-uhd/llm-guidelines-skill.git

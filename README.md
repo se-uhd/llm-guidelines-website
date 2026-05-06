@@ -10,7 +10,7 @@ You can test changes to the website locally as follows:
 1. Either install `ruby`, `pandoc`, and a TeX distribution directly or using [mise](https://mise.jdx.dev/) (see [mise.toml](https://github.com/se-uhd/llm-guidelines-website/blob/main/mise.toml)). If you're on Windows, we suggest using [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 2. Run `gem install bundler jekyll`.
 3. Run `bundle install` in the root directory of this repo.
-4. Run `git submodule update --init` to populate the [paper repo](https://github.com/se-uhd/llm-guidelines-paper) submodule, which holds the authoritative content.
+4. Run `git submodule update --init` to populate both submodules: the [paper repo](https://github.com/se-uhd/llm-guidelines-paper) (authoritative content) and the [skill repo](https://github.com/se-uhd/llm-guidelines-skill) (Agent Skill distribution target).
 5. Run `./compile-latex.sh` to validate that the LaTeX entry points still compile.
 6. Run `./convert-and-merge-sources.sh` to convert the LaTeX files to Markdown.
 7. Run `bundle exec jekyll serve` to host the website locally.
@@ -27,14 +27,22 @@ To double-check the generated Markdown files, you can use any Markdown editor yo
 
 If you add references to [literature.bib](https://github.com/se-uhd/llm-guidelines-paper/blob/main/literature.bib), please use the [DBLP](https://dblp.org/) Bibtex entries, if available.
 
+## Skill bundle
+
+`./convert-and-merge-sources.sh` ends by invoking `./generate-skill.sh` if `llm-guidelines-skill/` is initialized. That script regenerates the [Agent Skill](https://agentskills.io/home) bundle inside the skill submodule. The skill version, plugin manifest, and marketplace entry are all stamped from the CalVer tag in `_config.yml`. The script does not commit; review the diff under `llm-guidelines-skill/` and commit/push there manually, then bump the submodule pointer in this repo.
+
+The skill landing page is at [`/skill/`](https://llm-guidelines.org/skill/) and links to install instructions, downloads, and the source files in the skill repository.
+
 ## Versioning
 
-Guidelines are versioned with date-based tags (CalVer, `YYYY.MM`) on the [paper repo](https://github.com/se-uhd/llm-guidelines-paper). The current version is shown in the top-right of the website, left of the GitHub link, and links to the tagged sources. To publish a new version:
+Guidelines are versioned with date-based tags (CalVer, `YYYY.MM`) on the [paper repo](https://github.com/se-uhd/llm-guidelines-paper). The current version is shown in the top-right of the website, left of the GitHub link, and links to the tagged sources. The skill bundle inherits the same tag. To publish a new version:
 
 1. In `llm-guidelines-paper/`, tag the target commit: `git tag YYYY.MM <sha>` and `git push --tags`.
-2. In this repo, bump the submodule pointer to that commit: `git submodule update --remote llm-guidelines-paper` (or check out the tag inside the submodule).
+2. In this repo, bump the paper submodule pointer to that commit: `git submodule update --remote llm-guidelines-paper` (or check out the tag inside the submodule).
 3. Update `_config.yml` `aux_links`: replace both occurrences of the old `YYYY.MM` (label and URL) with the new tag.
-4. Commit and open a PR.
+4. Run `./compile-latex.sh && ./convert-and-merge-sources.sh` to regenerate website pages and the skill bundle.
+5. In `llm-guidelines-skill/`, review the diff, commit with the new tag, push, and tag the commit `YYYY.MM` there as well.
+6. Bump the skill submodule pointer in this repo and open a PR.
 
 ## Information for authors
 
