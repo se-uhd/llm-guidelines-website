@@ -52,11 +52,11 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 
 1. Reads `_config.yml` to extract the current CalVer tag.
 2. Iterates `guidelines/_sources/0[1-8]_*.md` and `study-types/_sources/0[2-9]_*.md` plus `1[0-1]_*.md` for ordering, then loads the matching website-rendered subpage (`guidelines/<slug>/index.md`, `study-types/<slug>/index.md`) for each.
-3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to skill-relative (`guidelines/<slug>.md` etc.); writes the result into `llm-guidelines-skill/skills/llm-guidelines/`.
-4. Renders `skills/llm-guidelines/SKILL.md` from `_skill/SKILL.md.template` (kept in the website repo, since it is a build-time artifact and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`.
-5. Rewrites the `version` field in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
+3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to skill-relative (`guidelines/<slug>.md` etc.); writes the result into `llm-guidelines-skill/plugins/llm-guidelines/skills/llm-guidelines/`.
+4. Renders `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` in the skill repo from `_skill/SKILL.md.template` (kept here, since it is a build-time artifact and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`.
+5. Rewrites the `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
 
-In the website repo, `_skill/SKILL.md.template` is hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, and the marketplace JSON are hand-curated; everything else under `skills/llm-guidelines/` is generated.
+In the website repo, `_skill/SKILL.md.template` is hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, and the marketplace JSON are hand-curated; everything else under `plugins/llm-guidelines/skills/llm-guidelines/` is generated.
 
 The website surface is a single page at `/skill/` (`skill/index.md`, hand-curated): install instructions, invocation, downloads, and a table linking the bundled files to their rich rendering on this site (or, for `SKILL.md`, to the source on GitHub).
 
