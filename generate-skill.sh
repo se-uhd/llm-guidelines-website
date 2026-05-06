@@ -16,7 +16,8 @@ set -e
 
 ROOT="$(pwd)"
 SKILL_REPO="${ROOT}/llm-guidelines-skill"
-SKILL_DIR="${SKILL_REPO}/skills/llm-guidelines"
+SKILL_DIR="${SKILL_REPO}/plugins/llm-guidelines/skills/llm-guidelines"
+PLUGIN_DIR="${SKILL_REPO}/plugins/llm-guidelines"
 
 if [ ! -d "${SKILL_REPO}/.claude-plugin" ]; then
     echo "error: ${SKILL_REPO} is not initialized; run 'git submodule update --init' first" >&2
@@ -160,7 +161,7 @@ perl -CSD -pe '
     s/\{\{STUDY_TYPES_INDEX\}\}/$ENV{STUDY_TYPES_INDEX}/g;
 ' "$TEMPLATE" > "${SKILL_DIR}/SKILL.md"
 
-for f in "${SKILL_REPO}/.claude-plugin/plugin.json" "${SKILL_REPO}/.claude-plugin/marketplace.json"; do
+for f in "${PLUGIN_DIR}/.claude-plugin/plugin.json" "${SKILL_REPO}/.claude-plugin/marketplace.json"; do
     [ -e "$f" ] || continue
     perl -CSD -i -pe 's/("version"\s*:\s*)"[^"]*"/$1"$ENV{VERSION}"/g;' "$f"
 done
