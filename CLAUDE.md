@@ -60,6 +60,68 @@ In the website repo, `_skill/SKILL.md.template` is hand-curated. In the skill re
 
 The website surface is a single page at `/skill/` (`skill/index.md`, hand-curated): install instructions, invocation, downloads, and a table linking the bundled files to their rich rendering on this site (or, for `SKILL.md`, to the source on GitHub).
 
+### Plugin Packaging Gotchas
+
+Hard-won notes from the initial setup. Read these before changing the plugin or marketplace manifest, or the bundle layout.
+
+**1. Always run `claude plugin validate` on both manifests before commit.**
+
+```bash
+claude plugin validate llm-guidelines-skill/plugins/llm-guidelines
+claude plugin validate llm-guidelines-skill/.claude-plugin/marketplace.json
+```
+
+The validator catches schema issues that the install flow reports as a single, misleading message (see point 2). Treat any error from the validator as a hard fail.
+
+**2. The "source type" error is a manifest-schema error in disguise.**
+
+When `/plugin install` reports:
+
+> Failed to install: This plugin uses a source type your Claude Code version does not support. Update Claude Code and try again.
+
+…it does **not** mean the `source` field uses an unsupported syntax. Claude Code emits this same message for any unrecognized key in either manifest. Real causes we hit during initial setup:
+
+| Symptom                                                 | Actual cause                                                  |
+|---------------------------------------------------------|---------------------------------------------------------------|
+| "source type your Claude Code version does not support" | `"authors": [...]` (npm style) in `plugin.json`; the schema expects singular `"author": {...}`. |
+| Same message after restructuring the source field       | Same root cause as above; the source field was a red herring. |
+
+Treatment: run `claude plugin validate` first. Do not iterate on the `source` field in response to this error.
+
+**3. Test installs via the CLI, not the interactive UI.**
+
+```bash
+claude plugin install llm-guidelines     # faster, clearer errors than /plugin install
+claude plugin list
+claude plugin uninstall llm-guidelines
+```
+
+The CLI reads the same on-disk marketplace cache as the TUI; a successful CLI install confirms that the manifest is correct.
+
+**4. Stale in-memory marketplace state.**
+
+The on-disk marketplace cache is at `~/.claude/plugins/marketplaces/<name>/`. `/plugin marketplace update <name>` refreshes it. The running CC session does **not** auto-reload after a `git push`. If a working manifest still produces an error in `/plugin install`:
+
+1. `/plugin marketplace update <name>` and retry.
+2. If still failing, restart CC.
+3. Inspect `~/.claude/plugins/marketplaces/<name>/.claude-plugin/marketplace.json` to confirm the cache holds what you pushed.
+
+**5. Canonical single-plugin marketplace layout.**
+
+```
+<repo>/
+  .claude-plugin/
+    marketplace.json          # catalog only
+  plugins/
+    <plugin-name>/
+      .claude-plugin/
+        plugin.json           # plugin manifest
+      skills/
+      ...
+```
+
+Marketplace entry: `"source": "./plugins/<plugin-name>"`. Putting `plugin.json` and `marketplace.json` in the same `.claude-plugin/` directory at the repo root is not a documented configuration and does not work.
+
 ## Repository Structure
 
 - `header-website.tex` — Website wrapper (documentclass, geometry, parskip) that inputs `shared-header.tex` from the paper repo
