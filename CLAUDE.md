@@ -129,7 +129,13 @@ To bump:
 2. Bump the paper submodule pointer here.
 3. Update both the label and URL of the version entry in `_config.yml`.
 4. Run `./convert-and-merge-sources.sh` (which regenerates the skill bundle).
-5. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
-6. Bump the skill submodule pointer here, commit, push.
+5. **Validate** the regenerated plugin and marketplace manifests with the Claude Code CLI:
+   ```bash
+   claude plugin validate llm-guidelines-skill/plugins/llm-guidelines
+   claude plugin validate llm-guidelines-skill/.claude-plugin/marketplace.json
+   ```
+   Both must pass before commit. Fix any errors before continuing; warnings are OK to defer. CC silently rejects manifests with unknown keys at install time with the misleading error "This plugin uses a source type your Claude Code version does not support", so this validation step is mandatory.
+6. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
+7. Bump the skill submodule pointer here, commit, push.
 
 First version is `2026.03` (paper commit `d57da062`, dated 2026-03-19, marking the EMSE revision submission).
