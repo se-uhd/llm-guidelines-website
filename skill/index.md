@@ -6,7 +6,7 @@ nav_order: 5
 
 # Skill
 
-`llm-guidelines` is an [Agent Skill](https://agentskills.io/home) that packages these guidelines so authors can run them against their own paper draft and supplementary material to surface reporting gaps before submission. It bundles the same content this website renders ([scope](/scope/), [study types](/study-types/), [guidelines](/guidelines/), [checklist](/checklist/)) plus a workflow that produces an `llm-guidelines-report.md` for the paper at hand.
+`llm-guidelines` is an [Agent Skill](https://agentskills.io/home) that packages these guidelines for authors to use directly inside an AI coding assistant. It bundles the same content this website renders ([scope](/scope/), [study types](/study-types/), [guidelines](/guidelines/), [checklist](/checklist/)) and exposes two slash commands: one for **exploring** the guidelines (asking questions, discussing study designs, navigating the taxonomy) and one for **reviewing** a paper draft (and any supplementary material) against the eight guidelines, producing an `llm-guidelines-report.md` for the paper at hand.
 
 Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients) for the current set. The instructions below cover Claude Code; for any other client, copy the `plugins/llm-guidelines/skills/llm-guidelines/` directory from the repository into the location that client expects (each client's docs are linked from the client list).
 
@@ -35,27 +35,45 @@ The directory `plugins/llm-guidelines/skills/llm-guidelines/` in the repository 
 
 ## Invoke
 
+The skill exposes two slash commands.
+
+### Explore the guidelines
+
+Use this when you want to ask a question, plan a study, walk through the checklist, or decide which study type your project falls under, before any draft exists.
+
+```
+/llm-guidelines:explore
+```
+
+Explore mode is a conversation; it does not write any files unless you ask.
+
+### Review a draft
+
+Use this when you have a draft paper (and optionally supplementary material) and want a structured pass against each of the eight guidelines.
+
 With a LaTeX source:
 
 ```
-/llm-guidelines path/to/paper.tex
+/llm-guidelines:review path/to/paper.tex
 ```
 
 Or with a PDF:
 
 ```
-/llm-guidelines path/to/paper.pdf
+/llm-guidelines:review path/to/paper.pdf
 ```
 
 The supplementary-material path is optional, and you can pass more than one when artifacts live in separate locations (e.g., code on GitHub, data on Zenodo):
 
 ```
-/llm-guidelines path/to/paper.tex path/to/code-repo path/to/dataset
+/llm-guidelines:review path/to/paper.tex path/to/code-repo path/to/dataset
 ```
 
-When installed via the plugin, the namespaced form `/llm-guidelines:llm-guidelines` is also available. The skill can also load itself without an explicit slash command if the agent decides its description matches the user's current task.
+If invoked without arguments, review mode asks for paths to your paper (LaTeX source or PDF) and any supplementary directories. It will not modify your files; it writes its findings to `llm-guidelines-report.md` in your working directory and prints the same content to the console.
 
-If invoked without arguments, the skill asks for paths to your paper (LaTeX source or PDF) and any supplementary directories. It will not modify your files; it writes its findings to `llm-guidelines-report.md` in your working directory and prints the same content to the console.
+### Auto-invocation
+
+The skill can also load itself without an explicit slash command if the agent decides its description matches the task. In that case, the skill picks the mode from your request: a paper path or a request to "check" or "review" a draft triggers review mode; a question or design discussion triggers explore mode.
 
 ## Bundled Files
 

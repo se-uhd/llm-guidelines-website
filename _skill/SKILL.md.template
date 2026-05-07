@@ -1,6 +1,6 @@
 ---
 name: llm-guidelines
-description: Apply the community guidelines for empirical software engineering studies involving LLMs to a paper draft and its supplementary material. Invoke when the user is preparing or reviewing a manuscript whose study falls into one of the seven types defined in `study-types/` (LLMs as annotators, judges, synthesis, or subjects; studying LLM usage in software engineering; LLMs for new software engineering tools; benchmarking LLMs for software engineering tasks), and wants per-guideline feedback on what to report.
+description: Apply the community guidelines for empirical software engineering studies involving LLMs. Two modes. (1) Explore mode helps authors plan a study, discuss design choices, and navigate the guidelines, scope, and study-type taxonomy. (2) Review mode checks a draft paper and its supplementary material against the eight guidelines and writes a report. Invoke whenever the user is preparing, planning, or reviewing an empirical study whose method involves an LLM, including the seven study types defined in `study-types/` (LLMs as annotators, judges, synthesis, or subjects; studying LLM usage in software engineering; LLMs for new software engineering tools; benchmarking LLMs for software engineering tasks).
 version: {{VERSION}}
 homepage: https://llm-guidelines.org
 license: CC-BY-4.0
@@ -8,22 +8,66 @@ license: CC-BY-4.0
 
 # LLM Guidelines for Empirical SE Studies
 
-This skill helps a *paper author* (and, secondarily, a *reviewer*) check a draft manuscript and its supplementary material against the eight community guidelines for reporting empirical SE studies involving LLMs. The guidelines themselves live in `guidelines/`, indexed below; the scope, study-type taxonomy, and reporting checklist live alongside.
+This skill packages the eight community guidelines for reporting empirical SE studies involving LLMs, plus the scope statement, the study-type taxonomy, and the reporting checklist. It supports two modes:
 
-**Audience and tone.** The default user is an author improving their own draft. Findings should be framed as suggestions for clearer reporting, not as violations. If a reviewer invokes this skill, treat the output as a starting point for review comments, **not** as a rejection rubric. The guidelines are community recommendations; incompleteness against them is not grounds for rejection.
+- **Explore mode** is for discussing how the guidelines apply: answering questions about a guideline, planning a study, weighing design choices, deciding which study type a project falls under, walking through the checklist before any draft exists.
+- **Review mode** is for checking a concrete draft (paper plus any supplementary material) against the eight guidelines and producing a structured report of reporting gaps.
+
+The guideline content lives in `guidelines/`, indexed below; scope, study types, and the checklist live alongside.
+
+**Audience and tone.** The default user is an author working on their own study, either planning it, drafting the manuscript, or assembling the replication package. Frame findings and suggestions as ways to improve reporting clarity, not as violations. If a reviewer invokes review mode, treat the output as a starting point for review comments, **not** as a rejection rubric. The guidelines are community recommendations; incompleteness against them is not grounds for rejection.
+
+## Choosing a mode
+
+Two named slash commands pin the mode explicitly:
+
+- `/llm-guidelines:review` for review mode.
+- `/llm-guidelines:explore` for explore mode.
+
+If the skill auto-loads (the model picks it up because the request matches the description above) without an explicit slash command, infer the mode from what the user is asking for:
+
+- The user names a paper, hands you a path to a `.tex` or `.pdf`, or asks to check, review, or audit a draft: **review mode**.
+- The user asks a question about a guideline, asks how the guidelines apply to a planned or in-progress study, asks to discuss study design, asks what study type their project falls under, or asks for navigation help inside the bundle: **explore mode**.
+- If a request is genuinely ambiguous, ask once: "Do you want to review a specific draft, or discuss the guidelines and your study design?"
+
+It is fine to switch modes mid-conversation. An explore-mode discussion can turn into a review of an actual draft once the user shares one, and a review-mode session can branch into explore-style questions about a specific guideline.
 
 ## When to use
 
 Invoke this skill when the user:
 
-1. Asks to check a paper (or paper plus supplementary material) against the LLM reporting guidelines.
-2. Is drafting the methodology, results, or limitations of an empirical study involving an LLM and wants reporting suggestions.
-3. Is preparing a replication package and wants to know what to include for a study involving an LLM.
-4. Is reviewing such a paper and asks for clarifying questions to consider.
+1. Asks to check a paper (or paper plus supplementary material) against the LLM reporting guidelines. *(review)*
+2. Is drafting the methodology, results, or limitations of an empirical study involving an LLM and wants reporting suggestions on a concrete draft. *(review)*
+3. Is reviewing such a paper and asks for clarifying questions to consider. *(review)*
+4. Asks general questions about the guidelines, the scope statement, or the study-type taxonomy. *(explore)*
+5. Is planning a study and wants to discuss design choices, what to log, what baselines to consider, or which study type the work falls under. *(explore)*
+6. Is preparing a replication package and wants to know what to include for a study involving an LLM. *(explore if planning, review if a concrete package already exists)*
 
 Do **not** invoke when the user is doing unrelated software engineering work that happens to mention LLMs.
 
-## Inputs the user will provide
+## Explore mode
+
+The bundled files are the source of truth, the same files review mode draws on:
+
+- `scope.md` for what is in and out of scope.
+- `study-types/<slug>.md` for each of the seven study types and how they relate.
+- `guidelines/<slug>.md` for each of the eight guidelines.
+- `checklist.md` for the consolidated, section-organized reporting checklist.
+
+### Workflow
+
+1. **Identify which area the question touches** (scope, study type, guideline, checklist). A single question can span several.
+2. **Load on demand.** Read only the file or files that bear on the question. Do not preload the full bundle.
+3. **Answer with citations.** Quote or paraphrase the relevant passage and link to the file (e.g., `guidelines/report-system-and-prompt-design.md`). Use the same RFC 2119 levels the guideline uses (**must**, **should**); do not invent severity.
+4. **For study-design discussions**, walk the user through what the relevant guidelines would expect to see reported. This is advice for planning, not a checklist of violations. Surface the choices the guidelines call out (e.g., open versus proprietary models for `use-an-open-llm-as-a-baseline`, what to log for `report-session-traces`) and present the trade-offs the guideline discusses, then let the user decide.
+5. **Stay in scope.** Only address topics the bundled files cover. If the user asks about something the guidelines do not address (general statistical methods, theoretical contribution, narrative structure, writing quality), say so explicitly and, where relevant, point them to standard SE methodology references rather than answering from training data.
+6. **Do not write a report file.** Explore mode is a conversation. Nothing is written to disk unless the user asks.
+
+If the conversation reveals that a draft already exists and the user wants a structured pass over it, offer to switch to `/llm-guidelines:review`.
+
+## Review mode
+
+### Inputs the user will provide
 
 The user typically provides one or more of:
 
@@ -35,7 +79,7 @@ The user typically provides one or more of:
 
 If no path is supplied, ask the user for the paper source path and (optionally) supplementary paths before proceeding.
 
-## Workflow
+### Workflow
 
 1. **Resolve inputs.** For a LaTeX paper, read the entry-point file and follow `\input{}`/`\include{}` for files inside the project tree. For a PDF paper, extract text with a tool available in the environment (`pdftotext`, `mutool`, `pdfminer.six`, etc.). For supplementary directories, start with the top-level `README*` or `INDEX*` and the directory layout to orient yourself, then read whatever the layout points at as relevant: prompts, traces, datasets, code, replication scripts. Drill deeper only where the structure suggests evidence for a guideline; do not try to read every file in a large package.
 
@@ -57,24 +101,7 @@ If no path is supplied, ask the user for the paper source path and (optionally) 
 
 7. **Stop after the report.** Do not modify the user's paper or supplementary material. If the user asks for follow-up edits, treat that as a new request.
 
-## Guidelines index
-
-The eight guidelines are stored as standalone files under `guidelines/`. Load on demand (do not load all eight unless needed).
-
-{{GUIDELINES_INDEX}}
-
-## Study-types index
-
-Stored under `study-types/`. Load only the files relevant to the study being assessed.
-
-{{STUDY_TYPES_INDEX}}
-
-## Other resources
-
-- `scope.md`: what is in and out of scope for the guidelines.
-- `checklist.md`: the consolidated reporting checklist organized by paper section, with severity markers.
-
-## Report template
+### Report template
 
 ```markdown
 # LLM Guidelines Assessment
@@ -113,9 +140,28 @@ Stored under `study-types/`. Load only the files relevant to the study being ass
 authors. Otherwise omit this section.>
 ```
 
+## Guidelines index
+
+The eight guidelines are stored as standalone files under `guidelines/`. Load on demand (do not load all eight unless needed).
+
+{{GUIDELINES_INDEX}}
+
+## Study-types index
+
+Stored under `study-types/`. Load only the files relevant to the study being assessed or discussed.
+
+{{STUDY_TYPES_INDEX}}
+
+## Other resources
+
+- `scope.md`: what is in and out of scope for the guidelines.
+- `checklist.md`: the consolidated reporting checklist organized by paper section, with severity markers.
+
 ## Constraints
+
+These apply to both modes.
 
 - **Cite the guidelines; do not paraphrase severity.** When you write "required" or "recommended", make sure it matches a `must` or `should` in the underlying guideline. If the guideline does not specify a level, use neutral language ("Consider...").
 - **Do not infer non-disclosure.** A missing detail in the paper does not mean the authors did something wrong; it means the report could state the detail explicitly.
 - **Stick to the guidelines.** Only flag items the eight guideline files cover. Do not add critiques of aspects the guidelines do not address (e.g., the paper's theoretical contribution, novelty argument, narrative structure, or general writing quality), even if you notice them.
-- **Do not modify user files** without an explicit follow-up request from the user.
+- **Do not modify user files** without an explicit follow-up request from the user. Review mode writes only `llm-guidelines-report.md` in the working directory; explore mode writes nothing unless the user asks.

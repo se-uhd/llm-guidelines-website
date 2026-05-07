@@ -56,7 +56,7 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 4. Renders `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` in the skill repo from `_skill/SKILL.md.template` (kept here, since it is a build-time artifact and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`.
 5. Rewrites the `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
 
-In the website repo, `_skill/SKILL.md.template` is hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, and the marketplace JSON are hand-curated; everything else under `plugins/llm-guidelines/skills/llm-guidelines/` is generated.
+In the website repo, `_skill/SKILL.md.template` is hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; everything else under `plugins/llm-guidelines/skills/llm-guidelines/` is generated.
 
 The website surface is a single page at `/skill/` (`skill/index.md`, hand-curated): install instructions, invocation, downloads, and a table linking the bundled files to their rich rendering on this site (or, for `SKILL.md`, to the source on GitHub).
 
@@ -116,6 +116,7 @@ The on-disk marketplace cache is at `~/.claude/plugins/marketplaces/<name>/`. `/
     <plugin-name>/
       .claude-plugin/
         plugin.json           # plugin manifest
+      commands/                # slash commands, one .md per command (optional)
       skills/
       ...
 ```
