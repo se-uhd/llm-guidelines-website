@@ -12,22 +12,23 @@ convert_tex_to_md() {
 }
 
 # Generate a sub-page index.md from a converted .md file
-# Usage: generate_subpage <md_file> <parent_dir> <parent_title> <nav_order>
+# Usage: generate_subpage <md_file> <parent_dir> <parent_title> <nav_order> [grand_parent] [has_children]
 generate_subpage() {
     md_file=$1
     parent_dir=$2
     parent_title=$3
     nav_order=$4
+    grand_parent=$5
+    has_children=$6
 
     # Extract the first ## heading
     heading=$(grep -m1 "^## " "$md_file" | sed 's/^## //')
     [ -z "$heading" ] && return 1
 
-    # Derive slug: lowercase, strip "Introduction: " prefix,
-    # remove non-alphanumeric chars except hyphens and spaces, collapse spaces to hyphens
+    # Derive slug: lowercase, remove non-alphanumeric chars except hyphens and
+    # spaces, collapse spaces to hyphens
     slug=$(echo "$heading" | perl -pe '
         $_ = lc $_;
-        s/^introduction:\s*//;
         s/[^a-z0-9 -]//g;
         s/\s+/-/g;
         s/-{2,}/-/g;
@@ -35,7 +36,7 @@ generate_subpage() {
     ')
     [ -z "$slug" ] && return 1
 
-    # Derive nav title: map full heading text to short name, strip "Introduction: " prefix
+    # Derive nav title: map full heading text to short name where one is defined
     nav_title=$(echo "$heading" | perl -pe '
         my %short = (
             "Declare LLM Usage and Role"                              => "Declare Usage",
@@ -56,7 +57,6 @@ generate_subpage() {
             "LLMs as Tools for Software Engineering Researchers"      => "LLMs for Research",
             "LLMs as Tools for Software Engineers"                    => "LLMs for SE",
         );
-        s/^Introduction:\s*//;
         chomp(my $key = $_);
         $_ = "$short{$key}\n" if exists $short{$key};
     ')
@@ -66,17 +66,16 @@ generate_subpage() {
 
     # Generate the sub-page: front matter + page heading + content with headings promoted
     {
-        cat <<EOF
----
-layout: default
-title: "${nav_title}"
-parent: ${parent_title}
-nav_order: ${nav_order}
----
+        printf -- '---\n'
+        printf 'layout: default\n'
+        printf 'title: "%s"\n' "$nav_title"
+        printf 'parent: %s\n' "$parent_title"
+        [ -n "$grand_parent" ] && printf 'grand_parent: %s\n' "$grand_parent"
+        printf 'nav_order: %s\n' "$nav_order"
+        [ -n "$has_children" ] && printf 'has_children: true\n'
+        printf -- '---\n\n'
+        printf '# %s\n\n' "$heading"
 
-# ${heading}
-
-EOF
         # Strip the first ## heading, promote remaining headings one level
         perl -pe '
             if (!$done && /^## /) { $done = 1; $_ = ""; next }
@@ -118,14 +117,43 @@ GUIDELINES_INTRO="$guidelines_intro" \
     guidelines/_sources/00_header.md > guidelines/index.md
 
 # --- Study types sub-pages ---
+#
+# Two-level structure: each "LLMs as Tools for..." parent is a top-level page
+# under "Study Types" with its specific study types nested under it.
+# "Advantages and Challenges" is a top-level sibling because the prose covers
+# both groups.
+#
+# File numbering encodes the structure:
+#   02     = parent #1 (LLMs as Tools for Software Engineering Researchers)
+#   03-06  = children of #1 (annotators, judges, synthesis, subjects)
+#   07     = parent #2 (LLMs as Tools for Software Engineers)
+#   08-10  = children of #2 (usage, tools, benchmarks)
+#   11     = advantages and challenges (cross-cutting sibling)
 
-# Generate sub-pages for each study type
-study_types_nav=1
-for md_file in study-types/_sources/0[2-9]_*.md study-types/_sources/1[0-1]_*.md; do
-    [ -e "$md_file" ] || continue
-    generate_subpage "$md_file" "study-types" "Study Types" "$study_types_nav"
-    study_types_nav=$((study_types_nav + 1))
+# Group 1: parent + four children
+generate_subpage study-types/_sources/02_*.md study-types "Study Types" 1 "" "true"
+n=1
+for prefix in 03 04 05 06; do
+    for md_file in study-types/_sources/${prefix}_*.md; do
+        [ -e "$md_file" ] || continue
+        generate_subpage "$md_file" "study-types" "LLMs for Research" "$n" "Study Types"
+        n=$((n + 1))
+    done
 done
+
+# Group 2: parent + three children
+generate_subpage study-types/_sources/07_*.md study-types "Study Types" 2 "" "true"
+n=1
+for prefix in 08 09 10; do
+    for md_file in study-types/_sources/${prefix}_*.md; do
+        [ -e "$md_file" ] || continue
+        generate_subpage "$md_file" "study-types" "LLMs for SE" "$n" "Study Types"
+        n=$((n + 1))
+    done
+done
+
+# Cross-cutting sibling
+generate_subpage study-types/_sources/11_*.md study-types "Study Types" 3
 
 # Read converted intro content
 study_types_intro=$(cat study-types/_sources/00_intro.md)

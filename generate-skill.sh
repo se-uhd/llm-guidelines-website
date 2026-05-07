@@ -76,7 +76,6 @@ echo "skill version: ${VERSION} (guideline ${GUIDELINE_VERSION}, revision ${REVI
 slugify() {
     echo "$1" | perl -CSD -pe '
         $_ = lc $_;
-        s/^introduction:\s*//;
         s/[^a-z0-9 -]//g;
         s/\s+/-/g;
         s/-{2,}/-/g;
@@ -163,22 +162,43 @@ for src in guidelines/_sources/0[1-8]_*.md; do
 done
 
 # --- 6. Generate study-type files ---
+#
+# Same two-level structure as the website nav: each parent's children are
+# indented in the index so the consuming agent sees the taxonomy at a glance.
+# File numbering encodes structure (see convert-and-merge-sources.sh comments).
 
-study_types_index=""
-for src in study-types/_sources/0[2-9]_*.md study-types/_sources/1[0-1]_*.md; do
-    [ -e "$src" ] || continue
+emit_study_type() {
+    src=$1
+    indent=$2
+    [ -e "$src" ] || return 0
     heading=$(grep -m1 '^## ' "$src" | sed 's/^## //')
     slug=$(slugify "$heading")
-    [ -z "$slug" ] && { echo "warn: no slug for $src" >&2; continue; }
+    [ -z "$slug" ] && { echo "warn: no slug for $src" >&2; return 0; }
     site_md="study-types/${slug}/index.md"
     if [ ! -f "$site_md" ]; then
         echo "warn: $site_md missing; run convert-and-merge-sources.sh first" >&2
-        continue
+        return 0
     fi
     convert_source "$site_md" "${SHARED_DIR}/study-types/${slug}.md" study-type
-    display=$(echo "$heading" | sed 's/^Introduction: //')
-    study_types_index="${study_types_index}- [${display}](../../shared/study-types/${slug}.md)\n"
+    study_types_index="${study_types_index}${indent}- [${heading}](../../shared/study-types/${slug}.md)\n"
+}
+
+study_types_index=""
+
+# Group 1: parent + four children
+for src in study-types/_sources/02_*.md; do emit_study_type "$src" ""; done
+for prefix in 03 04 05 06; do
+    for src in study-types/_sources/${prefix}_*.md; do emit_study_type "$src" "    "; done
 done
+
+# Group 2: parent + three children
+for src in study-types/_sources/07_*.md; do emit_study_type "$src" ""; done
+for prefix in 08 09 10; do
+    for src in study-types/_sources/${prefix}_*.md; do emit_study_type "$src" "    "; done
+done
+
+# Cross-cutting sibling
+for src in study-types/_sources/11_*.md; do emit_study_type "$src" ""; done
 
 # --- 7. Generate scope.md and checklist.md ---
 
