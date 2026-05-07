@@ -220,5 +220,43 @@ done
 
 echo "$VERSION" > "${SKILL_REPO}/VERSION"
 
+# --- 10. Render skill/index.md (website) and README.md (skill repo) ---
+#
+# Both files share the literal slash-command and install-command strings.
+# `_skill/commands.env` is the single source of truth for those literals;
+# both templates reference them as {{CMD_*}} placeholders. Editing a value
+# in commands.env propagates to both rendered files on the next run.
+
+. "${ROOT}/_skill/commands.env"
+export CMD_MARKETPLACE_ADD CMD_PLUGIN_INSTALL \
+       CMD_MARKETPLACE_UPDATE CMD_RELOAD_PLUGINS \
+       CMD_INVOKE_EXPLORE CMD_INVOKE_REVIEW \
+       CMD_INVOKE_REVIEW_TEX CMD_INVOKE_REVIEW_PDF CMD_INVOKE_REVIEW_SUPP
+
+render_with_commands() {
+    src=$1
+    dst=$2
+    perl -CSD -pe '
+        s/\{\{CMD_MARKETPLACE_ADD\}\}/$ENV{CMD_MARKETPLACE_ADD}/g;
+        s/\{\{CMD_PLUGIN_INSTALL\}\}/$ENV{CMD_PLUGIN_INSTALL}/g;
+        s/\{\{CMD_MARKETPLACE_UPDATE\}\}/$ENV{CMD_MARKETPLACE_UPDATE}/g;
+        s/\{\{CMD_RELOAD_PLUGINS\}\}/$ENV{CMD_RELOAD_PLUGINS}/g;
+        s/\{\{CMD_INVOKE_EXPLORE\}\}/$ENV{CMD_INVOKE_EXPLORE}/g;
+        s/\{\{CMD_INVOKE_REVIEW\}\}/$ENV{CMD_INVOKE_REVIEW}/g;
+        s/\{\{CMD_INVOKE_REVIEW_TEX\}\}/$ENV{CMD_INVOKE_REVIEW_TEX}/g;
+        s/\{\{CMD_INVOKE_REVIEW_PDF\}\}/$ENV{CMD_INVOKE_REVIEW_PDF}/g;
+        s/\{\{CMD_INVOKE_REVIEW_SUPP\}\}/$ENV{CMD_INVOKE_REVIEW_SUPP}/g;
+    ' "$src" > "$dst"
+    if grep -q '{{CMD_' "$dst"; then
+        leftover=$(grep -o '{{CMD_[A-Z_]*}}' "$dst" | sort -u | tr '\n' ' ')
+        echo "error: unresolved placeholder(s) in $dst: $leftover" >&2
+        echo "       add the missing variable(s) to _skill/commands.env" >&2
+        exit 1
+    fi
+}
+
+render_with_commands "${ROOT}/_skill/skill-index.md.template" "${ROOT}/skill/index.md"
+render_with_commands "${ROOT}/_skill/README.md.template"      "${SKILL_REPO}/README.md"
+
 echo "skill bundle written to ${PLUGIN_DIR}"
 echo "to publish: cd llm-guidelines-skill && git add -A && git commit && git push"

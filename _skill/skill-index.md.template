@@ -15,8 +15,8 @@ The skill is published in a separate repository at [se-uhd/llm-guidelines-skill]
 ## Install
 
 ```
-/plugin marketplace add se-uhd/llm-guidelines-skill
-/plugin install llm-guidelines
+{{CMD_MARKETPLACE_ADD}}
+{{CMD_PLUGIN_INSTALL}}
 ```
 
 ## Invoke
@@ -28,7 +28,7 @@ The bundle exposes two slash commands.
 Use this when you want to ask a question, plan a study, walk through the checklist, or decide which study type your project falls under, before any draft exists.
 
 ```
-/llm-guidelines:explore
+{{CMD_INVOKE_EXPLORE}}
 ```
 
 Explore mode is a conversation; it does not write any files unless you ask.
@@ -40,19 +40,19 @@ Use this when you have a draft paper (and optionally supplementary material) and
 With a LaTeX source:
 
 ```
-/llm-guidelines:review path/to/paper.tex
+{{CMD_INVOKE_REVIEW_TEX}}
 ```
 
 Or with a PDF:
 
 ```
-/llm-guidelines:review path/to/paper.pdf
+{{CMD_INVOKE_REVIEW_PDF}}
 ```
 
 The supplementary-material path is optional, and you can pass more than one when artifacts live in separate locations (e.g., code on GitHub, data on Zenodo):
 
 ```
-/llm-guidelines:review path/to/paper.tex path/to/code-repo path/to/dataset
+{{CMD_INVOKE_REVIEW_SUPP}}
 ```
 
 If invoked without arguments, review mode asks for paths to your paper (LaTeX source or PDF) and any supplementary directories. It will not modify your files; it writes its findings to `llm-guidelines-report.md` in your working directory and prints the same content to the console.

@@ -74,11 +74,14 @@ Pipeline steps:
 3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to relative paths inside `shared/`; writes the result into `plugins/llm-guidelines/shared/`.
 4. Renders `plugins/llm-guidelines/skills/explore/SKILL.md` and `plugins/llm-guidelines/skills/review/SKILL.md` from `_skill/explore.SKILL.md.template` and `_skill/review.SKILL.md.template` respectively (templates kept here, since they are build-time artifacts and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`. Index entries reference `../../shared/...`.
 5. Rewrites the `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
-6. Removes any leftover `plugins/llm-guidelines/skills/llm-guidelines/` directory from earlier single-skill bundles.
+6. Renders `skill/index.md` (in this repo) and `README.md` (in the skill repo) from `_skill/skill-index.md.template` and `_skill/README.md.template`, substituting the literal slash-command and install-command strings from `_skill/commands.env`. Fails with an explicit error if any `{{CMD_*}}` placeholder is unresolved.
+7. Removes any leftover `plugins/llm-guidelines/skills/llm-guidelines/` directory from earlier single-skill bundles.
 
-In the website repo, `_skill/explore.SKILL.md.template`, `_skill/review.SKILL.md.template`, and `_skill/REVISION` are hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; everything under `plugins/llm-guidelines/shared/` and the two `SKILL.md` files are generated.
+In the website repo, `_skill/explore.SKILL.md.template`, `_skill/review.SKILL.md.template`, `_skill/skill-index.md.template`, `_skill/README.md.template`, `_skill/commands.env`, and `_skill/REVISION` are hand-curated. In the skill repo, `LICENSE`, `.gitignore`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; `README.md`, everything under `plugins/llm-guidelines/shared/`, and the two `SKILL.md` files are generated.
 
-The website surface is a single page at `/skill/` (`skill/index.md`, hand-curated): install instructions, invocation, and a table linking the bundled files to their rich rendering on this site (or, for the two `SKILL.md` files, to the source on GitHub).
+The website surface is a single page at `/skill/` (`skill/index.md`, generated from `_skill/skill-index.md.template`): install instructions, invocation, and a table linking the bundled files to their rich rendering on this site (or, for the two `SKILL.md` files, to the source on GitHub).
+
+To change a slash-command literal anywhere in the docs, edit `_skill/commands.env` and re-run `./generate-skill.sh`; both the website page and the skill repo README pick up the change.
 
 ### Plugin Packaging Gotchas
 

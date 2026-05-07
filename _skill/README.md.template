@@ -1,0 +1,109 @@
+# LLM Guidelines Skill
+
+An [Agent Skill](https://agentskills.io/home) bundle that applies the community guidelines for empirical software engineering studies involving LLMs to a paper draft and its supplementary material. Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients).
+
+The bundle exposes two skills: **explore** for discussing the guidelines and planning a study, and **review** for assessing a concrete draft against the eight guidelines and writing a report.
+
+The guideline content is published at <https://llm-guidelines.org> and authored in the companion paper repository <https://github.com/se-uhd/llm-guidelines-paper>. The Markdown files in this repository are generated from those LaTeX sources; see <https://github.com/se-uhd/llm-guidelines-website> for the conversion pipeline. **Do not edit the generated files in this repository directly.**
+
+## Versioning
+
+The bundle uses two-part versioning: a guideline version (CalVer `YYYY.MM`, matching the paper and website tag) and an optional skill revision suffix.
+
+- Initial release for a guideline version: bare `YYYY.MM` (e.g., `2026.05`).
+- Skill-only revisions for the same guideline version: `YYYY.MM-revN` (e.g., `2026.05-rev1`, `2026.05-rev2`).
+
+The current version is recorded in `VERSION` and embedded in `.claude-plugin/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json`, and the two `SKILL.md` files.
+
+## Install as a Claude Code plugin
+
+```
+{{CMD_MARKETPLACE_ADD}}
+{{CMD_PLUGIN_INSTALL}}
+```
+
+Two slash commands become available. Use `{{CMD_INVOKE_EXPLORE}}` to discuss the guidelines or plan a study (no arguments). Use `{{CMD_INVOKE_REVIEW}}` to assess a draft:
+
+```
+{{CMD_INVOKE_EXPLORE}}
+{{CMD_INVOKE_REVIEW_TEX}}
+{{CMD_INVOKE_REVIEW_PDF}}
+```
+
+Supplementary-material paths are optional, and you can pass more than one when artifacts live in separate locations (e.g., code on GitHub, data on Zenodo):
+
+```
+{{CMD_INVOKE_REVIEW_SUPP}}
+```
+
+To pick up a new release, refresh the marketplace catalog and reload plugins:
+
+```
+{{CMD_MARKETPLACE_UPDATE}}
+{{CMD_RELOAD_PLUGINS}}
+```
+
+The marketplace update reports `(1 plugin bumped)` when a new version is found and installs it; `{{CMD_RELOAD_PLUGINS}}` activates the new commands and skills in the running session.
+
+## Use in other Agent Skills clients
+
+Each `SKILL.md` under `plugins/llm-guidelines/skills/` references the shared bundled content via `../../shared/...`. To consume the bundle outside Claude Code's plugin loader, place `plugins/llm-guidelines/skills/<mode>/` and `plugins/llm-guidelines/shared/` so that the relative path is preserved (i.e., reproduce the `plugins/llm-guidelines/` subtree under your client's skills directory). Each client's docs are linked from the [Agent Skills client list](https://agentskills.io/clients).
+
+## What the skills do
+
+### `{{CMD_INVOKE_EXPLORE}}`
+
+A conversational skill for authors planning or discussing an empirical study involving an LLM. It answers questions about the guidelines, walks through design choices, helps decide which study type a project falls under, and draws on the scope statement and the reporting checklist before any draft exists. It does not write any files unless the user asks.
+
+### `{{CMD_INVOKE_REVIEW}}`
+
+A structured skill for assessing a concrete draft. Given a paper (LaTeX source or PDF) and any supplementary material directories, it:
+
+1. Identifies the study type(s) using the taxonomy in `shared/study-types/`.
+2. Confirms the work is in scope using `shared/scope.md`.
+3. Runs a per-guideline assessment using the eight files under `shared/guidelines/`.
+4. Writes a Markdown report to `llm-guidelines-report.md` in the current working directory and prints it to the console.
+
+The report frames findings as opportunities to clarify or strengthen reporting. It is intended as a self-check for authors. Reviewers may use it for inspiration but should not treat it as a rejection rubric.
+
+## Repository layout
+
+```
+.claude-plugin/
+  marketplace.json     marketplace entry (single-plugin)
+plugins/
+  llm-guidelines/
+    .claude-plugin/
+      plugin.json      plugin manifest
+    commands/
+      explore.md       {{CMD_INVOKE_EXPLORE}} slash command
+      review.md        {{CMD_INVOKE_REVIEW}} slash command
+    skills/
+      explore/
+        SKILL.md       explore-mode skill (planning, discussion)
+      review/
+        SKILL.md       review-mode skill (assessing a draft)
+    shared/            content shared by both skills
+      scope.md         in-scope / out-of-scope definition
+      guidelines/      eight standalone guideline files
+      study-types/     seven study-type files plus parent groupings
+      checklist.md     consolidated reporting checklist
+VERSION                YYYY.MM or YYYY.MM-revN
+```
+
+## Maintainer notes
+
+The bundled Markdown is generated by the build pipeline in the [website repository](https://github.com/se-uhd/llm-guidelines-website) (see its `CLAUDE.md` "Skill Pipeline" section for the full procedure, including version bumps, validation, and lessons from initial setup).
+
+When changing `.claude-plugin/marketplace.json` or `plugins/llm-guidelines/.claude-plugin/plugin.json`, validate before committing:
+
+```bash
+claude plugin validate plugins/llm-guidelines
+claude plugin validate .claude-plugin/marketplace.json
+```
+
+If a user reports `Failed to install: This plugin uses a source type your Claude Code version does not support`, do **not** assume the problem is the `source` field. Claude Code emits that same message for any unrecognized key in either manifest. Run `claude plugin validate` first — the validator surfaces the real error.
+
+## License
+
+Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), matching the [companion website](https://github.com/se-uhd/llm-guidelines-website) and [paper](https://github.com/se-uhd/llm-guidelines-paper) repositories. See `LICENSE`.
