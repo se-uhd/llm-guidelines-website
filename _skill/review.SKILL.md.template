@@ -1,0 +1,120 @@
+---
+name: review
+description: Review a paper draft (and any supplementary material) against the community LLM reporting guidelines for empirical SE studies. Use this when the user names a paper, hands you a path to a `.tex` or `.pdf`, asks to check, audit, or review a draft, or when they share a replication package and want it assessed against the eight guidelines (LLMs as annotators, judges, synthesis, or subjects; studying LLM usage in software engineering; LLMs for new SE tools; benchmarking LLMs for SE tasks). Writes a structured report.
+version: {{VERSION}}
+homepage: https://llm-guidelines.org
+license: CC-BY-4.0
+---
+
+# LLM Guidelines — Review Mode
+
+This skill checks a concrete draft (paper plus any supplementary material) against the eight community guidelines and produces a structured report of reporting gaps. It packages the guidelines, the scope statement, the study-type taxonomy, and the consolidated reporting checklist; the bundled files live at `../../shared/`.
+
+**Audience and tone.** The default user is an author reviewing their own draft. Frame findings as suggestions for clearer reporting, not as violations. If a reviewer invokes this skill, treat the output as a starting point for review comments, **not** as a rejection rubric. The guidelines are community recommendations; incompleteness against them is not grounds for rejection.
+
+## When to use
+
+Invoke this skill when the user:
+
+1. Asks to check a paper (or paper plus supplementary material) against the LLM reporting guidelines.
+2. Is drafting the methodology, results, or limitations of an empirical study involving an LLM and wants reporting suggestions on a concrete draft.
+3. Is reviewing such a paper and asks for clarifying questions to consider.
+
+Do **not** invoke when the user is doing unrelated software engineering work that happens to mention LLMs. If the user is still planning a study or asking conceptual questions, switch to `/llm-guidelines:explore`.
+
+## Inputs the user will provide
+
+The user typically provides one or more of:
+
+- A path to the paper. Both forms are supported:
+  - A LaTeX source file (`.tex`): read it directly and follow `\input{}`/`\include{}` for files inside the project tree. A flattened `.tex` works the same way.
+  - A PDF (`.pdf`): extract text using whatever tool is available in the environment (e.g., `pdftotext`, `mutool draw -F txt`, or a Python library). If no extractor is available, tell the user which one to install rather than failing silently.
+  When both are available, prefer the LaTeX source: it lets you spot LaTeX-specific artifacts (e.g., commented-out disclosures, `\todo{}` notes) that get lost in the PDF.
+- One or more pointers to supplementary material with prompts, traces, datasets, code, or replication packages. Each can be a local directory, a local repository, or a public URL (e.g., a GitHub repo or a Zenodo record); clone or fetch URLs as the user prefers.
+
+If no path is supplied, ask the user for the paper source path and (optionally) supplementary paths before proceeding.
+
+## Workflow
+
+1. **Resolve inputs.** For a LaTeX paper, read the entry-point file and follow `\input{}`/`\include{}` for files inside the project tree. For a PDF paper, extract text with a tool available in the environment (`pdftotext`, `mutool`, `pdfminer.six`, etc.). For supplementary directories, start with the top-level `README*` or `INDEX*` and the directory layout to orient yourself, then read whatever the layout points at as relevant: prompts, traces, datasets, code, replication scripts. Drill deeper only where the structure suggests evidence for a guideline; do not try to read every file in a large package.
+
+2. **Identify the study type(s).** Use the files under `../../shared/study-types/` to classify the study. A single paper can fall under multiple types (e.g., a new tool that also benchmarks LLMs). Note the classification at the top of the report.
+
+3. **Consult `../../shared/scope.md`** to confirm the work is in scope (LLM use that materially affects the research method or its outcomes, not just LLM-assisted writing).
+
+4. **Per-guideline assessment.** For each of the eight guidelines listed below, load the corresponding file in `../../shared/guidelines/` on demand, then for that guideline produce:
+   - `Status`: one of `covered`, `partial`, `not found`, or `not applicable` (with a one-line reason if N/A).
+   - `Evidence`: 1 to 3 short quotes or file pointers from the paper or supplementary material that support the status.
+   - `Gaps`: bullet list of specific missing items (`must`/`should`-level), each phrased as an author-facing suggestion (e.g., "Consider naming the exact model version and access date in the methodology.").
+   - `Pointers`: links to the relevant section(s) of the consulted guideline file.
+
+   Apply the RFC 2119 levels from the guideline text: **must** items become "required for full reporting"; **should** items become "recommended". Do not invent severity levels not present in the guideline.
+
+5. **Cross-cutting concerns.** After the per-guideline pass, scan `../../shared/checklist.md` for any item that did not surface during step 4 and add it to a `Checklist gaps` section if missing.
+
+6. **Write the report.** Save the assessment as `llm-guidelines-report.md` in the user's current working directory **and** print the same content to the console. Use the [report template](#report-template) below.
+
+7. **Stop after the report.** Do not modify the user's paper or supplementary material. If the user asks for follow-up edits, treat that as a new request.
+
+## Report template
+
+```markdown
+# LLM Guidelines Assessment
+
+**Paper:** <path or title>
+**Supplementary material:** <paths>
+**Identified study type(s):** <one or more from study-types/>
+**Skill version:** <VERSION>
+
+> This report applies the community LLM reporting guidelines from
+> https://llm-guidelines.org as a self-check for authors. It is not a
+> rejection rubric; missing items are reporting gaps to consider, not
+> grounds for rejection.
+
+## Summary
+
+<Two-to-four-sentence overall summary: what is reported well, what is missing.>
+
+## Per-guideline findings
+
+### Declare LLM Usage and Role
+- Status: <covered | partial | not found | not applicable>
+- Evidence: <quotes or pointers>
+- Gaps: <author-facing bullets>
+- Pointers: <links to ../../shared/guidelines/declare-llm-usage-and-role.md>
+
+<... repeat for each of the remaining guidelines ...>
+
+## Checklist gaps
+
+<Items from ../../shared/checklist.md that were not surfaced above.>
+
+## Notes for reviewers
+
+<If invoked by a reviewer, surface 3 to 5 clarifying questions worth asking the
+authors. Otherwise omit this section.>
+```
+
+## Guidelines index
+
+The eight guidelines are stored as standalone files under `../../shared/guidelines/`. Load on demand (do not load all eight unless needed).
+
+{{GUIDELINES_INDEX}}
+
+## Study-types index
+
+Stored under `../../shared/study-types/`. Load only the files relevant to the study being assessed.
+
+{{STUDY_TYPES_INDEX}}
+
+## Other resources
+
+- `../../shared/scope.md`: what is in and out of scope for the guidelines.
+- `../../shared/checklist.md`: the consolidated reporting checklist organized by paper section, with severity markers.
+
+## Constraints
+
+- **Cite the guidelines; do not paraphrase severity.** When you write "required" or "recommended", make sure it matches a `must` or `should` in the underlying guideline. If the guideline does not specify a level, use neutral language ("Consider...").
+- **Do not infer non-disclosure.** A missing detail in the paper does not mean the authors did something wrong; it means the report could state the detail explicitly.
+- **Stick to the guidelines.** Only flag items the eight guideline files cover. Do not add critiques of aspects the guidelines do not address (theoretical contribution, novelty argument, narrative structure, general writing quality), even if you notice them.
+- **Do not modify user files** without an explicit follow-up request from the user. Review mode writes only `llm-guidelines-report.md` in the working directory.

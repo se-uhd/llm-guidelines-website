@@ -10,31 +10,66 @@
 # strip the Jekyll front matter and rewrite website-absolute links to
 # skill-relative paths.
 #
+# Layout produced in the skill submodule:
+#
+#   plugins/llm-guidelines/
+#     shared/                  bundled content shared by both skills
+#       guidelines/
+#       study-types/
+#       scope.md
+#       checklist.md
+#     skills/
+#       explore/SKILL.md       explore-mode skill (planning, discussion)
+#       review/SKILL.md        review-mode skill (assessing a draft)
+#
 # Does not commit or push; the user reviews and commits in the submodule manually.
 
 set -e
 
 ROOT="$(pwd)"
 SKILL_REPO="${ROOT}/llm-guidelines-skill"
-SKILL_DIR="${SKILL_REPO}/plugins/llm-guidelines/skills/llm-guidelines"
 PLUGIN_DIR="${SKILL_REPO}/plugins/llm-guidelines"
+SHARED_DIR="${PLUGIN_DIR}/shared"
+SKILLS_DIR="${PLUGIN_DIR}/skills"
 
 if [ ! -d "${SKILL_REPO}/.claude-plugin" ]; then
     echo "error: ${SKILL_REPO} is not initialized; run 'git submodule update --init' first" >&2
     exit 1
 fi
 
-# --- 1. Resolve the CalVer version from _config.yml ---
+# --- 1. Resolve the skill version ---
 #
-# Parsed from the paper-tag URL in aux_links (the URL form is more stable
-# than the HTML icon label that sits in the same block).
+# Guideline version: parsed from the paper-tag URL in `_config.yml`
+# (the URL form is more stable than the HTML icon label that sits in the
+# same block). Bumped when the paper repo gets a new CalVer tag.
+#
+# Skill revision: read from `_skill/REVISION` (a single integer). Bumped
+# independently for skill-only changes (SKILL.md edits, command tweaks,
+# layout changes) against the same guideline version. Reset to 0 on a
+# guideline-version bump.
+#
+# Combined skill version: `YYYY.MM` when revision is 0, else `YYYY.MM-revN`.
 
-VERSION=$(perl -ne 'if (m{llm-guidelines-paper/tree/(\d{4}\.\d{2})}) { print $1; exit }' "${ROOT}/_config.yml")
-if [ -z "$VERSION" ]; then
+GUIDELINE_VERSION=$(perl -ne 'if (m{llm-guidelines-paper/tree/(\d{4}\.\d{2})}) { print $1; exit }' "${ROOT}/_config.yml")
+if [ -z "$GUIDELINE_VERSION" ]; then
     echo "error: could not extract CalVer from _config.yml" >&2
     exit 1
 fi
-echo "skill version: ${VERSION}"
+
+REVISION=$(tr -d '[:space:]' < "${ROOT}/_skill/REVISION" 2>/dev/null || echo 0)
+case "$REVISION" in
+    ''|*[!0-9]*)
+        echo "error: _skill/REVISION must be a non-negative integer (got: '$REVISION')" >&2
+        exit 1
+        ;;
+esac
+
+if [ "$REVISION" = "0" ]; then
+    VERSION="$GUIDELINE_VERSION"
+else
+    VERSION="${GUIDELINE_VERSION}-rev${REVISION}"
+fi
+echo "skill version: ${VERSION} (guideline ${GUIDELINE_VERSION}, revision ${REVISION})"
 
 # --- 2. Slug derivation (mirrors convert-and-merge-sources.sh) ---
 
@@ -49,11 +84,13 @@ slugify() {
     '
 }
 
-# --- 3. Convert a website-rendered Markdown page into a skill file ---
+# --- 3. Convert a website-rendered Markdown page into a shared file ---
 #
 # Strips Jekyll front matter and any inline <style>/<script>/<button> blocks
 # (the checklist embeds these for client-side state and CSV export); rewrites
-# website-absolute links to skill-relative paths.
+# website-absolute links to paths relative to the file's location inside
+# `shared/` (guidelines and study-types files use `../`, files at the
+# `shared/` root use `./`).
 #
 # Args: <source_md> <output_md> <kind: guideline|study-type|root>
 
@@ -88,17 +125,27 @@ convert_source() {
     " "$dst"
 }
 
-# --- 4. Wipe and recreate skill content directories ---
+# --- 4. Wipe old layout and recreate target directories ---
+#
+# Transition cleanup: the previous layout placed bundled files directly under
+# skills/llm-guidelines/. Remove that directory if present so we don't ship
+# stale content alongside the new shared/ + skills/{explore,review}/ layout.
 
-mkdir -p "${SKILL_DIR}/guidelines" "${SKILL_DIR}/study-types"
-find "${SKILL_DIR}/guidelines" -maxdepth 1 -name '*.md' -delete
-find "${SKILL_DIR}/study-types" -maxdepth 1 -name '*.md' -delete
-rm -f "${SKILL_DIR}/scope.md" "${SKILL_DIR}/checklist.md"
+rm -rf "${PLUGIN_DIR}/skills/llm-guidelines"
+
+mkdir -p "${SHARED_DIR}/guidelines" "${SHARED_DIR}/study-types"
+mkdir -p "${SKILLS_DIR}/explore" "${SKILLS_DIR}/review"
+find "${SHARED_DIR}/guidelines" -maxdepth 1 -name '*.md' -delete
+find "${SHARED_DIR}/study-types" -maxdepth 1 -name '*.md' -delete
+rm -f "${SHARED_DIR}/scope.md" "${SHARED_DIR}/checklist.md"
+rm -f "${SKILLS_DIR}/explore/SKILL.md" "${SKILLS_DIR}/review/SKILL.md"
 
 # --- 5. Generate guideline files ---
 #
 # Iterate the source LaTeX-derived Markdown for ordering and heading
 # extraction; read content from the website's already-rendered subpage.
+# Index entries reference the files from a SKILL.md two levels deep
+# (skills/<mode>/SKILL.md), hence the `../../shared/` prefix.
 
 guidelines_index=""
 for src in guidelines/_sources/0[1-8]_*.md; do
@@ -111,8 +158,8 @@ for src in guidelines/_sources/0[1-8]_*.md; do
         echo "warn: $site_md missing; run convert-and-merge-sources.sh first" >&2
         continue
     fi
-    convert_source "$site_md" "${SKILL_DIR}/guidelines/${slug}.md" guideline
-    guidelines_index="${guidelines_index}- [${heading}](guidelines/${slug}.md)\n"
+    convert_source "$site_md" "${SHARED_DIR}/guidelines/${slug}.md" guideline
+    guidelines_index="${guidelines_index}- [${heading}](../../shared/guidelines/${slug}.md)\n"
 done
 
 # --- 6. Generate study-type files ---
@@ -128,38 +175,43 @@ for src in study-types/_sources/0[2-9]_*.md study-types/_sources/1[0-1]_*.md; do
         echo "warn: $site_md missing; run convert-and-merge-sources.sh first" >&2
         continue
     fi
-    convert_source "$site_md" "${SKILL_DIR}/study-types/${slug}.md" study-type
+    convert_source "$site_md" "${SHARED_DIR}/study-types/${slug}.md" study-type
     display=$(echo "$heading" | sed 's/^Introduction: //')
-    study_types_index="${study_types_index}- [${display}](study-types/${slug}.md)\n"
+    study_types_index="${study_types_index}- [${display}](../../shared/study-types/${slug}.md)\n"
 done
 
 # --- 7. Generate scope.md and checklist.md ---
 
-convert_source "scope/index.md"     "${SKILL_DIR}/scope.md"     root
-convert_source "checklist/index.md" "${SKILL_DIR}/checklist.md" root
+convert_source "scope/index.md"     "${SHARED_DIR}/scope.md"     root
+convert_source "checklist/index.md" "${SHARED_DIR}/checklist.md" root
 
-# --- 8. Fill placeholders ---
+# --- 8. Render the two SKILL.md files ---
 #
-# The SKILL.md template lives in the website repo at `_skill/SKILL.md.template`
-# (a build-time artifact that should not ship in the consumer-facing skill repo).
-# The rendered SKILL.md is written into the skill submodule. plugin.json and
-# marketplace.json are committed in the skill repo with concrete version
-# strings; we rewrite the version field in place each run.
-
-TEMPLATE="${ROOT}/_skill/SKILL.md.template"
-if [ ! -e "$TEMPLATE" ]; then
-    echo "error: $TEMPLATE missing" >&2
-    exit 1
-fi
+# Both templates live in the website repo under `_skill/` (build-time
+# artifacts that should not ship in the consumer-facing skill repo). Each
+# rendered SKILL.md is written into its skill directory in the submodule.
 
 GUIDELINES_INDEX=$(printf '%b' "$guidelines_index")
 STUDY_TYPES_INDEX=$(printf '%b' "$study_types_index")
 export VERSION GUIDELINES_INDEX STUDY_TYPES_INDEX
-perl -CSD -pe '
-    s/\{\{VERSION\}\}/$ENV{VERSION}/g;
-    s/\{\{GUIDELINES_INDEX\}\}/$ENV{GUIDELINES_INDEX}/g;
-    s/\{\{STUDY_TYPES_INDEX\}\}/$ENV{STUDY_TYPES_INDEX}/g;
-' "$TEMPLATE" > "${SKILL_DIR}/SKILL.md"
+
+for mode in explore review; do
+    template="${ROOT}/_skill/${mode}.SKILL.md.template"
+    if [ ! -e "$template" ]; then
+        echo "error: $template missing" >&2
+        exit 1
+    fi
+    perl -CSD -pe '
+        s/\{\{VERSION\}\}/$ENV{VERSION}/g;
+        s/\{\{GUIDELINES_INDEX\}\}/$ENV{GUIDELINES_INDEX}/g;
+        s/\{\{STUDY_TYPES_INDEX\}\}/$ENV{STUDY_TYPES_INDEX}/g;
+    ' "$template" > "${SKILLS_DIR}/${mode}/SKILL.md"
+done
+
+# --- 9. Stamp version into manifests and VERSION ---
+#
+# plugin.json and marketplace.json are committed in the skill repo with
+# concrete version strings; we rewrite the version field in place each run.
 
 for f in "${PLUGIN_DIR}/.claude-plugin/plugin.json" "${SKILL_REPO}/.claude-plugin/marketplace.json"; do
     [ -e "$f" ] || continue
@@ -168,5 +220,5 @@ done
 
 echo "$VERSION" > "${SKILL_REPO}/VERSION"
 
-echo "skill bundle written to ${SKILL_DIR}"
+echo "skill bundle written to ${PLUGIN_DIR}"
 echo "to publish: cd llm-guidelines-skill && git add -A && git commit && git push"

@@ -48,17 +48,37 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 
 ## Skill Pipeline
 
-`generate-skill.sh` produces an [Agent Skill](https://agentskills.io/home) bundle from the same Markdown the website builds:
+`generate-skill.sh` produces an [Agent Skill](https://agentskills.io/home) bundle from the same Markdown the website builds. The bundle exposes two skills sharing a common content pool:
 
-1. Reads `_config.yml` to extract the current CalVer tag.
+```
+plugins/llm-guidelines/
+  shared/                  generated content shared by both skills
+    guidelines/
+    study-types/
+    scope.md
+    checklist.md
+  skills/
+    explore/SKILL.md       explore-mode skill (planning, discussion)
+    review/SKILL.md        review-mode skill (assessing a draft)
+  commands/
+    explore.md             /llm-guidelines:explore slash command (thin wrapper)
+    review.md              /llm-guidelines:review slash command (thin wrapper)
+```
+
+`SKILL.md` files reference shared content as `../../shared/...`. The slash commands are thin wrappers that point at the corresponding skill, so the workflow lives in exactly one place per mode.
+
+Pipeline steps:
+
+1. Reads `_config.yml` to extract the current guideline CalVer tag and `_skill/REVISION` for the skill revision number; combines them into the skill version (see "Versioning" below).
 2. Iterates `guidelines/_sources/0[1-8]_*.md` and `study-types/_sources/0[2-9]_*.md` plus `1[0-1]_*.md` for ordering, then loads the matching website-rendered subpage (`guidelines/<slug>/index.md`, `study-types/<slug>/index.md`) for each.
-3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to skill-relative (`guidelines/<slug>.md` etc.); writes the result into `llm-guidelines-skill/plugins/llm-guidelines/skills/llm-guidelines/`.
-4. Renders `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` in the skill repo from `_skill/SKILL.md.template` (kept here, since it is a build-time artifact and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`.
+3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to relative paths inside `shared/`; writes the result into `plugins/llm-guidelines/shared/`.
+4. Renders `plugins/llm-guidelines/skills/explore/SKILL.md` and `plugins/llm-guidelines/skills/review/SKILL.md` from `_skill/explore.SKILL.md.template` and `_skill/review.SKILL.md.template` respectively (templates kept here, since they are build-time artifacts and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`. Index entries reference `../../shared/...`.
 5. Rewrites the `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
+6. Removes any leftover `plugins/llm-guidelines/skills/llm-guidelines/` directory from earlier single-skill bundles.
 
-In the website repo, `_skill/SKILL.md.template` is hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; everything else under `plugins/llm-guidelines/skills/llm-guidelines/` is generated.
+In the website repo, `_skill/explore.SKILL.md.template`, `_skill/review.SKILL.md.template`, and `_skill/REVISION` are hand-curated. In the skill repo, `README.md`, `LICENSE`, `.gitignore`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; everything under `plugins/llm-guidelines/shared/` and the two `SKILL.md` files are generated.
 
-The website surface is a single page at `/skill/` (`skill/index.md`, hand-curated): install instructions, invocation, downloads, and a table linking the bundled files to their rich rendering on this site (or, for `SKILL.md`, to the source on GitHub).
+The website surface is a single page at `/skill/` (`skill/index.md`, hand-curated): install instructions, invocation, and a table linking the bundled files to their rich rendering on this site (or, for the two `SKILL.md` files, to the source on GitHub).
 
 ### Plugin Packaging Gotchas
 
@@ -184,21 +204,40 @@ Study types reference guidelines, not the other way around. To connect a study t
 
 ## Versioning
 
-Guidelines use CalVer tags (`YYYY.MM`, no `v` prefix) on the paper repo. The current version is hard-coded in `_config.yml` under `aux_links` (label + tree URL) and displayed left of the GitHub link. The skill bundle reads the same value at generation time and stamps it into `SKILL.md`, `plugin.json`, `marketplace.json`, and `VERSION` in the skill submodule, so paper, website, and skill stay in lockstep.
+Guidelines use CalVer tags (`YYYY.MM`, no `v` prefix) on the paper repo. The current value is hard-coded in `_config.yml` under `aux_links` (label + tree URL) and displayed left of the GitHub link. The website always shows the bare guideline `YYYY.MM`.
 
-To bump:
+The skill bundle uses a two-part version so that skill-only changes (SKILL.md edits, command tweaks, layout changes, bundle bug fixes) can ship between guideline-version bumps without falsely advertising a new guideline release:
+
+- **Guideline version** — `YYYY.MM`, read from `_config.yml`.
+- **Skill revision** — non-negative integer in `_skill/REVISION`. Initial state is `0`.
+- **Combined skill version** — `YYYY.MM` when revision is `0`, otherwise `YYYY.MM-revN`. Stamped into `SKILL.md` files, `plugin.json`, `marketplace.json`, and `VERSION` in the skill submodule.
+
+The `-rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-separated number.
+
+### Bumping the guideline version (new paper tag)
 
 1. Tag the target commit in the paper submodule (`git tag YYYY.MM <sha> && git push --tags`).
 2. Bump the paper submodule pointer here.
 3. Update both the label and URL of the version entry in `_config.yml`.
-4. Run `./convert-and-merge-sources.sh` (which regenerates the skill bundle).
-5. **Validate** the regenerated plugin and marketplace manifests with the Claude Code CLI:
+4. **Reset `_skill/REVISION` to `0`** (the new release for the new guideline version is the bare `YYYY.MM`, no `-rev` suffix).
+5. Run `./convert-and-merge-sources.sh` (which regenerates the skill bundle).
+6. **Validate** the regenerated plugin and marketplace manifests with the Claude Code CLI:
    ```bash
    claude plugin validate llm-guidelines-skill/plugins/llm-guidelines
    claude plugin validate llm-guidelines-skill/.claude-plugin/marketplace.json
    ```
    Both must pass before commit. Fix any errors before continuing; warnings are OK to defer. CC silently rejects manifests with unknown keys at install time with the misleading error "This plugin uses a source type your Claude Code version does not support", so this validation step is mandatory.
-6. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
-7. Bump the skill submodule pointer here, commit, push.
+7. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
+8. Bump the skill submodule pointer here, commit, push.
 
-First version is `2026.03` (paper commit `d57da062`, dated 2026-03-19, marking the EMSE revision submission).
+### Bumping the skill revision (skill-only change)
+
+Use this when the guideline content has not changed (no new paper tag) but the skill bundle itself needs a new release — for example, edits to a `SKILL.md` template, the slash commands, the `shared/` layout, or `generate-skill.sh`.
+
+1. Increment the integer in `_skill/REVISION` (e.g., `0` → `1`, or `2` → `3`).
+2. Run `./convert-and-merge-sources.sh` (or `./generate-skill.sh` directly if no Markdown content changed).
+3. Validate manifests as in step 6 above.
+4. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM-revN`, and push commit and tag.
+5. Bump the skill submodule pointer here, commit, push.
+
+First guideline version is `2026.03` (paper commit `d57da062`, dated 2026-03-19, marking the EMSE revision submission).
