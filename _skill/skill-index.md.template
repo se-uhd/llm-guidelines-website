@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Skill
-nav_order: 5
+nav_order: 7
 ---
 
 # Skill
