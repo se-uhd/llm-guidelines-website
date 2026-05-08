@@ -4,4 +4,15 @@
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/custom.css">
 <script src="https://kit.fontawesome.com/86e6bffe1c.js" crossorigin="anonymous"></script>
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
 <!-- end custom head snippets -->

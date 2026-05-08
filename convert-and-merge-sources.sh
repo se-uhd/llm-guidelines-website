@@ -7,7 +7,7 @@ convert_tex_to_md() {
         [ -e "$tex_file" ] || continue
         md_file="${tex_file%.tex}.md"
         # debug: --verbose --log="pandoc.log"
-        pandoc --wrap=none --lua-filter="../../pandoc-filters.lua" --bibliography="../../llm-guidelines-paper/literature.bib" -s "$tex_file" -t markdown_strict --citeproc --webtex | perl -ne 'print if not /^---/.../^---/; END { print "\n" }' > "$md_file"
+        pandoc --wrap=none --lua-filter="../../pandoc-filters.lua" --bibliography="../../llm-guidelines-paper/literature.bib" -s "$tex_file" -t markdown_strict --citeproc --mathjax | perl -ne 'print if not /^---/.../^---/; END { print "\n" }' > "$md_file"
     done
 }
 
@@ -186,7 +186,7 @@ for md_file in scope/index.md guidelines/index.md guidelines/*/index.md \
     perl -CSD -pi -e '
         my $sp = qr/[\s\x{a0}]/;
         s/(?<=\S)$sp{2,}/ /g;
-        s/$sp([,.;:!?)>\]])/\1/g;
+        s/$sp([,.;:?)>\]]|!(?!\[))/\1/g;
     ' "$md_file"
     perl -CSD -0777 -pi -e '
         my %fn;
