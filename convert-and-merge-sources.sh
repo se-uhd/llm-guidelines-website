@@ -187,6 +187,12 @@ for md_file in scope/index.md guidelines/index.md guidelines/*/index.md \
         my $sp = qr/[\s\x{a0}]/;
         s/(?<=\S)$sp{2,}/ /g;
         s/$sp([,.;:?)>\]]|!(?!\[))/\1/g;
+        # Dedupe doubled author-year citations from \citeauthor{X} ... \cite{X}
+        # rendered by --citeproc as "Author (Year) ... (Author Year)" because
+        # both directives become full citations. Stripping the trailing
+        # parenthetical citation keeps the narrative form. Bound the gap
+        # between the two with [^.()]{0,300} to avoid spanning sentences.
+        s/(\b[A-Z][^()]*?) \((\d{4}[a-z]?)\)([^.()]{0,300}?)\s*\(\1\s+\2\)/$1 ($2)$3/g;
     ' "$md_file"
     perl -CSD -0777 -pi -e '
         my %fn;
