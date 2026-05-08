@@ -128,7 +128,7 @@ convert_source() {
         # (backticked tags) and drop the website-only filter-panel mention.
         # This regex must match POST-chip-backticking text (the substitution
         # above this one already wrapped the chips in backticks).
-        s{Items prefixed with a bracketed tag apply only to studies with that feature \(e\.g\., `\[fine-tuning\]`, `\[agents\]`\)\. Readers can hover each tag to read its description and use the filter panel to hide items that do not apply to their study\.}{Items prefixed with a backticked tag (e.g., `[fine-tuning]`, `[agents]`) apply only to studies with that feature.};
+        s{Items prefixed with a bracketed tag apply only to studies with that characteristic \(e\.g\., `\[fine-tuning\]`, `\[agents\]`\)\. Readers can hover each tag to read its description and use the filter panel to hide items that do not apply to their study\.}{Items prefixed with a backticked tag (e.g., `[fine-tuning]`, `[agents]`) apply only to studies with that characteristic.};
         # Replace the should-marker bullet on remaining list items with the
         # literal **should** prefix. The optional \h after the span eats
         # the NBSP that follows, so the output uses a regular space.

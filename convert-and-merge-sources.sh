@@ -227,7 +227,7 @@ if [ -e checklist/index.md ]; then
     # sentence "...filter to the tags relevant to their study.").
     perl -CSD -0777 -pi -e '
         s/<!-- RESET_BUTTON -->\n*/\n/;
-        my $filters = q{<details id="condition-filters"><summary>Filter checklist by study features</summary>
+        my $filters = q{<details id="condition-filters"><summary>Filter checklist by study characteristics</summary>
 <p class="filter-parent-heading">Research Design and Methods</p>
 <div class="filter-section">
 <p class="filter-section-title">Model Selection and Configuration</p>
