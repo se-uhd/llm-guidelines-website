@@ -205,6 +205,13 @@ done
 
 # Checklist-specific post-processing
 if [ -e checklist/index.md ]; then
+    # Convert \condition{slug} sentinel from the LaTeX macro into a styled chip
+    # span. The website-side macro emits @@cond:slug@@; @@ is the only form
+    # we found that survives pandoc's markdown_strict output verbatim (literal
+    # `[[...]]` gets escaped, and `--` inside HTML comments gets smart-quoted
+    # to an en-dash). The span provides a CSS hook and a data attribute the
+    # JS filter can match against.
+    perl -CSD -pi -e 's{\@\@cond:([a-z0-9-]+)\@\@}{<span class="condition" data-condition="$1">[$1]</span>}g' checklist/index.md
     # Remove duplicate "# Checklist" heading (already have "# Reporting Checklist" from header)
     perl -CSD -pi -e 's/^# Checklist$//' checklist/index.md
     # Promote paper section headings: #### **Name** → ## Name
@@ -214,28 +221,77 @@ if [ -e checklist/index.md ]; then
     perl -CSD -pi -e 's/^(?:  \n)?\*([A-Z][^*]+)\*$/### $1/' checklist/index.md
     # Remove stray whitespace-only lines (from \mbox{}\\)
     perl -CSD -pi -e 's/^  $//' checklist/index.md
-    # Place the reset button after the intro paragraph (replace placeholder)
+    # Place the filter UI and reset/export buttons between the intro paragraph
+    # and the first checklist section (replaces placeholder; anchors on the
+    # end of the intro paragraph, which now closes with the bracket-convention
+    # sentence "...filter to the tags relevant to their study.").
     perl -CSD -0777 -pi -e '
         s/<!-- RESET_BUTTON -->\n*/\n/;
-        s/(unmarked items may be reported in either\.)\n/\1\n\n<button id="checklist-reset" class="btn btn-outline"><i class="fa-solid fa-rotate-left"><\/i> Reset checkboxes<\/button>\n<button id="checklist-export" class="btn btn-outline"><i class="fa-solid fa-file-csv"><\/i> Export to CSV<\/button>\n/;
+        my $filters = q{<details id="condition-filters"><summary>Filter checklist by study features</summary>
+<p class="filter-parent-heading">Research Design and Methods</p>
+<div class="filter-section">
+<p class="filter-section-title">Model Selection and Configuration</p>
+<div class="filter-grid">
+<label title="Study fine-tunes one or more LLMs with additional training data."><input type="checkbox" class="cond-filter" data-condition="fine-tuning" checked> fine-tuning</label>
+<label title="Study uses a quantized model variant (e.g., 4-bit, 8-bit) to reduce memory or compute requirements."><input type="checkbox" class="cond-filter" data-condition="quantization" checked> quantization</label>
+<label title="Study uses commercial (closed-weight) LLMs or services."><input type="checkbox" class="cond-filter" data-condition="commercial-models" checked> commercial models</label>
+</div>
+</div>
+<div class="filter-section">
+<p class="filter-section-title">System and Prompt Design / Session Traces</p>
+<div class="filter-grid">
+<label title="Study uses an autonomous agent that plans and executes tasks (single- or multi-agent system)."><input type="checkbox" class="cond-filter" data-condition="agents" checked> agents</label>
+<label title="Study augments the prompt with stored data via retrieval-augmented generation (RAG) or similar retrieval mechanisms."><input type="checkbox" class="cond-filter" data-condition="context-augmentation" checked> context augmentation</label>
+<label title="Study uses context file mechanisms (e.g., CLAUDE.md, AGENTS.md) to steer model behavior."><input type="checkbox" class="cond-filter" data-condition="context-files" checked> context files</label>
+<label title="Study exposes tools, skills, sub-agents, or MCP servers to the LLM for runtime invocation."><input type="checkbox" class="cond-filter" data-condition="tool-use" checked> tool use</label>
+<label title="Study uses an ensemble of multiple models with routing logic or an output-combination strategy."><input type="checkbox" class="cond-filter" data-condition="ensemble" checked> ensemble</label>
+<label title="Study constructs prompts programmatically at runtime, beyond filling templates with study-specific inputs."><input type="checkbox" class="cond-filter" data-condition="dynamic-prompts" checked> dynamic prompts</label>
+<label title="Study involves human participants who create or modify the prompts."><input type="checkbox" class="cond-filter" data-condition="participant-prompts" checked> participant prompts</label>
+<label title="Prompts in the study are long or complex enough to warrant input-length handling or token-optimization strategies."><input type="checkbox" class="cond-filter" data-condition="long-prompts" checked> long/complex prompts</label>
+</div>
+</div>
+<div class="filter-section">
+<p class="filter-section-title">Benchmarks and Metrics</p>
+<div class="filter-grid">
+<label title="Study creates or releases a new benchmark."><input type="checkbox" class="cond-filter" data-condition="new-benchmark" checked> new benchmark</label>
+<label title="Study uses non-probability sampling (e.g., convenience) to select benchmark items."><input type="checkbox" class="cond-filter" data-condition="non-probability-sampling" checked> non-probability sampling</label>
+<label title="Multiple human raters or non-deterministic LLM-as-judge runs assess the same item, with possible disagreement."><input type="checkbox" class="cond-filter" data-condition="multi-rater-scoring" checked> multi-rater scoring</label>
+</div>
+</div>
+<div class="filter-section">
+<p class="filter-section-title">Human Validation</p>
+<div class="filter-grid">
+<label title="Study uses human raters or annotators to validate LLM outputs."><input type="checkbox" class="cond-filter" data-condition="human-validation" checked> human validation</label>
+<label title="Study measures value-laden or culturally contingent constructs (e.g., fairness, code quality, usability)."><input type="checkbox" class="cond-filter" data-condition="subjective-constructs" checked> subjective constructs</label>
+</div>
+</div>
+<div class="filter-section">
+<p class="filter-section-title">Reproducibility and Ethics</p>
+<div class="filter-grid">
+<label title="Study involves sensitive, proprietary, or otherwise restricted materials (data, prompts, traces, code) that cannot be fully shared publicly."><input type="checkbox" class="cond-filter" data-condition="restricted-sharing" checked> restricted sharing</label>
+</div>
+</div>
+<p class="filter-parent-heading">Results</p>
+<div class="filter-section filter-section-no-title">
+<div class="filter-grid">
+<label title="Study compares multiple models or tools and reports their relative performance."><input type="checkbox" class="cond-filter" data-condition="comparing-models" checked> model comparison</label>
+</div>
+</div>
+<div class="filter-actions">
+<button id="filters-toggle" type="button" class="btn btn-outline"><i class="fa-solid fa-toggle-on"></i> Toggle all filters</button>
+</div>
+</details>
+};
+        my $buttons = qq{<button id="checklist-reset" type="button" class="btn btn-outline"><i class="fa-solid fa-rotate-left"></i> Reset checkboxes</button>\n<button id="checklist-export" type="button" class="btn btn-outline"><i class="fa-solid fa-file-csv"></i> Export to CSV</button>\n};
+        s/(use the filter panel to hide items that do not apply to their study\.)\n/$1\n\n$buttons\n$filters/;
     ' checklist/index.md
     # Replace ○ (SHOULD) with gray-filled ● to match paper styling
     perl -pi -e 's/○/<span class="marker-should">●<\/span>/g' checklist/index.md
-    # Link short-name references like (Declare Usage) to the corresponding guideline sub-pages
-    perl -CSD -pi -e '
-        my %g = (
-            "Declare Usage"    => "declare-llm-usage-and-role",
-            "Model Version"    => "report-model-version-configuration-and-customizations",
-            "Design"           => "report-system-and-prompt-design",
-            "Traces"           => "report-session-traces",
-            "Benchmarks"       => "use-suitable-baselines-benchmarks-and-metrics",
-            "Open LLM"         => "use-an-open-llm-as-a-baseline",
-            "Human Validation" => "use-human-validation-for-llm-outputs",
-            "Limitations"      => "report-limitations-and-mitigations",
-        );
-        my $names = join("|", map { quotemeta } sort { length($b) <=> length($a) } keys %g);
-        s/\(($names)\)/"([$1](\/guidelines\/" . $g{$1} . "\/))"/ge;
-    ' checklist/index.md
+    # Short-name references like (Declare Usage) are now produced by the
+    # \refdeclareusage / \refmodelversion / ... macros in shared-header.tex,
+    # which the website branch defines as \href{/guidelines/<slug>/}{<short>}.
+    # Pandoc converts the \href to a markdown link automatically; no further
+    # post-processing is needed.
 fi
 
 # --- Skill bundle (optional; runs only if the skill submodule is initialized) ---

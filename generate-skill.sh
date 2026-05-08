@@ -109,6 +109,8 @@ convert_source() {
         s{<style>.*?</style>\s*}{}gs;
         s{<script>.*?</script>\s*}{}gs;
         s{<button[^>]*>.*?</button>\s*}{}gs;
+        s{<details id="condition-filters".*?</details>\s*}{}gs;
+        s{<span class="condition" data-condition="[^"]+">(\[[^\]]+\])</span>}{$1}g;
         print;
     ' "$src" > "$dst"
 
