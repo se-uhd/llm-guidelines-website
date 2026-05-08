@@ -105,12 +105,48 @@ convert_source() {
     esac
 
     perl -CSD -0777 -ne '
+        use utf8;
         s/^---\n.*?\n---\n\s*//s;
         s{<style>.*?</style>\s*}{}gs;
         s{<script>.*?</script>\s*}{}gs;
         s{<button[^>]*>.*?</button>\s*}{}gs;
         s{<details id="condition-filters".*?</details>\s*}{}gs;
-        s{<span class="condition" data-condition="[^"]+">(\[[^\]]+\])</span>}{$1}g;
+        # Wrap the bracketed condition slug in backticks so it renders as
+        # inline code in the skill bundle. Without backticks, [fine-tuning]
+        # is a CommonMark shortcut reference link: any matching [slug]: URL
+        # definition (now or later) would silently turn the tag into a link.
+        s{<span class="condition" data-condition="[^"]+">(\[[^\]]+\])</span>}{`$1`}g;
+        # Rewrite the intro paragraph sentence about ●/○ markers to a
+        # skill-only phrasing (no ● glyphs, no marker-should span). This
+        # must run before the generic should-span substitution below so it
+        # can match the original sentence containing the span. \h+ matches
+        # horizontal whitespace including the NBSP that pandoc emits in
+        # place of the LaTeX \xspace after each marker.
+        s{Items marked ●\h+are requirements \(\*\*must\*\*\), and items marked <span class="marker-should">●</span>\h+are recommendations \(\*\*should\*\*\)\.}{Items prefixed with **must** are requirements; items prefixed with **should** are recommendations.};
+        # Rewrite the intro paragraph sentence about bracketed tags / the
+        # filter panel to reflect the skill-bundle representation
+        # (backticked tags) and drop the website-only filter-panel mention.
+        # This regex must match POST-chip-backticking text (the substitution
+        # above this one already wrapped the chips in backticks).
+        s{Items prefixed with a bracketed tag apply only to studies with that feature \(e\.g\., `\[fine-tuning\]`, `\[agents\]`\)\. Readers can hover each tag to read its description and use the filter panel to hide items that do not apply to their study\.}{Items prefixed with a backticked tag (e.g., `[fine-tuning]`, `[agents]`) apply only to studies with that feature.};
+        # Replace the should-marker bullet on remaining list items with the
+        # literal **should** prefix. The optional \h after the span eats
+        # the NBSP that follows, so the output uses a regular space.
+        s{<span class="marker-should">[^<]*</span>\h?}{**should** }g;
+        # Replace the must-marker bullet on list items with the literal
+        # **must** prefix. ● appears as a list bullet only on must items
+        # in the checklist; the intro mention has already been rewritten.
+        # \h+ tolerates the NBSP from \xspace.
+        s{^- ●\h+}{- **must** }gm;
+        # Pandoc wraps acronyms or title-case fragments in <span class="nocase">
+        # so bibliography styles do not lowercase them. The class has no
+        # meaning in the skill bundle; keep the inner text only.
+        s{<span class="nocase">([^<]*)</span>}{$1}g;
+        # Pandoc renders inline math via codecogs PNG image references by
+        # default. The image title attribute carries the original LaTeX;
+        # replace the image reference with that LaTeX inside $...$ so the
+        # skill consumer sees the source, not an unfetchable image URL.
+        s{!\[[^\]]*\]\(https://latex\.codecogs\.com/png\.latex\?[^)\s]+ "([^"]+)"\)}{\$$1\$}g;
         print;
     ' "$src" > "$dst"
 
