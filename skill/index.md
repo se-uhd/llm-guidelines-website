@@ -10,7 +10,7 @@ nav_order: 7
 
 Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients) for the current set. The instructions below cover Claude Code; for any other client, copy the `plugins/llm-guidelines/` subtree from the repository into the location that client expects, preserving the relative paths between `skills/<mode>/SKILL.md` and `shared/` (each client's docs are linked from the client list).
 
-The skill is published in a separate repository at [se-uhd/llm-guidelines-skill](https://github.com/se-uhd/llm-guidelines-skill). Its version reuses the guideline `YYYY.MM` tag shown in the header of this site for releases that match a paper version, and adds a `-revN` suffix for skill-only updates against the same guideline version (see the skill repo `README.md` for details).
+The skill is published in a separate repository at [se-uhd/llm-guidelines-skill](https://github.com/se-uhd/llm-guidelines-skill). Its version reuses the guideline `YYYY.MM` tag shown in the header of this site for releases that match a paper version, and adds a `_revN` suffix for skill-only updates against the same guideline version (see the skill repo `README.md` for details).
 
 ## Install
 

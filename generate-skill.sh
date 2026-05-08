@@ -48,7 +48,7 @@ fi
 # layout changes) against the same guideline version. Reset to 0 on a
 # guideline-version bump.
 #
-# Combined skill version: `YYYY.MM` when revision is 0, else `YYYY.MM-revN`.
+# Combined skill version: `YYYY.MM` when revision is 0, else `YYYY.MM_revN`.
 
 GUIDELINE_VERSION=$(perl -ne 'if (m{llm-guidelines-paper/tree/(\d{4}\.\d{2})}) { print $1; exit }' "${ROOT}/_config.yml")
 if [ -z "$GUIDELINE_VERSION" ]; then
@@ -67,7 +67,7 @@ esac
 if [ "$REVISION" = "0" ]; then
     VERSION="$GUIDELINE_VERSION"
 else
-    VERSION="${GUIDELINE_VERSION}-rev${REVISION}"
+    VERSION="${GUIDELINE_VERSION}_rev${REVISION}"
 fi
 echo "skill version: ${VERSION} (guideline ${GUIDELINE_VERSION}, revision ${REVISION})"
 

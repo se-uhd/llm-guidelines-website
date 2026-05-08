@@ -11,7 +11,7 @@ The guideline content is published at <https://llm-guidelines.org> and authored 
 The bundle uses two-part versioning: a guideline version (CalVer `YYYY.MM`, matching the paper and website tag) and an optional skill revision suffix.
 
 - Initial release for a guideline version: bare `YYYY.MM` (e.g., `2026.05`).
-- Skill-only revisions for the same guideline version: `YYYY.MM-revN` (e.g., `2026.05-rev1`, `2026.05-rev2`).
+- Skill-only revisions for the same guideline version: `YYYY.MM_revN` (e.g., `2026.05_rev1`, `2026.05_rev2`).
 
 The current version is recorded in `VERSION` and embedded in `.claude-plugin/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json`, and the two `SKILL.md` files.
 
@@ -88,7 +88,7 @@ plugins/
       guidelines/      eight standalone guideline files
       study-types/     seven study-type files plus parent groupings
       checklist.md     consolidated reporting checklist
-VERSION                YYYY.MM or YYYY.MM-revN
+VERSION                YYYY.MM or YYYY.MM_revN
 ```
 
 ## Maintainer notes

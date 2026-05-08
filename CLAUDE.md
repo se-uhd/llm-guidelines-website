@@ -213,16 +213,16 @@ The skill bundle uses a two-part version so that skill-only changes (SKILL.md ed
 
 - **Guideline version** — `YYYY.MM`, read from `_config.yml`.
 - **Skill revision** — non-negative integer in `_skill/REVISION`. Initial state is `0`.
-- **Combined skill version** — `YYYY.MM` when revision is `0`, otherwise `YYYY.MM-revN`. Stamped into `SKILL.md` files, `plugin.json`, `marketplace.json`, and `VERSION` in the skill submodule.
+- **Combined skill version** — `YYYY.MM` when revision is `0`, otherwise `YYYY.MM_revN`. Stamped into `SKILL.md` files, `plugin.json`, `marketplace.json`, and `VERSION` in the skill submodule.
 
-The `-rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-separated number.
+The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-separated number, and the underscore (rather than `-`) makes the boundary between guideline version and revision unambiguous.
 
 ### Bumping the guideline version (new paper tag)
 
 1. Tag the target commit in the paper submodule (`git tag YYYY.MM <sha> && git push --tags`).
 2. Bump the paper submodule pointer here.
 3. Update both the label and URL of the version entry in `_config.yml`.
-4. **Reset `_skill/REVISION` to `0`** (the new release for the new guideline version is the bare `YYYY.MM`, no `-rev` suffix).
+4. **Reset `_skill/REVISION` to `0`** (the new release for the new guideline version is the bare `YYYY.MM`, no `_rev` suffix).
 5. Run `./convert-and-merge-sources.sh` (which regenerates the skill bundle).
 6. **Validate** the regenerated plugin and marketplace manifests with the Claude Code CLI:
    ```bash
@@ -240,7 +240,7 @@ Use this when the guideline content has not changed (no new paper tag) but the s
 1. Increment the integer in `_skill/REVISION` (e.g., `0` → `1`, or `2` → `3`).
 2. Run `./convert-and-merge-sources.sh` (or `./generate-skill.sh` directly if no Markdown content changed).
 3. Validate manifests as in step 6 above.
-4. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM-revN`, and push commit and tag.
+4. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM_revN`, and push commit and tag.
 5. Bump the skill submodule pointer here, commit, push.
 
 First guideline version is `2026.03` (paper commit `d57da062`, dated 2026-03-19, marking the EMSE revision submission).
