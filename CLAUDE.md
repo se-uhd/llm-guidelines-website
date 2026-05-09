@@ -171,7 +171,7 @@ The preamble is split into three files:
 
 1. **`shared-header.tex`** (paper repo root) — All shared packages and commands. Uses `\ifpaper` conditionals for commands that differ between paper and website (RFC 2119 keywords, cross-references, section formatting, icons, framed environment, etc.). No `\documentclass` or `\newif`.
 2. **`header-website.tex`** (website root) — Sets `\documentclass{article}`, `\newif\ifpaper` (false), website layout packages (geometry, parskip), then inputs `shared-header.tex` from the paper repo.
-3. **Paper's `emse25-llm-guidelines.tex`** — Sets `\newif\ifpaper\papertrue`, loads paper-only packages (tikz, xcolor, mdframed, etc.) before `\input{shared-header.tex}`.
+3. **Paper's `emse26-llm-guidelines.tex`** — Sets `\newif\ifpaper\papertrue`, loads paper-only packages (tikz, xcolor, mdframed, etc.) before `\input{shared-header.tex}`.
 
 Entry-point files in `_sources/` directories use `\input{../../header-website.tex}`. LaTeX `\input` resolves relative to pdflatex's working directory (the `_sources/` folder), so `../../` reaches the website root. From there, `header-website.tex` references `shared-header.tex` via `../../llm-guidelines-paper/shared-header.tex` (submodule path). Content files are also referenced via `../../llm-guidelines-paper/` paths (e.g., `../../llm-guidelines-paper/_guidelines/01_declare-llm-usage-and-role.tex`).
 
