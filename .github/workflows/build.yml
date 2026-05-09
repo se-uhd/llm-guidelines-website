@@ -33,6 +33,7 @@ jobs:
             texlive-bibtex-extra \
             texlive-plain-generic \
             texlive-extra-utils \
+            latexmk \
             poppler-utils \
             biber
           wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb && sudo dpkg -i pandoc-3.6.1-1-amd64.deb
@@ -40,10 +41,10 @@ jobs:
         run: ./compile-latex.sh
       - name: Convert and merge source files
         run: ./convert-and-merge-sources.sh
-      - name: Build paper (regular and flat)
+      - name: Build paper (regular and flattened)
         run: ./compile_and_flatten.sh
         working-directory: llm-guidelines-paper
-      - name: Compare regular and flat PDFs
+      - name: Compare regular and flattened PDFs
         run: ./scripts/compare_pdfs.sh emse26-llm-guidelines.pdf emse26-llm-guidelines-flat.pdf
         working-directory: llm-guidelines-paper
       - name: Upload paper PDFs
