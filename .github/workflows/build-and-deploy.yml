@@ -50,9 +50,13 @@ jobs:
             texlive-latex-recommended \
             texlive-latex-extra \
             texlive-fonts-recommended \
+            texlive-fonts-extra \
             texlive-bibtex-extra \
             texlive-plain-generic \
             texlive-extra-utils \
+            texlive-science \
+            texlive-pictures \
+            texlive-publishers \
             latexmk \
             poppler-utils \
             biber
