@@ -59,7 +59,7 @@ jobs:
         working-directory: llm-guidelines-paper
       - name: Upload paper PDFs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: paper
           path: |
