@@ -8,3 +8,7 @@ a.disabled {
     margin-top: 0.5em;
     font-size: 0.9em;
 }
+
+.top-align td, .top-align th {
+    vertical-align: top;
+}
