@@ -32,15 +32,17 @@ The user typically provides one or more of:
   When both are available, prefer the LaTeX source: it lets you spot LaTeX-specific artifacts (e.g., commented-out disclosures, `\todo{}` notes) that get lost in the PDF.
 - One or more pointers to supplementary material with prompts, traces, datasets, code, or replication packages. Each can be a local directory, a local repository, or a public URL (e.g., a GitHub repo or a Zenodo record); clone or fetch URLs as the user prefers.
 
-If no path is supplied, ask the user for the paper source path and (optionally) supplementary paths before proceeding.
+If no paper path is supplied, ask the user for one before proceeding. Supplementary paths are optional: if the user omits them, search the paper itself for links to replication packages, datasets, prompts, traces, or code (see workflow step 1).
 
 ## Workflow
 
 1. **Resolve inputs.** For a LaTeX paper, read the entry-point file and follow `\input{}`/`\include{}` for files inside the project tree. For a PDF paper, extract text with a tool available in the environment (`pdftotext`, `mutool`, `pdfminer.six`, etc.). For supplementary directories, start with the top-level `README*` or `INDEX*` and the directory layout to orient yourself, then read whatever the layout points at as relevant: prompts, traces, datasets, code, replication scripts. Drill deeper only where the structure suggests evidence for a guideline; do not try to read every file in a large package.
 
+    **Search the paper for supplementary-material links** even when the user has supplied supplementary paths, and especially when they have not. Look across the abstract, introduction, methodology, data-availability / artifact-availability statements, footnotes, acknowledgments, appendices, and the references list for URLs that point to replication packages, datasets, code, prompts, or traces. Common hosts include `github.com`, `gitlab.com`, `zenodo.org`, `figshare.com`, `huggingface.co`, `anonymous.4open.science`, and institutional archives; also check for DOIs (`doi.org/10.5281/...`) and any sentence containing phrases such as "available at", "we release", "we open-source", "replication package", "artifact", or "supplementary material". Record every link you find, the surrounding sentence, and whether the link resolves (best effort). If the paper claims to release something but does not anchor the claim to a concrete URL, note the unanchored claim too. The findings populate the *Supplementary material availability* section of the report (see template).
+
 2. **Identify the study type(s).** Use the files under `../../shared/study-types/` to classify the study. A single paper can fall under multiple types (e.g., a new tool that also benchmarks LLMs). Note the classification at the top of the report.
 
-3. **Consult `../../shared/scope.md`** to confirm the work is in scope (LLM use that materially affects the research method or its outcomes, not just LLM-assisted writing).
+3. **Consult `../../shared/scope.md`** to confirm the work is in scope. The guidelines cover LLM use that materially affects the research method or its outcomes; peripheral uses (proofreading, spell-checking, translation, writing assistance) are explicitly out of scope, even though venue policies such as the ACM Policy on Authorship may still require an author-writing disclosure separately.
 
 4. **Per-guideline assessment.** For each of the eight guidelines listed below, load the corresponding file in `../../shared/guidelines/` on demand, then for that guideline produce:
    - `Status`: one of `covered`, `partial`, `not found`, or `not applicable` (with a one-line reason if N/A).
@@ -74,6 +76,18 @@ If no path is supplied, ask the user for the paper source path and (optionally) 
 ## Summary
 
 <Two-to-four-sentence overall summary: what is reported well, what is missing.>
+
+## Supplementary material availability
+
+<Report what the user provided and what you found in the paper itself:
+- User-supplied paths: <list, or "none provided">.
+- Links found in the paper: <bulleted list of each URL, with the section it appears in and the surrounding sentence; mark each as "resolves" / "does not resolve" / "not checked".>
+- Unanchored release claims: <quote any "we release" / "available at" / "we open-source" sentence that does not anchor to a concrete URL; this is a reporting gap for the relevant guideline.>
+- Coverage: <one sentence on whether the supplementary material the paper points at appears to include prompts, raw outputs / traces, datasets, and code, or only some of these.>
+
+If nothing was supplied and nothing was found, say so explicitly and flag it under
+the relevant guideline (typically *Report System and Prompt Design* and *Report
+Session Traces*).>
 
 ## Per-guideline findings
 
@@ -117,4 +131,5 @@ Stored under `../../shared/study-types/`. Load only the files relevant to the st
 - **Cite the guidelines; do not paraphrase severity.** When you write "required" or "recommended", make sure it matches a `must` or `should` in the underlying guideline. If the guideline does not specify a level, use neutral language ("Consider...").
 - **Do not infer non-disclosure.** A missing detail in the paper does not mean the authors did something wrong; it means the report could state the detail explicitly.
 - **Stick to the guidelines.** Only flag items the eight guideline files cover. Do not add critiques of aspects the guidelines do not address (theoretical contribution, novelty argument, narrative structure, general writing quality), even if you notice them.
+- **Author-side writing assistance is out of scope.** When assessing *Declare LLM Usage and Role*, restrict the disclosure check to LLM roles that materially affect the research method or its outcomes (e.g., subjects, annotators, judges, synthesizers, generators of study material, components of tools under study). The absence of an author-writing AI-disclosure is **not** a guideline gap; if a paper discloses every method-relevant role, mark the guideline `covered`. Venue policies may still require an author-writing disclosure, but that is a venue-policy concern, not a finding for this report.
 - **Do not modify user files** without an explicit follow-up request from the user. Review mode writes only `llm-guidelines-report.md` in the working directory.
