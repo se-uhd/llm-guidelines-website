@@ -1,26 +1,16 @@
----
-name: review
-description: Review a paper draft (and any supplementary material) against the community LLM reporting guidelines for empirical SE studies. Use this when the user names a paper, hands you a path to a `.tex` or `.pdf`, asks to check, audit, or review a draft, or when they share a replication package and want it assessed against the eight guidelines (LLMs as annotators, judges, synthesis, or subjects; studying LLM usage in software engineering; LLMs for new SE tools; benchmarking LLMs for SE tasks). Writes a structured report.
-version: {{VERSION}}
-homepage: https://llm-guidelines.org
-license: CC-BY-4.0
----
+# Review Mode
 
-# LLM Guidelines — Review Mode
-
-This skill checks a concrete draft (paper plus any supplementary material) against the eight community guidelines and produces a structured report of reporting gaps. It packages the guidelines, the scope statement, the study-type taxonomy, and the consolidated reporting checklist; the bundled files live at `../../shared/`.
-
-**Audience and tone.** The default user is an author reviewing their own draft. Frame findings as suggestions for clearer reporting, not as violations. If a reviewer invokes this skill, treat the output as a starting point for review comments, **not** as a rejection rubric. The guidelines are community recommendations; incompleteness against them is not grounds for rejection.
+This file is loaded by `../SKILL.md` when the user wants a concrete draft assessed against the guidelines (slash command `/llm-guidelines:review`, or when the user names a paper / hands a path to `.tex` or `.pdf` / asks to check / audit / review a draft). For the audience, tone, mode-selection rules, shared constraints, and full file indices, see [`../SKILL.md`](../SKILL.md).
 
 ## When to use
 
-Invoke this skill when the user:
+Stay in review mode when the user:
 
 1. Asks to check a paper (or paper plus supplementary material) against the LLM reporting guidelines.
 2. Is drafting the methodology, results, or limitations of an empirical study involving an LLM and wants reporting suggestions on a concrete draft.
 3. Is reviewing such a paper and asks for clarifying questions to consider.
 
-Do **not** invoke when the user is doing unrelated software engineering work that happens to mention LLMs. If the user is still planning a study or asking conceptual questions, switch to `/llm-guidelines:explore`.
+If the user is still planning a study or asking conceptual questions, switch to explore mode and follow [`./explore.md`](./explore.md).
 
 ## Inputs the user will provide
 
@@ -53,11 +43,11 @@ If no paper path is supplied, ask the user for one before proceeding. Supplement
 
     **When fetching genuinely fails**, say so explicitly in the report — name the URL, the failure mode (404, archive corrupt, repo private, auth/approval wall, rate limit, LFS pull failed, network blocked), and what is therefore unverified. Do not paper over the gap with a `WebFetch` summary.
 
-2. **Identify the study type(s).** Use the files under `../../shared/study-types/` to classify the study. A single paper can fall under multiple types (e.g., a new tool that also benchmarks LLMs). Note the classification at the top of the report.
+2. **Identify the study type(s).** Use the files under `./study-types/` to classify the study. A single paper can fall under multiple types (e.g., a new tool that also benchmarks LLMs). Note the classification at the top of the report.
 
-3. **Consult `../../shared/scope.md`** to confirm the work is in scope. The guidelines cover LLM use that materially affects the research method or its outcomes; peripheral uses (proofreading, spell-checking, translation, writing assistance) are explicitly out of scope, even though venue policies such as the ACM Policy on Authorship may still require an author-writing disclosure separately.
+3. **Consult [`./scope.md`](./scope.md)** to confirm the work is in scope. The guidelines cover LLM use that materially affects the research method or its outcomes; peripheral uses (proofreading, spell-checking, translation, writing assistance) are explicitly out of scope, even though venue policies such as the ACM Policy on Authorship may still require an author-writing disclosure separately.
 
-4. **Per-guideline assessment.** For each of the eight guidelines listed below, load the corresponding file in `../../shared/guidelines/` on demand, then for that guideline produce:
+4. **Per-guideline assessment.** For each of the eight guidelines listed in [`../SKILL.md`](../SKILL.md), load the corresponding file in `./guidelines/` on demand, then for that guideline produce:
    - `Status`: one of `covered`, `partial`, `not found`, or `not applicable` (with a one-line reason if N/A).
    - `Evidence`: 1 to 3 items, each a **verbatim quote** from the paper or supplementary material (or, for binary/structured data files, a direct file-or-key pointer), with its source location (e.g., `_s4_evaluation.tex:34` or `benchmark/python/api_usage/instance_0042.json`). Do not paraphrase. See the *Constraints* section for the full grounding rule.
    - `Gaps`: bullet list of specific missing items (`must`/`should`-level), each phrased as an author-facing suggestion (e.g., "Consider naming the exact model version and access date in the methodology."). Each gap's premise must be supported either by an Evidence item above or by a verified absence (state what you searched for and how, e.g., "`grep -i 'experiment date' _s*.tex` returned no hit").
@@ -65,7 +55,7 @@ If no paper path is supplied, ask the user for one before proceeding. Supplement
 
    Apply the RFC 2119 levels from the guideline text: **must** items become "required for full reporting"; **should** items become "recommended". Do not invent severity levels not present in the guideline.
 
-5. **Cross-cutting concerns.** After the per-guideline pass, scan `../../shared/checklist.md` for any item that did not surface during step 4 and add it to a `Checklist gaps` section if missing.
+5. **Cross-cutting concerns.** After the per-guideline pass, scan [`./checklist.md`](./checklist.md) for any item that did not surface during step 4 and add it to a `Checklist gaps` section if missing.
 
 6. **Write the report.** Save the assessment as `llm-guidelines-report.md` in the user's current working directory **and** print the same content to the console. Use the [report template](#report-template) below.
 
@@ -108,13 +98,13 @@ Session Traces*).>
 - Status: <covered | partial | not found | not applicable>
 - Evidence: <1-3 items, each a verbatim quote from the paper or a verbatim excerpt from a file in the supplementary material (or, for binary/structured data files, a direct file-or-key pointer), with source location (e.g., `_s3_realistic.tex:140`, `prompts/judge_prompt.txt:1-12`, or `benchmark/python/api_usage/instance_0042.json`). Do not paraphrase here; gaps and interpretation belong in the Gaps bullet.>
 - Gaps: <author-facing bullets; each bullet's premise must be supported by an Evidence item or by an absence you actually checked for (state what you searched and how, e.g., "grep for '\\bdate\\b' across all .tex files returned no experiment date").>
-- Pointers: <links to ../../shared/guidelines/declare-llm-usage-and-role.md>
+- Pointers: <links to ./guidelines/declare-llm-usage-and-role.md>
 
 <... repeat for each of the remaining guidelines ...>
 
 ## Checklist gaps
 
-<Items from ../../shared/checklist.md that were not surfaced above.>
+<Items from ./checklist.md that were not surfaced above.>
 
 ## Notes for reviewers
 
@@ -122,29 +112,10 @@ Session Traces*).>
 authors. Otherwise omit this section.>
 ```
 
-## Guidelines index
+## Mode-specific constraints
 
-The eight guidelines are stored as standalone files under `../../shared/guidelines/`. Load on demand (do not load all eight unless needed).
-
-{{GUIDELINES_INDEX}}
-
-## Study-types index
-
-Stored under `../../shared/study-types/`. Load only the files relevant to the study being assessed.
-
-{{STUDY_TYPES_INDEX}}
-
-## Other resources
-
-- `../../shared/scope.md`: what is in and out of scope for the guidelines.
-- `../../shared/checklist.md`: the consolidated reporting checklist organized by paper section, with severity markers.
-
-## Constraints
+These add to the shared constraints in [`../SKILL.md`](../SKILL.md):
 
 - **Ground every claim in a verbatim quote or a file pointer.** Every factual statement in the report about what the paper or the supplementary material does, says, contains, or omits **must** be backed by one of: (a) a verbatim quote from the paper with a source location (e.g., `_s4_evaluation.tex:34` or "§4.2, p. 7"), or (b) a pointer to a specific file (or file plus line range / key) in the supplementary material that was actually read (e.g., `prompts/judge_prompt.txt:1-40`, `benchmark/python/instance_0042.json`). Statements that paraphrase or summarise the paper **must** cite the underlying source the same way. **Do not write hedged language** such as *"the repo appears to include …"*, *"the README seems to describe …"*, *"presumably …"*, *"likely contains …"*, *"suggests that …"*, *"indicates that …"*, *"based on the structure …"*, *"it can be inferred …"* — if you cannot back the claim with a verbatim quote or a file pointer, do not make the claim. Instead, state the gap explicitly: name what you tried to verify, what you read, and what is therefore unknown. Absence of evidence is reported as absence, not as a guess.
 - **Only quote what you have read.** Quotation marks in the report must contain text that appears verbatim in a source you opened (the paper's `.tex` / extracted PDF text, or a file in the materialised supplementary directory). Do not "quote" a `WebFetch` summary or a rendering of an HTML directory listing — that is paraphrase, not source text. If a quote spans an ellipsis, use `[...]` and keep the rest verbatim.
-- **Cite the guidelines; do not paraphrase severity.** When you write "required" or "recommended", make sure it matches a `must` or `should` in the underlying guideline. If the guideline does not specify a level, use neutral language ("Consider...").
-- **Do not infer non-disclosure.** A missing detail in the paper does not mean the authors did something wrong; it means the report could state the detail explicitly.
-- **Stick to the guidelines.** Only flag items the eight guideline files cover. Do not add critiques of aspects the guidelines do not address (theoretical contribution, novelty argument, narrative structure, general writing quality), even if you notice them.
-- **Author-side writing assistance is out of scope.** When assessing *Declare LLM Usage and Role*, restrict the disclosure check to LLM roles that materially affect the research method or its outcomes (e.g., subjects, annotators, judges, synthesizers, generators of study material, components of tools under study). The absence of an author-writing AI-disclosure is **not** a guideline gap; if a paper discloses every method-relevant role, mark the guideline `covered`. Venue policies may still require an author-writing disclosure, but that is a venue-policy concern, not a finding for this report.
-- **Do not modify user files** without an explicit follow-up request from the user. Review mode writes only `llm-guidelines-report.md` in the working directory.
+- **Review mode writes only `llm-guidelines-report.md`** in the working directory. No other user files are touched.

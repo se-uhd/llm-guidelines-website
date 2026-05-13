@@ -2,7 +2,7 @@
 
 An [Agent Skill](https://agentskills.io/home) bundle that applies the community guidelines for empirical software engineering studies involving LLMs to a paper draft and its supplementary material. Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients).
 
-The bundle exposes two skills: **explore** for discussing the guidelines and planning a study, and **review** for assessing a concrete draft against the eight guidelines and writing a report.
+The bundle exposes a single skill, `llm-guidelines`, with two slash-command entry points: `{{CMD_INVOKE_EXPLORE}}` for discussing the guidelines and planning a study, and `{{CMD_INVOKE_REVIEW}}` for assessing a concrete draft against the eight guidelines and writing a report. The two commands route into mode-specific instructions inside the same skill.
 
 The guideline content is published at <https://llm-guidelines.org> and authored in the companion paper repository <https://github.com/se-uhd/llm-guidelines-paper>. The Markdown files in this repository are generated from those LaTeX sources; see <https://github.com/se-uhd/llm-guidelines-website> for the conversion pipeline. **Do not edit the generated files in this repository directly.**
 
@@ -13,7 +13,7 @@ The bundle uses two-part versioning: a guideline version (CalVer `YYYY.MM`, matc
 - Initial release for a guideline version: bare `YYYY.MM` (e.g., `2026.05`).
 - Skill-only revisions for the same guideline version: `YYYY.MM_revN` (e.g., `2026.05_rev1`, `2026.05_rev2`).
 
-The current version is recorded in `VERSION` and embedded in `.claude-plugin/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json`, and the two `SKILL.md` files.
+The current version is recorded in `VERSION` and embedded in `.claude-plugin/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json`, and `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` (under `metadata.version`).
 
 ## Install as a Claude Code plugin
 
@@ -47,7 +47,7 @@ The marketplace update reports `(1 plugin bumped)` when a new version is found a
 
 ## Use in other Agent Skills clients
 
-Each `SKILL.md` under `plugins/llm-guidelines/skills/` references the shared bundled content via `../../shared/...`. To consume the bundle outside Claude Code's plugin loader, place `plugins/llm-guidelines/skills/<mode>/` and `plugins/llm-guidelines/shared/` so that the relative path is preserved (i.e., reproduce the `plugins/llm-guidelines/` subtree under your client's skills directory). Each client's docs are linked from the [Agent Skills client list](https://agentskills.io/clients).
+The skill is self-contained under `plugins/llm-guidelines/skills/llm-guidelines/`: `SKILL.md` plus a `references/` directory holding the mode-specific procedures (`explore.md`, `review.md`), the eight guideline files, the study-type files, the scope statement, and the reporting checklist. To consume the bundle outside Claude Code's plugin loader, copy that directory into the location your client expects (each client's docs are linked from the [Agent Skills client list](https://agentskills.io/clients)).
 
 ## What the skills do
 
@@ -57,11 +57,11 @@ A conversational skill for authors planning or discussing an empirical study inv
 
 ### `{{CMD_INVOKE_REVIEW}}`
 
-A structured skill for assessing a concrete draft. Given a paper (LaTeX source or PDF) and any supplementary material directories, it:
+A structured mode for assessing a concrete draft. Given a paper (LaTeX source or PDF) and any supplementary material directories, it:
 
-1. Identifies the study type(s) using the taxonomy in `shared/study-types/`.
-2. Confirms the work is in scope using `shared/scope.md`.
-3. Runs a per-guideline assessment using the eight files under `shared/guidelines/`.
+1. Identifies the study type(s) using the taxonomy in `skills/llm-guidelines/references/study-types/`.
+2. Confirms the work is in scope using `skills/llm-guidelines/references/scope.md`.
+3. Runs a per-guideline assessment using the eight files under `skills/llm-guidelines/references/guidelines/`.
 4. Writes a Markdown report to `llm-guidelines-report.md` in the current working directory and prints it to the console.
 
 The report frames findings as opportunities to clarify or strengthen reporting. It is intended as a self-check for authors. Reviewers may use it for inspiration but should not treat it as a rejection rubric.
@@ -70,25 +70,27 @@ The report frames findings as opportunities to clarify or strengthen reporting. 
 
 ```
 .claude-plugin/
-  marketplace.json     marketplace entry (single-plugin)
+  marketplace.json                marketplace entry (single-plugin)
 plugins/
   llm-guidelines/
     .claude-plugin/
-      plugin.json      plugin manifest
+      plugin.json                 plugin manifest
     commands/
-      explore.md       {{CMD_INVOKE_EXPLORE}} slash command
-      review.md        {{CMD_INVOKE_REVIEW}} slash command
+      explore.md                  {{CMD_INVOKE_EXPLORE}} slash command
+      review.md                   {{CMD_INVOKE_REVIEW}} slash command
     skills/
-      explore/
-        SKILL.md       explore-mode skill (planning, discussion)
-      review/
-        SKILL.md       review-mode skill (assessing a draft)
-    shared/            content shared by both skills
-      scope.md         in-scope / out-of-scope definition
-      guidelines/      eight standalone guideline files
-      study-types/     seven study-type files plus parent groupings
-      checklist.md     consolidated reporting checklist
-VERSION                YYYY.MM or YYYY.MM_revN
+      llm-guidelines/
+        SKILL.md                  router with shared frontmatter, mode-
+                                  selection, and shared constraints
+        references/
+          explore.md              explore-mode procedure
+          review.md               review-mode procedure
+          guidelines/             eight standalone guideline files
+          study-types/            seven study-type files plus parent
+                                  groupings
+          scope.md                in-scope / out-of-scope definition
+          checklist.md            consolidated reporting checklist
+VERSION                           YYYY.MM or YYYY.MM_revN
 ```
 
 ## Maintainer notes

@@ -10,17 +10,23 @@
 # strip the Jekyll front matter and rewrite website-absolute links to
 # skill-relative paths.
 #
-# Layout produced in the skill submodule:
+# Layout produced in the skill submodule (single skill, two modes):
 #
 #   plugins/llm-guidelines/
-#     shared/                  bundled content shared by both skills
-#       guidelines/
-#       study-types/
-#       scope.md
-#       checklist.md
 #     skills/
-#       explore/SKILL.md       explore-mode skill (planning, discussion)
-#       review/SKILL.md        review-mode skill (assessing a draft)
+#       llm-guidelines/
+#         SKILL.md             router with shared frontmatter, mode-selection,
+#                              shared constraints, and the file indices
+#         references/
+#           explore.md         explore-mode procedure (loaded by SKILL.md)
+#           review.md          review-mode procedure (loaded by SKILL.md)
+#           guidelines/        the eight guideline files
+#           study-types/       the study-type taxonomy files
+#           scope.md           scope statement
+#           checklist.md       consolidated reporting checklist
+#
+# The two slash commands (commands/explore.md, commands/review.md) point at
+# the same skill and hint which mode to enter.
 #
 # Does not commit or push; the user reviews and commits in the submodule manually.
 
@@ -29,8 +35,9 @@ set -e
 ROOT="$(pwd)"
 SKILL_REPO="${ROOT}/llm-guidelines-skill"
 PLUGIN_DIR="${SKILL_REPO}/plugins/llm-guidelines"
-SHARED_DIR="${PLUGIN_DIR}/shared"
 SKILLS_DIR="${PLUGIN_DIR}/skills"
+SKILL_DIR="${SKILLS_DIR}/llm-guidelines"
+REFS_DIR="${SKILL_DIR}/references"
 
 if [ ! -d "${SKILL_REPO}/.claude-plugin" ]; then
     echo "error: ${SKILL_REPO} is not initialized; run 'git submodule update --init' first" >&2
@@ -83,13 +90,13 @@ slugify() {
     '
 }
 
-# --- 3. Convert a website-rendered Markdown page into a shared file ---
+# --- 3. Convert a website-rendered Markdown page into a references file ---
 #
 # Strips Jekyll front matter and any inline <style>/<script>/<button> blocks
 # (the checklist embeds these for client-side state and CSV export); rewrites
 # website-absolute links to paths relative to the file's location inside
-# `shared/` (guidelines and study-types files use `../`, files at the
-# `shared/` root use `./`).
+# `references/` (guidelines and study-types files sit one directory deep so
+# their cross-links use `../`; files at the `references/` root use `./`).
 #
 # Args: <source_md> <output_md> <kind: guideline|study-type|root>
 
@@ -164,25 +171,26 @@ convert_source() {
 
 # --- 4. Wipe old layout and recreate target directories ---
 #
-# Transition cleanup: the previous layout placed bundled files directly under
-# skills/llm-guidelines/. Remove that directory if present so we don't ship
-# stale content alongside the new shared/ + skills/{explore,review}/ layout.
+# Transition cleanup: previous layouts placed content under
+# skills/llm-guidelines/ directly (very old), or split into skills/explore/
+# + skills/review/ + shared/ (intermediate). Remove all three so we don't
+# ship stale content alongside the current single-skill layout.
 
-rm -rf "${PLUGIN_DIR}/skills/llm-guidelines"
+rm -rf "${PLUGIN_DIR}/shared" "${SKILLS_DIR}/explore" "${SKILLS_DIR}/review"
 
-mkdir -p "${SHARED_DIR}/guidelines" "${SHARED_DIR}/study-types"
-mkdir -p "${SKILLS_DIR}/explore" "${SKILLS_DIR}/review"
-find "${SHARED_DIR}/guidelines" -maxdepth 1 -name '*.md' -delete
-find "${SHARED_DIR}/study-types" -maxdepth 1 -name '*.md' -delete
-rm -f "${SHARED_DIR}/scope.md" "${SHARED_DIR}/checklist.md"
-rm -f "${SKILLS_DIR}/explore/SKILL.md" "${SKILLS_DIR}/review/SKILL.md"
+mkdir -p "${REFS_DIR}/guidelines" "${REFS_DIR}/study-types"
+find "${REFS_DIR}/guidelines" -maxdepth 1 -name '*.md' -delete
+find "${REFS_DIR}/study-types" -maxdepth 1 -name '*.md' -delete
+rm -f "${REFS_DIR}/scope.md" "${REFS_DIR}/checklist.md"
+rm -f "${REFS_DIR}/explore.md" "${REFS_DIR}/review.md"
+rm -f "${SKILL_DIR}/SKILL.md"
 
 # --- 5. Generate guideline files ---
 #
 # Iterate the source LaTeX-derived Markdown for ordering and heading
 # extraction; read content from the website's already-rendered subpage.
-# Index entries reference the files from a SKILL.md two levels deep
-# (skills/<mode>/SKILL.md), hence the `../../shared/` prefix.
+# Index entries are emitted relative to SKILL.md, which sits one level
+# above references/, so the prefix is `references/`.
 
 guidelines_index=""
 for src in guidelines/_sources/0[1-8]_*.md; do
@@ -195,8 +203,8 @@ for src in guidelines/_sources/0[1-8]_*.md; do
         echo "warn: $site_md missing; run convert-and-merge-sources.sh first" >&2
         continue
     fi
-    convert_source "$site_md" "${SHARED_DIR}/guidelines/${slug}.md" guideline
-    guidelines_index="${guidelines_index}- [${heading}](../../shared/guidelines/${slug}.md)\n"
+    convert_source "$site_md" "${REFS_DIR}/guidelines/${slug}.md" guideline
+    guidelines_index="${guidelines_index}- [${heading}](references/guidelines/${slug}.md)\n"
 done
 
 # --- 6. Generate study-type files ---
@@ -217,8 +225,8 @@ emit_study_type() {
         echo "warn: $site_md missing; run convert-and-merge-sources.sh first" >&2
         return 0
     fi
-    convert_source "$site_md" "${SHARED_DIR}/study-types/${slug}.md" study-type
-    study_types_index="${study_types_index}${indent}- [${heading}](../../shared/study-types/${slug}.md)\n"
+    convert_source "$site_md" "${REFS_DIR}/study-types/${slug}.md" study-type
+    study_types_index="${study_types_index}${indent}- [${heading}](references/study-types/${slug}.md)\n"
 }
 
 study_types_index=""
@@ -240,31 +248,37 @@ for src in study-types/_sources/11_*.md; do emit_study_type "$src" ""; done
 
 # --- 7. Generate scope.md and checklist.md ---
 
-convert_source "scope/index.md"     "${SHARED_DIR}/scope.md"     root
-convert_source "checklist/index.md" "${SHARED_DIR}/checklist.md" root
+convert_source "scope/index.md"     "${REFS_DIR}/scope.md"     root
+convert_source "checklist/index.md" "${REFS_DIR}/checklist.md" root
 
-# --- 8. Render the two SKILL.md files ---
+# --- 8. Render SKILL.md and the two mode reference files ---
 #
-# Both templates live in the website repo under `_skill/` (build-time
-# artifacts that should not ship in the consumer-facing skill repo). Each
-# rendered SKILL.md is written into its skill directory in the submodule.
+# Templates live in the website repo under `_skill/` (build-time artifacts
+# that should not ship in the consumer-facing skill repo). SKILL.md is the
+# router; references/{explore,review}.md hold the mode-specific procedures.
 
 GUIDELINES_INDEX=$(printf '%b' "$guidelines_index")
 STUDY_TYPES_INDEX=$(printf '%b' "$study_types_index")
 export VERSION GUIDELINES_INDEX STUDY_TYPES_INDEX
 
-for mode in explore review; do
-    template="${ROOT}/_skill/${mode}.SKILL.md.template"
-    if [ ! -e "$template" ]; then
-        echo "error: $template missing" >&2
+substitute_template() {
+    src=$1
+    dst=$2
+    if [ ! -e "$src" ]; then
+        echo "error: $src missing" >&2
         exit 1
     fi
     perl -CSD -pe '
         s/\{\{VERSION\}\}/$ENV{VERSION}/g;
         s/\{\{GUIDELINES_INDEX\}\}/$ENV{GUIDELINES_INDEX}/g;
         s/\{\{STUDY_TYPES_INDEX\}\}/$ENV{STUDY_TYPES_INDEX}/g;
-    ' "$template" > "${SKILLS_DIR}/${mode}/SKILL.md"
-done
+    ' "$src" > "$dst"
+}
+
+mkdir -p "${SKILL_DIR}"
+substitute_template "${ROOT}/_skill/SKILL.md.template"              "${SKILL_DIR}/SKILL.md"
+substitute_template "${ROOT}/_skill/references-explore.md.template" "${REFS_DIR}/explore.md"
+substitute_template "${ROOT}/_skill/references-review.md.template"  "${REFS_DIR}/review.md"
 
 # --- 9. Stamp version into manifests and VERSION ---
 #

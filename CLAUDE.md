@@ -50,38 +50,40 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 
 ## Skill Pipeline
 
-`generate-skill.sh` produces an [Agent Skill](https://agentskills.io/home) bundle from the same Markdown the website builds. The bundle exposes two skills sharing a common content pool:
+`generate-skill.sh` produces an [Agent Skill](https://agentskills.io/home) bundle from the same Markdown the website builds. The bundle is a single self-contained skill with two slash-command entry points:
 
 ```
 plugins/llm-guidelines/
-  shared/                  generated content shared by both skills
-    guidelines/
-    study-types/
-    scope.md
-    checklist.md
   skills/
-    explore/SKILL.md       explore-mode skill (planning, discussion)
-    review/SKILL.md        review-mode skill (assessing a draft)
+    llm-guidelines/
+      SKILL.md             router: shared frontmatter, mode-selection, shared constraints, file indices
+      references/
+        explore.md         explore-mode procedure (loaded by SKILL.md)
+        review.md          review-mode procedure (loaded by SKILL.md)
+        guidelines/        eight standalone guideline files
+        study-types/       study-type taxonomy files
+        scope.md
+        checklist.md
   commands/
-    explore.md             /llm-guidelines:explore slash command (thin wrapper)
-    review.md              /llm-guidelines:review slash command (thin wrapper)
+    explore.md             /llm-guidelines:explore slash command (routes into explore mode)
+    review.md              /llm-guidelines:review slash command (routes into review mode)
 ```
 
-`SKILL.md` files reference shared content as `../../shared/...`. The slash commands are thin wrappers that point at the corresponding skill, so the workflow lives in exactly one place per mode.
+All bundled content lives inside the skill folder under `references/`, so the skill conforms to the [Agent Skills spec](https://agentskills.io/specification) layout (a self-contained `SKILL.md` plus a `references/` subdirectory). The two slash commands are thin wrappers that each name the same `llm-guidelines` skill and hint which mode to enter; the mode-specific procedure lives in exactly one place under `references/`.
 
 Pipeline steps:
 
 1. Reads `_config.yml` to extract the current guideline CalVer tag and `_skill/REVISION` for the skill revision number; combines them into the skill version (see "Versioning" below).
 2. Iterates `guidelines/_sources/0[1-8]_*.md` and `study-types/_sources/0[2-9]_*.md` plus `1[0-1]_*.md` for ordering, then loads the matching website-rendered subpage (`guidelines/<slug>/index.md`, `study-types/<slug>/index.md`) for each.
-3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to relative paths inside `shared/`; writes the result into `plugins/llm-guidelines/shared/`.
-4. Renders `plugins/llm-guidelines/skills/explore/SKILL.md` and `plugins/llm-guidelines/skills/review/SKILL.md` from `_skill/explore.SKILL.md.template` and `_skill/review.SKILL.md.template` respectively (templates kept here, since they are build-time artifacts and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`. Index entries reference `../../shared/...`.
+3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to relative paths inside `references/`; writes the result into `plugins/llm-guidelines/skills/llm-guidelines/references/`.
+4. Renders `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` from `_skill/SKILL.md.template`, and renders `references/explore.md` and `references/review.md` from `_skill/references-explore.md.template` and `_skill/references-review.md.template` respectively (templates kept here, since they are build-time artifacts and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`. Index entries reference `references/...` (one level deep from SKILL.md, per the Agent Skills spec).
 5. Rewrites the `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
 6. Renders `skill/index.md` (in this repo) and `README.md` (in the skill repo) from `_skill/skill-index.md.template` and `_skill/README.md.template`, substituting the literal slash-command and install-command strings from `_skill/commands.env`. Fails with an explicit error if any `{{CMD_*}}` placeholder is unresolved.
-7. Removes any leftover `plugins/llm-guidelines/skills/llm-guidelines/` directory from earlier single-skill bundles.
+7. Removes any leftover `plugins/llm-guidelines/shared/`, `plugins/llm-guidelines/skills/explore/`, or `plugins/llm-guidelines/skills/review/` directories from earlier layouts.
 
-In the website repo, `_skill/explore.SKILL.md.template`, `_skill/review.SKILL.md.template`, `_skill/skill-index.md.template`, `_skill/README.md.template`, `_skill/commands.env`, and `_skill/REVISION` are hand-curated. In the skill repo, `LICENSE`, `.gitignore`, `CLAUDE.md`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; `README.md`, everything under `plugins/llm-guidelines/shared/`, and the two `SKILL.md` files are generated. The skill repo's `CLAUDE.md` exists to warn future Claude Code sessions opened in that repo that the bundle is generated upstream and must not be edited there directly — bypassing the generator silently desynchronizes the `version` stamps in `plugin.json` and `marketplace.json` from the bundle's actual content, causing `/plugin` to report "already at the latest" for users on stale content.
+In the website repo, `_skill/SKILL.md.template`, `_skill/references-explore.md.template`, `_skill/references-review.md.template`, `_skill/skill-index.md.template`, `_skill/README.md.template`, `_skill/commands.env`, and `_skill/REVISION` are hand-curated. In the skill repo, `LICENSE`, `.gitignore`, `CLAUDE.md`, the plugin manifest, the marketplace JSON, and the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`) are hand-curated; `README.md`, everything under `plugins/llm-guidelines/skills/llm-guidelines/` (the `SKILL.md` and the entire `references/` tree) are generated. The skill repo's `CLAUDE.md` exists to warn future Claude Code sessions opened in that repo that the bundle is generated upstream and must not be edited there directly — bypassing the generator silently desynchronizes the `version` stamps in `plugin.json` and `marketplace.json` from the bundle's actual content, causing `/plugin` to report "already at the latest" for users on stale content.
 
-The website surface is a single page at `/skill/` (`skill/index.md`, generated from `_skill/skill-index.md.template`): install instructions, invocation, and a table linking the bundled files to their rich rendering on this site (or, for the two `SKILL.md` files, to the source on GitHub).
+The website surface is a single page at `/skill/` (`skill/index.md`, generated from `_skill/skill-index.md.template`): install instructions, invocation, and a table linking the bundled files to their rich rendering on this site (or, for `SKILL.md` and the mode reference files, to the source on GitHub).
 
 To change a slash-command literal anywhere in the docs, edit `_skill/commands.env` and re-run `./generate-skill.sh`; both the website page and the skill repo README pick up the change.
 
@@ -237,7 +239,7 @@ The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-
 
 ### Bumping the skill revision (skill-only change)
 
-Use this when the guideline content has not changed (no new paper tag) but the skill bundle itself needs a new release — for example, edits to a `SKILL.md` template, the slash commands, the `shared/` layout, or `generate-skill.sh`.
+Use this when the guideline content has not changed (no new paper tag) but the skill bundle itself needs a new release — for example, edits to a `SKILL.md` template, the slash commands, the `references/` layout, or `generate-skill.sh`.
 
 1. Increment the integer in `_skill/REVISION` (e.g., `0` → `1`, or `2` → `3`).
 2. Run `./convert-and-merge-sources.sh` (or `./generate-skill.sh` directly if no Markdown content changed).

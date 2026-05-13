@@ -1,0 +1,57 @@
+---
+name: llm-guidelines
+description: Apply the community LLM reporting guidelines for empirical SE studies (see https://llm-guidelines.org). Use when the user plans, discusses, or audits an empirical study whose method involves an LLM, walks through the scope statement, eight reporting guidelines, or reporting checklist, picks a study type from the taxonomy (LLMs as annotators, judges, synthesis, or subjects; studying LLM usage in software engineering; LLMs for new SE tools; benchmarking LLMs for SE tasks), or asks for a structured pass over a draft (`.tex` or `.pdf`, plus any supplementary material) producing an `llm-guidelines-report.md`.
+license: CC-BY-4.0
+metadata:
+  version: "{{VERSION}}"
+  homepage: https://llm-guidelines.org
+---
+
+# LLM Guidelines
+
+This skill packages the community LLM reporting guidelines for empirical SE studies — the scope statement, study-type taxonomy, the eight guidelines, and the consolidated reporting checklist — and applies them in one of two modes:
+
+- **Explore mode** — conversational planning, taxonomy questions, study-design discussion. No file is written.
+- **Review mode** — structured assessment of a concrete draft (`.tex` or `.pdf`, plus any supplementary material). Writes `llm-guidelines-report.md`.
+
+**Audience and tone.** The default user is an author working on their own study (planning, drafting, assembling a replication package, or reviewing their own draft). Frame findings and suggestions as ways to clarify reporting, not as violations. If a reviewer invokes this skill, treat the output as a starting point for review comments, **not** as a rejection rubric. The guidelines are community recommendations; incompleteness against them is not grounds for rejection.
+
+## Mode selection
+
+Pick the mode from the user's intent (or the slash command they invoked):
+
+- **Explore** — `/llm-guidelines:explore`, or when the user asks a general question about the guidelines / scope / study types, is planning a study, is preparing a replication package, or has no draft yet. Follow [`references/explore.md`](references/explore.md).
+- **Review** — `/llm-guidelines:review`, or when the user names a paper, hands a path to a `.tex` or `.pdf`, asks to check / audit / review a draft, or shares a replication package for assessment. Follow [`references/review.md`](references/review.md).
+
+If both apply (rare — e.g., the user has a draft and also wants to discuss design choices not yet in it), start in review mode for the parts that touch the draft and switch to explore mode for the planning questions. Announce the switch so the user can follow along.
+
+Do **not** invoke this skill at all when the user is doing unrelated software engineering work that happens to mention LLMs.
+
+## Bundled files
+
+All bundled content lives inside this skill's `references/` directory:
+
+- [`references/scope.md`](references/scope.md) — what is in and out of scope for the guidelines.
+- [`references/checklist.md`](references/checklist.md) — the consolidated reporting checklist organized by paper section, with severity markers.
+- `references/guidelines/<slug>.md` — one file per guideline (eight total).
+- `references/study-types/<slug>.md` — one file per study type plus umbrella entries.
+
+Load on demand. Do not preload the full bundle; the mode files instruct when to read each.
+
+## Guidelines index
+
+{{GUIDELINES_INDEX}}
+
+## Study-types index
+
+{{STUDY_TYPES_INDEX}}
+
+## Shared constraints
+
+These apply in both modes. The mode-specific files add to them but do not relax them.
+
+- **Cite the guidelines; do not paraphrase severity.** When you write "required" or "recommended", make sure it matches a `must` or `should` in the underlying guideline. If the guideline does not specify a level, use neutral language ("Consider...").
+- **Do not infer non-disclosure.** A missing detail does not mean the authors did something wrong; it means the report can state the detail explicitly.
+- **Stick to the guidelines.** Only address topics the bundled files cover. Do not add critiques of aspects the guidelines do not address (theoretical contribution, novelty argument, narrative structure, general writing quality), even if they come up.
+- **Author-side writing assistance is out of scope.** When assessing or discussing *Declare LLM Usage and Role*, restrict disclosure to LLM roles that materially affect the research method or its outcomes. The absence of an author-writing AI-disclosure is **not** a guideline gap. Venue policies may still require it, but that is a venue-policy concern, not a finding here.
+- **Do not modify user files** without an explicit follow-up request. Explore mode writes nothing; review mode writes only `llm-guidelines-report.md` in the working directory.
