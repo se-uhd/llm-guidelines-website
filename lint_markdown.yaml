@@ -1,0 +1,46 @@
+extensions:
+  front-matter:
+    enabled: true
+  markdown-tables:
+    enabled: true
+  markdown-task-list-items:
+    enabled: true
+  markdown-strikethrough:
+    enabled: true
+  markdown-extended-autolinks:
+    enabled: true
+
+plugins:
+  md005:
+    # Same rationale as in the bundle: mixed 3-space and 4-space
+    # sub-bullet indent under numbered parents is valid CommonMark; the
+    # template-driven prose reads more naturally than rewriting it.
+    enabled: false
+  md007:
+    # Same rationale as the bundle: pandoc-converted and template-driven
+    # lists use 4-space indent against md007's default 2-space expectation.
+    enabled: false
+  md013:
+    enabled: false
+  md024:
+    # Changelog pages repeat `## Changed`, `## Added`, etc. across
+    # versions by design (Keep a Changelog convention). Disable rather
+    # than rename the duplicate sections.
+    enabled: false
+  md025:
+    # Jekyll content pages carry a `title:` field in the YAML front
+    # matter AND a `# Heading` in the body; the linter sees both as H1
+    # and flags duplicates. The page render shows the title once.
+    enabled: false
+  md026:
+    # Same narrowing as in the bundle: drop `?` and `:` so question-form
+    # and list-introducer headings pass.
+    punctuation: ".,;!"
+  md033:
+    enabled: false
+  md036:
+    # Bold paragraph leads (`**Note:**`, `**Guideline:**`) are an
+    # intentional prose device, not failed headings.
+    enabled: false
+  md041:
+    enabled: false

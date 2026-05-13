@@ -17,14 +17,14 @@ The current version is recorded in `VERSION` and embedded in `.claude-plugin/mar
 
 ## Install as a Claude Code plugin
 
-```
+```text
 {{CMD_MARKETPLACE_ADD}}
 {{CMD_PLUGIN_INSTALL}}
 ```
 
 Two slash commands become available. Use `{{CMD_INVOKE_EXPLORE}}` to discuss the guidelines or plan a study (no arguments). Use `{{CMD_INVOKE_REVIEW}}` to assess a draft:
 
-```
+```text
 {{CMD_INVOKE_EXPLORE}}
 {{CMD_INVOKE_REVIEW_TEX}}
 {{CMD_INVOKE_REVIEW_PDF}}
@@ -32,13 +32,13 @@ Two slash commands become available. Use `{{CMD_INVOKE_EXPLORE}}` to discuss the
 
 Supplementary-material paths are optional, and you can pass more than one when artifacts live in separate locations (e.g., code on GitHub, data on Zenodo):
 
-```
+```text
 {{CMD_INVOKE_REVIEW_SUPP}}
 ```
 
 To pick up a new release, refresh the marketplace catalog and reload plugins:
 
-```
+```text
 {{CMD_MARKETPLACE_UPDATE}}
 {{CMD_RELOAD_PLUGINS}}
 ```
@@ -68,7 +68,7 @@ The report frames findings as opportunities to clarify or strengthen reporting. 
 
 ## Repository layout
 
-```
+```text
 .claude-plugin/
   marketplace.json                marketplace entry (single-plugin)
 plugins/

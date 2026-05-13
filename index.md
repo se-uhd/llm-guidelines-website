@@ -5,7 +5,7 @@ description: "Reporting Guidelines for Empirical Studies in Software Engineering
 nav_order: 1
 ---
 
-# LLM Guidelines for SE 
+# LLM Guidelines for SE
 {: .fs-9 }
 
 Guidelines for Empirical Studies in Software Engineering involving Large Language Models.
@@ -28,17 +28,19 @@ Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com
 <a href="https://arxiv.org/abs/2508.15503" class="btn" target="_blank" rel="noopener noreferrer"><i class="ai ai-arxiv"></i> View on arXiv</a>
 
 {% raw %}
-```
+
+```bibtex
 @misc{baltes2026guidelinesempiricalstudiessoftware,
-      title={{Guidelines for Empirical Studies in Software Engineering involving Large Language Models}}, 
+      title={{Guidelines for Empirical Studies in Software Engineering involving Large Language Models}},
       author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Junda He and Christoph Treude and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Cristina Martinez Montes and Lutz Prechelt and Paul Ralph and Rijnard van Tonder and Stefan Wagner},
       year={2026},
       eprint={2508.15503},
       archivePrefix={arXiv},
       primaryClass={cs.SE},
-      url={https://arxiv.org/abs/2508.15503}, 
+      url={https://arxiv.org/abs/2508.15503},
 }
 ```
+
 {% endraw %}
 
 <p class="citations-info"><i class="ai ai-google-scholar"></i> Cited by about <strong>{{ site.data.citations.total }}</strong> publications on Google Scholar (<a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=16126919270545554010,11554931200167593565&as_sdt=5" target="_blank" rel="noopener noreferrer">preprint</a> + <a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=10292768743544802913&as_sdt=5" target="_blank" rel="noopener noreferrer">position paper</a>; updated {{ site.data.citations.updated }}).</p>

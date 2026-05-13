@@ -14,7 +14,7 @@ The skill is published in a separate repository at [se-uhd/llm-guidelines-skill]
 
 ## Install
 
-```
+```text
 {{CMD_MARKETPLACE_ADD}}
 {{CMD_PLUGIN_INSTALL}}
 ```
@@ -27,7 +27,7 @@ The bundle exposes two slash commands.
 
 Use this when you want to ask a question, plan a study, walk through the checklist, or decide which study type your project falls under, before any draft exists.
 
-```
+```text
 {{CMD_INVOKE_EXPLORE}}
 ```
 
@@ -39,19 +39,19 @@ Use this when you have a draft paper (and optionally supplementary material) and
 
 With a LaTeX source:
 
-```
+```text
 {{CMD_INVOKE_REVIEW_TEX}}
 ```
 
 Or with a PDF:
 
-```
+```text
 {{CMD_INVOKE_REVIEW_PDF}}
 ```
 
 The supplementary-material path is optional, and you can pass more than one when artifacts live in separate locations (e.g., code on GitHub, data on Zenodo):
 
-```
+```text
 {{CMD_INVOKE_REVIEW_SUPP}}
 ```
 

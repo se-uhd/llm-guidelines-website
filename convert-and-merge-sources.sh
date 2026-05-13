@@ -302,6 +302,27 @@ if [ -e checklist/index.md ]; then
     # post-processing is needed.
 fi
 
+# --- Final markdown normalization (lint-aligned) ---
+#
+# - Collapse runs of 3+ consecutive newlines (2+ blank lines) to one
+#   blank line.
+# - Trim trailing blank lines so each file ends with exactly one `\n`.
+# - Normalize `- {2,}` after a list marker to a single space. Pandoc
+#   emits `-  ` for some list contexts, which the linter flags as md030.
+#
+# Run over every authored / generated `.md` under the content sections so
+# that both the intermediate `_sources/*.md` and the final `<slug>/index.md`
+# pages stay clean independent of the per-section post-processing above.
+
+find scope guidelines study-types checklist changelog \
+     -type f -name '*.md' -print0 2>/dev/null \
+  | xargs -0 perl -CSD -0777 -i -pe '
+      s/\n{3,}/\n\n/g;
+      s/\n+\z/\n/;
+      s/^(\s*)-[ ]{2,}(\S)/$1- $2/mg;
+      s/^(\s*)(\d+\.)[ ]{2,}(\S)/$1$2 $3/mg;
+  '
+
 # --- Skill bundle (optional; runs only if the skill submodule is initialized) ---
 
 if [ -d llm-guidelines-skill/.claude-plugin ] && [ -x ./generate-skill.sh ]; then

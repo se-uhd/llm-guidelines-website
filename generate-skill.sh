@@ -185,6 +185,10 @@ rm -f "${REFS_DIR}/scope.md" "${REFS_DIR}/checklist.md"
 rm -f "${REFS_DIR}/explore.md" "${REFS_DIR}/review.md"
 rm -f "${SKILL_DIR}/SKILL.md"
 
+# ${SKILL_DIR}/scripts/ (the vendored PyMarkdown tree plus the lint wrapper,
+# refresh script, and config) is hand-curated in the skill submodule and is
+# intentionally NOT touched here. See llm-guidelines-skill/CLAUDE.md.
+
 # --- 5. Generate guideline files ---
 #
 # Iterate the source LaTeX-derived Markdown for ordering and heading
@@ -329,6 +333,27 @@ render_with_commands() {
 
 render_with_commands "${ROOT}/_skill/skill-index.md.template" "${ROOT}/skill/index.md"
 render_with_commands "${ROOT}/_skill/README.md.template"      "${SKILL_REPO}/README.md"
+
+# --- 11. Lint-aligned post-processing ---
+#
+# Collapse runs of 3+ consecutive newlines (2+ blank lines) to one blank
+# line, and trim trailing blank lines so each file ends with exactly one
+# `\n`. The pandoc → markdown_strict path and the merge step that prepends
+# Jekyll frontmatter and the `# Heading` line both leave occasional
+# multi-blank runs that pymarkdown's md012 flags; this final pass keeps
+# the published bundle clean independent of upstream pipeline quirks.
+#
+# Trailing whitespace is intentionally NOT stripped here — markdown allows
+# 2 trailing spaces as a hard-break, and md009 in the skill's
+# `scripts/lint_markdown.yaml` accepts 0 or 2. Stripping would change the
+# semantics of intentional hard-breaks.
+
+find "${SKILL_DIR}" "${SKILL_REPO}/README.md" -type f -name '*.md' \
+     -print0 2>/dev/null \
+  | xargs -0 perl -CSD -0777 -i -pe '
+      s/\n{3,}/\n\n/g;
+      s/\n+\z/\n/;
+  '
 
 echo "skill bundle written to ${PLUGIN_DIR}"
 echo "to publish: cd llm-guidelines-skill && git add -A && git commit && git push"

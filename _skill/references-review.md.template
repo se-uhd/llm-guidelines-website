@@ -59,6 +59,8 @@ If no paper path is supplied, ask the user for one before proceeding. Supplement
 
 6. **Write the report.** Save the assessment as `llm-guidelines-report.md` in the user's current working directory **and** print the same content to the console. Use the [report template](#report-template) below.
 
+    Then run `python3 ${CLAUDE_SKILL_DIR}/scripts/lint_markdown.py --fix llm-guidelines-report.md`. If the linter exits non-zero, read its stdout findings (one per line, tab-separated `<file>:<line>\t<rule>\t<message>`), revise the report in place to address each, and re-run the linter. Repeat at most three iterations; after the third pass proceed regardless of the linter's state. The lint loop is internal quality control — do not mention lint output, rule names, exit codes, or iteration counts in the user-facing summary.
+
 7. **Stop after the report.** Do not modify the user's paper or supplementary material. If the user asks for follow-up edits, treat that as a new request.
 
 ## Report template
@@ -72,7 +74,7 @@ If no paper path is supplied, ask the user for one before proceeding. Supplement
 **Skill version:** <VERSION>
 
 > This report applies the community LLM reporting guidelines from
-> https://llm-guidelines.org as a self-check for authors. It is not a
+> <https://llm-guidelines.org> as a self-check for authors. It is not a
 > rejection rubric; missing items are reporting gaps to consider, not
 > grounds for rejection.
 
@@ -95,6 +97,7 @@ Session Traces*).>
 ## Per-guideline findings
 
 ### Declare LLM Usage and Role
+
 - Status: <covered | partial | not found | not applicable>
 - Evidence: <1-3 items, each a verbatim quote from the paper or a verbatim excerpt from a file in the supplementary material (or, for binary/structured data files, a direct file-or-key pointer), with source location (e.g., `_s3_realistic.tex:140`, `prompts/judge_prompt.txt:1-12`, or `benchmark/python/api_usage/instance_0042.json`). Do not paraphrase here; gaps and interpretation belong in the Gaps bullet.>
 - Gaps: <author-facing bullets; each bullet's premise must be supported by an Evidence item or by an absence you actually checked for (state what you searched and how, e.g., "grep for '\\bdate\\b' across all .tex files returned no experiment date").>

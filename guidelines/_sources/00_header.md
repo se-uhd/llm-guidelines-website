@@ -35,4 +35,3 @@ The guideline's core recommendations:<br/>
 | <a href="/guidelines/use-an-open-llm-as-a-baseline/">Open LLM</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | -- | -- | <span class="marker-should">●</span> | ● |
 | <a href="/guidelines/use-human-validation-for-llm-outputs/">Human Validation</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
 | <a href="/guidelines/report-limitations-and-mitigations/">Limitations</a> | ● | ● | ● | ● | ● | ● | ● |
-
