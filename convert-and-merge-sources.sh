@@ -228,9 +228,10 @@ if [ -e checklist/index.md ]; then
     # Remove stray whitespace-only lines (from \mbox{}\\)
     perl -CSD -pi -e 's/^  $//' checklist/index.md
     # Place the filter UI and reset/export buttons between the intro paragraph
-    # and the first checklist section (replaces placeholder; anchors on the
-    # end of the intro paragraph, which now closes with the bracket-convention
-    # sentence "...filter to the tags relevant to their study.").
+    # and the first checklist section. Anchors on the structural boundary
+    # between the `# Reporting Checklist` title and the first `## ` heading,
+    # rather than on any specific sentence in the intro prose, so it survives
+    # rewording of the introduction. Fails loudly if the anchor is not found.
     perl -CSD -0777 -pi -e '
         s/<!-- RESET_BUTTON -->\n*/\n/;
         my $filters = q{<details id="condition-filters"><summary>Filter checklist by study characteristics</summary>
@@ -289,7 +290,8 @@ if [ -e checklist/index.md ]; then
 </details>
 };
         my $buttons = qq{<button id="checklist-reset" type="button" class="btn btn-outline"><i class="fa-solid fa-rotate-left"></i> Reset checkboxes</button>\n<button id="checklist-export" type="button" class="btn btn-outline"><i class="fa-solid fa-file-csv"></i> Export to CSV</button>\n};
-        s/(use the filter panel to hide items that do not apply to their study\.)\n/$1\n\n$buttons\n$filters/;
+        my $injected = s{(\n# Reporting Checklist\n.*?)(\n+## )}{$1\n\n$buttons\n$filters$2}s;
+        die "ERROR: failed to insert checklist filter UI: could not find boundary between `# Reporting Checklist` and the first `## ` heading in checklist/index.md\n" unless $injected;
     ' checklist/index.md
     # Replace ○ (SHOULD) with gray-filled ● to match paper styling
     perl -pi -e 's/○/<span class="marker-should">●<\/span>/g' checklist/index.md
