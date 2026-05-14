@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Scope and Conventions
+title: Scope
 nav_order: 2
 has_children: false
 ---

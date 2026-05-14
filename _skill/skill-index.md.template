@@ -63,13 +63,20 @@ The skill can also load itself without an explicit slash command if the agent de
 
 ## Bundled Files
 
-The bundle ships a structured set of Markdown files under `plugins/llm-guidelines/skills/llm-guidelines/`. The first column links to the rich rendering on this website (where one exists); the second column links to the raw Markdown file in the skill repository.
+The bundle ships a set of Markdown files under `plugins/llm-guidelines/skills/llm-guidelines/`.
+
+### Entry points
+
+These files live only in the skill repo:
+
+- [SKILL.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/SKILL.md): skill instructions
+- [references/explore.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/explore.md): explore mode
+- [references/review.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/review.md): review mode
+
+### Scope and Checklist
 
 | File | Markdown |
 |------|----------|
-| Skill router (not rendered here) | [SKILL.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/SKILL.md) |
-| Explore-mode procedure (not rendered here) | [references/explore.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/explore.md) |
-| Review-mode procedure (not rendered here) | [references/review.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/review.md) |
 | [Scope](/scope/) | [references/scope.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/scope.md) |
 | [Reporting Checklist](/checklist/) | [references/checklist.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/checklist.md) |
 

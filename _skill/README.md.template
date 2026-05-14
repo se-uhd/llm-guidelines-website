@@ -47,7 +47,7 @@ The marketplace update reports `(1 plugin bumped)` when a new version is found a
 
 ## Use in other Agent Skills clients
 
-The skill is self-contained under `plugins/llm-guidelines/skills/llm-guidelines/`: `SKILL.md` plus a `references/` directory holding the mode-specific procedures (`explore.md`, `review.md`), the eight guideline files, the study-type files, the scope statement, and the reporting checklist. To consume the bundle outside Claude Code's plugin loader, copy that directory into the location your client expects (each client's docs are linked from the [Agent Skills client list](https://agentskills.io/clients)).
+The skill is self-contained under `plugins/llm-guidelines/skills/llm-guidelines/`, laid out per the [Agent Skills specification](https://agentskills.io/specification): `SKILL.md` plus a `references/` directory holding the mode-specific procedures (`explore.md`, `review.md`), the eight guideline files, the study-type files, the scope statement, and the reporting checklist. To consume the bundle outside Claude Code's plugin loader, copy that directory into the location your client expects (each client's docs are linked from the [Agent Skills client list](https://agentskills.io/clients)).
 
 ## What the skills do
 
@@ -68,30 +68,23 @@ The report frames findings as opportunities to clarify or strengthen reporting. 
 
 ## Repository layout
 
+Packaging skeleton (showing the shape Claude Code's plugin loader expects, not the full file inventory):
+
 ```text
-.claude-plugin/
-  marketplace.json                marketplace entry (single-plugin)
-plugins/
-  llm-guidelines/
-    .claude-plugin/
-      plugin.json                 plugin manifest
-    commands/
-      explore.md                  {{CMD_INVOKE_EXPLORE}} slash command
-      review.md                   {{CMD_INVOKE_REVIEW}} slash command
-    skills/
-      llm-guidelines/
-        SKILL.md                  router with shared frontmatter, mode-
-                                  selection, and shared constraints
-        references/
-          explore.md              explore-mode procedure
-          review.md               review-mode procedure
-          guidelines/             eight standalone guideline files
-          study-types/            seven study-type files plus parent
-                                  groupings
-          scope.md                in-scope / out-of-scope definition
-          checklist.md            consolidated reporting checklist
-VERSION                           YYYY.MM or YYYY.MM_revN
+.claude-plugin/marketplace.json
+plugins/llm-guidelines/
+  .claude-plugin/plugin.json
+  commands/                       # {{CMD_INVOKE_EXPLORE}}, {{CMD_INVOKE_REVIEW}}
+  skills/llm-guidelines/
+    SKILL.md
+    references/                   # explore.md, review.md, guidelines/, study-types/, scope.md, checklist.md
+    scripts/                      # Markdown linter and its vendored PyMarkdown tree
+scripts/tests/                    # bundle smoke test
+.github/workflows/                # CI: smoke test, Markdown lint
+VERSION                           # YYYY.MM or YYYY.MM_revN
 ```
+
+The bundled content under `references/` is regenerated from the website repository; see "Maintainer notes" below.
 
 ## Maintainer notes
 
@@ -104,8 +97,12 @@ claude plugin validate plugins/llm-guidelines
 claude plugin validate .claude-plugin/marketplace.json
 ```
 
-If a user reports `Failed to install: This plugin uses a source type your Claude Code version does not support`, do **not** assume the problem is the `source` field. Claude Code emits that same message for any unrecognized key in either manifest. Run `claude plugin validate` first — the validator surfaces the real error.
+If a user reports `Failed to install: This plugin uses a source type your Claude Code version does not support`, do **not** assume the problem is the `source` field. Claude Code emits that same message for any unrecognized key in either manifest. Run `claude plugin validate` first; the validator surfaces the real error.
+
+Two further checks run in CI on every push and pull request (see `.github/workflows/`) and should be run locally before tagging a release: a bundle smoke test (`scripts/tests/run_smoke.py`) that verifies the `version` field agrees across `VERSION`, `marketplace.json`, `plugin.json`, and `SKILL.md`, that the expected `references/` files are present, and that internal links resolve; and a Markdown linter (`plugins/llm-guidelines/skills/llm-guidelines/scripts/lint_markdown.py`, backed by a vendored PyMarkdown tree under `scripts/_vendor/`) that enforces the policy in `lint_markdown.yaml` and supports `--fix` for auto-correctable rules. The smoke test catches exactly the desync that broke `2026.05_rev10`, where a content change shipped without the version stamps moving.
 
 ## License
 
-Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), matching the [companion website](https://github.com/se-uhd/llm-guidelines-website) and [paper](https://github.com/se-uhd/llm-guidelines-paper) repositories. See `LICENSE`.
+First-party content is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), matching the [companion website](https://github.com/se-uhd/llm-guidelines-website) and [paper](https://github.com/se-uhd/llm-guidelines-paper) repositories. See [`LICENSE`](LICENSE).
+
+Third-party software bundled under `plugins/llm-guidelines/skills/llm-guidelines/scripts/_vendor/` is distributed verbatim under its own licenses (MIT, BSD-3-Clause, Apache-2.0, PSF-2.0). See [`plugins/llm-guidelines/skills/llm-guidelines/scripts/_vendor/NOTICE`](plugins/llm-guidelines/skills/llm-guidelines/scripts/_vendor/NOTICE) for per-package attribution and full license texts.
