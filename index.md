@@ -63,6 +63,7 @@ Contributors:
 * [Brian Fitzgerald](https://www.brian-fitzgerald.com), Lero and University of Limerick (Ireland)
 * [Davide Fucci](https://dfucci.github.io), Blekinge Institute of Technology (Sweden)
 * [Junda He](https://jundahe.github.io/), Singapore Management University (Singapore)
+* [Steffen Herbold](https://www.fim.uni-passau.de/ai-engineering), University of Passau (Germany)
 * [Christoph Treude](https://ctreude.ca), Singapore Management University (Singapore)
 * [Marcos Kalinowski](https://www-di.inf.puc-rio.br/~kalinowski/), Pontifical Catholic University of Rio de Janeiro (Brazil)
 * [Stefano Lambiase](https://stefanolambiase.github.io), Aalborg University in Copenhagen (Denmark)

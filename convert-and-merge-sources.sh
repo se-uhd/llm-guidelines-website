@@ -260,6 +260,7 @@ if [ -e checklist/index.md ]; then
 <div class="filter-section">
 <p class="filter-section-title">Benchmarks and Metrics</p>
 <div class="filter-grid">
+<label title="Study outcomes depend on response time (e.g., interactive user studies, latency comparisons)."><input type="checkbox" class="cond-filter" data-condition="latency-sensitive" checked> latency-sensitive</label>
 <label title="Study creates or releases a new benchmark."><input type="checkbox" class="cond-filter" data-condition="new-benchmark" checked> new benchmark</label>
 <label title="Study uses non-probability sampling (e.g., convenience) to select benchmark items."><input type="checkbox" class="cond-filter" data-condition="non-probability-sampling" checked> non-probability sampling</label>
 <label title="Multiple human raters or non-deterministic LLM-as-judge runs assess the same item, with possible disagreement."><input type="checkbox" class="cond-filter" data-condition="multi-rater-scoring" checked> multi-rater scoring</label>
