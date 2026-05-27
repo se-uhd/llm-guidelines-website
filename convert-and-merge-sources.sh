@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Short-title -> slug mapping, shared with generate-skill.sh.
+. "$(dirname "$0")/short-titles.sh"
+
 convert_tex_to_md() {
     directory=$1
     cd "$directory"
@@ -25,9 +28,11 @@ generate_subpage() {
     heading=$(grep -m1 "^## " "$md_file" | sed 's/^## //')
     [ -z "$heading" ] && return 1
 
-    # Derive slug: lowercase, remove non-alphanumeric chars except hyphens and
-    # spaces, collapse spaces to hyphens
-    slug=$(echo "$heading" | perl -pe '
+    # Nav title and slug both derive from the short title (full heading where
+    # none is defined). The slug is the short title lowercased with non-word
+    # characters removed and spaces collapsed to hyphens.
+    nav_title=$(short_title "$heading")
+    slug=$(echo "$nav_title" | perl -pe '
         $_ = lc $_;
         s/[^a-z0-9 -]//g;
         s/\s+/-/g;
@@ -36,29 +41,15 @@ generate_subpage() {
     ')
     [ -z "$slug" ] && return 1
 
-    # Derive nav title: map full heading text to short name where one is defined
-    nav_title=$(echo "$heading" | perl -pe '
-        my %short = (
-            "Declare LLM Usage and Role"                              => "Declare Usage",
-            "Report Model Version, Configuration, and Customizations" => "Model Version",
-            "Report System and Prompt Design"                         => "Design",
-            "Report Session Traces"                                   => "Traces",
-            "Use Suitable Baselines, Benchmarks, and Metrics"         => "Benchmarks",
-            "Use an Open LLM as a Baseline"                           => "Open LLM",
-            "Use Human Validation for LLM Outputs"                    => "Human Validation",
-            "Report Limitations and Mitigations"                      => "Limitations",
-            "LLMs as Annotators"                                      => "Annotator",
-            "LLMs as Judges"                                          => "Judge",
-            "LLMs for Synthesis"                                      => "Synthesis",
-            "LLMs as Subjects"                                        => "Subject",
-            "Studying LLM Usage in Software Engineering"              => "Usage",
-            "LLMs for New Software Engineering Tools"                 => "Tools",
-            "Benchmarking LLMs for Software Engineering Tasks"        => "Benchmarks",
-            "LLMs as Tools for Software Engineering Researchers"      => "LLMs for Research",
-            "LLMs as Tools for Software Engineers"                    => "LLMs for SE",
-        );
-        chomp(my $key = $_);
-        $_ = "$short{$key}\n" if exists $short{$key};
+    # Old slug, derived from the full heading. When the short title shortens the
+    # slug, emit a jekyll-redirect-from alias so the previously published URL
+    # (/<parent_dir>/<full-heading-slug>/) keeps resolving.
+    full_slug=$(echo "$heading" | perl -pe '
+        $_ = lc $_;
+        s/[^a-z0-9 -]//g;
+        s/\s+/-/g;
+        s/-{2,}/-/g;
+        s/^-|-$//g;
     ')
 
     # Create sub-page directory
@@ -73,6 +64,7 @@ generate_subpage() {
         [ -n "$grand_parent" ] && printf 'grand_parent: %s\n' "$grand_parent"
         printf 'nav_order: %s\n' "$nav_order"
         [ -n "$has_children" ] && printf 'has_children: true\n'
+        [ "$full_slug" != "$slug" ] && printf 'redirect_from:\n  - /%s/%s/\n' "$parent_dir" "$full_slug"
         printf -- '---\n\n'
         printf '# %s\n\n' "$heading"
 

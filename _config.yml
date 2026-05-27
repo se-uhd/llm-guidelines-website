@@ -34,6 +34,9 @@ callouts:
   highlight:
     color: blue
 
+plugins:
+  - jekyll-redirect-from
+
 exclude:
   - "CLAUDE.md"
   - "LICENSE"
@@ -46,6 +49,7 @@ exclude:
   - "mise.toml"
   - "pandoc-filters.lua"
   - "scripts"
+  - "short-titles.sh"
   - "texput.log"
   - "**/_sources/*"
   - "llm-guidelines-paper"

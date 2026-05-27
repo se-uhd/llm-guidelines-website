@@ -16,8 +16,8 @@ If the conversation reveals that a draft already exists and the user wants a str
 
 1. **Identify which area the question touches** (scope, study type, guideline, checklist). A single question can span several.
 2. **Load on demand.** Read only the file or files that bear on the question. Do not preload the full bundle.
-3. **Answer with citations.** Quote or paraphrase the relevant passage and link to the file (e.g., `./guidelines/report-system-and-prompt-design.md`). Use the same RFC 2119 levels the guideline uses (**must**, **should**); do not invent severity.
-4. **For study-design discussions**, walk the user through what the relevant guidelines would expect to see reported. This is advice for planning, not a checklist of violations. Surface the choices the guidelines call out (for example, open versus proprietary models for `use-an-open-llm-as-a-baseline`, or what to log for `report-session-traces`) and present the trade-offs the guideline discusses, then let the user decide.
+3. **Answer with citations.** Quote or paraphrase the relevant passage and link to the file (e.g., `./guidelines/design.md`). Use the same RFC 2119 levels the guideline uses (**must**, **should**); do not invent severity.
+4. **For study-design discussions**, walk the user through what the relevant guidelines would expect to see reported. This is advice for planning, not a checklist of violations. Surface the choices the guidelines call out (for example, open versus proprietary models for `open-llm`, or what to log for `traces`) and present the trade-offs the guideline discusses, then let the user decide.
 5. **Stay in scope.** Only address topics the bundled files cover. If the user asks about something the guidelines do not address (general statistical methods, theoretical contribution, narrative structure, writing quality), say so explicitly and, where relevant, point them to standard SE methodology references rather than answering from training data.
 6. **Do not write a report file.** Explore mode is a conversation. Nothing is written to disk unless the user asks.
 

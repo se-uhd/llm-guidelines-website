@@ -39,6 +39,9 @@ SKILLS_DIR="${PLUGIN_DIR}/skills"
 SKILL_DIR="${SKILLS_DIR}/llm-guidelines"
 REFS_DIR="${SKILL_DIR}/references"
 
+# Short-title -> slug mapping, shared with convert-and-merge-sources.sh.
+. "${ROOT}/short-titles.sh"
+
 if [ ! -d "${SKILL_REPO}/.claude-plugin" ]; then
     echo "error: ${SKILL_REPO} is not initialized; run 'git submodule update --init' first" >&2
     exit 1
@@ -79,6 +82,9 @@ fi
 echo "skill version: ${VERSION} (guideline ${GUIDELINE_VERSION}, revision ${REVISION})"
 
 # --- 2. Slug derivation (mirrors convert-and-merge-sources.sh) ---
+#
+# Slugs derive from the short title (see short-titles.sh), so the subpage
+# directory the website produces and the reference filename here agree.
 
 slugify() {
     echo "$1" | perl -CSD -pe '
@@ -159,7 +165,6 @@ convert_source() {
 
     perl -CSD -i -pe "
         my \$p = '${prefix}';
-        s{/guidelines#([a-z0-9-]+)}{\${p}guidelines/\$1.md}g;
         s{/guidelines/([a-z0-9-]+)/}{\${p}guidelines/\$1.md}g;
         s{/study-types/([a-z0-9-]+)/}{\${p}study-types/\$1.md}g;
         s{/scope/}{\${p}scope.md}g;
@@ -200,7 +205,7 @@ guidelines_index=""
 for src in guidelines/_sources/0[1-8]_*.md; do
     [ -e "$src" ] || continue
     heading=$(grep -m1 '^## ' "$src" | sed 's/^## //')
-    slug=$(slugify "$heading")
+    slug=$(slugify "$(short_title "$heading")")
     [ -z "$slug" ] && { echo "warn: no slug for $src" >&2; continue; }
     site_md="guidelines/${slug}/index.md"
     if [ ! -f "$site_md" ]; then
@@ -222,7 +227,7 @@ emit_study_type() {
     indent=$2
     [ -e "$src" ] || return 0
     heading=$(grep -m1 '^## ' "$src" | sed 's/^## //')
-    slug=$(slugify "$heading")
+    slug=$(slugify "$(short_title "$heading")")
     [ -z "$slug" ] && { echo "warn: no slug for $src" >&2; return 0; }
     site_md="study-types/${slug}/index.md"
     if [ ! -f "$site_md" ]; then

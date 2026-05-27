@@ -101,7 +101,7 @@ Session Traces*).>
 - Status: <covered | partial | not found | not applicable>
 - Evidence: <1-3 items, each a verbatim quote from the paper or a verbatim excerpt from a file in the supplementary material (or, for binary/structured data files, a direct file-or-key pointer), with source location (e.g., `_s3_realistic.tex:140`, `prompts/judge_prompt.txt:1-12`, or `benchmark/python/api_usage/instance_0042.json`). Do not paraphrase here; gaps and interpretation belong in the Gaps bullet.>
 - Gaps: <author-facing bullets; each bullet's premise must be supported by an Evidence item or by an absence you actually checked for (state what you searched and how, e.g., "grep for '\\bdate\\b' across all .tex files returned no experiment date").>
-- Pointers: <links to ./guidelines/declare-llm-usage-and-role.md>
+- Pointers: <links to ./guidelines/declare-usage.md>
 
 <... repeat for each of the remaining guidelines ...>
 

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem "jekyll"
 gem "just-the-docs"
+gem "jekyll-redirect-from"
 
 # prevent deprecation warnings (https://github.com/just-the-docs/just-the-docs/issues/1541)
 gem "sass-embedded", "~> 1.78.0"
