@@ -59,6 +59,8 @@ fi
 # guideline-version bump.
 #
 # Combined skill version: `YYYY.MM` when revision is 0, else `YYYY.MM_revN`.
+# Codex plugin version: strict semver `YYYY.M.REVISION` because Codex
+# rejects the Claude-facing `_revN` CalVer string.
 
 GUIDELINE_VERSION=$(perl -ne 'if (m{llm-guidelines-paper/tree/(\d{4}\.\d{2})}) { print $1; exit }' "${ROOT}/_config.yml")
 if [ -z "$GUIDELINE_VERSION" ]; then
@@ -79,7 +81,13 @@ if [ "$REVISION" = "0" ]; then
 else
     VERSION="${GUIDELINE_VERSION}_rev${REVISION}"
 fi
-echo "skill version: ${VERSION} (guideline ${GUIDELINE_VERSION}, revision ${REVISION})"
+
+GUIDELINE_YEAR=$(printf '%s' "$GUIDELINE_VERSION" | cut -d. -f1)
+GUIDELINE_MONTH=$(printf '%s' "$GUIDELINE_VERSION" | cut -d. -f2 | sed 's/^0*//')
+[ -n "$GUIDELINE_MONTH" ] || GUIDELINE_MONTH=0
+CODEX_VERSION="${GUIDELINE_YEAR}.${GUIDELINE_MONTH}.${REVISION}"
+
+echo "skill version: ${VERSION} (guideline ${GUIDELINE_VERSION}, revision ${REVISION}; codex ${CODEX_VERSION})"
 
 # --- 2. Slug derivation (mirrors convert-and-merge-sources.sh) ---
 #
@@ -268,7 +276,7 @@ convert_source "checklist/index.md" "${REFS_DIR}/checklist.md" root
 
 GUIDELINES_INDEX=$(printf '%b' "$guidelines_index")
 STUDY_TYPES_INDEX=$(printf '%b' "$study_types_index")
-export VERSION GUIDELINES_INDEX STUDY_TYPES_INDEX
+export VERSION CODEX_VERSION GUIDELINES_INDEX STUDY_TYPES_INDEX
 
 substitute_template() {
     src=$1
@@ -298,6 +306,10 @@ for f in "${PLUGIN_DIR}/.claude-plugin/plugin.json" "${SKILL_REPO}/.claude-plugi
     [ -e "$f" ] || continue
     perl -CSD -i -pe 's/("version"\s*:\s*)"[^"]*"/$1"$ENV{VERSION}"/g;' "$f"
 done
+for f in "${PLUGIN_DIR}/.codex-plugin/plugin.json"; do
+    [ -e "$f" ] || continue
+    perl -CSD -i -pe 's/("version"\s*:\s*)"[^"]*"/$1"$ENV{CODEX_VERSION}"/g;' "$f"
+done
 
 echo "$VERSION" > "${SKILL_REPO}/VERSION"
 
@@ -311,6 +323,8 @@ echo "$VERSION" > "${SKILL_REPO}/VERSION"
 . "${ROOT}/_skill/commands.env"
 export CMD_MARKETPLACE_ADD CMD_PLUGIN_INSTALL \
        CMD_MARKETPLACE_UPDATE CMD_RELOAD_PLUGINS \
+       CMD_CODEX_MARKETPLACE_ADD CMD_CODEX_PLUGIN_INSTALL \
+       CMD_CODEX_MARKETPLACE_UPGRADE \
        CMD_INVOKE_EXPLORE CMD_INVOKE_REVIEW \
        CMD_INVOKE_REVIEW_TEX CMD_INVOKE_REVIEW_PDF CMD_INVOKE_REVIEW_SUPP
 
@@ -322,6 +336,9 @@ render_with_commands() {
         s/\{\{CMD_PLUGIN_INSTALL\}\}/$ENV{CMD_PLUGIN_INSTALL}/g;
         s/\{\{CMD_MARKETPLACE_UPDATE\}\}/$ENV{CMD_MARKETPLACE_UPDATE}/g;
         s/\{\{CMD_RELOAD_PLUGINS\}\}/$ENV{CMD_RELOAD_PLUGINS}/g;
+        s/\{\{CMD_CODEX_MARKETPLACE_ADD\}\}/$ENV{CMD_CODEX_MARKETPLACE_ADD}/g;
+        s/\{\{CMD_CODEX_PLUGIN_INSTALL\}\}/$ENV{CMD_CODEX_PLUGIN_INSTALL}/g;
+        s/\{\{CMD_CODEX_MARKETPLACE_UPGRADE\}\}/$ENV{CMD_CODEX_MARKETPLACE_UPGRADE}/g;
         s/\{\{CMD_INVOKE_EXPLORE\}\}/$ENV{CMD_INVOKE_EXPLORE}/g;
         s/\{\{CMD_INVOKE_REVIEW\}\}/$ENV{CMD_INVOKE_REVIEW}/g;
         s/\{\{CMD_INVOKE_REVIEW_TEX\}\}/$ENV{CMD_INVOKE_REVIEW_TEX}/g;

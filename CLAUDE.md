@@ -52,10 +52,14 @@ The pipeline has four content sections: **scope**, **study-types**, **guidelines
 
 ## Skill Pipeline
 
-`generate-skill.sh` produces an [Agent Skill](https://agentskills.io/home) bundle from the same Markdown the website builds. The bundle is a single self-contained skill with two slash-command entry points:
+`generate-skill.sh` produces an [Agent Skill](https://agentskills.io/home) bundle from the same Markdown the website builds. The bundle is a single self-contained skill. Claude Code exposes two slash-command entry points; Codex CLI loads the same skill from plugin metadata and invokes it from natural-language prompts:
 
 ```text
+.claude-plugin/marketplace.json
+.agents/plugins/marketplace.json
 plugins/llm-guidelines/
+  .claude-plugin/plugin.json
+  .codex-plugin/plugin.json
   skills/
     llm-guidelines/
       SKILL.md             router: shared frontmatter, mode-selection, shared constraints, file indices
@@ -79,19 +83,42 @@ Pipeline steps:
 2. Iterates `guidelines/_sources/0[1-8]_*.md` and `study-types/_sources/0[2-9]_*.md` plus `1[0-1]_*.md` for ordering, then loads the matching website-rendered subpage (`guidelines/<slug>/index.md`, `study-types/<slug>/index.md`) for each.
 3. For each source, strips Jekyll front matter and the checklist's embedded `<style>`/`<script>`/`<button>` blocks; rewrites website-absolute links (`/guidelines/<slug>/` etc.) to relative paths inside `references/`; writes the result into `plugins/llm-guidelines/skills/llm-guidelines/references/`.
 4. Renders `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` from `_skill/SKILL.md.template`, and renders `references/explore.md` and `references/review.md` from `_skill/references-explore.md.template` and `_skill/references-review.md.template` respectively (templates kept here, since they are build-time artifacts and should not ship in the consumer-facing skill bundle), substituting `{{VERSION}}`, `{{GUIDELINES_INDEX}}`, `{{STUDY_TYPES_INDEX}}`. Index entries reference `references/...` (one level deep from SKILL.md, per the Agent Skills spec).
-5. Rewrites the `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root.
-6. Renders `skill/index.md` (in this repo) and `README.md` (in the skill repo) from `_skill/skill-index.md.template` and `_skill/README.md.template`, substituting the literal slash-command and install-command strings from `_skill/commands.env`. Fails with an explicit error if any `{{CMD_*}}` placeholder is unresolved.
+5. Rewrites the Claude-facing `version` field in `plugins/llm-guidelines/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; writes `VERSION` at the skill repo root; maps the same release to Codex semver (`YYYY.M.REVISION`) and rewrites `plugins/llm-guidelines/.codex-plugin/plugin.json`.
+6. Renders `skill/index.md` (in this repo) and `README.md` (in the skill repo) from `_skill/skill-index.md.template` and `_skill/README.md.template`, substituting the literal Claude and Codex install/update commands plus Claude slash-command strings from `_skill/commands.env`. Fails with an explicit error if any `{{CMD_*}}` placeholder is unresolved.
 7. Removes any leftover `plugins/llm-guidelines/shared/`, `plugins/llm-guidelines/skills/explore/`, or `plugins/llm-guidelines/skills/review/` directories from earlier layouts.
 
-In the website repo, `_skill/SKILL.md.template`, `_skill/references-explore.md.template`, `_skill/references-review.md.template`, `_skill/skill-index.md.template`, `_skill/README.md.template`, `_skill/commands.env`, and `_skill/REVISION` are hand-curated. In the skill repo, `LICENSE`, `.gitignore`, `CLAUDE.md`, the plugin manifest, the marketplace JSON, the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`), and the lint scaffolding under `plugins/llm-guidelines/skills/llm-guidelines/scripts/` (vendored PyMarkdown tree, `lint_markdown.py`, `lint_markdown.yaml`, `refresh_vendor.py`) are hand-curated; `README.md`, the `SKILL.md`, and the entire `references/` tree under `plugins/llm-guidelines/skills/llm-guidelines/` are generated. The generator removes specific files in `references/` and old-layout skill subdirs before regenerating, but does not touch the `scripts/` subdirectory. The skill repo's `CLAUDE.md` exists to warn future Claude Code sessions opened in that repo that the bundle is generated upstream and must not be edited there directly — bypassing the generator silently desynchronizes the `version` stamps in `plugin.json` and `marketplace.json` from the bundle's actual content, causing `/plugin` to report "already at the latest" for users on stale content.
+In the website repo, `_skill/SKILL.md.template`, `_skill/references-explore.md.template`, `_skill/references-review.md.template`, `_skill/skill-index.md.template`, `_skill/README.md.template`, `_skill/commands.env`, and `_skill/REVISION` are hand-curated. In the skill repo, `LICENSE`, `.gitignore`, `CLAUDE.md`, `AGENTS.md`, `.claude-plugin/marketplace.json` (catalog fields other than `version`), `.agents/plugins/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json` (fields other than `version`), `plugins/llm-guidelines/.codex-plugin/plugin.json` (fields other than `version`), the slash-command files under `plugins/llm-guidelines/commands/` (`review.md`, `explore.md`), and the lint scaffolding under `plugins/llm-guidelines/skills/llm-guidelines/scripts/` (vendored PyMarkdown tree, `lint_markdown.py`, `lint_markdown.yaml`, `refresh_vendor.py`) are hand-curated; `README.md`, the `SKILL.md`, and the entire `references/` tree under `plugins/llm-guidelines/skills/llm-guidelines/` are generated. The generator removes specific files in `references/` and old-layout skill subdirs before regenerating, but does not touch the `scripts/` subdirectory. The skill repo's `CLAUDE.md` and `AGENTS.md` exist to warn future agent sessions opened in that repo that the bundle is generated upstream and must not be edited there directly. Bypassing the generator silently desynchronizes the version stamps in plugin manifests and marketplace files from the bundle's actual content, causing clients to report "already at the latest" for users on stale content.
 
 The website surface is a single page at `/skill/` (`skill/index.md`, generated from `_skill/skill-index.md.template`): install instructions, invocation, and a table linking the bundled files to their rich rendering on this site (or, for `SKILL.md` and the mode reference files, to the source on GitHub).
 
-To change a slash-command literal anywhere in the docs, edit `_skill/commands.env` and re-run `./generate-skill.sh`; both the website page and the skill repo README pick up the change.
+To change an install command or slash-command literal anywhere in the docs, edit `_skill/commands.env` and re-run `./generate-skill.sh`; both the website page and the skill repo README pick up the change.
 
 ### Plugin Packaging Gotchas
 
 Hard-won notes from the initial setup. Read these before changing the plugin or marketplace manifest, or the bundle layout.
+
+Claude and Codex use different packaging metadata:
+
+- Claude Code: `.claude-plugin/marketplace.json` at the skill repo root and `plugins/llm-guidelines/.claude-plugin/plugin.json`.
+- Codex CLI: `.agents/plugins/marketplace.json` at the skill repo root and `plugins/llm-guidelines/.codex-plugin/plugin.json`.
+
+The Codex marketplace entry keeps the required nested source shape:
+
+```json
+{
+  "source": {
+    "source": "local",
+    "path": "./plugins/llm-guidelines"
+  },
+  "policy": {
+    "installation": "AVAILABLE",
+    "authentication": "ON_INSTALL"
+  },
+  "category": "Research"
+}
+```
+
+Do not add root-level plugin symlinks. The repo already has the marketplace-supported `plugins/llm-guidelines/` layout.
 
 **1. Always run `claude plugin validate` on both manifests before commit.**
 
@@ -135,7 +162,7 @@ The on-disk marketplace cache is at `~/.claude/plugins/marketplaces/<name>/`. `/
 2. If still failing, restart CC.
 3. Inspect `~/.claude/plugins/marketplaces/<name>/.claude-plugin/marketplace.json` to confirm the cache holds what you pushed.
 
-**5. Canonical single-plugin marketplace layout.**
+**5. Canonical Claude single-plugin marketplace layout.**
 
 ```text
 <repo>/
@@ -151,6 +178,20 @@ The on-disk marketplace cache is at `~/.claude/plugins/marketplaces/<name>/`. `/
 ```
 
 Marketplace entry: `"source": "./plugins/<plugin-name>"`. Putting `plugin.json` and `marketplace.json` in the same `.claude-plugin/` directory at the repo root is not a documented configuration and does not work.
+
+**6. Validate both clients before release.**
+
+Run the bundle smoke test from the skill repo after `./generate-skill.sh`; it checks Claude version coherence, Codex semver mapping, Codex marketplace shape, `AGENTS.md` pointers, generated links, and an optional Codex CLI marketplace smoke when `codex` is installed:
+
+```bash
+python3 scripts/tests/run_smoke.py
+```
+
+Then run the Markdown linter smoke test:
+
+```bash
+python3 plugins/llm-guidelines/skills/llm-guidelines/scripts/tests/run_smoke.py
+```
 
 ## Repository Structure
 
@@ -221,6 +262,7 @@ The skill bundle uses a two-part version so that skill-only changes (SKILL.md ed
 - **Guideline version** — `YYYY.MM`, read from `_config.yml`.
 - **Skill revision** — non-negative integer in `_skill/REVISION`. Initial state is `0`.
 - **Combined skill version** — `YYYY.MM` when revision is `0`, otherwise `YYYY.MM_revN`. Stamped into `SKILL.md` files, `plugin.json`, `marketplace.json`, and `VERSION` in the skill submodule.
+- **Codex plugin version** — strict semver `YYYY.M.REVISION`, stamped only into `plugins/llm-guidelines/.codex-plugin/plugin.json` because Codex does not accept the Claude-facing `_revN` CalVer string.
 
 The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-separated number, and the underscore (rather than `-`) makes the boundary between guideline version and revision unambiguous.
 
@@ -239,8 +281,9 @@ The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-
    ```
 
    Both must pass before commit. Fix any errors before continuing; warnings are OK to defer. CC silently rejects manifests with unknown keys at install time with the misleading error "This plugin uses a source type your Claude Code version does not support", so this validation step is mandatory.
-7. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
-8. Bump the skill submodule pointer here, commit, push.
+7. In `llm-guidelines-skill/`, run `python3 scripts/tests/run_smoke.py` and the Markdown linter smoke test. If `codex` is installed, the bundle smoke test also checks that Codex can add the local marketplace in an isolated `CODEX_HOME` and list `llm-guidelines@se-uhd`.
+8. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
+9. Bump the skill submodule pointer here, commit, push.
 
 ### Bumping the skill revision (skill-only change)
 
@@ -248,7 +291,7 @@ Use this when the guideline content has not changed (no new paper tag) but the s
 
 1. Increment the integer in `_skill/REVISION` (e.g., `0` → `1`, or `2` → `3`).
 2. Run `./convert-and-merge-sources.sh` (or `./generate-skill.sh` directly if no Markdown content changed).
-3. Validate manifests as in step 6 above.
+3. Validate manifests and run the smoke checks as in steps 6 and 7 above.
 4. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM_revN`, and push commit and tag.
 5. Bump the skill submodule pointer here, commit, push.
 

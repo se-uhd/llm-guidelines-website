@@ -6,22 +6,40 @@ nav_order: 7
 
 # Skill
 
-`llm-guidelines` is an [Agent Skill](https://agentskills.io/home) bundle that packages these guidelines for authors to use directly inside an AI coding assistant. It bundles the same content this website renders ([scope](/scope/), [study types](/study-types/), [guidelines](/guidelines/), [checklist](/checklist/)) and exposes two slash commands: one for **exploring** the guidelines (asking questions, discussing study designs, deciding which study type fits) and one for **reviewing** a paper draft (and any supplementary material) against the eight guidelines, producing an `llm-guidelines-report.md` for the paper at hand. The two commands route into mode-specific instructions inside a single `llm-guidelines` skill.
+`llm-guidelines` is an [Agent Skill](https://agentskills.io/home) bundle that packages these guidelines for authors to use directly inside an AI coding assistant. It bundles the same content this website renders ([scope](/scope/), [study types](/study-types/), [guidelines](/guidelines/), [checklist](/checklist/)) and provides two modes: **explore** for asking questions, discussing study designs, and deciding which study type fits; and **review** for assessing a paper draft and any supplementary material against the eight guidelines, producing an `llm-guidelines-report.md` for the paper at hand.
 
-Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients) for the current set. The instructions below cover Claude Code; for any other client, copy the `plugins/llm-guidelines/skills/llm-guidelines/` subtree from the repository into the location that client expects (the skill is self-contained — `SKILL.md` plus a `references/` directory with all bundled content). Each client's docs are linked from the client list.
+Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients) for the current set. The instructions below cover Claude Code and Codex CLI; for any other client, copy the `plugins/llm-guidelines/skills/llm-guidelines/` subtree from the repository into the location that client expects (the skill is self-contained: `SKILL.md` plus a `references/` directory with all bundled content). Each client's docs are linked from the client list.
 
 The skill is published in a separate repository at [se-uhd/llm-guidelines-skill](https://github.com/se-uhd/llm-guidelines-skill). Its version reuses the guideline `YYYY.MM` tag shown in the header of this site for releases that match a paper version, and adds a `_revN` suffix for skill-only updates against the same guideline version (see the skill repo `README.md` for details).
 
-## Install
+## Install in Claude Code
 
 ```text
 /plugin marketplace add se-uhd/llm-guidelines-skill
 /plugin install llm-guidelines
 ```
 
+## Install in Codex CLI
+
+For regular use, install from the GitHub marketplace source:
+
+```text
+codex plugin marketplace add se-uhd/llm-guidelines-skill
+codex plugin add llm-guidelines@se-uhd
+```
+
+Local path installs are for development because Codex may copy the working tree into its plugin cache.
+
+To pick up a new Codex release:
+
+```text
+codex plugin marketplace upgrade se-uhd
+codex plugin add llm-guidelines@se-uhd
+```
+
 ## Invoke
 
-The bundle exposes two slash commands.
+In Claude Code, the bundle exposes two slash commands. In Codex CLI, use natural-language prompts that ask for the same explore or review work.
 
 ### Explore the guidelines
 
@@ -29,6 +47,12 @@ Use this when you want to ask a question, plan a study, walk through the checkli
 
 ```text
 /llm-guidelines:explore
+```
+
+Codex CLI example:
+
+```text
+Which LLM study type fits my planned study?
 ```
 
 Explore mode is a conversation; it does not write any files unless you ask.
@@ -53,6 +77,13 @@ The supplementary-material path is optional, and you can pass more than one when
 
 ```text
 /llm-guidelines:review path/to/paper.tex path/to/code-repo path/to/dataset
+```
+
+Codex CLI examples:
+
+```text
+Review path/to/paper.tex against the LLM reporting guidelines.
+Check path/to/paper.pdf and path/to/artifact-dir for reporting gaps.
 ```
 
 If invoked without arguments, review mode asks for paths to your paper (LaTeX source or PDF) and any supplementary directories. It will not modify your files; it writes its findings to `llm-guidelines-report.md` in your working directory and prints the same content to the console.

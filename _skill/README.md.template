@@ -2,7 +2,7 @@
 
 An [Agent Skill](https://agentskills.io/home) bundle that applies the community guidelines for empirical software engineering studies involving LLMs to a paper draft and its supplementary material. Agent Skills is an open standard originally developed by Anthropic. The format is now read by Cursor, GitHub Copilot, OpenAI Codex, Gemini CLI, Claude Code, and JetBrains Junie, among others; see the [client list](https://agentskills.io/clients).
 
-The bundle exposes a single skill, `llm-guidelines`, with two slash-command entry points: `{{CMD_INVOKE_EXPLORE}}` for discussing the guidelines and planning a study, and `{{CMD_INVOKE_REVIEW}}` for assessing a concrete draft against the eight guidelines and writing a report. The two commands route into mode-specific instructions inside the same skill.
+The bundle exposes a single skill, `llm-guidelines`, with two modes: explore mode for discussing the guidelines and planning a study, and review mode for assessing a concrete draft against the eight guidelines and writing a report. Claude Code adds slash-command entry points for those modes; Codex CLI invokes the same skill from natural-language prompts.
 
 The guideline content is published at <https://llm-guidelines.org> and authored in the companion paper repository <https://github.com/se-uhd/llm-guidelines-paper>. The Markdown files in this repository are generated from those LaTeX sources; see <https://github.com/se-uhd/llm-guidelines-website> for the conversion pipeline. **Do not edit the generated files in this repository directly.**
 
@@ -13,7 +13,7 @@ The bundle uses two-part versioning: a guideline version (CalVer `YYYY.MM`, matc
 - Initial release for a guideline version: bare `YYYY.MM` (e.g., `2026.05`).
 - Skill-only revisions for the same guideline version: `YYYY.MM_revN` (e.g., `2026.05_rev1`, `2026.05_rev2`).
 
-The current version is recorded in `VERSION` and embedded in `.claude-plugin/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json`, and `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` (under `metadata.version`).
+The current Claude/skill version is recorded in `VERSION` and embedded in `.claude-plugin/marketplace.json`, `plugins/llm-guidelines/.claude-plugin/plugin.json`, and `plugins/llm-guidelines/skills/llm-guidelines/SKILL.md` (under `metadata.version`). Codex plugin manifests require strict semver, so `plugins/llm-guidelines/.codex-plugin/plugin.json` maps the same release to `YYYY.M.REVISION` (for example, `2026.05_rev18` becomes `2026.5.18`).
 
 ## Install as a Claude Code plugin
 
@@ -45,6 +45,32 @@ To pick up a new release, refresh the marketplace catalog and reload plugins:
 
 The marketplace update reports `(1 plugin bumped)` when a new version is found and installs it; `{{CMD_RELOAD_PLUGINS}}` activates the new commands and skills in the running session.
 
+## Install in Codex CLI
+
+For regular use, install from the GitHub marketplace source:
+
+```text
+{{CMD_CODEX_MARKETPLACE_ADD}}
+{{CMD_CODEX_PLUGIN_INSTALL}}
+```
+
+Use natural-language prompts to activate the skill:
+
+```text
+Review path/to/paper.tex against the LLM reporting guidelines.
+Check path/to/paper.pdf and path/to/artifact-dir for reporting gaps.
+Which LLM study type fits my planned study?
+```
+
+To pick up a new release, upgrade the marketplace and reinstall the plugin if Codex reports an available update:
+
+```text
+{{CMD_CODEX_MARKETPLACE_UPGRADE}}
+{{CMD_CODEX_PLUGIN_INSTALL}}
+```
+
+Local path installs are a development workflow. Codex may copy the working tree into its plugin cache, so a local install can lag behind your checkout until the marketplace is upgraded or the plugin is reinstalled.
+
 ## Use in other Agent Skills clients
 
 The skill is self-contained under `plugins/llm-guidelines/skills/llm-guidelines/`, laid out per the [Agent Skills specification](https://agentskills.io/specification): `SKILL.md` plus a `references/` directory holding the mode-specific procedures (`explore.md`, `review.md`), the eight guideline files, the study-type files, the scope statement, and the reporting checklist. To consume the bundle outside Claude Code's plugin loader, copy that directory into the location your client expects (each client's docs are linked from the [Agent Skills client list](https://agentskills.io/clients)).
@@ -68,12 +94,14 @@ The report frames findings as opportunities to clarify or strengthen reporting. 
 
 ## Repository layout
 
-Packaging skeleton (showing the shape Claude Code's plugin loader expects, not the full file inventory):
+Packaging skeleton (showing the plugin-loader files, not the full file inventory):
 
 ```text
 .claude-plugin/marketplace.json
+.agents/plugins/marketplace.json
 plugins/llm-guidelines/
   .claude-plugin/plugin.json
+  .codex-plugin/plugin.json
   commands/                       # {{CMD_INVOKE_EXPLORE}}, {{CMD_INVOKE_REVIEW}}
   skills/llm-guidelines/
     SKILL.md
@@ -90,7 +118,7 @@ The bundled content under `references/` is regenerated from the website reposito
 
 The bundled Markdown is generated by the build pipeline in the [website repository](https://github.com/se-uhd/llm-guidelines-website) (see its `CLAUDE.md` "Skill Pipeline" section for the full procedure, including version bumps, validation, and lessons from initial setup).
 
-When changing `.claude-plugin/marketplace.json` or `plugins/llm-guidelines/.claude-plugin/plugin.json`, validate before committing:
+When changing Claude plugin manifests, validate before committing:
 
 ```bash
 claude plugin validate plugins/llm-guidelines
@@ -99,7 +127,7 @@ claude plugin validate .claude-plugin/marketplace.json
 
 If a user reports `Failed to install: This plugin uses a source type your Claude Code version does not support`, do **not** assume the problem is the `source` field. Claude Code emits that same message for any unrecognized key in either manifest. Run `claude plugin validate` first; the validator surfaces the real error.
 
-Two further checks run in CI on every push and pull request (see `.github/workflows/`) and should be run locally before tagging a release: a bundle smoke test (`scripts/tests/run_smoke.py`) that verifies the `version` field agrees across `VERSION`, `marketplace.json`, `plugin.json`, and `SKILL.md`, that the expected `references/` files are present, and that internal links resolve; and a Markdown linter (`plugins/llm-guidelines/skills/llm-guidelines/scripts/lint_markdown.py`, backed by a vendored PyMarkdown tree under `scripts/_vendor/`) that enforces the policy in `lint_markdown.yaml` and supports `--fix` for auto-correctable rules. The smoke test catches exactly the desync that broke `2026.05_rev10`, where a content change shipped without the version stamps moving.
+Run `python3 scripts/tests/run_smoke.py` before tagging a release. It verifies the Claude version fields, Codex semver mapping, Codex marketplace shape, expected `references/` files, internal links, and the optional Codex CLI marketplace smoke when `codex` is installed. Also run the Markdown linter smoke test at `plugins/llm-guidelines/skills/llm-guidelines/scripts/tests/run_smoke.py`; it exercises the vendored linter and schema checks without rewriting generated guideline prose. The smoke test catches exactly the desync that broke `2026.05_rev10`, where a content change shipped without the version stamps moving.
 
 ## License
 

@@ -59,7 +59,15 @@ If no paper path is supplied, ask the user for one before proceeding. Supplement
 
 6. **Write the report.** Save the assessment as `llm-guidelines-report.md` in the user's current working directory **and** print the same content to the console. Use the [report template](#report-template) below.
 
-    Then run `python3 ${CLAUDE_SKILL_DIR}/scripts/lint_markdown.py --fix llm-guidelines-report.md`. If the linter exits non-zero, read its stdout findings (one per line, tab-separated `<file>:<line>\t<rule>\t<message>`), revise the report in place to address each, and re-run the linter. Repeat at most three iterations; after the third pass proceed regardless of the linter's state. The lint loop is internal quality control — do not mention lint output, rule names, exit codes, or iteration counts in the user-facing summary.
+    Then try to resolve the bundled Markdown linter. Check these locations in order and use the first `lint_markdown.py` that exists:
+
+    1. `${CLAUDE_SKILL_DIR}/scripts/lint_markdown.py`, when `${CLAUDE_SKILL_DIR}` is set.
+    2. A checked-out plugin path under the current directory or one of its parents: `plugins/llm-guidelines/skills/llm-guidelines/scripts/lint_markdown.py`.
+    3. The Codex plugin cache under `${CODEX_HOME:-$HOME/.codex}/plugins/cache`, preferring paths that contain `/se-uhd/llm-guidelines/` and then any `llm-guidelines` cache entry.
+
+    If no linter is found, continue without the lint loop. Do not mention the missing linter in the user-facing summary.
+
+    If a linter is found, run `python3 <resolved-lint_markdown.py> --fix llm-guidelines-report.md`. If the linter exits non-zero, read its stdout findings (one per line, tab-separated `<file>:<line>\t<rule>\t<message>`), revise the report in place to address each, and re-run the linter. Repeat at most three iterations; after the third pass proceed regardless of the linter's state. The lint loop is internal quality control; do not mention lint output, rule names, exit codes, or iteration counts in the user-facing summary.
 
 7. **Stop after the report.** Do not modify the user's paper or supplementary material. If the user asks for follow-up edits, treat that as a new request.
 
