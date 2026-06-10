@@ -28,7 +28,7 @@ short_title() {
         "LLMs as Subjects")                                        echo "Subjects" ;;
         "Studying LLM Usage in Software Engineering")              echo "Usage" ;;
         "LLMs for New Software Engineering Tools")                 echo "Tools" ;;
-        "Benchmarking LLMs for Software Engineering Tasks")        echo "Benchmarks" ;;
+        "Benchmarking LLMs for Software Engineering Tasks")        echo "Benchmarking" ;;
         "LLMs as Tools for Software Engineering Researchers")      echo "LLMs for Research" ;;
         "LLMs as Tools for Software Engineers")                    echo "LLMs for SE" ;;
         *)                                                         echo "$1" ;;
@@ -42,6 +42,7 @@ short_title() {
 old_slugs() {
     case "$1" in
         "Benchmarks & Metrics") echo "benchmarks" ;;
+        "Benchmarking")         echo "benchmarks" ;;
         *)                      echo "" ;;
     esac
 }
