@@ -285,7 +285,7 @@ The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-
    ```
 
    Both must pass before commit. Fix any errors before continuing; warnings are OK to defer. CC silently rejects manifests with unknown keys at install time with the misleading error "This plugin uses a source type your Claude Code version does not support", so this validation step is mandatory.
-7. In `llm-guidelines-skill/`, run `python3 scripts/tests/run_smoke.py` and the Markdown linter smoke test. If `codex` is installed, the bundle smoke test also checks that Codex can add the local marketplace in an isolated `CODEX_HOME` and list `llm-guidelines@se-uhd`. In this repo, run `python3 scripts/tests/run_generator_check.py`.
+7. In `llm-guidelines-skill/`, update `EXPECTED_CLAUDE_VERSION` in `scripts/tests/run_smoke.py` to the new combined version (a deliberate release tripwire; CI smoke fails on any release that skips it), then run `python3 scripts/tests/run_smoke.py` and the Markdown linter smoke test, checking exit codes rather than skimming output (the suite prints failures before the passes). If `codex` is installed, the bundle smoke test also checks that Codex can add the local marketplace in an isolated `CODEX_HOME` and list `llm-guidelines@se-uhd`. In this repo, run `python3 scripts/tests/run_generator_check.py`.
 8. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
 9. Bump the skill submodule pointer here, commit, push.
 
