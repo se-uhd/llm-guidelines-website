@@ -64,7 +64,16 @@ generate_subpage() {
         [ -n "$grand_parent" ] && printf 'grand_parent: %s\n' "$grand_parent"
         printf 'nav_order: %s\n' "$nav_order"
         [ -n "$has_children" ] && printf 'has_children: true\n'
-        [ "$full_slug" != "$slug" ] && printf 'redirect_from:\n  - /%s/%s/\n' "$parent_dir" "$full_slug"
+        # Redirect aliases: the full-heading slug (when the short title
+        # shortens it) and any retired slugs from short-title renames
+        # (see old_slugs in short-titles.sh).
+        if [ "$full_slug" != "$slug" ] || [ -n "$(old_slugs "$nav_title")" ]; then
+            printf 'redirect_from:\n'
+            [ "$full_slug" != "$slug" ] && printf -- '  - /%s/%s/\n' "$parent_dir" "$full_slug"
+            for old in $(old_slugs "$nav_title"); do
+                printf -- '  - /%s/%s/\n' "$parent_dir" "$old"
+            done
+        fi
         printf -- '---\n\n'
         printf '# %s\n\n' "$heading"
 

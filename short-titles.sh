@@ -18,7 +18,7 @@ short_title() {
         "Report Model Version, Configuration, and Customizations") echo "Model Version" ;;
         "Report System and Prompt Design")                         echo "Design" ;;
         "Report Session Traces")                                   echo "Traces" ;;
-        "Use Suitable Baselines, Benchmarks, and Metrics")         echo "Benchmarks" ;;
+        "Use Suitable Baselines, Benchmarks, and Metrics")         echo "Benchmarks & Metrics" ;;
         "Use an Open LLM as a Baseline")                           echo "Open LLM" ;;
         "Use Human Validation for LLM Outputs")                    echo "Human Validation" ;;
         "Report Limitations and Mitigations")                      echo "Limitations" ;;
@@ -32,5 +32,16 @@ short_title() {
         "LLMs as Tools for Software Engineering Researchers")      echo "LLMs for Research" ;;
         "LLMs as Tools for Software Engineers")                    echo "LLMs for SE" ;;
         *)                                                         echo "$1" ;;
+    esac
+}
+
+# Retired URL slugs, keyed by the CURRENT short title. When a short title
+# changes, the previously published slug goes here (space-separated when
+# several accumulate) so convert-and-merge-sources.sh emits a
+# jekyll-redirect-from alias and the old URL keeps resolving.
+old_slugs() {
+    case "$1" in
+        "Benchmarks & Metrics") echo "benchmarks" ;;
+        *)                      echo "" ;;
     esac
 }

@@ -114,7 +114,10 @@ def parse_matrix(path):
     header, body = text.split("\\midrule", 1)
     body = body.split("\\bottomrule", 1)[0]
 
-    columns = re.findall(r"\\rot\{\\hyperref\[[^\]]+\]\{([^{}]+)\}\}", header)
+    columns = [
+        latex_to_md(c, f"{path} column header")
+        for c in re.findall(r"\\rot\{\\hyperref\[[^\]]+\]\{([^{}]+)\}\}", header)
+    ]
     if len(columns) != N_STUDY_TYPES:
         raise GenerationError(
             f"{path}: expected {N_STUDY_TYPES} study-type columns, found {len(columns)}: {columns}"
@@ -127,7 +130,7 @@ def parse_matrix(path):
         label_match = re.search(r"\\hyperref\[[^\]]+\]\{([^{}]+)\}", chunk)
         if not label_match:
             raise GenerationError(f"{path}: row without \\hyperref label: {chunk.strip()[:60]!r}")
-        label = label_match.group(1).strip()
+        label = latex_to_md(label_match.group(1), f"{path} row label")
         cells = split_unescaped(chunk, "&")[1:]
         if len(cells) != N_STUDY_TYPES:
             raise GenerationError(
@@ -210,14 +213,18 @@ def website_cell(value):
     return {MUST: WEBSITE_MUST, SHOULD: WEBSITE_SHOULD, NA: WEBSITE_NA}[value]
 
 
+def html_text(label):
+    return label.replace("&", "&amp;")
+
+
 def render_website_matrix(columns, rows):
     head = "| | " + " | ".join(
-        f'<a href="/study-types/{slugify(c)}/">{c}</a>' for c in columns
+        f'<a href="/study-types/{slugify(c)}/">{html_text(c)}</a>' for c in columns
     ) + " |"
     sep = "|---|" + ":---:|" * N_STUDY_TYPES
     lines = [head, sep]
     for label, cells in rows:
-        link = f'<a href="/guidelines/{slugify(label)}/">{label}</a>'
+        link = f'<a href="/guidelines/{slugify(label)}/">{html_text(label)}</a>'
         lines.append("| " + link + " | " + " | ".join(website_cell(c) for c in cells) + " |")
     return "\n".join(lines) + "\n"
 
