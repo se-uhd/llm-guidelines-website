@@ -103,9 +103,12 @@ done
 # Read converted intro content (strip pandoc-generated References heading and everything after it)
 guidelines_intro=$(perl -ne 'print unless /^#{2,3}\s+References\s*$/ .. eof' guidelines/_sources/00_intro.md)
 
-# Generate guidelines parent page (header + intro + matrix)
-GUIDELINES_INTRO="$guidelines_intro" \
-    perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/' \
+# Generate guidelines parent page (header + intro + matrix). The matrix table
+# is generated from the paper's _summary/matrix.tex so the website cannot
+# drift from the paper; the generator exits non-zero on any parse mismatch.
+guidelines_matrix=$(python3 scripts/generate-summary-tables.py --website-matrix -)
+GUIDELINES_INTRO="$guidelines_intro" GUIDELINES_MATRIX="$guidelines_matrix" \
+    perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/; s/<!-- MATRIX -->/$ENV{GUIDELINES_MATRIX}/' \
     guidelines/_sources/00_header.md > guidelines/index.md
 
 # --- Study types sub-pages ---
@@ -159,6 +162,13 @@ STUDY_TYPES_INTRO="$study_types_intro" \
 
 cat scope/_sources/*.md > scope/index.md
 cat checklist/_sources/*.md > checklist/index.md
+
+# --- Summary page (generated from the paper's rationale-recommendations table) ---
+
+summary_table=$(python3 scripts/generate-summary-tables.py --summary-table -)
+SUMMARY_TABLE="$summary_table" \
+    perl -pe 's/<!-- TABLE -->/$ENV{SUMMARY_TABLE}/' \
+    summary/_sources/00_header.md > summary/index.md
 
 # --- Changelog (plain Markdown copy from paper repo) ---
 
@@ -245,6 +255,7 @@ if [ -e checklist/index.md ]; then
 <label title="Study exposes tools, skills, sub-agents, or MCP servers to the LLM for runtime invocation."><input type="checkbox" class="cond-filter" data-condition="tool-use" checked> tool use</label>
 <label title="Study uses an ensemble of multiple models with routing logic or an output-combination strategy."><input type="checkbox" class="cond-filter" data-condition="ensemble" checked> ensemble</label>
 <label title="Study constructs prompts programmatically at runtime, beyond filling templates with study-specific inputs."><input type="checkbox" class="cond-filter" data-condition="dynamic-prompts" checked> dynamic prompts</label>
+<label title="Study uses few-shot prompting, with selected examples embedded in the prompt."><input type="checkbox" class="cond-filter" data-condition="few-shot" checked> few-shot prompting</label>
 <label title="Study involves human participants who create or modify the prompts."><input type="checkbox" class="cond-filter" data-condition="participant-prompts" checked> participant prompts</label>
 <label title="Prompts in the study are long or complex enough to warrant input-length handling or token-optimization strategies."><input type="checkbox" class="cond-filter" data-condition="long-prompts" checked> long/complex prompts</label>
 </div>
@@ -307,7 +318,7 @@ fi
 # that both the intermediate `_sources/*.md` and the final `<slug>/index.md`
 # pages stay clean independent of the per-section post-processing above.
 
-find scope guidelines study-types checklist changelog \
+find scope guidelines study-types checklist changelog summary \
      -type f -name '*.md' -print0 2>/dev/null \
   | xargs -0 perl -CSD -0777 -i -pe '
       s/\n{3,}/\n\n/g;

@@ -85,9 +85,9 @@ A conversational skill for authors planning or discussing an empirical study inv
 
 A structured mode for assessing a concrete draft. Given a paper (LaTeX source or PDF) and any supplementary material directories, it:
 
-1. Identifies the study type(s) using the taxonomy in `skills/llm-guidelines/references/study-types/`.
-2. Confirms the work is in scope using `skills/llm-guidelines/references/scope.md`.
-3. Runs a per-guideline assessment using the eight files under `skills/llm-guidelines/references/guidelines/`.
+1. Identifies the study type(s) using the taxonomy in `plugins/llm-guidelines/skills/llm-guidelines/references/study-types/`.
+2. Confirms the work is in scope using `plugins/llm-guidelines/skills/llm-guidelines/references/scope.md`.
+3. Runs a per-guideline assessment using the eight files under `plugins/llm-guidelines/skills/llm-guidelines/references/guidelines/`.
 4. Writes a Markdown report to `llm-guidelines-report.md` in the current working directory and prints it to the console.
 
 The report frames findings as opportunities to clarify or strengthen reporting. It is intended as a self-check for authors. Reviewers may use it for inspiration but should not treat it as a rejection rubric.

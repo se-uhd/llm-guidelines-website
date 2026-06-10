@@ -13,14 +13,14 @@ Guidelines for Empirical Studies in Software Engineering involving Large Languag
 
 {: .highlight }
 > <i style="color: #2e6fdd" class="fa-solid fa-code-pull-request"></i> **Contribute to the guidelines:**<br/>
-> We welcome community input. Please [open an issue](https://github.com/se-ubt/llm-guidelines/issues/new) on GitHub to share feedback or, even better, [open a pull request](https://github.com/se-ubt/llm-guidelines/pulls) proposing a concrete change.
+> We welcome community input. Please [open an issue](https://github.com/se-uhd/llm-guidelines-website/issues/new) on GitHub to share feedback or, even better, [open a pull request](https://github.com/se-uhd/llm-guidelines-website/pulls) proposing a concrete change.
 
 This website hosts **community guidelines** for reporting empirical studies in software engineering (SE) involving large language models (LLMs).
 Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM study types](/study-types) and corresponding [guidelines](/guidelines).
-We also publish the guidelines as a [Claude Code skill](/skill/) that authors can run against their paper draft and supplementary material to flag reporting gaps before submission.
+We also publish the guidelines as an [Agent Skill](/skill/) for coding agents such as Claude Code and Codex CLI, which authors can run against their paper draft and supplementary material to flag reporting gaps before submission.
 These guidelines are meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
 The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussions during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
-To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-ubt/llm-guidelines).
+To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-uhd/llm-guidelines-website).
 To **cite our guidelines**, please refer to the [arXiv version](https://arxiv.org/abs/2508.15503).
 Although that version is regularly updated, the most up-to-date version of the guidelines can always be found on this website.
 Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a **specific version** of the guidelines; the current version is shown in the header of this website, alongside a link to the [changelog](/changelog/).

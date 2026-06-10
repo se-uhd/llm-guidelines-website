@@ -20,9 +20,9 @@ When you change the LaTeX and convert them to Markdown, the local version of the
 Do not modify the converted Markdown files, as your changes will be lost after the next conversion.
 The converted files are also not versioned, as they are generated when the website is deployed using a GitHub Actions workflow (see below).
 
-Once you push your changes to the `main` branch or once a pull request is merged, the website is automatically redeployed via a GitHub Actions [workflow](https://github.com/se-uhd/llm-guidelines-website/blob/main/.github/workflows/pages.yml), which you can monitor [here](https://github.com/se-uhd/llm-guidelines-website/actions).
+Once you push your changes to the `main` branch or once a pull request is merged, the website is automatically redeployed via a GitHub Actions [workflow](https://github.com/se-uhd/llm-guidelines-website/blob/main/.github/workflows/build-and-deploy.yml), which you can monitor [here](https://github.com/se-uhd/llm-guidelines-website/actions).
 
-We are free to use any Latex editor you like.
+You are free to use any LaTeX editor you like.
 To double-check the generated Markdown files, you can use any Markdown editor you like, preferably one that supports [kramdown](https://kramdown.gettalong.org/), which is the [default Markdown renderer for Jekyll](https://jekyllrb.com/docs/configuration/markdown/#kramdown).
 
 If you add references to [literature.bib](https://github.com/se-uhd/llm-guidelines-paper/blob/main/literature.bib), please use the [DBLP](https://dblp.org/) Bibtex entries, if available.

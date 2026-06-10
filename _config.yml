@@ -1,6 +1,6 @@
 title: LLM Guidelines for SE
 description: >- # this means to ignore newlines until "theme:"
-  Evaluation Guidelines for Empirical Studies in Software Engineering involving LLMs.
+  Reporting Guidelines for Empirical Studies in Software Engineering involving Large Language Models.
 theme: just-the-docs
 url: "https://llm-guidelines.org" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: ""
@@ -38,6 +38,7 @@ plugins:
   - jekyll-redirect-from
 
 exclude:
+  - "AGENTS.md"
   - "CLAUDE.md"
   - "LICENSE"
   - "README.md"

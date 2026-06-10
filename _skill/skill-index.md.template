@@ -104,12 +104,13 @@ These files live only in the skill repo:
 - [references/explore.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/explore.md): explore mode
 - [references/review.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/review.md): review mode
 
-### Scope and Checklist
+### Scope, Checklist, and Matrix
 
 | File | Markdown |
 |------|----------|
 | [Scope](/scope/) | [references/scope.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/scope.md) |
 | [Reporting Checklist](/checklist/) | [references/checklist.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/checklist.md) |
+| [Applicability Matrix](/guidelines/#guidelines-by-study-type) | [references/matrix.md](https://github.com/se-uhd/llm-guidelines-skill/blob/main/plugins/llm-guidelines/skills/llm-guidelines/references/matrix.md) |
 
 ### Guidelines
 

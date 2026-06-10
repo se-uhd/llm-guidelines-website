@@ -33,6 +33,7 @@ All bundled content lives inside this skill's `references/` directory:
 
 - [`references/scope.md`](references/scope.md) — what is in and out of scope for the guidelines.
 - [`references/checklist.md`](references/checklist.md) — the consolidated reporting checklist organized by paper section, with severity markers.
+- [`references/matrix.md`](references/matrix.md) — the applicability matrix: which guidelines are must, should, or n/a for each study type.
 - `references/guidelines/<slug>.md` — one file per guideline (eight total).
 - `references/study-types/<slug>.md` — one file per study type plus umbrella entries.
 

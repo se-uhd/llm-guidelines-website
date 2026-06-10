@@ -120,8 +120,8 @@ convert_source() {
     kind=$3
 
     case "$kind" in
-        guideline|study-type) prefix="../" ;;
-        root)                 prefix="./" ;;
+        guideline|study-type) prefix="../" ; up="../../" ;;
+        root)                 prefix="./"  ; up="../" ;;
         *) echo "error: unknown kind: $kind" >&2; exit 1 ;;
     esac
 
@@ -173,12 +173,18 @@ convert_source() {
 
     perl -CSD -i -pe "
         my \$p = '${prefix}';
+        my \$up = '${up}';
+        # The website's applicability-matrix anchor maps to the bundled
+        # references/matrix.md; bare section links map to the SKILL.md
+        # indices, since the bundle has no guidelines/ or study-types/
+        # index files.
+        s{/guidelines/#guidelines-by-study-type}{\${p}matrix.md}g;
         s{/guidelines/([a-z0-9-]+)/}{\${p}guidelines/\$1.md}g;
         s{/study-types/([a-z0-9-]+)/}{\${p}study-types/\$1.md}g;
         s{/scope/}{\${p}scope.md}g;
         s{/checklist/}{\${p}checklist.md}g;
-        s{/guidelines/(?![a-z0-9])}{\${p}guidelines/}g;
-        s{/study-types/(?![a-z0-9])}{\${p}study-types/}g;
+        s{/guidelines/(?![a-z0-9])}{\${up}SKILL.md#guidelines-index}g;
+        s{/study-types/(?![a-z0-9])}{\${up}SKILL.md#study-types-index}g;
     " "$dst"
 }
 
@@ -194,7 +200,7 @@ rm -rf "${PLUGIN_DIR}/shared" "${SKILLS_DIR}/explore" "${SKILLS_DIR}/review"
 mkdir -p "${REFS_DIR}/guidelines" "${REFS_DIR}/study-types"
 find "${REFS_DIR}/guidelines" -maxdepth 1 -name '*.md' -delete
 find "${REFS_DIR}/study-types" -maxdepth 1 -name '*.md' -delete
-rm -f "${REFS_DIR}/scope.md" "${REFS_DIR}/checklist.md"
+rm -f "${REFS_DIR}/scope.md" "${REFS_DIR}/checklist.md" "${REFS_DIR}/matrix.md"
 rm -f "${REFS_DIR}/explore.md" "${REFS_DIR}/review.md"
 rm -f "${SKILL_DIR}/SKILL.md"
 
@@ -263,10 +269,16 @@ done
 # Cross-cutting sibling
 for src in study-types/_sources/11_*.md; do emit_study_type "$src" ""; done
 
-# --- 7. Generate scope.md and checklist.md ---
+# --- 7. Generate scope.md, checklist.md, and matrix.md ---
 
 convert_source "scope/index.md"     "${REFS_DIR}/scope.md"     root
 convert_source "checklist/index.md" "${REFS_DIR}/checklist.md" root
+
+# The applicability matrix is generated straight from the paper's
+# _summary/matrix.tex by the same generator that renders the website tables,
+# so the bundle carries the per-study-type must/should levels that scope.md
+# and the mode files point to.
+python3 "${ROOT}/scripts/generate-summary-tables.py" --skill-matrix "${REFS_DIR}/matrix.md"
 
 # --- 8. Render SKILL.md and the two mode reference files ---
 #

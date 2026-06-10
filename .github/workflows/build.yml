@@ -46,9 +46,11 @@ jobs:
             latexmk \
             poppler-utils \
             biber
-          wget https://github.com/jgm/pandoc/releases/download/3.6.1/pandoc-3.6.1-1-amd64.deb && sudo dpkg -i pandoc-3.6.1-1-amd64.deb
+          wget https://github.com/jgm/pandoc/releases/download/3.6.4/pandoc-3.6.4-1-amd64.deb && sudo dpkg -i pandoc-3.6.4-1-amd64.deb
       - name: Check Latex and Bibtex files
         run: ./compile-latex.sh
+      - name: Check summary-table generator
+        run: python3 scripts/tests/run_generator_check.py
       - name: Convert and merge source files
         run: ./convert-and-merge-sources.sh
       - name: Build paper (regular and flattened)

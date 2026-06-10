@@ -25,13 +25,4 @@ The guideline's core recommendations:<br/>
 <span class="marker-should">●</span> = **should** be followed for this study type.<br/>
 -- = are not directly applicable for this study type.
 
-| | <a href="/study-types/annotators/">Annotators</a> | <a href="/study-types/judges/">Judges</a> | <a href="/study-types/synthesis/">Synthesis</a> | <a href="/study-types/subjects/">Subjects</a> | <a href="/study-types/usage/">Usage</a> | <a href="/study-types/tools/">Tools</a> | <a href="/study-types/benchmarks/">Benchmarks</a> |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| <a href="/guidelines/declare-usage/">Declare Usage</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/model-version/">Model Version</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/design/">Design</a> | ● | ● | ● | ● | ● | ● | ● |
-| <a href="/guidelines/traces/">Traces</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
-| <a href="/guidelines/benchmarks/">Benchmarks</a> | ● | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | ● |
-| <a href="/guidelines/open-llm/">Open LLM</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | -- | -- | <span class="marker-should">●</span> | ● |
-| <a href="/guidelines/human-validation/">Human Validation</a> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> | <span class="marker-should">●</span> |
-| <a href="/guidelines/limitations/">Limitations</a> | ● | ● | ● | ● | ● | ● | ● |
+<!-- MATRIX -->
