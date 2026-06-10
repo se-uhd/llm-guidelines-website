@@ -101,6 +101,13 @@ def main():
     second = run(["--website-matrix", "-", "--summary-table", "-", "--skill-matrix", "-"])
     check("deterministic_output", first.stdout == second.stdout)
 
+    res = run(["--lint-matrix"])
+    check(
+        "matrix_comment_lint_clean",
+        res.returncode == 0 and not res.stderr.strip(),
+        res.stderr.strip().splitlines()[0][:160] if res.stderr.strip() else "",
+    )
+
     with tempfile.TemporaryDirectory() as tmp:
         fake = Path(tmp)
         (fake / "llm-guidelines-paper" / "_summary").mkdir(parents=True)

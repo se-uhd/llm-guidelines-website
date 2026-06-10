@@ -112,6 +112,12 @@ done
 # Read converted intro content (strip pandoc-generated References heading and everything after it)
 guidelines_intro=$(perl -ne 'print unless /^#{2,3}\s+References\s*$/ .. eof' guidelines/_sources/00_intro.md)
 
+# Warn-level coherence lint: matrix cell severities against their
+# justification comments, and comment quotes against the guideline text
+# they cite. Never fails the build here; scripts/tests/run_generator_check.py
+# treats any warning as a failure, so CI catches regressions.
+python3 scripts/generate-summary-tables.py --lint-matrix || true
+
 # Generate guidelines parent page (header + intro + matrix). The matrix table
 # is generated from the paper's _summary/matrix.tex so the website cannot
 # drift from the paper; the generator exits non-zero on any parse mismatch.

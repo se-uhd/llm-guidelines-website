@@ -263,6 +263,73 @@ def render_skill_matrix(columns, rows):
     return intro + "\n".join(lines) + "\n"
 
 
+QUOTED = re.compile(r'"([^"]+)"')
+NA_JUSTIFICATIONS = ("not feasible", "not applicable", "impractical", "subsumed")
+
+
+def lint_matrix_comments(root):
+    """Warn-level cross-check of matrix cells against their justifications.
+
+    Each cell in matrix.tex carries a comment quoting the guideline's Study
+    Types subsection. Two checks per cell: the cell's severity must match
+    the RFC keyword carried by its quotes (a "conditional" or "subsumed"
+    note exempts judgment calls), and every quoted fragment must still
+    appear verbatim in the corresponding guideline file, so the comments
+    cannot silently outlive the text they cite. Returns warning strings;
+    callers decide whether they are fatal.
+    """
+    def lint_norm(s):
+        s = s.replace("\\ ", " ").replace("~", " ").replace("\\", "")
+        return re.sub(r"\s+", " ", s)
+
+    warnings = []
+    matrix_path = root / "llm-guidelines-paper" / "_summary" / "matrix.tex"
+    guideline_files = sorted((root / "llm-guidelines-paper" / "_guidelines").glob("0[1-8]_*.tex"))
+    if len(guideline_files) != N_GUIDELINES:
+        return [f"expected {N_GUIDELINES} guideline files, found {len(guideline_files)}"]
+    guideline_texts = [lint_norm(p.read_text(encoding="utf-8")) for p in guideline_files]
+
+    body = matrix_path.read_text(encoding="utf-8").split("\\midrule", 1)[1]
+    body = body.split("\\bottomrule", 1)[0]
+    row = -1
+    for chunk in split_unescaped(body, "\\\\"):
+        if "\\hyperref" not in chunk:
+            continue
+        row += 1
+        gname = guideline_files[row].name
+        gtext = guideline_texts[row]
+        for line in chunk.splitlines():
+            m = re.search(r"(?<!\\)%(.*)$", line)
+            if not m:
+                continue
+            code, comment = line[: m.start()], m.group(1)
+            where = f"matrix.tex row {row + 1} ({gname}): %{comment.strip()[:40]}..."
+            quotes = QUOTED.findall(comment)
+
+            if "&" in code:
+                icon = MUST if "\\iconM" in code else SHOULD if "\\iconS" in code else NA
+                exempt = "conditional" in comment.lower() or "subsumed" in comment.lower()
+                quoted_must = any(re.search(r"\bmust\b", q) for q in quotes)
+                quoted_should = any(re.search(r"\bshould\b", q) for q in quotes)
+                if icon == SHOULD and quoted_must and not exempt:
+                    warnings.append(f"{where}: \\iconS cell but a quote carries 'must'")
+                if icon == MUST and quotes and not quoted_must and not exempt:
+                    warnings.append(f"{where}: \\iconM cell but no quote carries 'must'")
+                if icon == NA and not any(k in comment.lower() for k in NA_JUSTIFICATIONS):
+                    warnings.append(f"{where}: '--' cell without a stated justification")
+                if icon == SHOULD and quotes and not quoted_should and not exempt:
+                    warnings.append(f"{where}: \\iconS cell but no quote carries 'should'")
+
+            for q in quotes:
+                for frag in re.split(r"\.\.\.|…", q):
+                    frag_n = lint_norm(frag).strip(" .,;:")
+                    if len(frag_n) >= 15 and frag_n not in gtext:
+                        warnings.append(
+                            f"{where}: quote not found verbatim in {gname}: \"{frag_n[:60]}\""
+                        )
+    return warnings
+
+
 def write_output(content, dest):
     if dest == "-":
         sys.stdout.write(content)
@@ -281,6 +348,12 @@ def main():
     parser.add_argument("--summary-table", metavar="OUT", help="write the summary-page table")
     parser.add_argument("--skill-matrix", metavar="OUT", help="write the skill bundle matrix.md")
     parser.add_argument("--check", action="store_true", help="parse and validate only")
+    parser.add_argument(
+        "--lint-matrix",
+        action="store_true",
+        help="warn (stderr, exit 0) when matrix cells disagree with their "
+        "justification comments or quotes have gone stale",
+    )
     args = parser.parse_args()
 
     root = Path(args.root)
@@ -294,7 +367,17 @@ def main():
         print(f"generate-summary-tables: error: {exc}", file=sys.stderr)
         return 1
 
-    if not (args.check or args.website_matrix or args.summary_table or args.skill_matrix):
+    if args.lint_matrix:
+        for w in lint_matrix_comments(root):
+            print(f"generate-summary-tables: warning: {w}", file=sys.stderr)
+
+    if not (
+        args.check
+        or args.lint_matrix
+        or args.website_matrix
+        or args.summary_table
+        or args.skill_matrix
+    ):
         parser.error("nothing to do: pass --check or at least one output option")
 
     if args.website_matrix:
