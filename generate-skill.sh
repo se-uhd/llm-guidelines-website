@@ -188,14 +188,10 @@ convert_source() {
     " "$dst"
 }
 
-# --- 4. Wipe old layout and recreate target directories ---
+# --- 4. Recreate target directories ---
 #
-# Transition cleanup: previous layouts placed content under
-# skills/llm-guidelines/ directly (very old), or split into skills/explore/
-# + skills/review/ + shared/ (intermediate). Remove all three so we don't
-# ship stale content alongside the current single-skill layout.
-
-rm -rf "${PLUGIN_DIR}/shared" "${SKILLS_DIR}/explore" "${SKILLS_DIR}/review"
+# Remove the generated reference files before regenerating so a renamed
+# guideline or study type cannot leave its old slug behind.
 
 mkdir -p "${REFS_DIR}/guidelines" "${REFS_DIR}/study-types"
 find "${REFS_DIR}/guidelines" -maxdepth 1 -name '*.md' -delete
