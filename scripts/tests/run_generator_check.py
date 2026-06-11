@@ -11,6 +11,7 @@ the paper legitimately changes those severities.
 Run from anywhere: paths resolve relative to this file.
 """
 
+import re
 import shutil
 import subprocess
 import sys
@@ -108,6 +109,29 @@ def main():
         res.stderr.strip().splitlines()[0][:160] if res.stderr.strip() else "",
     )
 
+    checklist_tex = (ROOT / "llm-guidelines-paper" / "_summary" / "checklist.tex").read_text(
+        encoding="utf-8"
+    )
+    checklist_conditions = set(re.findall(r"\\condition\{([a-z0-9-]+)\}", checklist_tex))
+    converter = (ROOT / "convert-and-merge-sources.sh").read_text(encoding="utf-8")
+    filter_conditions = set(
+        re.findall(r'class="cond-filter"\s+data-condition="([a-z0-9-]+)"', converter)
+    )
+    missing_filters = sorted(checklist_conditions - filter_conditions)
+    stale_filters = sorted(filter_conditions - checklist_conditions)
+    check(
+        "checklist_filter_conditions_match_tags",
+        not missing_filters and not stale_filters,
+        f"missing: {missing_filters}; stale: {stale_filters}",
+    )
+    checklist_header = (ROOT / "checklist" / "_sources" / "00_header.md").read_text(
+        encoding="utf-8"
+    )
+    check(
+        "checklist_export_uses_guideline_links",
+        'href.indexOf("/guidelines/")' in checklist_header
+        and not re.search(r"G\\d", checklist_header),
+    )
     with tempfile.TemporaryDirectory() as tmp:
         fake = Path(tmp)
         (fake / "llm-guidelines-paper" / "_summary").mkdir(parents=True)

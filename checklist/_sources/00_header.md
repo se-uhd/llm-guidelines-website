@@ -312,18 +312,25 @@ document.addEventListener("DOMContentLoaded", function () {
       var tags = tagSlugs.join(", ");
 
       var guideline = "";
-      var link = li.querySelector("a");
-      if (link) {
-        var gMatch = link.textContent.match(/^G\d+$/);
-        if (gMatch) guideline = gMatch[0];
+      var guidelineLink = null;
+      li.querySelectorAll("a").forEach(function (link) {
+        var href = link.getAttribute("href") || "";
+        if (!guidelineLink && href.indexOf("/guidelines/") !== -1) {
+          guidelineLink = link;
+        }
+      });
+      if (guidelineLink) {
+        guideline = guidelineLink.textContent.trim();
       }
 
       var cleanText = text
         .replace(/^[\u25CF\u25CB]\s*/, "")
-        .replace(/\s*\[[a-z0-9-]+\]\s*/g, " ")
-        .replace(/\s*\(G\d+\)\.?\s*$/, "")
-        .replace(/\s+/g, " ")
-        .trim();
+        .replace(/\s*\[[a-z0-9-]+\]\s*/g, " ");
+      if (guideline) {
+        var escapedGuideline = guideline.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        cleanText = cleanText.replace(new RegExp("\\s*\\(" + escapedGuideline + "\\)\\.?\\s*$"), "");
+      }
+      cleanText = cleanText.replace(/\s+/g, " ").trim();
 
       var cb = li.querySelector("input[type='checkbox']");
       var status = cb && cb.checked ? "checked" : "unchecked";
