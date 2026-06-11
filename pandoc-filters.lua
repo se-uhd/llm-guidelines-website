@@ -3,6 +3,26 @@
 
 -- Convert plain environment (lstnewenvironment) to code blocks.
 -- Convert enumerate* environment to OrderedList.
+-- Preserve display math for MathJax. markdown_strict otherwise tries to
+-- down-convert TeX math to plain Markdown and warns on fractions/binomials.
+function Para(el)
+  if #el.content >= 1 and el.content[1].t == "Math" and el.content[1].mathtype == "DisplayMath" then
+    local blocks = {pandoc.RawBlock("markdown", "$$" .. el.content[1].text .. "$$")}
+    local rest = {}
+    local start = 2
+    if el.content[start] and el.content[start].t == "SoftBreak" then
+      start = start + 1
+    end
+    for i = start, #el.content do
+      table.insert(rest, el.content[i])
+    end
+    if #rest > 0 then
+      table.insert(blocks, pandoc.Para(rest))
+    end
+    return blocks
+  end
+end
+
 function Div(el)
   if el.classes:includes("plain") then
     local doc = pandoc.Pandoc(el.content)
