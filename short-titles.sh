@@ -34,15 +34,3 @@ short_title() {
         *)                                                         echo "$1" ;;
     esac
 }
-
-# Retired URL slugs, keyed by the CURRENT short title. When a short title
-# changes, the previously published slug goes here (space-separated when
-# several accumulate) so convert-and-merge-sources.sh emits a
-# jekyll-redirect-from alias and the old URL keeps resolving.
-old_slugs() {
-    case "$1" in
-        "Benchmarks & Metrics") echo "benchmarks" ;;
-        "Benchmarking")         echo "benchmarks" ;;
-        *)                      echo "" ;;
-    esac
-}
