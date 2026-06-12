@@ -21,23 +21,27 @@ We also publish the guidelines as an [Agent Skill](/skill/) for coding agents su
 These guidelines are meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
 The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussions during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
 To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-uhd/llm-guidelines-website).
-To **cite our guidelines**, please refer to the [arXiv version](https://arxiv.org/abs/2508.15503).
-Although that version is regularly updated, the most up-to-date version of the guidelines can always be found on this website.
-Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a **specific version** of the guidelines; the current version is shown in the header of this website, alongside a link to the [changelog](/changelog/).
 
-<a href="https://arxiv.org/abs/2508.15503" class="btn" target="_blank" rel="noopener noreferrer"><i class="ai ai-arxiv"></i> View on arXiv</a>
+The paper has been accepted at **Empirical Software Engineering**, and a preprint is available on [arXiv](https://arxiv.org/abs/2508.15503).
+To **cite our guidelines**, please use the BibTeX entry below, which cites the accepted article.
+The most up-to-date version of the guidelines can always be found on this website.
+Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a **specific version** of the guidelines. The current version is shown in the header of this website, alongside a link to the [changelog](/changelog/).
+Going forward, the changelog will document changes relative to the accepted version.
+
+<a href="https://arxiv.org/abs/2508.15503" class="btn" target="_blank" rel="noopener noreferrer"><i class="ai ai-arxiv"></i> View preprint on arXiv</a>
 
 {% raw %}
 
 ```bibtex
-@misc{baltes2026guidelinesempiricalstudiessoftware,
-      title={{Guidelines for Empirical Studies in Software Engineering involving Large Language Models}},
-      author={Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Junda He and Christoph Treude and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Cristina Martinez Montes and Lutz Prechelt and Paul Ralph and Rijnard van Tonder and Stefan Wagner},
-      year={2026},
-      eprint={2508.15503},
-      archivePrefix={arXiv},
-      primaryClass={cs.SE},
-      url={https://arxiv.org/abs/2508.15503},
+@article{baltes2026guidelinesempiricalstudiessoftware,
+  title = {{Guidelines for Empirical Studies in Software Engineering involving Large Language Models}},
+  author = {Sebastian Baltes and Florian Angermeir and Chetan Arora and Marvin Muñoz Barón and Chunyang Chen and Lukas Böhme and Fabio Calefato and Neil Ernst and Davide Falessi and Brian Fitzgerald and Davide Fucci and Junda He and Christoph Treude and Marcos Kalinowski and Stefano Lambiase and Daniel Russo and Mircea Lungu and Cristina Martinez Montes and Lutz Prechelt and Paul Ralph and Rijnard van Tonder and Stefan Wagner},
+  journal = {Empirical Software Engineering},
+  year = {2026},
+  eprint = {2508.15503},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.SE},
+  url = {https://arxiv.org/abs/2508.15503},
 }
 ```
 
