@@ -100,8 +100,12 @@ for md_file in guidelines/_sources/0[1-8]_*.md; do
     guidelines_nav=$((guidelines_nav + 1))
 done
 
-# Read converted intro content (strip pandoc-generated References heading and everything after it)
+# Read converted intro content (strip pandoc-generated References heading and
+# everything after it) and capture the references separately so they can be
+# appended below the matrix instead of landing mid-page. Promote the intro's
+# `### References` to `##` to match the heading level used on every other page.
 guidelines_intro=$(perl -ne 'print unless /^#{2,3}\s+References\s*$/ .. eof' guidelines/_sources/00_intro.md)
+guidelines_refs=$(perl -ne 'if (/^#{2,3}\s+References\s*$/ .. eof) { s/^#{2,3}(\s+References\s*)$/##$1/; print }' guidelines/_sources/00_intro.md)
 
 # Warn-level coherence lint: matrix cell severities against their
 # justification comments, and comment quotes against the guideline text
@@ -113,8 +117,8 @@ python3 scripts/generate-summary-tables.py --lint-matrix || true
 # is generated from the paper's _summary/matrix.tex so the website cannot
 # drift from the paper; the generator exits non-zero on any parse mismatch.
 guidelines_matrix=$(python3 scripts/generate-summary-tables.py --website-matrix -)
-GUIDELINES_INTRO="$guidelines_intro" GUIDELINES_MATRIX="$guidelines_matrix" \
-    perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/; s/<!-- MATRIX -->/$ENV{GUIDELINES_MATRIX}/' \
+GUIDELINES_INTRO="$guidelines_intro" GUIDELINES_MATRIX="$guidelines_matrix" GUIDELINES_REFS="$guidelines_refs" \
+    perl -pe 's/<!-- INTRO -->/$ENV{GUIDELINES_INTRO}/; s/<!-- MATRIX -->/$ENV{GUIDELINES_MATRIX}/; s/<!-- REFERENCES -->/$ENV{GUIDELINES_REFS}/' \
     guidelines/_sources/00_header.md > guidelines/index.md
 
 # --- Study types sub-pages ---

@@ -26,3 +26,5 @@ The guideline's core recommendations:<br/>
 -- = are not directly applicable for this study type.
 
 <!-- MATRIX -->
+
+<!-- REFERENCES -->
