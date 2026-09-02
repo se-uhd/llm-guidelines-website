@@ -299,4 +299,4 @@ Use this when the guideline content has not changed (no new paper tag) but the s
 4. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM_revN`, and push commit and tag.
 5. Bump the skill submodule pointer here, commit, push.
 
-First guideline version is `2026.03` (paper commit `d57da062`, dated 2026-03-19, marking the EMSE revision submission).
+First guideline version is `2026.03` (paper commit `58ec8a62`, dated 2026-03-19, marking the EMSE revision submission).
