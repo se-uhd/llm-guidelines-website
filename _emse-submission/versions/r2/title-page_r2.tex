@@ -1,0 +1,65 @@
+\documentclass[
+	pdftex,
+	%draft, % Prints a box at the end of overfull lines, changes behavior of some packages
+	final,
+	12pt,
+	a4paper,
+	parskip=false, % Paragraphs are identified by indentation of the first line by 1em
+	twoside, % Prepares the document for two-sided printing
+	footheight=0mm, % remove footer
+  	foot include=false,
+	toc=bibliography, % add bibliography to table of contents
+	toc=listof, % add list of figures and tables to table of contents
+]{scrbook} % documentation: https://de.mirrors.cicku.me/ctan/macros/latex/contrib/koma-script/doc/scrguide-en.pdf
+% language and encoding
+\usepackage[utf8]{inputenc} % set document encoding to UTF-8
+\usepackage[main=english, ngerman]{babel} % adjust language depending on thesis language (affects hyphenation)
+\usepackage[T1]{fontenc} % set font encoding so that special characters are displayed correctly
+
+% fonts
+%\usepackage{mathpazo} % Palatino font (serif)
+\usepackage{fourier} % Utopia font (serif)
+\usepackage[scaled=0.95]{helvet} % Helvetica font (sans-serif)
+\usepackage{courier} % Courier Font (typewriter)
+%\usepackage{eulervm} % Euler font (math) -> led to problems with = and > characters in math mode
+
+% page margins
+\usepackage[paper=a4paper, inner=30mm, outer=25mm, top=30mm, bottom=25mm]{geometry}
+
+%% author's custom commands
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newcommand{\paperid}{EMSE-D-25-123456}
+\newcommand{\papertitle}{Guidelines for Empirical Studies in Software~Engineering involving Large~Language~Models}
+\newcommand{\authornames}{Sebastian~Baltes, Florian~Angermeir, Chetan~Arora, Marvin~Muñoz~Barón, Chunyang~Chen, Lukas~Böhme, Fabio~Calefato, Neil~Ernst, Davide~Falessi, Brian~Fitzgerald, Davide~Fucci, Junda~He, Christoph~Treude, Marcos~Kalinowski, Stefano~Lambiase, Daniel~Russo, Mircea~Lungu, Cristina~Martinez~Montes, Lutz~Prechelt, Paul~Ralph, Rijnard~van~Tonder, and Stefan~Wagner}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\hyphenchar\font=\string"7F % fix hyphenation of hyphenated words, see https://tex.stackexchange.com/a/63234/100364
+\selectlanguage{english}
+
+\frontmatter % roman numbers
+
+\begin{titlepage}
+
+        \vfill
+    
+	\begin{center}
+		%{\large \paperid}\\
+		%\vspace{1cm}
+		{\LARGE\textsf{\papertitle}}\\
+		\vspace{1cm}
+		{\large \authornames}\\
+	\end{center}
+
+	\vspace{4cm}
+		
+	\begin{center}
+		{\large\textbf{Detailed author information can be found on the next page.}}
+	\end{center}
+
+\end{titlepage}
+
+\end{document}

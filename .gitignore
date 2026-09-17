@@ -95,6 +95,8 @@ __pycache__/
 ########
 # Misc #
 ########
+# Publisher PDFs must not become public
+_emse-submission/versions/cr/*OnlinePDF.pdf
 *.sublime-project
 *.sublime-workspace
 codekit-config.json
