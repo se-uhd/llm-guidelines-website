@@ -25,8 +25,7 @@ To **contribute to the guidelines**, you can open an issue or create a pull requ
 The paper has been accepted at **Empirical Software Engineering**, and a preprint is available on [arXiv](https://arxiv.org/abs/2508.15503).
 To **cite our guidelines**, please use the BibTeX entry below, which cites the accepted article.
 The most up-to-date version of the guidelines can always be found on this website.
-Each revision is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a **specific version** of the guidelines. The current version is shown in the header of this website, alongside a link to the [changelog](/changelog/).
-Going forward, the changelog will document changes relative to the accepted version.
+Each release is tagged (`YYYY.MM`) in the [paper repository](https://github.com/se-uhd/llm-guidelines-paper/tags), so you can reference a **specific version** of the guidelines. The current version is shown in the header of this website, alongside a link to the [changelog](/changelog/), which records what changed in each release.
 
 <a href="https://arxiv.org/abs/2508.15503" class="btn" target="_blank" rel="noopener noreferrer"><i class="ai ai-arxiv"></i> View preprint on arXiv</a>
 

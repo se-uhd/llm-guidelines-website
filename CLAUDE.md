@@ -214,6 +214,7 @@ python3 plugins/llm-guidelines/skills/llm-guidelines/scripts/tests/run_smoke.py
 - `summary/_sources/00_header.md` — Summary page header with the `<!-- TABLE -->` placeholder
 - `skill/index.md` — Skill landing page (install, invocation, downloads, file index); tracked but generated from `_skill/skill-index.md.template`
 - `llm-guidelines-skill/` — Git submodule containing the published Agent Skill and plugin packaging
+- `_emse-submission/` — EMSE submission trail: reviewer reports and response letters (`reviews-and-response/`) plus the per-round bundles (`versions/initial/`, `r1/`, `r2/`, `cr/`). Jekyll skips underscore-prefixed directories, so none of it is published. It lives here rather than in the paper repo because every tag of that repo is archived on Zenodo, and the archive should hold the guidelines, not the journal correspondence. The `regenerate.sh` scripts in `versions/r2/` and `versions/cr/` reach the paper sources through the `llm-guidelines-paper/` submodule.
 - `.github/workflows/` — `build.yml` validates LaTeX, the generator, and the paper build on PRs; `build-and-deploy.yml` builds and deploys on merge to main; `update-citations.yml` refreshes citation counts weekly and pushes to main
 
 ## LaTeX Header Architecture
@@ -264,7 +265,7 @@ Guidelines use CalVer tags (`YYYY.MM`, no `v` prefix) on the paper repo. The cur
 The skill bundle uses a two-part version so that skill-only changes (SKILL.md edits, command tweaks, layout changes, bundle bug fixes) can ship between guideline-version bumps without falsely advertising a new guideline release:
 
 - **Guideline version** — `YYYY.MM`, read from `_config.yml`.
-- **Skill revision** — non-negative integer in `_skill/REVISION`. Initial state is `0`.
+- **Skill revision** — non-negative integer in `_skill/REVISION`, counted within the current guideline version. Starts at `0` and resets to `0` on every guideline-version bump.
 - **Combined skill version** — `YYYY.MM` when revision is `0`, otherwise `YYYY.MM_revN`. Stamped into `SKILL.md` files, `plugin.json`, `marketplace.json`, and `VERSION` in the skill submodule.
 - **Codex plugin version** — strict semver `YYYY.M.REVISION`, stamped only into `plugins/llm-guidelines/.codex-plugin/plugin.json` because Codex does not accept the Claude-facing `_revN` CalVer string.
 
@@ -272,7 +273,7 @@ The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-
 
 ### Bumping the guideline version (new paper tag)
 
-1. Tag the target commit in the paper submodule (`git tag YYYY.MM <sha> && git push --tags`).
+1. In the paper submodule, prepare the release before tagging: add the release section to `CHANGELOG.md`, set `version` and `date-released` in `CITATION.cff`, then run `./scripts/make_release_pdf.sh` (builds the tracked `release/` PDF) and `python3 scripts/generate_zenodo_json.py` (regenerates `.zenodo.json`; it is generated, never hand-edited). Commit, then tag (`git tag YYYY.MM && git push --tags`).
 2. Bump the paper submodule pointer here.
 3. Update both the label and URL of the version entry in `_config.yml`.
 4. **Reset `_skill/REVISION` to `0`** (the new release for the new guideline version is the bare `YYYY.MM`, no `_rev` suffix).
@@ -288,6 +289,8 @@ The `_rev` separator avoids the `2026.05.1`-vs-"May 1" ambiguity of a third dot-
 7. In `llm-guidelines-skill/`, update `EXPECTED_CLAUDE_VERSION` in `scripts/tests/run_smoke.py` to the new combined version (a deliberate release tripwire; CI smoke fails on any release that skips it), then run `python3 scripts/tests/run_smoke.py` and the Markdown linter smoke test, checking exit codes rather than skimming output (the suite prints failures before the passes). If `codex` is installed, the bundle smoke test also checks that Codex can add the local marketplace in an isolated `CODEX_HOME` and list `llm-guidelines@se-uhd`. In this repo, run `python3 scripts/tests/run_generator_check.py`.
 8. In `llm-guidelines-skill/`, review the diff, commit, tag the new commit `YYYY.MM`, and push commit and tag.
 9. Bump the skill submodule pointer here, commit, push.
+10. Publish a GitHub release for the paper tag, using that version's `CHANGELOG.md` section as the release notes. Zenodo is connected to the paper repo and archives the tag's source zipball, minting a version DOI under the project's concept DOI. Files attached to the release as assets are **not** archived, which is why the release PDF and the metadata files are committed instead.
+11. Confirm the Zenodo record shows the expected creators, license, and related identifiers, then post the new version to arXiv.
 
 ### Bumping the skill revision (skill-only change)
 

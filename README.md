@@ -37,12 +37,21 @@ The skill landing page is at [`/skill/`](https://llm-guidelines.org/skill/) and 
 
 Guidelines are versioned with date-based tags (CalVer, `YYYY.MM`) on the [paper repo](https://github.com/se-uhd/llm-guidelines-paper). The current version is shown in the top-right of the website, left of the GitHub link, and links to the tagged sources. The skill bundle inherits the same tag. To publish a new version:
 
-1. In `llm-guidelines-paper/`, tag the target commit: `git tag YYYY.MM <sha>` and `git push --tags`.
+1. In `llm-guidelines-paper/`, add the release section to `CHANGELOG.md`, set `version` and `date-released` in `CITATION.cff`, then run `./scripts/make_release_pdf.sh` and `python3 scripts/generate_zenodo_json.py`. Commit, tag the commit `git tag YYYY.MM`, and push commit and tag.
 2. In this repo, bump the paper submodule pointer to that commit: `git submodule update --remote llm-guidelines-paper` (or check out the tag inside the submodule).
 3. Update `_config.yml` `aux_links`: replace both occurrences of the old `YYYY.MM` (label and URL) with the new tag.
-4. Run `./compile-latex.sh && ./convert-and-merge-sources.sh` to regenerate website pages and the skill bundle.
-5. In `llm-guidelines-skill/`, review the diff, commit with the new tag, push, and tag the commit `YYYY.MM` there as well.
-6. Bump the skill submodule pointer in this repo and open a PR.
+4. Reset `_skill/REVISION` to `0`.
+5. Run `./compile-latex.sh && ./convert-and-merge-sources.sh` to regenerate website pages and the skill bundle.
+6. In `llm-guidelines-skill/`, review the diff, commit with the new tag, push, and tag the commit `YYYY.MM` there as well.
+7. Bump the skill submodule pointer in this repo and open a PR.
+8. Publish a [GitHub release](https://github.com/se-uhd/llm-guidelines-paper/releases) for the tag, using that version's changelog section as the release notes. Zenodo archives the tag and mints a DOI for it.
+9. Check that the Zenodo record appeared with the expected metadata, and post the new version to arXiv.
+
+## EMSE submission archive
+
+`_emse-submission/` holds the EMSE submission trail: the reviewer reports and response letters for each round, and the per-round submission bundles. Jekyll ignores directories whose name starts with an underscore, so nothing in it is published to the website. It lives here rather than in the paper repo so that the Zenodo archive of each guideline release contains the guidelines themselves and not the journal correspondence.
+
+The `regenerate.sh` scripts under `_emse-submission/versions/r2/` and `_emse-submission/versions/cr/` rebuild their bundle from the current paper sources, which they locate through the `llm-guidelines-paper/` submodule.
 
 ## Information for authors
 
