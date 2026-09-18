@@ -1,0 +1,938 @@
+\documentclass[11pt]{article}
+
+% language and encoding
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{natbib}
+
+% page layout
+\usepackage{fullpage}
+\usepackage{stfloats}
+
+% colors
+\usepackage{xcolor}
+\usepackage{color}
+
+% document structure
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% math
+\usepackage{mathrsfs}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{bm}
+
+% graphics and images
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, arrows.meta, calc, fit}
+
+% tables
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+% hyperlinks and references
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{xr}
+
+% text and typography
+\usepackage{textcomp}
+\usepackage{csquotes}
+\usepackage{soul}
+\usepackage{paralist}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=3pt}
+
+% boxes and code
+\usepackage[most]{tcolorbox}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{verbatim}
+
+% conditionals and utilities
+\usepackage{xifthen}
+
+% get author names despite the fact that IEEEtran doesn't support it (it can't be used together with natbib)
+%\usepackage[style=ieee, backend=biber,sorting=nty, mincitenames=1, maxcitenames=2]{biblatex}
+%\addbibresource{literature.bib}
+
+% make "et al." upright (not italic)
+% \DefineBibliographyStrings{english}{%
+%   andothers = {et\addabbrvspace al\adddot},
+% }
+
+% define command for inline quotes
+\newcommand*{\enq}[1]{\enquote{{\itshape#1}}}
+
+% define environment for quotes
+\newmdenv[
+  leftmargin=\leftmargin,
+  skipabove=\topsep,
+  skipbelow=\topsep
+]{mdquote}
+
+% color for result box background
+\definecolor{background-gray}{gray}{0.96}
+
+% define environment for results
+\newmdenv[
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  skipabove=\baselineskip,
+  skipbelow=\baselineskip,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  innerleftmargin=12pt,
+  innerrightmargin=12pt,
+  tikzsetting={draw=black, line width=4pt},
+  linecolor=black,
+  backgroundcolor=background-gray
+]{results}
+
+% editorial commands
+\newcommand{\boxedtext}[1]{\fbox{\scriptsize\bfseries\textsf{#1}}}
+\newcommand{\nota}[2]{\boxedtext{#1}{\small$\blacktriangleright$\emph{\textsl{#2}}$\blacktriangleleft$}}
+\newcommand{\todo}[1]{{\color{red}\nota{TODO}{#1}}}
+% uncomment the following line to hide all \todo{} commands
+%\renewcommand\todo[1]{}
+\newcommand{\fix}[1]{\textcolor{blue}{#1}}
+
+% quote
+\definecolor{block-gray}{RGB}{245,245,245}
+\newtcolorbox{commentquote}[2][]{%
+    colback=block-gray,
+    grow to right by=0mm,
+    grow to left by=0mm, 
+    boxrule=0pt,
+    boxsep=0pt,
+    breakable,
+    enhanced jigsaw,
+    borderline west={2pt}{0pt}{gray},
+    before skip=6pt,
+    after skip=4pt
+}
+
+% comment and replies
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{comment}[reviewer]
+\setcounter{comment}{0}
+
+\renewcommand{\thecomment}{Comment\,\thereviewer.\arabic{comment}}
+
+\newcommand{\review}{%
+  \stepcounter{reviewer}%
+  \section*{Reviewer \thereviewer}%
+  \vspace{-0.75\baselineskip}%
+}
+
+\makeatletter
+\newenvironment{reviewcomment}
+{%
+  \refstepcounter{comment}%
+  \begingroup
+    \edef\@tempa{comment:\thereviewer.\arabic{comment}}%
+    \label{\@tempa}%
+  \endgroup
+  \needspace{8\baselineskip}%
+  \bigskip\noindent
+  \textbf{\thecomment}:%
+  \begin{commentquote}{}%
+}%
+{%
+  \end{commentquote}%
+  \medskip\par
+}
+\makeatother
+
+\makeatletter
+\newenvironment{response}
+{%
+  \needspace{6\baselineskip}%
+  \par\medskip\noindent\textbf{Response}:\\%
+  \phantomsection%
+  \begingroup
+    \edef\@tempa{response:\thereviewer.\arabic{comment}}%
+    \label{\@tempa}%
+  \endgroup
+}
+{%
+  \medskip\par
+}
+\makeatother
+
+% paper metadata
+\providecommand{\papertitle}{\textbf{Guidelines for Empirical Studies in Software Engineering Involving Large Language Models}}
+\providecommand{\paperid}{\textbf{[EMSE-D-25-00637]}}
+
+\newcommand{\setpaperinfo}[2]{%
+  \def\papertitle{#1}%
+  \def\paperid{#2}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO: set title, paper id, and author names
+\setpaperinfo{Guidelines for Empirical Studies in Software Engineering Involving Large Language Models}{EMSE-D-25-00637}
+\author{S. Baltes et al.}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{%
+  \textbf{Response Letter}\\
+  \papertitle\\
+  {\large \paperid}
+}
+
+\makeatletter
+\def\@date{}
+\makeatother
+
+
+\begin{document}
+
+\maketitle
+
+\noindent Dear editor and reviewers,
+
+\medskip
+\noindent Thank you for giving us the opportunity to submit a major revision of our manuscript.
+We have thoroughly revised the manuscript based on the feedback provided by the reviewers.
+In the following, you can find detailed responses to each comment.
+
+\noindent As part of this revision, we welcomed new co-authors (Cristina Martinez Montes, Rijnard van Tonder, and Junda He) who contributed additional expertise to the major rewrite of the guidelines. This project is a community effort, and we remain open to new contributors who can strengthen the breadth and depth of our recommendations.
+
+\noindent We have considerably revised the paper based on the reviewers' feedback. Due to the extensive nature of the changes (structural reorganization, new sections, and cross-cutting edits), the provided \texttt{latexdiff} document may be difficult to navigate. We therefore provide detailed responses to each comment below, referencing the relevant sections of the revised manuscript.
+
+\medskip
+\noindent Best regards,\\
+Sebastian Baltes (on behalf of all co-authors)
+
+\section*{\textsc{Response to Editor}}
+
+\vspace{-0.75\baselineskip}
+
+\begin{reviewcomment}
+The reviewers all recommend a major revision of the paper. For the revision, please focus on:
+
+\begin{itemize}
+    \item Structure \& Presentation. Make the paper more concise, reduce repetition, provide a summary tables of the guidelines.
+    \item Terminology \#1. Reconsider the use of RFC terminology. As R2 makes the case, peer review is not a standardization method.
+    \item Terminology \#2. Be careful claiming "undisputable truths" (see comments by R2). Guidelines should allow flexibility given resource constraints.
+    \item Methodological Improvements. Provide additional details on the methodology as requested in the reviews. For the revision, we do not expect any additional experiments, evaluations, but please increase the rigor as much as possible.
+\end{itemize}
+
+\end{reviewcomment}
+
+\begin{response}
+Thanks for your guidance. We addressed your focus points in the following way:
+
+\begin{itemize}
+    \item Structure \& Presentation: We conducted a comprehensive revision of the existing content, focusing on deduplication. We moved advantages and challenges to a cross-cutting summary section (Section~4.3), added a ``How to Navigate this Paper'' subsection, created Table~3 (guideline--study type matrix), Table~4 (rationale--recommendations mapping), and a comprehensive checklist (Appendix~A).
+    \item Terminology \#1: We dropped the reference to RFC~2119/8174. We retained \emph{must} and \emph{should} as plain indicators of essential requirements vs.\ desired practices, and converted all instances of \emph{may} to prose or \emph{should} to reduce complexity.
+    \item Terminology \#2: We revisited all \emph{must} items and limited them to practices that our author group unanimously considered both essential and broadly feasible. We added flexibility language (Section~5) encouraging sensible trade-offs and justification for deviations.
+    \item Methodological Improvements: We expanded Section~3 (Methodology) with details on the example selection process. We added a self-assessment against the SIGSOFT Empirical Standards quality dimensions (conclusion). Each guideline now includes dedicated ``Rationale'' subsections that explicitly motivate the guideline, as well as ``Advice for Reviewers'' and ``See Also'' subsections.
+\end{itemize}
+
+We provide more detailed responses to the individual reviewer comments below.
+Thank you for your valuable comments on our manuscript.
+We have done our best to incorporate changes to reflect the suggestions, which allowed us to improve the quality of our work.
+We provide a \texttt{latexdiff} document as part of the submission; however, given the extent of the changes, it may be difficult to navigate.
+\end{response}
+
+
+\section*{\textsc{Response to Reviewers}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\review
+
+\begin{reviewcomment}
+This is worthwhile work that can benefit from a number of improvements mainly it terms of its structure.
+\end{reviewcomment}
+\begin{response}
+    Thank you for your feedback.
+	We have carefully addressed all the issues item by item as follows.
+\end{response}
+
+\begin{reviewcomment}
+Regarding significance, the motivation behind this work is clearly set in the introduction. The presented contributions can clearly impact the field of software engineering theory and practice as described in the concluding sections.
+\end{reviewcomment}
+
+\begin{response}
+We thank the reviewer for these supportive comments.
+\end{response}
+
+\begin{reviewcomment}
+Regarding novelty, the work's contributions are original with respect to the state-of-the-art. Existing work in the area is coherently analyzed and synthesized, and the study's contributions are clearly identified in its context.
+\end{reviewcomment}
+\begin{response}
+We thank the reviewer for these supportive comments.
+\end{response}
+
+
+\begin{reviewcomment}
+    Regarding soundness, the study's contributions address its research questions, but in some cases the applied research methods lack the required rigor. In particular the methods described in Section 3 could be improved by having the process informed in a systematic way from other disciplines. The contribution's evaluation can be improved perhaps with a provision (as an appendix) of a model study following the recommendations, in order to judge the recommendations' practicality and value. Threats to validity and their effect on the results' soundness are not explicitly presented.
+\end{reviewcomment}
+
+\begin{response}
+We thank the reviewer for their feedback.
+However, we want to note that this is a meta-scientific paper. It doesn't have ``threats to validity'' or ``soundness'' in the same sense as an empirical paper. The SIGSOFT Empirical Standards suggest the following quality criteria for meta-science:\footnote{\url{https://www2.sigsoft.org/EmpiricalStandards/docs/standards?standard=MetaScience}}
+
+\begin{itemize}
+    \item comprehensiveness of analysis or guidance provided
+    \item usefulness to the research community
+    \item quality of argumentation supporting analysis of guidance
+    \item degree of integration with previous work, both in software engineering and in reference disciplines
+\end{itemize}
+
+We have added a paragraph to the conclusion that discusses these aspects from the authors' point of view, but we are open to consider the reviewer's feedback along these dimensions, especially regarding the quality of our argumentation.
+
+Regarding the ``model study'', we want to point the reviewer to the ``Example(s)'' sub-sections of the guidelines, which contain pointers to papers following (part of) our guidelines, highlighting the integration with previous work.
+Extending these sub-sections would significantly increase an already high page count.
+
+However, the guidelines exhibit high face validity in that subject matter experts derived these guidelines. Also, the process for establishing the guidelines is similar to that of guidelines with similar goals in other disciplines (see, e.g.,~\cite{Begg1996}).
+\end{response}
+
+\begin{reviewcomment}
+    Regarding verifiability, independent verification of the paper's claimed contributions is difficult, though this is a difficult to address issue.
+\end{reviewcomment}
+\begin{response}
+    Following our response to \ref{comment:1.4}, we argue, that verifiability does not align with the quality criteria for meta-science established in the SIGSOFT Empirical Standards.
+\end{response}
+
+\begin{reviewcomment}
+    Regarding presentation, the paper's structure can be improved. Several challenges and advantages are repeated in many sections. Consider codifying them, analyzing them once, and then cross-referencing them from a table. Furthermore, the identified challenges are given without any proposed means to address them. Most are later addressed through the proposed guidelines. Consider codifying and linking the two, again in tabular form.
+\end{reviewcomment}
+
+\begin{response}
+    We agree with the reviewer and moved the advantages and the challenges to a separate section and linked, where relevant, to study types.
+    We deliberately avoided bi-directional links between study types and guidelines for long-term maintainability reasons, but introduced with Table 3 a matrix that maps study types to guidelines, creating an implicit link.
+
+
+\end{response}
+
+\begin{reviewcomment}
+    Along similar lines, consider splitting the provided recommendations into a hierarchically numbered set of recommendations and a separate rationale exposition. In some places the exposition is not as clear as it could be.
+\end{reviewcomment}
+
+\begin{response}
+    To ensure the recommendations get the necessary exposition, we summarized them into a dedicated checklist inspired by CONSORT~\cite{Schulz2010}, structuring items into requirements (\emph{must}) and recommendations (\emph{should}).
+\end{response}
+
+\begin{reviewcomment}
+Furthermore, many paragraphs, such as those in Section 5.8.1, start with a long-winded rationale before arriving at the recommendation. Consider using recommendations as each paragraph's thematic sentence.  The text is free from typos and style errors. The formatting follows the provided instructions, but could be improved. Please fix the capitalization of referenced titles, see e.g. reference 96 (should be Python, ChatGPT).
+\end{reviewcomment}
+\begin{response}
+    We agree, that a thematic start improves the reading flow. Due to the number of requirements per recommendation section we refrained from using thematic sentences, but rather started each with a short rationale subsection.
+\end{response}
+
+\begin{reviewcomment}
+Consider converting the RFC 2119 MUST/SHALL/MAY verbs into lowercase. Their uppercase appearance is distracting, and the paper contains guidelines, not a technical standard.
+\end{reviewcomment}
+\begin{response}
+We agree, that the paper is not intended as a standardization, but as a community-driven effort. Hence we dropped the technical standards background (RFC). MUST and SHOULD are kept as indicators towards essential and desirable requirements. To reduce complexity, we converted instances of MAY to prose or SHOULD.
+\end{response}
+
+\begin{reviewcomment}
+Consider reducing in-text cross-references to other sections—they are distracting. If needed, add them in a separate section, as is done in many Design Pattern catalogues. The abstract is self-standing and summarizes succinctly the paper's essence. The paper could also benefit from the addition of a few figures to help navigating it.
+\end{reviewcomment}
+\begin{response}
+    We see the point about the length of cross-references. We intentionally did not reduce in-text cross-references to sections, as we feel this would require higher cognitive load of the reader. After consideration, we shortened the in-text cross-references significantly (e.g. from ''Use Human Validation for LLM Outputs`` to ''Human Validation``). This should also facilitate navigation across the entire paper.
+
+    Regarding figures, the paper now contains additional tables that serve a navigational purpose (Tables~1--4). We considered adding figures but found that the tabular format better served the paper's reference-style usage. The checklist and matrix table collectively address the navigation concern.
+\end{response}
+
+\begin{reviewcomment}
+Below is a list of more detailed comments.
+
+Page 3, line 16: Consider providing some details or examples as motivation, perhaps specifically targetting LLMs.
+\end{reviewcomment}
+\begin{response}
+    We restructured the introduction to foreground concrete LLM-specific reproducibility threats---non-determinism, model evolution beyond version identifiers, and opaque training data---as motivation, rather than burying them later in the gap paragraph.
+    Prompt formatting and temperature effects are now also cited early as examples of unreported settings that directly impact reproducibility.
+    The revised introduction is shorter overall (three paragraphs instead of four) while providing the concrete LLM-specific examples the reviewer suggested.
+\end{response}
+
+\begin{reviewcomment}
+Page 3, line 29: Consider also mentioning the ACM SIGSOFT Empirical Standards for Software Engineering.
+\end{reviewcomment}
+\begin{response}
+    We added the ACM SIGSOFT Empirical Standards.
+\end{response}
+
+\begin{reviewcomment}
+Page 3, line 33: LLMs are also a new tool, which requires fresh methdological guidance.
+\end{reviewcomment}
+\begin{response}
+We restructured the introduction to explicitly motivate why LLMs require fresh methodological guidance.
+    The revised text now foregrounds three LLM-specific threats (non-determinism, evolving models, opaque training data) and concrete examples (prompt formatting, temperature) before identifying the gap in existing SE guidelines.
+\end{response}
+
+\begin{reviewcomment}
+Page 4, line 7: Consider changing "recent version" into "recent version of this document".
+\end{reviewcomment}
+\begin{response}
+We are referring to continuously evolving guidelines as published online. We changed it as follows:
+	\begin{mdquote}
+		The most recent version of the guidelines is always available online.
+	\end{mdquote}
+
+\end{response}
+
+\begin{reviewcomment}
+Page 4, line 9: Remove "xw"?
+Page 4, line 38: Consider changing "advise" into "advice".
+\end{reviewcomment}
+\begin{response}
+Fixed.
+\end{response}
+
+\begin{reviewcomment}
+Section 2: The scope includes software code in addition to natural language, right?
+\end{reviewcomment}
+\begin{response}
+Yes, absolutely. We changed it to ``textual use cases.''
+\end{response}
+
+\begin{reviewcomment}
+Page 5, line 23: Also data generation, as in 4.1.4
+\end{reviewcomment}
+\begin{response}
+    We added ''generation``.
+\end{response}
+
+\begin{reviewcomment}
+Page 6, line 29: The numbering is wrong.
+\end{reviewcomment}
+\begin{response}
+Fixed.
+\end{response}
+
+\begin{reviewcomment}
+Page 7, line 38: Consider changing "inter-rater agreement" into "accuracy".
+\end{reviewcomment}
+\begin{response}
+    We kept ``inter-rater agreement'' here because we are referring to a specific paper in which they use that term.
+\end{response}
+
+\begin{reviewcomment}
+Page 8, line 16: Please clarify.
+\end{reviewcomment}
+\begin{response}
+We have now clarified it further and added an example to improve the sentence's readability.
+ \begin{mdquote}
+    Studies have shown that LLMs can be unreliable for high-stakes labeling, i.e., labels where misclassification has substantial downstream consequences (e.g., safety-critical or compliance-related decisions). In addition, LLMs can exhibit uneven per-class performance, with accuracy differing markedly across label categories, often performing worse on rare or ambiguous labels and systematically over- or under-assigning specific annotation categories.
+ \end{mdquote}
+
+\end{response}
+
+\begin{reviewcomment}
+    Section 4.1: It might be worth investigating the following philosophical question. Is it sound to consider human judgment as the gold standard against which LLM performance is evaluated? For example, this is not the approach scientists employ when evaluating the accuracy of spectrometer measurements.
+\end{reviewcomment}
+\begin{response}
+    This is quite an interesting remark. We discuss this in Section~5.5.5 (challenges of human validation for LLM outputs).
+\end{response}
+
+\begin{reviewcomment}
+Section 4.1.2: Several of the advantages listed here also apply to 4.1.1. Consider some form of merging to avoid gratuitous differences or repetitions.
+\end{reviewcomment}
+\begin{response}
+    See our response to \ref{comment:1.6}. We consolidated the advantages and challenges from individual study types into a cross-cutting Section~4.3, which directly addresses the overlap observed by the reviewer.
+\end{response}
+
+\begin{reviewcomment}
+Page 10, line 11: Please explain why this is an issue.
+\end{reviewcomment}
+\begin{response}
+    We added:
+    \begin{mdquote}
+The underlying statistical framework of an LLM usually pushes outputs towards the most likely (majority) answer, which might not
+be the best answer. Questions about bias, accuracy, and trust remain
+    \end{mdquote}
+\end{response}
+
+\begin{reviewcomment}
+Page 10, line 32: The word synthesis also applies to this use, but under a different meaning: "the production of a substance from simpler materials after a chemical reaction" rather than "the mixing of different ideas, influences, or things to make a whole that is different, or new" as used at the beginning of the paragraph. To avoid confusion, consider splitting this case into a separate section with a title like "synthetic data generation".
+\end{reviewcomment}
+\begin{response}
+Thanks for this remark.
+We have revised the section to make the two different notions of ``synthesis'' clearer. Please note the examples we reference, showing that SE researchers use both meanings in research papers.
+
+    \begin{mdquote}
+        Although synthesis in the preceding notion refers to abstraction and interpretation across multiple data sources, the term is sometimes also used to refer to generating synthetic content (e.g., source code, bug-fix pairs, requirements, etc.) that are then used in downstream tasks to train, fine-tune, or evaluate existing models or tools.
+In this case, the synthesis is done primarily using the LLM and its training data; the input is limited to basic instructions and examples.
+    \end{mdquote}
+\end{response}
+
+\begin{reviewcomment}
+Section 4.1.3: The examples provided here are the the wrong (meta) level compared to the other sections. If no direct examples can be found, consider mentioning this distinction.
+\end{reviewcomment}
+\begin{response}
+We have now added concrete examples from software engineering, from scoping studies to specific proposed implementation frameworks.
+
+\end{response}
+
+\begin{reviewcomment}
+Section 4.1.3: Several of the challenges listed here also apply to other sections. Consider some form of merging to avoid gratuitous differences or repetitions.
+\end{reviewcomment}
+\begin{response}
+    See actions and response to \ref{comment:1.6}.
+\end{response}
+
+\begin{reviewcomment}
+Page 12, line 32: Please clarify the meaning and implications of "should". Is this something the researchers should verify (if so, how) or is it a currently unatainable ideal?
+\end{reviewcomment}
+\begin{response}
+We understand the point being made. However, these 4 criteria are drawn from reference \cite{DBLP:journals/corr/abs-2209-06899} so we do not feel we can/should qualify an individual criterion.
+\end{response}
+
+\begin{reviewcomment}
+Page 16, line 22: A key advantage is the automation of tasks previously executed by humans.
+\end{reviewcomment}
+\begin{response}
+Added this as an overarching advantage.
+\end{response}
+
+\begin{reviewcomment}
+Page 16, line 44: Please … and replicability.
+\end{reviewcomment}
+\begin{response}
+    We added this point on replicability to the list of challenges.
+\end{response}
+
+\begin{reviewcomment}
+Section 5: Consider also including guidelines for reviewing papers that use LLMs. Following the providing guidelines is a start, but there are also things the reviewers should avoid, such as excessive requirements regarding verification. Furthermore, consider the space needed for fulfilling all the requirements; could much of the data be supplied as part of a replication package? If so which?
+\end{reviewcomment}
+\begin{response}
+   We added a paragraph to Section 5. indicating that reviewers should use the guidelines to help write reviews, emphasizing a focus on doing what is practically possible rather than ideal in principle.
+
+   We also added detailed new ``advice for reviewers'' subsections to each guideline advising reviewers on what to focus on, how to deal with common problems, and how to differentiate minor vs. major problems. We use these sections to encourage good reviewing thinking rather than repeat each guideline's individual must/should items.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.2: Is the position regarding the requirement to disclosue version too timid? As stated, many providers do not make it possible to use a past version. I think more epistemological thought, deliberation, and discussion is needed regarding the fact that research with SAAS models may not be deterministically reproducible.  This is not neccessarily a fatal problem. Many research methods, such as ethnography, grounded theory, and action research, share this feature. However, in such cases additional emphasis is placed in methodological elements such as triangulation, reflexivity, audit trails, and peer debriefing. These measures aim to ensure trustworthiness, encompassing credibility, transferability, dependability, and confirmability—the qualitative counterparts to validity, generalizability, reliability, and objectivity in deterministic quantitative research. Consider discussing these issues and adjusting the recommendations.
+\end{reviewcomment}
+\begin{response}
+Thank you for this feedback. We now explicitly draw on qualitative research epistemology (\cite{guba1981criteria}), framing SaaS-based LLM research as facing analogous conditions to ethnography, grounded theory, and action research. We added trustworthiness criteria (credibility, transferability, dependability, confirmability) and measures such as triangulation, reflexivity, and audit trails to Section~5.8.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.2.4: Consider expanding and explaining the drawbacks, advantages, and limitations of a 0 temperature setting regarding reproducibility.
+\end{reviewcomment}
+\begin{response}
+We added a corresponding discussion at the end of Section~5.2.5.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.2.5: I recommend summarizing recommendations by study type also in a table. (Also applies to the other .5 subsections.)
+\end{reviewcomment}
+\begin{response}
+    See response to \ref{comment:1.6} about avoiding bi-directional links between study types and guidelines.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.3: In general, for replicability we tend to distribute source code. So why here is the requirement only for abstract models (e.g. architecture diagrams, coordination logic), rather than concrete implementations? Consider requiring both.
+\end{reviewcomment}
+\begin{response}
+    We agree with the reviewer, that a replication package is to be expected (see discussions in Section 5.6 and Section 5.8).
+\end{response}
+
+\begin{reviewcomment}
+Page 29, line 1: Why is "keeping a record of the actual conversation" "crucial for accuracy"? There are several other such statements in the paragraphs' concluding phrases, which read like AI-generated slop. Please review them carefully, removing those that don't add anything substantial and fixing those, such as this one, that read nicely but are actually incorrect.
+\end{reviewcomment}
+\begin{response}
+We thank the reviewer for this feedback and agree with their assessment of the corresponding sentences. We have reformulated them as follows:
+
+\begin{mdquote}
+The rationale for this is similar to the rationale for reporting interview transcripts in qualitative research.
+Just as a human participant might give different answers to the same question asked two months apart, the responses from tools such as ChatGPT can also vary over time.
+\end{mdquote}
+\end{response}
+
+\begin{reviewcomment}
+Section 5.5.2: The text in the quotes appears to be paraphrased, so remove them (or adjust the text). Clarify what are "the first three categories".
+\end{reviewcomment}
+\begin{response}
+    We removed the quote and summarized it, to also mitigating any confusion about "the first three categories".
+\end{response}
+
+\begin{reviewcomment}
+Page 32, line 25: Please clarify how this is relevant to human validation.
+\end{reviewcomment}
+\begin{response}
+    We agree, that the example was not perfectly aligned with the section. Hence we replaced it with a better fitting example on human validation of LLM generated content.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.5.2: What is your recommendation given the cited low human-model and human-human agreements?
+\end{reviewcomment}
+\begin{response}
+    This example underlines our recommendation to use human validation for LLM outputs. LLMs, in their current state, are not suitable to judge each others outputs, as they share systematic biases. We rephrase this part to reason deeper about the low human-model and high model-model agreements.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.5.4: Please clarify the relevance of the "struggle with adapting to AI-assisted work" to this section.
+\end{reviewcomment}
+\begin{response}
+We thank the reviewer for their remark and have removed the corresponding article from the corresponding section.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.6.1: Please clarify why including an open LLM baseline might not be possible if the study involves human participants.
+\end{reviewcomment}
+\begin{response}
+In studies involving human participants, including an open LLM baseline may require participants to repeat the same tasks with multiple models. This can be infeasible, for example, due to time constraints and learning effects. Therefore, while open baselines are strongly encouraged, they may not always be practical in human-centered study designs.
+We are open to strengthening Section~5.6.1 based on additional feedback.
+\end{response}
+
+\begin{reviewcomment}
+Page 35, line 45: Consider changing "managed cloud APIs provided by proprietary vendors" into "vendor-provided managed proprietary cloud APIs".
+\end{reviewcomment}
+\begin{response}
+    We clarified our statement by removing ``managed cloud''.  And added example of one vendor for clarity.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.6: Consider tabulating the scientific advantages of moving from proprietary, to open-weight, to full-open models.
+\end{reviewcomment}
+\begin{response}
+Thank you for the suggestion. We considered adding such a table but concluded that a meaningful comparison would require multiple dimensions (e.g., reproducibility, cost, customizability, transparency of training data) that vary significantly across specific models and change rapidly. Instead, the rationale and recommendations in Section~5.6 discuss these trade-offs in prose, which we believe is more maintainable given the pace of change in this field.
+\end{response}
+
+\begin{reviewcomment}
+Page 37, line 15: Static analysis would be an even better example.
+\end{reviewcomment}
+\begin{response}
+    Thanks, we added static analysis as an example in addition to program repair.
+\end{response}
+
+\begin{reviewcomment}
+Page 37, line 4: Please clarify: what benchmarks is the example referring to?
+\end{reviewcomment}
+\begin{response}
+    Thanks, we added references (\cite{DBLP:journals/corr/abs-2107-03374},\cite{DBLP:journals/corr/abs-2108-07732}) for improved clarity.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.7.2: Most of the information presented here is (useful) background, not concrete examples. Consider moving it to an appropriate section.
+\end{reviewcomment}
+\begin{response}
+    We moved the background explanations of metrics to the recommendation subsection.
+\end{response}
+
+\begin{reviewcomment}
+Page 38, line 37: Please use a display equation
+\end{reviewcomment}
+\begin{response}
+    Fixed.
+\end{response}
+
+\begin{reviewcomment}
+Page 38, line 49: The tasks mentioned here do not adhere to the problem types introduced at the beginning of Section 5.7.2
+\end{reviewcomment}
+\begin{response}
+    We restructured the example section according to the problem types. We hope this clarifies the relation of tasks to problem types.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.7: This section can benefit from a structured classification of the benchmarks described in Section 5.7.2.
+\end{reviewcomment}
+\begin{response}
+    Thanks for the suggestion. To not increase the length of the paper further we refer the interested reader to the classifications in the initial references of 5.7.1.
+\end{response}
+
+\begin{reviewcomment}
+Page 40, line 18: This is one of the most important issues. Consider placing it more prominently and providing concrete
+\end{reviewcomment}
+\begin{response}
+    Thank you for raising this point. The topic of benchmark contamination/inter-dataset duplication was discussed mainly in Section 5.8 (Report Limitations and Mitigations) with a brief mentioning in Section 5.7 (Use Suitable Baselines, Benchmarks, and Metrics). We performed the following changes: First, a detailed discussion of benchmark contamination and related mitigations in 5.7. Second, we reduced the mentioning in 5.8 on the broader topic of inter-dataset duplication and the necessity of authors to discuss those threats to the validity. We hope this restructuring give the topic the appropriate attention and makes it more concrete for authors.
+\end{response}
+
+\begin{reviewcomment}
+Page 42, line 7: GPT-4o is a very coarse model identifier. Clarify whether the problem also applies to models sharing the same fingerprint.
+\end{reviewcomment}
+\begin{response}
+    Thank you for the feedback, we extensively rewrote the limitations and mitigations section to avoid repetitions with the other recommendation sections. This specific part is described on a more abstract level now. To our knowledge, there is no research on the stability of model performance based on fingerprinting over time.
+\end{response}
+
+\begin{reviewcomment}
+Page 42, line 35: Please start the paragraph with a thematic sentence.
+\end{reviewcomment}
+\begin{response}
+    Thank you for the feedback, we extensively rewrote the limitations and mitigations section to avoid repetitions with the other recommendation sections.
+\end{response}
+
+\begin{reviewcomment}
+Page 44, line 26: The paragraph starts by discussing generalizability and then switches to a discussion of code duplication. Please structure accordingly.
+\end{reviewcomment}
+\begin{response}
+    Thank you for the feedback, we extensively rewrote the limitations and mitigations section to avoid repetitions with the other recommendation sections.
+    The topic of code duplication was mentioned as one example for dataset leakage affecting generalizability, however we also describe this matter on a more abstract level now.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.8: To aid transparency and provide context, the cost should be reported by breaking down its components, e.g. number of input tokens, output tokens, and corresponding unit costs. This allows predicting future costs.
+\end{reviewcomment}
+\begin{response}
+    Thank you for the thoughtful suggestion. We included it as the preferred way of reporting costs.
+\end{response}
+
+\begin{reviewcomment}
+Section 5.8: Given that its benefits are very difficult to judge, I am not convinced regarding the value of an environmental impact assessment for scientific research. How would one evaluate CERN LHC, Mars space missions, ITER, NIF, and LLM model training in this context?
+\end{reviewcomment}
+\begin{response}
+    The reviewer raises an important point here. We agree, that SHOULD was too strong. Given the increased environmental impact of LLM-focused research compared to traditional research, we nevertheless deem it noteworthy to raise awareness. Hence we shifted the discussion from impact assessment to the tradeoff of performance improvement vs. increase resource consumption.
+\end{response}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\review
+
+\begin{reviewcomment}
+The paper is about LLM usage in software engineering research. It first describes the main uses cases of LLMs in SE research and then proceeds with guidelines. These guidelines recommend that researchers declare LLM usage, report model versions and configurations, document tool architectures, disclose prompts, use human validation, employ open LLMs and suitable baselines, and articulate study limitations. The ultimate goal is to enable open science and ensure the reliability of research findings.
+
+Main strengths:
+\begin{itemize}
+    \item timeliness: This is a timely and well-structured contribution to the software engineering methodology literature There are already zillions of SE papers with LLMs, and there will be many more The paper provides a clear and actionable framework for improving the rigor and transparency of empirical studies involving LLMs.
+    \item Relevance and Clear Motivation: The paper addresses a critical, contemporary problem in software engineering research: the challenge of maintaining scientific rigor (specifically reproducibility and replicability) in studies involving rapidly evolving, non-deterministic, and often opaque LLMs The motivation is clear, compelling, and immediately relevant to any researcher or practitioner in the field.
+    \item Credible, Community-Driven Methodology: The guidelines are not the product of a single research group but are presented as a community effort that originated from discussions at a research  and was refined through workshops and reviews. This collaborative approach lends the guidelines authority and increases the likelihood of their adoption by the community.
+    \item Actionable Guidelines: The eight guidelines are thorough, practical, and well-articulated.
+\end{itemize}
+\end{reviewcomment}
+\begin{response}
+We thank the reviewer for their encouraging feedback.
+\end{response}
+
+\begin{reviewcomment}
+Too long: we want to encourage the community to read this, the longer the paper, the fewer the readers. Trim, cut. For example, the "study types" subsections in Sec 5 are heavy and confusing (it took me some time to understand they're referring to Sec 4), I would simply get rid of those subsections.
+\end{reviewcomment}
+\begin{response}
+We agree with the reviewer, that the length of the paper could be counterproductive to the goal of encouraging the community to read it.
+Hence, we introduced a checklist summarizing all MUST/SHOULD recommendations as an initial starting point, state the key recommendations in Table~4, integrate a matrix (Table~3) to navigate between study types and guidelines, and introduced a ``How to Navigate'' subsection.
+
+We hope those changes enable easy consumption of the guidelines while not losing any of the necessary context and rationales that contribute to the length of the paper.
+\end{response}
+
+\begin{reviewcomment}
+Lack of overview: we should be able to read the paper in one page. Consolidate all guidelines in a table at the beginning
+\end{reviewcomment}
+\begin{response}
+We aggregated all recommendations in a new checklist (see appendix).
+\end{response}
+
+\begin{reviewcomment}
+Usage of RFC terminology MUST/SHOULD: a paper, even community driven, cannot speak for the whole community, the paper it not a standard and EMSE is not a standardization body. Peer-review is not a standardization method. I would recommend to NOT take the style a standard, this is unsound and confusing.
+\end{reviewcomment}
+\begin{response}
+Also the first reviewer pointed out something similar. We agree, that this manuscript should not act as a standardization. We nevertheless deem it important to distinguish between different recommendations. Hence we explained the difference between MUST and SHOULD in terms of desired practices, and dropped the reference to the RFC. Further, we converted MAY to SHOULD or prose to reduce complexity.
+\end{response}
+
+\begin{reviewcomment}
+- Usage of MUST: this is too strong. even if I agree with the utmost importance of some guidelines, my general philosophy of science is to be be very cautious with undisputable truth and hard rules. Science is about taking a critical standpoint at everything, and about being able to take one's own path, regardless of the others command. I would remove the MUST.
+\end{reviewcomment}
+\begin{response}
+We understand the reviewer’s concern; given the size of the research team, there are indeed differing perspectives within our group, including views aligned with the one expressed by the reviewer. That said, through internal discussion we converged on the conclusion that, in order to make this contribution concrete and genuinely usable, the adoption of such terminology (not only MUST, but also SHOULD, etc.) was necessary. We deliberately limited the use of MUST to guidelines that we, as a group, unanimously considered both essential and broadly acceptable.  However, to make it truly usable in practice, we provide more flexibility now on a sensible selection of recommendations and critical discussions on the impact of those decisions in Section 5 (in line with the reviewers suggestion).
+\end{response}
+
+\begin{reviewcomment}
+If some guidelines are too strong, it decreases the credibility of the whole effort. for example the suggestion to test results on commercial models "over an extended period of time" is methodologically sound but may be infeasible given the time and cost constraints of typical academic projects.
+\end{reviewcomment}
+\begin{response}
+We went over all recommendations again and ensured, that MUST is limited to instances where requirements are essential and feasible (within the boundaries of sensible decisions by the authors in the individual study context).
+\end{response}
+
+\begin{reviewcomment}
+Cherry-picking examples: there are many more example papers to cite, but it is not the goal of the paper to be a survey. Yet, how were the examples selected? bias towards the authors' paper? their collaborators
+\end{reviewcomment}
+\begin{response}
+
+The paper selection process was conducted as follows:
+\begin{enumerate}
+    \item During an initial meeting, at least two authors were assigned to each specific part of the guidelines (study types or individual guidelines), with the responsibility of drafting the corresponding section.
+    \item Each pair of authors independently started drafting their section by searching for relevant examples using search strings on academic databases.
+    \item After collecting an initial set of examples, the pool was further extended based on co-author's suggestions.
+    \item The identified papers were then individually assessed by one author and subsequently reviewed by the second author. Papers that did not add new insights beyond those already covered by the existing examples were not included.
+    \item Finally, multiple final review rounds were carried out on the guidelines as a whole, during which the selected papers were cross-checked by additional authors and, where necessary, further examples were added.
+    \item As part of this journal revision, we then checked the references again based on the reviewers' feedback.
+\end{enumerate}
+
+We added this to the methodology section.
+As correctly noted by the reviewer, the purpose of the examples was not to be systematic, but illustrative. Since this work is not intended to be a systematic review, we believe that this approach is appropriate and sufficient. Moreover, the involvement of multiple authors at different stages of the process helped mitigate individual bias and ensured a balanced selection of examples.
+Finally, this paper is a community initiative that will extend beyond this paper.
+Therefore, we invite everything to suggest better examples than the ones we referred to.
+
+
+\end{response}
+
+\begin{reviewcomment}
+Focus on Natural Language Use Cases -> Focus on Textual Use Cases. Code is not natural language.
+\end{reviewcomment}
+\begin{response}
+Fixed!
+\end{response}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% R3
+\review
+
+\begin{reviewcomment}
+This paper establishes guidelines and recommendations for software engineering researchers conducting empirical studies that use Large Language Models (LLMs). The guidelines are structured around a taxonomy of study types where LLMs serve various roles, such as tools for SE researchers (Annotators, Judges, Synthesis, and Subjects) or tools for software engineers (Studying LLM Usage, LLMs for New Tools, and Benchmarking). Furthermore, the paper presents concrete reporting guidelines covering essential aspects of reproducibility, including declaring LLM usage, documenting model versions and configurations, describing tool architectures, reporting prompts and interaction logs, advocating for human validation, using open LLMs as baselines, and meticulously reporting limitations and mitigations. Overall, the paper aims to promote validity and transparency in LLM-related SE research, recognizing the challenges posed by their non-deterministic nature, evolving versions, and
+potential biases.
+
+Strengths:
+
+This research is timely for the SE community.
+
+Covering the SE cycle and benchmarks highlights the importance of benchmarking every step and the challenges faced.
+
+The guidelines enhance the validity, transparency, reproducibility, and replicability of empirical studies in SE that involve LLMs.
+
+The taxonomy organizing LLM usage into seven distinct study types is well-structured and covers the landscape systematically.
+
+The eight guidelines use MUST, SHOULD, MAY terminology to distinguish between essential and desired practices.
+
+The methodology demonstrates real community engagement.
+\end{reviewcomment}
+\begin{response}
+    Thank you for the summary and the acknowledged strengths!
+\end{response}
+
+\begin{reviewcomment}
+Insufficient Discussion of Trade-offs and Conflicts Between Guidelines. For example, using an open LLM baseline (Guideline 6) while also requiring multiple experimental repetitions (Guideline 7) and human validation (Guideline 5) could be prohibitively expensive for many researchers. How to prioritize the guidelines? Do you recommend any decision tree to define which study type is the most appropriate?
+\end{reviewcomment}
+\begin{response}
+We agree that there exists and inherent trade-off between guidelines. Where possible, we mentioned those trade-offs. Additionally, we added a remark in Section 5 advocating for sensible trade-offs and related discussions. Due to the variety in different study setups, we cannot offer a prescriptive way of prioritizing guidelines beyond our classification into requirements and desired practices.
+
+\end{response}
+
+\begin{reviewcomment}
+An Insufficient Treatment of Data Contamination and Leakage. While Section 5.8.1 mentions data leakage, the discussion is buried in the limitations section rather than being a standalone guideline. Given that benchmark contamination is acknowledged as a "major challenge," this deserves more prominence. What recommendations or validation strategies do you recommend?
+\end{reviewcomment}
+\begin{response}
+
+Thank you for highlighting this improvement point. We agree, that this topic is a major challenge. To ensure this issue receives the necessary attention, we expanded the discussion of benchmark contamination and gave concrete mitigations in more detail in Section 5.7. In the same line, we streamlined the discussion in 5.8 on the broader topic of inter-dataset duplication, also here discussing the necessity of authors to discuss those threats to the validity while providing initial guidance to mitigate those threats. We hope this restructuring gives the topic the appropriate attention and makes it more concrete for authors.
+\end{response}
+
+\begin{reviewcomment}
+Insufficient Guidance on Statistical Power and Sample Sizes. While the paper mentions power analysis in Guideline 5, there's no systematic guidance on determining appropriate sample sizes for LLM experiments, especially given non-determinism.
+\end{reviewcomment}
+\begin{response}
+Providing systematic guidance on statistical power analysis or sample size estimation for LLM experiments is beyond the scope of these guidelines, as it depends heavily on the specific study design, task variability, and target precision. For general guidance on sampling, we refer the reader to the ACM SIGSOFT Empirical Standards. However, we have expanded Section~5.7 to discuss the number of experimental repetitions, recommending that researchers justify their chosen number through power analysis or convergence monitoring of descriptive statistics across incremental runs.
+\end{response}
+
+\begin{reviewcomment}
+DETAILED COMMENTS: This is a highly pertinent and timely paper for empirical SE community. While I think this paper should definitely be accepted, I have a few suggestions for the authors to improve before a possible publication. Hence, I recommend a Major Revision.
+\end{reviewcomment}
+\begin{response}
+    Thanks for this positive stance towards our manuscript and the chance to improve it!
+\end{response}
+
+\begin{reviewcomment}
+Several guidelines contain SHOULD recommendations that may be difficult to follow:
+
+* Guideline 5.4 (Report full interaction logs): For large-scale studies with thousands of LLM calls, storage and privacy concerns may prohibit full disclosure
+
+* Guideline 5.6 (Open LLM baseline): When state-of-the-art proprietary models significantly outperform open alternatives, including an underperforming baseline may provide limited scientific value
+
+* Guideline 5.8 (Report costs): Cloud API costs fluctuate; reported costs may not reflect what future researchers will pay
+\end{reviewcomment}
+\begin{response}
+As per the new definition of SHOULD, such recommendations present a desired practice, hence deviation is acceptable, and likely will often happen. Nonetheless, we believe, that making desired practices explicit adds value to a study description.
+
+Guideline 5.4: Guideline 5.4 already addresses exceptional situations by specifying that: "If full prompt disclosure is not feasible... summaries or examples should be provided."
+However, the broader principle is that, when a paper's analysis is based on interaction logs, finding ways to share that data is a challenge to embrace, not avoid. Shared data enables verification of claims and follow-up research, and increases the value of the work itself, as every published dataset becomes a resource for meta-analyses and replication studies.
+
+For privacy concerns, sensitive content can be redacted while preserving methodologically relevant details, as is standard practice in human-subjects research.
+
+Guideline 5.6: While the open LLM might be under-performing it provides a more stable baseline than proprietary models, which not only change explicitly (model versions), but also implicitly (e.g. internal prompt filtering/reformulation functionalities). We do not dare to predict the future of open LLMs in comparison to proprietary models.
+
+Guideline 5.8: While the costs fluctuate, reporting the input and output tokens enables a preliminary estimation of costs, supporting the study design phase (e.g. for resource allocation).
+
+
+\end{response}
+
+\begin{reviewcomment}
+The paper does not adequately address situations where guidelines conflict or where following all guidelines simultaneously is infeasible due to resource, privacy, or technical constraints. For instance, guideline 5 (human validation) and guideline 6 (open baseline) imply validating both commercial and open models, which increases human effort and cost. Small research groups might not even be able to run open-source baseline models, and models might be outdated compared to the access to commercial models. For studies where commercial models are 2-3x better than open alternatives, the baseline may not provide meaningful scientific insight.
+\end{reviewcomment}
+\begin{response}
+Please see \ref{comment:3.2} and \ref{comment:3.6}. In summary, we have added a remark in Section~5 encouraging researchers to make sensible trade-offs between guidelines and justify deviations. We distinguish between requirements (\emph{must}) and desired practices (\emph{should}) precisely to acknowledge that not all guidelines can always be followed simultaneously. Where two guidelines conflict in practice, researchers should prioritize \emph{must} items and justify omitting \emph{should} items.
+\end{response}
+\begin{reviewcomment}
+Similarly, some guidelines depend on others in non-obvious ways; for example, guideline 5.3 assumes a documented model per guideline 5.2. Guideline 5.7 interacts with guideline 5.6 for the open LLM baseline. Please elaborate or add a dependency diagram or a checklist showing the logical flow of applying the guidelines.
+\end{reviewcomment}
+\begin{response}
+We agree that visualization could help see dependencies clearer, but we decided against adding it to no further add complexity to the paper.
+However, we consolidated all cross-references in new ``See also'' subsections.
+We further added a table that summarizes rationale and key recommendations for each guideline (Table 4).
+\end{response}
+
+\begin{reviewcomment}
+While Guideline 5.7 mentions repeating experiments due to non-determinism, there is no systematic guidance on determining appropriate sample sizes or the number of repetitions for different study types. For a researcher working with LLM experiments, what would be a valid statistical sample and parameters to reproduce the experiment?
+\end{reviewcomment}
+\begin{response}
+For sample sizes, please refer to \ref{comment:3.4}.
+The number of required repetitions depends on factors such as the study type, the variability of the task, and the desired precision of estimates. As with sample sizes for human validation, researchers should justify their chosen number of repetitions, for example through a power  analysis~\cite{Cohen1992, bjarnason2026randomnessagenticevals} or by monitoring the convergence of descriptive statistics across incremental runs~\cite{blackwell2024towards}. A pilot study can help estimate the expected variability and inform this decision.
+We clarified this in the paper.
+
+
+\end{response}
+
+\begin{reviewcomment}
+    What are the recommendations to compare models or outputs? How to select a metric to compare models or experiments as researchers mitigate data contamination, and metrics evolve?
+\end{reviewcomment}
+\begin{response}
+    The reviewer raises an important and largely open challenge. We expanded Section~5.7 to discuss concrete mitigation strategies, including selecting benchmarks released after model training cutoff dates, using private or newly created test sets, and cross-validating with complementary evaluation methods. We also emphasize the importance of transparent reporting on potential contamination risks so that readers can assess result validity. As this remains an evolving area, we invite community contributions through our living guidelines at \url{https://llm-guidelines.org}.
+\end{response}
+
+\begin{reviewcomment}
+While the RFC 2119 distinction is clear in principle, how should it be enforced?  What constitutes an acceptable justification for not meeting ``should'' criteria? How should reviewers handle partial compliance? Provide reviewer guidance or a compliance checklist to operationalize the guidelines in peer review.
+\end{reviewcomment}
+
+\begin{response}
+   We added a paragraph to Section 5 indicating that reviewers should use the guidelines to help write reviews, emphasizing a focus on doing what is practically possible rather than ideal in principle.
+
+   We also added detailed new ``advice for reviewers'' subsections to each guideline advising reviewers on what to focus on, how to deal with common problems, and how to differentiate minor vs. major problems. We use these sections to encourage good reviewing thinking rather than repeat each guideline's individual must/should items.
+
+   While some of the authors are big fans of checklists and very much agree with Reviewer 3's instincts here, we think converting the current guidelines into a reviewer checklist is out of scope for this paper and possibly premature. If the reviewer compares our guidelines to one of the SIGSOFT empirical standards checklists, for example, three problems are apparent: (1) the sum of our `must' and `should' items would be much too long to compose a reviewer checklist; (2) our guidelines cover a wide variety of LLM uses in different study types, which all have to be disaggregated and organized into separate usable checklists; (3) guidelines phrases from the author perspective must be significantly reworded and reworked for a reviewer perspective.
+
+   This is probably why other widely cited guidelines papers do not also provide reviewer checklists, and why synthesizing reviewer checklists based on them is so much work. In sum, we agree with R3 that reviewer checklists are a natural next step, but we hope R3 can see why we think it's out of scope for this revision.
+
+\end{response}
+
+\begin{reviewcomment}
+While including examples from other domains (healthcare, social sciences) provides context, some readers may question their relevance to SE-specific challenges.
+Ensure every cross-domain example is explicitly connected back to SE contexts.
+\end{reviewcomment}
+\begin{response}
+
+Thanks for pointing this out! We removed examples that were too far away from SE. The remaining examples are directly from SE or are so general that the application to SE is clear.
+\end{response}
+
+\begin{reviewcomment}
+Please consider the following references:
+
+https://arxiv.org/html/2406.04244v1
+
+https://arxiv.org/abs/2502.00678
+\end{reviewcomment}
+\begin{response}
+
+We have incorporated the reviewer-suggested references at the end of Section~5.7.5.
+\end{response}
+
+\bibliographystyle{spbasic}
+\bibliography{literature}
+
+\end{document}

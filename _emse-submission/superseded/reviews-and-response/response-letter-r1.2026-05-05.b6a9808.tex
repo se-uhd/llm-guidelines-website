@@ -1,0 +1,278 @@
+\documentclass[11pt]{article}
+
+% language and encoding
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{natbib}
+
+% page layout
+\usepackage{fullpage}
+\usepackage{stfloats}
+
+% colors
+\usepackage{xcolor}
+\usepackage{color}
+
+% document structure
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% math
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+
+% graphics and images
+\usepackage{graphicx}
+
+% tables
+\usepackage{array}
+\usepackage{booktabs}
+
+% hyperlinks and references
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{xr}
+
+% text and typography
+\usepackage{textcomp}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=3pt}
+
+% boxes
+\usepackage[most]{tcolorbox}
+\usepackage[framemethod=TikZ]{mdframed}
+
+% utilities
+\usepackage{needspace}
+
+% define command for inline quotes
+\newcommand*{\enq}[1]{\enquote{{\itshape#1}}}
+
+% define environment for quotes
+\newmdenv[
+  leftmargin=\leftmargin,
+  skipabove=\topsep,
+  skipbelow=\topsep
+]{mdquote}
+
+% comment quote (gray side bar)
+\definecolor{block-gray}{RGB}{245,245,245}
+\newtcolorbox{commentquote}[2][]{%
+    colback=block-gray,
+    grow to right by=0mm,
+    grow to left by=0mm,
+    boxrule=0pt,
+    boxsep=0pt,
+    breakable,
+    enhanced jigsaw,
+    borderline west={2pt}{0pt}{gray},
+    before skip=6pt,
+    after skip=4pt
+}
+
+% comment counters
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{comment}[reviewer]
+\setcounter{comment}{0}
+
+\renewcommand{\thecomment}{Comment\,\thereviewer.\arabic{comment}}
+
+\newcommand{\review}{%
+  \stepcounter{reviewer}%
+  \section*{Reviewer \thereviewer}%
+  \vspace{-0.75\baselineskip}%
+}
+
+\makeatletter
+\newenvironment{reviewcomment}
+{%
+  \refstepcounter{comment}%
+  \begingroup
+    \edef\@tempa{comment:\thereviewer.\arabic{comment}}%
+    \label{\@tempa}%
+  \endgroup
+  \needspace{8\baselineskip}%
+  \bigskip\noindent
+  \textbf{\thecomment}:%
+  \begin{commentquote}{}%
+}%
+{%
+  \end{commentquote}%
+  \medskip\par
+}
+\makeatother
+
+\makeatletter
+\newenvironment{response}
+{%
+  \needspace{6\baselineskip}%
+  \par\medskip\noindent\textbf{Response}:\\%
+  \phantomsection%
+  \begingroup
+    \edef\@tempa{response:\thereviewer.\arabic{comment}}%
+    \label{\@tempa}%
+  \endgroup
+}
+{%
+  \medskip\par
+}
+\makeatother
+
+% paper metadata
+\providecommand{\papertitle}{\textbf{Guidelines for Empirical Studies in Software Engineering Involving Large Language Models}}
+\providecommand{\paperid}{\textbf{[EMSE-D-25-00637R1]}}
+
+\newcommand{\setpaperinfo}[2]{%
+  \def\papertitle{#1}%
+  \def\paperid{#2}%
+}
+
+\setpaperinfo{Guidelines for Empirical Studies in Software Engineering Involving Large Language Models}{EMSE-D-25-00637R1}
+\author{S. Baltes et al.}
+
+\title{%
+  \textbf{Response Letter (Minor Revision)}\\
+  \papertitle\\
+  {\large \paperid}
+}
+
+\makeatletter
+\def\@date{}
+\makeatother
+
+
+\begin{document}
+
+\maketitle
+
+\noindent Dear editor and reviewers,
+
+\medskip
+\noindent Thank you for the favorable evaluation of our revision and for the additional, focused feedback from Reviewer 1.
+We have addressed each of the remaining points; brief responses follow below.
+
+\medskip
+\noindent Best regards,\\
+Sebastian Baltes (on behalf of all co-authors)
+
+\section*{\textsc{Response to Editor}}
+
+\vspace{-0.75\baselineskip}
+
+\begin{reviewcomment}
+Thank you for the revision. Please address the remaining feedback by Reviewer 1.
+\end{reviewcomment}
+
+\begin{response}
+We thank the editors and reviewers for the positive assessment.
+We addressed every point raised by Reviewer 1, as detailed below.
+We also thank Reviewers 2 and 3 for confirming that their concerns have been resolved.
+\end{response}
+
+
+\section*{\textsc{Response to Reviewers}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\review
+
+\begin{reviewcomment}
+The authors are to be commended for essentially rewriting the entire paper following the suggestions of the first-round reviews. Most of my comments were sufficiently addressed or rebutted. The following minor ones can be easily accommodated in a minor revision without further review.
+\end{reviewcomment}
+\begin{response}
+We thank the reviewer for the encouraging assessment and for the precise, actionable feedback.
+We have addressed all remaining points item by item below.
+\end{response}
+
+\begin{reviewcomment}
+In common with other reviewers, please refrain from using uppercase MUST/SHOULD in the text. You already agreed that this publication is not a standard, so keeping these in the text is simply distracting. Retaining the distinction and emphasis in Table 3 is more than enough, though even there, I'd prefer to use the terms ``mandatory'' and ``desirable'' as is done in the SIGSOFT empirical standards.
+\end{reviewcomment}
+\begin{response}
+We agree and have lowercased \emph{must}, \emph{must not}, \emph{should}, and \emph{should not} throughout the text, removing the previous uppercase emphasis that read as standards-style language.
+
+On the suggestion to use \emph{mandatory} and \emph{desirable} in Table~3, we hope the reviewer agrees with us keeping \emph{must} and \emph{should}, for the same reason we gave in the previous round: after dropping the RFC reference, we retained \emph{must}/\emph{should} as plain indicators of essential vs.\ desired practices, in the same spirit as SIGSOFT's \emph{mandatory}/\emph{desirable} categories.
+The categorical distinction is also carried visually in Table~3 by the filled (\textbullet) and open ($\circ$) icons defined in the caption, so the table conveys the same essential/desired split that SIGSOFT's terms encode.
+Using a single vocabulary across Table~3, the guideline recommendations, and the reporting checklist (Appendix~A) lets readers map matrix cells directly to the corresponding sentences in the body, which we believe is more useful than aligning Table~3 with SIGSOFT terminology while the surrounding prose uses different words.
+\end{response}
+
+\begin{reviewcomment}
+In Table 3, try to name (in short form, e.g. Annotator, Judge, Synthesis, Subject, Usage, Tools, Benchmarks) the study types. The labels are already angled, so it should be easy to make these fit.
+\end{reviewcomment}
+\begin{response}
+Done.
+The column headers in Table~3 now read \emph{Annotator}, \emph{Judge}, \emph{Synthesis}, \emph{Subject}, \emph{Usage}, \emph{Tools}, and \emph{Benchmarks}, exactly as suggested.
+Each label is hyperlinked to the corresponding study-type subsection.
+As part of this change, we also dropped the S1--S7 and G1--G8 identifiers from the body text, since the short-form names are sufficient throughout.
+\end{response}
+
+\begin{reviewcomment}
+Rather than the cute but possibly unfamiliar ``tl;dr'', simply name the corresponding boxes as ``Summary''.
+\end{reviewcomment}
+\begin{response}
+Done.
+The framed box at the start of each guideline is now labeled \emph{Summary} instead of \emph{tl;dr}, in the paper as well as on the companion website.
+\end{response}
+
+\begin{reviewcomment}
+Rather than naming sections as ``Example(s)'' name them as Example / Examples according to their contents.
+\end{reviewcomment}
+\begin{response}
+Done.
+Every subsection contains multiple examples, so all \emph{Example(s)} subheadings now read \emph{Examples} across the guidelines and study-type sections.
+\end{response}
+
+\begin{reviewcomment}
+The names of the ``See Also'' elements are now confusing because they don't match the section titles. Please use the same section titles. If the change was made to avoid the unsightliness of long hyperlinks, simply hyperlink only the section number.
+\end{reviewcomment}
+\begin{response}
+Done, using the approach the reviewer suggested.
+All ``See Also'' entries now read ``Section~\emph{n} (\emph{Full Section Title}): \emph{rationale}'', with only the section number hyperlinked.
+\end{response}
+
+\begin{reviewcomment}
+In Appendix A, eliminate the confusing and redundant empty boxes, in favor of using the shall/must symbols as the bullet figure.
+\end{reviewcomment}
+\begin{response}
+Done.
+The empty checkbox markers ($\square$) have been removed from all itemize lists in Appendix~A.
+Each item is now introduced directly by its \emph{must}~(\textbullet) or \emph{should}~($\circ$) icon, which serves as the bullet figure, matching the symbology of Table~3.
+\end{response}
+
+\begin{reviewcomment}
+Please fix the capitalization in the references; e.g. The chatgpt python code saga $\rightarrow$ The ChatGPT Python code saga
+\end{reviewcomment}
+\begin{response}
+Done.
+We reviewed the bibliography for title-case errors and corrected the capitalization of proper nouns and acronyms (e.g., \emph{ChatGPT}, \emph{Python}, \emph{AI}, \emph{API}).
+The example flagged by the reviewer now renders as ``AI Writes, We Analyze: The ChatGPT Python Code Saga'', and similar fixes were applied across the bibliography.
+\end{response}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\review
+
+\begin{reviewcomment}
+Thanks for the revision. This paper will help the community, my own PhD student independently found the arxiv version and shared it with the group :)
+\end{reviewcomment}
+\begin{response}
+Thank you for this very encouraging note.
+We are glad that the work is already proving useful in practice, and we will continue to evolve the guidelines through the companion website (\url{https://llm-guidelines.org}) as the community engages with them.
+\end{response}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\review
+
+\begin{reviewcomment}
+Thank you for the thorough and thoughtful major revision of your manuscript. I appreciate the care you took in addressing the comments and concerns raised in the previous review. The revisions have significantly improved the clarity and quality of the work, and I am satisfied that all of my concerns have been adequately addressed.
+\end{reviewcomment}
+\begin{response}
+Thank you for the careful first-round review and for confirming that the revision addressed your concerns.
+\end{response}
+
+\end{document}
