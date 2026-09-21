@@ -210,7 +210,7 @@ python3 plugins/llm-guidelines/skills/llm-guidelines/scripts/tests/run_smoke.py
 - `convert-and-merge-sources.sh` — Converts LaTeX → Markdown, generates sub-pages, applies post-processing, merges into `index.md` files; invokes `generate-skill.sh` at the end if the skill submodule is initialized
 - `generate-skill.sh` — Generates the Agent Skill bundle into `llm-guidelines-skill/`
 - `scripts/generate-summary-tables.py` — Renders the applicability matrix and summary table from the paper's `_summary/` tex (website pages and skill `matrix.md`); `scripts/tests/run_generator_check.py` is its check suite, run by `build.yml`
-- `scripts/update-citations.py` — Refreshes `_data/citations.yml` (run weekly by `update-citations.yml`)
+- `scripts/update-citations.py` — Refreshes `_data/citations.yml` (run weekly by `update-citations.yml`; see "Citation Counts" before changing it)
 - `summary/_sources/00_header.md` — Summary page header with the `<!-- TABLE -->` placeholder
 - `skill/index.md` — Skill landing page (install, invocation, downloads, file index); tracked but generated from `_skill/skill-index.md.template`
 - `llm-guidelines-skill/` — Git submodule containing the published Agent Skill and plugin packaging
@@ -251,6 +251,21 @@ Entry-point files in `_sources/` directories use `\input{../../header-website.te
 ## HTML Conventions
 
 Always use self-closing `<br/>` (not `<br>` or `<br />`).
+
+## Citation Counts
+
+`scripts/update-citations.py` refreshes `_data/citations.yml`, which feeds the "Cited by about N publications" line on the home page. `update-citations.yml` runs it weekly and commits the result. A `workflow_dispatch` runs it by hand. The two counted works are pinned by Google Scholar cluster ID in `SOURCES`, and the comma-joined value is a merged cited-by page that Scholar deduplicates across the guidelines paper's two renamed versions. Keep those IDs in sync with the `cites=` links in `index.md`.
+
+**The number Scholar reports is an estimate, not a count.** Google states that its result totals are computed by estimation and are "not stable, and can change from request to request". In practice a cited-by page spends stretches of several minutes reporting a low, erratic value, such as readings of 13 to 27 for a page whose settled value is 48, and then returns to the correct figure with nothing having changed on the client side. The degradation is not caused by cookies, headers, request rate, parameter shape, or which Google frontend answers. All of those were tested and ruled out. A degraded reading always undershoots and never overshoots.
+
+The script compensates by reading each cluster up to `SAMPLES` times and keeping the highest reading, stopping as soon as one reading reaches the last-known count. A healthy run therefore costs two requests and finishes in about a minute, while a degraded run works through all ten readings and takes around twenty. The plausibility guard then rejects a sampled maximum that still drops or jumps implausibly, falling back to the previous value and leaving the `updated` date alone, so a bad week leaves the published numbers stale instead of wrong.
+
+Consequences when working on this:
+
+- **Never hand-edit `_data/citations.yml`.** It is generated, and a value that looks too high is almost always correct while the fresh reading is the degraded one.
+- **Do not scrape Scholar to check whether the published numbers are right.** It returns degraded counts without any error, and roughly eighty requests in quick succession triggers an HTTP 429 and a captcha on your IP that persists for hours. Open the `cites=` links from `index.md` in a normal browser instead, or ask the maintainer to.
+- **Reading "Cited by N" from the record instead is not an option.** Querying `?cluster=<id>` returns the record with no cited-by link, so that figure is only reachable through a title search. Commit `5d68bb2` moved away from title matching because the titles have been renamed twice and because adding the two versions double-counts the works that cite both.
+- **If the job ever times out, raise `timeout-minutes`.** Lowering `SAMPLES` would trade the fix back for the problem it solves.
 
 ## Git Workflow
 

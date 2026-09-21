@@ -108,3 +108,4 @@ npm-debug.log*
 # Claude Code      #
 ####################
 .claude/
+ai-slop-report.md
