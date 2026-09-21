@@ -19,7 +19,7 @@ This website hosts **community guidelines** for reporting empirical studies in s
 Besides our [motivation and scope](/scope), we present a first taxonomy of [LLM study types](/study-types) and corresponding [guidelines](/guidelines).
 We also publish the guidelines as an [Agent Skill](/skill/) for coding agents such as Claude Code and Codex CLI, which authors can run against their paper draft and supplementary material to flag reporting gaps before submission.
 These guidelines are meant as a starting point for further discussions in the community with the aim of developing a common understanding of how we should conduct and report empirical studies involving LLMs.
-The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) as well as discussions during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
+The project was initiated by a [position paper](https://arxiv.org/abs/2411.07668) (published at WSESE 2025) as well as discussions during the [ISERN](https://isern.iese.de/) 2024 meeting and the 2nd [Copenhagen Symposium on Human-Centered Software Engineering AI](https://www.danielrusso.org/copenhagen-symposium-human-centered-ai-software-engineering/).
 To **contribute to the guidelines**, you can open an issue or create a pull request in [our GitHub repository](https://github.com/se-uhd/llm-guidelines-website).
 
 The paper has been accepted at **Empirical Software Engineering**, and a preprint is available on [arXiv](https://arxiv.org/abs/2508.15503).
@@ -47,7 +47,7 @@ Each release is tagged (`YYYY.MM`) in the [paper repository](https://github.com/
 
 {% endraw %}
 
-<p class="citations-info"><i class="ai ai-google-scholar"></i> Cited by about <strong>{{ site.data.citations.total }}</strong> publications on Google Scholar (<a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=16126919270545554010,11554931200167593565&as_sdt=5" target="_blank" rel="noopener noreferrer">preprint</a> + <a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=10292768743544802913&as_sdt=5" target="_blank" rel="noopener noreferrer">position paper</a>; updated {{ site.data.citations.updated }}).</p>
+<p class="citations-info"><i class="ai ai-google-scholar"></i> Cited by about <strong>{{ site.data.citations.total }}</strong> publications on Google Scholar (<a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=16126919270545554010,11554931200167593565&as_sdt=5" target="_blank" rel="noopener noreferrer">EMSE paper</a> + <a href="https://scholar.google.de/scholar?oi=bibs&hl=en&cites=10292768743544802913&as_sdt=5" target="_blank" rel="noopener noreferrer">WSESE paper</a>; updated {{ site.data.citations.updated }}).</p>
 
 Project Coordinators:
 

@@ -16,12 +16,19 @@ both failure modes.
 
 Resilience:
 
-1. Each cluster lookup is retried with exponential backoff before being
-   declared dead. A blocked or captcha page reads as a 0/None total, which is
-   treated as a soft failure and retried.
-2. A plausibility guard rejects a fetched value that drops or jumps
-   implausibly against the last-known count (a symptom of a block page or a
-   Scholar hiccup), reusing the previous value so group totals don't regress.
+1. Each cluster is read up to `SAMPLES` times and the highest reading wins.
+   The "About N results" line is an estimate, and Google documents it as
+   unstable between requests. In practice Scholar spends stretches of several
+   minutes reporting a low, erratic value for a cited-by page (readings of
+   13-27 for a page whose settled value is 48), so a single reading can land
+   far below the true count. A reading is never too high, so the maximum is
+   the best estimator. Sampling stops as soon as a reading reaches the
+   last-known count, which is the usual case and keeps the job to two
+   requests.
+2. A plausibility guard rejects a value that drops or jumps implausibly
+   against the last-known count, reusing the previous value so group totals
+   don't regress. After sampling this catches a real decline, not a bad
+   reading, but the jump half still caps an estimate that overshoots.
 3. If a lookup still fails, the last-known per-source value in the YAML is
    reused.
 4. The script always exits 0 unless the file write itself fails. Partial
@@ -52,10 +59,9 @@ SOURCES: dict[str, str] = {
 
 DATA_FILE = Path(__file__).resolve().parent.parent / "_data" / "citations.yml"
 
-RETRY_ATTEMPTS = 3
-RETRY_BASE_DELAY = 5  # seconds; doubles each retry
-INTER_SOURCE_MIN = 10  # seconds; randomized gap between consecutive cluster lookups
-INTER_SOURCE_MAX = 30
+SAMPLES = 5  # readings per cluster before giving up on a fresh value
+REQUEST_MIN = 75  # seconds; randomized gap between consecutive requests
+REQUEST_MAX = 105
 
 # Plausibility band for a fresh count relative to the last-known value. These
 # papers are recent, so their weekly citation growth is small and monotonic; a
@@ -89,24 +95,14 @@ def setup_proxy() -> None:
         log(f"scholarly: proxy setup raised {type(e).__name__}: {e}, falling back to direct requests")
 
 
-def fetch_count(cluster: str) -> int | None:
-    """Return the 'cited by' total for a cluster (or merged clusters), or None."""
-    for attempt in range(1, RETRY_ATTEMPTS + 1):
-        try:
-            result = scholarly.search_citedby(cluster)
-            n = result.total_results
-        except Exception as e:
-            log(f"scholarly attempt {attempt}/{RETRY_ATTEMPTS} failed for cites={cluster}: {e}")
-            n = None
+def fetch_once(cluster: str) -> int | None:
+    """Return one 'cited by' reading for a cluster (or merged clusters), or None."""
+    try:
         # A blocked/captcha page yields no parseable count (None) or a bogus 0.
-        if n:
-            return n
-        log(f"scholarly: no results total for cites={cluster} (likely a block page)")
-        if attempt < RETRY_ATTEMPTS:
-            delay = RETRY_BASE_DELAY * (2 ** (attempt - 1))
-            log(f"retrying in {delay}s")
-            time.sleep(delay)
-    return None
+        return scholarly.search_citedby(cluster).total_results or None
+    except Exception as e:
+        log(f"scholarly failed for cites={cluster}: {type(e).__name__}: {e}")
+        return None
 
 
 def implausible(new: int, prev: int | None) -> str | None:
@@ -131,38 +127,62 @@ def main() -> int:
     setup_proxy()
 
     previous = load_existing()
+    prevs = {k: (previous.get(k) if isinstance(previous.get(k), int) else None) for k in SOURCES}
+
+    # Read every cluster once per round, dropping a cluster as soon as one of
+    # its readings reaches the last-known count. Rounds interleave the clusters
+    # so they share the waiting rather than each paying for it.
+    readings: dict[str, list[int]] = {key: [] for key in SOURCES}
+    pending = dict(SOURCES)
+    first = True
+
+    for round_no in range(1, SAMPLES + 1):
+        for key in list(pending):
+            if not first:
+                delay = random.uniform(REQUEST_MIN, REQUEST_MAX)
+                log(f"sleeping {delay:.1f}s before next reading")
+                time.sleep(delay)
+            first = False
+
+            cluster = pending[key]
+            n = fetch_once(cluster)
+            if n is None:
+                log(f"{key} reading {round_no}/{SAMPLES} [cites={cluster}]: none (block page or error)")
+                continue
+
+            readings[key].append(n)
+            log(f"{key} reading {round_no}/{SAMPLES} [cites={cluster}]: {n}")
+            if prevs[key] is not None and n >= prevs[key]:
+                del pending[key]  # a healthy reading never undershoots; stop here
+        if not pending:
+            break
 
     group_counts: dict[str, int] = {}
     fallbacks: list[str] = []
     skipped: list[str] = []
     successes = 0
-    first = True
 
-    for key, cluster in SOURCES.items():
-        if not first:
-            delay = random.uniform(INTER_SOURCE_MIN, INTER_SOURCE_MAX)
-            log(f"sleeping {delay:.1f}s before next source")
-            time.sleep(delay)
-        first = False
-
-        prev = previous.get(key) if isinstance(previous.get(key), int) else None
-        n = fetch_count(cluster)
+    for key in SOURCES:
+        prev = prevs[key]
+        samples = readings[key]
+        n = max(samples) if samples else None
+        if samples:
+            log(f"{key}: readings={samples} -> {n}")
 
         reason = None if n is None else implausible(n, prev)
         if n is not None and reason:
-            warn(f"{key}: fetched value {reason}; rejecting as implausible and reusing previous")
+            warn(f"{key}: best of {len(samples)} readings {reason}; rejecting as implausible and reusing previous")
             n = None
 
         if n is None:
             if prev is None:
-                warn(f"{key}: fetch failed and no previous value available; group total will be incomplete")
+                warn(f"{key}: no usable reading and no previous value available; group total will be incomplete")
                 skipped.append(key)
                 continue
             warn(f"{key}: reusing previous value {prev}")
             group_counts[key] = prev
             fallbacks.append(key)
         else:
-            log(f"{key} [cites={cluster}]: {n}")
             group_counts[key] = n
             successes += 1
 
